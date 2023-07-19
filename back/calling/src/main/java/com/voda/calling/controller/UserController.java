@@ -28,7 +28,7 @@ public class UserController {
     })
     @PostMapping("/regist")
     public ResponseEntity<User> regist(@RequestBody User user) {
-
+        System.out.println("유저 컨트롤러 호출");
         userService.regist(user.getUserEmail(), user.getUserPass(), user.getUserName(), user.getUserHandicap());
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }

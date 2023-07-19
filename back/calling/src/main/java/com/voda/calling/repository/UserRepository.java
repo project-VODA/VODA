@@ -9,14 +9,17 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
+@Transactional
 public class UserRepository{
     private final EntityManager em;
 
     public User save(User user) {
+        System.out.println("유저 레포지토리 호출");
         em.persist(user);
 
         return user;
