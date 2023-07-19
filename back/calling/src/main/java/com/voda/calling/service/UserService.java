@@ -1,4 +1,9 @@
 package com.voda.calling.service;
 
-public interface UserService {
+import com.voda.calling.dto.User;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserService {
+
 }

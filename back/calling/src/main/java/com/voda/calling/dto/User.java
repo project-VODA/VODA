@@ -33,4 +33,5 @@ public class User {
     private int userCancel;
     @Column(name = "user_regtime")
     private String userRegTime;
+
 }
