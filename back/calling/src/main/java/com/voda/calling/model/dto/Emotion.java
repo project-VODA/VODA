@@ -1,4 +1,4 @@
-package com.voda.calling.dto;
+package com.voda.calling.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
