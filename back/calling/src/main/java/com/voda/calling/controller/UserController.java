@@ -1,7 +1,7 @@
 package com.voda.calling.controller;
 
-import com.voda.calling.dto.User;
-import com.voda.calling.service.UserService;
+import com.voda.calling.model.dto.User;
+import com.voda.calling.model.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
