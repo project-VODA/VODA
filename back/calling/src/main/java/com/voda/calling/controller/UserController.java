@@ -19,10 +19,10 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/regist")
-    public ResponseEntity<String> register(@RequestBody User user) {
+    public ResponseEntity<User> regist(@RequestBody User user) {
 
-
-        return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        userService.regist(user.getUserEmail(), user.getUserPass(), user.getUserName(), user.getUserHandicap());
+        return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
 }

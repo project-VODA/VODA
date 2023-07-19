@@ -6,6 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import java.util.List;
 
 @Repository
@@ -13,8 +16,10 @@ import java.util.List;
 public class UserRepository{
     private final EntityManager em;
 
-    public void save(User user) {
+    public User save(User user) {
         em.persist(user);
+
+        return user;
     }
 
     public User findByEmail(String userEmail) {
