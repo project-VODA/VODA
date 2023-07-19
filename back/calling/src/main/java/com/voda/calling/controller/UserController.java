@@ -1,7 +1,28 @@
 package com.voda.calling.controller;
 
-import org.springframework.stereotype.Controller;
+import com.voda.calling.dto.User;
+import com.voda.calling.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
+@RequestMapping("/users")
+@CrossOrigin("*")
 public class UserController {
+
+    private static final String SUCCESS = "success";
+    private static final String FAIL = "fail";
+
+    @Autowired
+    UserService userService;
+
+    @PostMapping("/regist")
+    public ResponseEntity<String> register(@RequestBody User user) {
+
+
+        return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+    }
+
 }
