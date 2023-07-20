@@ -49,7 +49,7 @@ public class JwtUtil {
                 .compact();
     }
     
-    // access token으로부터 user eamil 추출하는 함수
+    // access token으로부터 user email 추출하는 함수
     public String getUserEmailFromJwt(String accessToken){
 
         Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
@@ -59,8 +59,7 @@ public class JwtUtil {
                 .build()
                 .parseClaimsJws(accessToken)
                 .getBody()
-                .get("userEmail")
-                .toString();
+                .get("userEmail", String.class);
     }
 
 }
