@@ -29,10 +29,10 @@ public class UserService {
     private Long expiredMs = 1000 * 60 * 60L;// 토큰 유효기간: 1시간
 
     public User regist(String userEmail, String userPass, String userName, int userHandicap) {
-//        User existed = userRepository.findByEmail(userEmail);
-//        if(existed != null){
-//            throw new EmailExistedException(userEmail);
-//        }
+        User existed = userRepository.findByEmail(userEmail);
+        if(existed != null){
+            throw new EmailExistedException(userEmail);
+        }
         System.out.println("유저 서비스 호출");
         // 가입일 설정
         String userRegTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
