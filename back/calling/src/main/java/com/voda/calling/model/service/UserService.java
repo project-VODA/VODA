@@ -51,8 +51,14 @@ public class UserService {
     }
 
     public String login(String userEmail, String userPass){
-        // 로그인 갔다오자!
-
+        User user = userRepository.findByEmail(userEmail);
+        if(user == null){ // 이메일이 틀린 경우
+            System.out.println("유저 없음");
+        }else if(passwordEncoder.matches(user.getUserPass(), userPass)) {// 비밀번호가 맞은 경우
+            System.out.println("유저 맞음");
+        }else{// 비밀번호가 틀린 경우
+            System.out.println("비밀번호 틀림");
+        }
         return jwtUtil.createToken(userEmail, secretKey, expiredMs);
     }
 }
