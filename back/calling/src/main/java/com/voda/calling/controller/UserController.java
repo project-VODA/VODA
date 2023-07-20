@@ -33,4 +33,10 @@ public class UserController {
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody User user) {
+        System.out.println("로그인 시도");
+
+        return ResponseEntity.ok().body(userService.login("test", "1234"));
+    }
 }

@@ -3,7 +3,9 @@ package com.voda.calling.model.service;
 import com.voda.calling.exception.EmailExistedException;
 import com.voda.calling.model.dto.User;
 import com.voda.calling.repository.UserRepository;
+import com.voda.calling.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,13 @@ public class UserService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    JwtUtil jwtUtil;
+
+    @Value("${jwt.secret}")
+    private String secretKey;
+    private Long expiredMs = 1000 * 60 * 60L;// 토큰 유효기간: 1시간
 
     public User regist(String userEmail, String userPass, String userName, int userHandicap) {
 //        User existed = userRepository.findByEmail(userEmail);
@@ -39,5 +48,11 @@ public class UserService {
                 .build();
 
         return userRepository.save(user);
+    }
+
+    public String login(String userEmail, String userPass){
+        // 로그인 갔다오자!
+
+        return jwtUtil.createToken(userEmail, secretKey, expiredMs);
     }
 }
