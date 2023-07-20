@@ -2,13 +2,10 @@ package com.voda.calling.repository;
 
 import com.voda.calling.model.dto.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -16,6 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 public class UserRepository{
+
     private final EntityManager em;
 
     public User save(User user) {

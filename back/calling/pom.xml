@@ -15,6 +15,8 @@
 	<description>voda project</description>
 	<properties>
 		<java.version>11</java.version>
+		<log4j-version>1.2.17</log4j-version>
+		<org.slf4j-version>1.7.36</org.slf4j-version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -93,8 +95,6 @@
 			<version>0.11.5</version>
 			<scope>runtime</scope>
 		</dependency>
-
-
 
 
 	</dependencies>
