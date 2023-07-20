@@ -24,7 +24,6 @@ public class UserService {
         if(existed != null){
             throw new EmailExistedException(userEmail);
         }
-        System.out.println("유저 서비스 호출");
         // 가입일 설정
         String userRegTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
