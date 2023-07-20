@@ -1,9 +1,12 @@
 package com.voda.calling.model.service;
 
 import com.voda.calling.exception.EmailExistedException;
+import com.voda.calling.exception.NotRegisteredException;
+import com.voda.calling.exception.PasswordWrongException;
 import com.voda.calling.model.dto.User;
 import com.voda.calling.repository.UserRepository;
 import com.voda.calling.util.JwtUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,8 +14,11 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
+@Slf4j
 public class UserService {
 
     @Autowired
@@ -24,9 +30,7 @@ public class UserService {
     @Autowired
     JwtUtil jwtUtil;
 
-    @Value("${jwt.secret}")
-    private String secretKey;
-    private Long expiredMs = 1000 * 60 * 60L;// 토큰 유효기간: 1시간
+    private static final int IS_CANCELED = 1; // 탈퇴 유저
 
     public User regist(String userEmail, String userPass, String userName, int userHandicap) {
         User existed = userRepository.findByEmail(userEmail);
@@ -50,16 +54,30 @@ public class UserService {
     }
 
 
-    public String login(String userEmail, String userPass) {
+    public Map<String, Object> login(String userEmail, String userPass) {
         User user = userRepository.findByEmail(userEmail);
-        if (user == null) { // 이메일이 틀린 경우
-            System.out.println("유저 없음");
-        } else if (passwordEncoder.matches(user.getUserPass(), userPass)) {// 비밀번호가 맞은 경우
-            System.out.println("유저 맞음");
-        } else {// 비밀번호가 틀린 경우
-            System.out.println("비밀번호 틀림");
+        if (user == null || user.getUserCancel() == IS_CANCELED) { // 등록이 안된 유저인 경우
+            log.info("{}에 해당하는 유저 없음", userEmail);
+            throw new NotRegisteredException();
+        } else if(!passwordEncoder.matches(userPass, user.getUserPass())) {// 비밀번호가 틀린 경우
+            log.info("{}유저 로그인 실패: 비밀번호 오류", userEmail);
+            throw new PasswordWrongException();
         }
-        return jwtUtil.createToken(userEmail, secretKey, expiredMs);
+
+        //!!!!!!!!!!!!! repository 수정 필요!!!!!!!!
+        User userInfo = User.builder()
+                .userEmail(user.getUserEmail())
+                .userName(user.getUserName())
+                .userHandicap(user.getUserHandicap())
+                .build();
+        Map<String, Object> loginInfo = new HashMap<>();
+        loginInfo.put("access-token", jwtUtil.createAccessToken(userEmail));
+        log.info("{}", jwtUtil.getUserEmailFromJwt(jwtUtil.createAccessToken(userEmail)));
+        loginInfo.put("user", userInfo);
+        // !!!!!!!!!! refresh token 주입 필요 !!!!!!!!!!!!!!
+
+        // 정상적 로그인이 이루어진 경우 accessToken, refreshToken, userInfo 반환
+        return loginInfo;
     }
 
     public User getUser(String userEmail) {
