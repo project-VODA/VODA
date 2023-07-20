@@ -528,4 +528,7 @@ MigrationBackup/
 # VS Code
 .vscode/
 
+#setting file
+application.properties
+
 # End of https://www.toptal.com/developers/gitignore/api/intellij,java,maven,netbeans,vs
