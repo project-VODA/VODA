@@ -35,7 +35,7 @@ public class User {
     @ApiModelProperty(value="로그인 시 발행되는 refresh token", example = "ajfbafjkbiuqfugkh", required = false)
     private String userToken;
     @Column(name = "user_handicap")
-    @ApiModelProperty(value="시각장애 여부 (0:시각 장애인, 1:비장애인)", example = "0", required = true)
+    @ApiModelProperty(value="시각장애 여부 (0:비장애인, 1:시각장애인)", example = "0", required = true)
     private int userHandicap;
     @Column(name = "user_cancel")
     @ApiModelProperty(value="회원 탈퇴 여부 (0: 탈퇴안함, 1: 탈퇴함, 기본값 0)", example = "0", required = false)
