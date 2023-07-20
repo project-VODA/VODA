@@ -37,6 +37,6 @@ public class UserController {
     public ResponseEntity<String> login(@RequestBody User user) {
         System.out.println("로그인 시도");
 
-        return ResponseEntity.ok().body(userService.login("test", "1234"));
+        return ResponseEntity.ok().body(userService.login(user.getUserEmail(), user.getUserPass()));
     }
 }
