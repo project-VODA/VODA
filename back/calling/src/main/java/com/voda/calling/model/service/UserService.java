@@ -71,10 +71,12 @@ public class UserService {
                 .userHandicap(user.getUserHandicap())
                 .build();
         Map<String, Object> loginInfo = new HashMap<>();
-        loginInfo.put("access-token", jwtUtil.createAccessToken(userEmail));
+        loginInfo.put("accessToken", jwtUtil.createAccessToken(userEmail));
         log.info("{}", jwtUtil.getUserEmailFromJwt(jwtUtil.createAccessToken(userEmail)));
         loginInfo.put("user", userInfo);
         // !!!!!!!!!! refresh token 주입 필요 !!!!!!!!!!!!!!
+        String refreshToken = jwtUtil.createRefreshToken();
+        loginInfo.put("refreshToken", refreshToken);
 
         // 정상적 로그인이 이루어진 경우 accessToken, refreshToken, userInfo 반환
         return loginInfo;
