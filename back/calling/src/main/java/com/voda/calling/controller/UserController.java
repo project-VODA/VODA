@@ -38,4 +38,11 @@ public class UserController {
 
         return ResponseEntity.ok().body(userService.login(user.getUserEmail(), user.getUserPass()));
     }
+
+    @GetMapping("/mypage/{userEmail}")
+    public ResponseEntity<User> getUserInfo(@PathVariable String userEmail){
+        User user = userService.getUser(userEmail);
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+    }
+
 }
