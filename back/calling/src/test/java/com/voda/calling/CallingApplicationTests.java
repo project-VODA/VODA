@@ -56,4 +56,11 @@ class CallingApplicationTests {
 		Assertions.assertEquals("1234", user.getUserPass());
 
 	}
+
+	@Test
+	public void joinUserTest() {
+		logger.info("joinUserTest");
+		User user = userService.regist("kyuh2002@gmail.com", "1234", "최키키", 0);
+		Assertions.assertEquals("최키키", user.getUserName());
+	}
 }
