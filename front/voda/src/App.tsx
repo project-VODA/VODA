@@ -11,11 +11,13 @@ import SimpleHomePage from './pages/simple/HomePage';
 import SimpleAbout from './pages/simple/About';
 import SimpleLogin from './pages/simple/Login';
 import SimpleMyPage from './pages/simple/MyPage';
+import SimpleVideo from './pages/simple/Video';
 
 import DetailHomePage from './pages/detail/HomePage';
 import DetailAbout from './pages/detail/About';
 import DetailLogin from './pages/detail/Login';
 import DetailMyPage from './pages/detail/MyPage';
+import DetailVideo from './pages/detail/Video';
 
 
 const App: React.FC = () => {
@@ -28,27 +30,12 @@ const App: React.FC = () => {
       <Navbar />
       {screenMode === 'simple' && (
         <Routes>
-          <Route
-            path="/"
-            element={<SimpleHomePage />}
-          />
-          <Route
-            path="/about"
-            // path="/about/*"
-            element={<SimpleAbout />}
-          />
-          <Route
-            path="/login"
-            element={<SimpleLogin />}
-          />
-          <Route
-            path="/mypage"
-            element={<SimpleMyPage />}
-          />
-          <Route
-            path='*'
-            element={<Navigate replace to="/"/>}
-          />
+          <Route path='/' element={<SimpleHomePage />} />
+          <Route path='/about' element={<SimpleAbout />} />
+          <Route path='/login' element={<SimpleLogin />} />
+          <Route path='/mypage' element={<SimpleMyPage />} />
+          <Route path='/video' element={<SimpleVideo />} />
+          <Route path='*' element={<Navigate replace to="/"/>} />
         </Routes>
       )}
       {screenMode === 'detail' && (
@@ -69,6 +56,10 @@ const App: React.FC = () => {
           <Route
             path="/mypage"
             element={<DetailMyPage />}
+          />
+          <Route
+            path="/video"
+            element={<DetailVideo />}
           />
           <Route
             path='*'
