@@ -65,6 +65,19 @@ public class UserService {
     public User getUser(String userEmail) {
         User user = userRepository.findByEmail(userEmail);
         return user;
+    }
 
+    public User logout(String token) {
+        String userEmail = jwtUtil.getUserEmailFromToken(token);
+        User user = userRepository.findByEmail(userEmail);
+        user.setUserToken(null);
+        return userRepository.save(user);
+    }
+
+    public User updatePassword(String userEmail, String userPass) {
+        User user = userRepository.findByEmail(userEmail);
+        String encodedPassword = passwordEncoder.encode(userPass);
+        user.setUserPass(encodedPassword);
+        return userRepository.save(user);
     }
 }

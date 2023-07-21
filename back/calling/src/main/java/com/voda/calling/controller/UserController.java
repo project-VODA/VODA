@@ -8,8 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+import java.lang.annotation.Repeatable;
+
 @RestController
-@Api(tags="user")
+@Api(tags="User")
 @RequestMapping("/users")
 @CrossOrigin("*")
 public class UserController {
@@ -44,4 +47,31 @@ public class UserController {
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
+    @ApiOperation( value = "로그아웃", notes = "userToken을 null로 바꾸고 세션을 초기화해서 로그아웃하는 API")
+    @ApiResponses({
+            @ApiResponse(code=200, message="로그아웃 성공"),
+            @ApiResponse(code=500, message="로그아웃 실패 - 서버(DB)오류")
+    })
+    @GetMapping("/logout")
+    public ResponseEntity<String> logout(String token, HttpSession session){
+        System.out.println("로그아웃 시도");
+
+        User logoutUser = userService.logout(token);
+        if(logoutUser.getUserToken()==null){
+            session.invalidate();
+            System.out.println("로그아웃 성공");
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }else{
+            System.out.println("로그아웃 실패");
+            return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/pass")
+    public ResponseEntity<String> changePassword(@RequestBody User user) {
+        System.out.println("비밀번호 변경");
+
+        userService.updatePassword(user.getUserEmail(), user.getUserPass());
+        return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+    }
 }
