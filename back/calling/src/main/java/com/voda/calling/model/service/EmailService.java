@@ -1,5 +1,8 @@
 package com.voda.calling.model.service;
 
+import com.voda.calling.exception.EmailExistedException;
+import com.voda.calling.model.dto.User;
+import com.voda.calling.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -12,10 +15,22 @@ import java.util.Random;
 @AllArgsConstructor
 public class EmailService {
 
+    private static final int IS_CANCELED = 1; // 탈퇴 유저
+    private static final int IS_NOT_CANCELED = 0; // 탈퇴 안 한 유저
+
     @Autowired
     JavaMailSender javaMailSender;
 
+    @Autowired
+    UserRepository userRepository;
+
     public String sendAuthenticationCode(String to) throws Exception{
+        // 중복 메일 체크
+        User existed = userRepository.findUserByUserEmailAndUserCancel(to, IS_NOT_CANCELED);
+        if(existed != null){
+            throw new EmailExistedException(to);
+        }
+
         // 인증 코드 생성
         String authenticationCode = createKey();
 
