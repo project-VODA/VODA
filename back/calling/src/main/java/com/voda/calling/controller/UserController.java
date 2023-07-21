@@ -44,4 +44,9 @@ public class UserController {
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
+//    @PostMapping("/mypage")
+//    public ResponseEntity<User> updateUserInfo(@RequestBody User user){
+//
+//    }
+
 }
