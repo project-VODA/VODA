@@ -39,7 +39,7 @@ public class EmailController {
         String temporaryPassword = emailService.sendAuthenticationCode(email);
 
         // 임시 비밀번호를 유저 DB에 업데이트
-        User user =
+        //User user =
 
         // 인증 코드 리턴
         return new ResponseEntity<String>(temporaryPassword, HttpStatus.OK);
