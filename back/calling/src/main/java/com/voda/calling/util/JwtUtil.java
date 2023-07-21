@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -12,6 +13,9 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
+
+    @Value("${jwt.secret}")
+    private String SECRET;
 
     public String createToken(String userEmail, String secretKey, long expiredMs){
         // payload 내용
@@ -28,4 +32,23 @@ public class JwtUtil {
                 .signWith(key, SignatureAlgorithm.HS256)// secretKey를 가지고 서명
                 .compact();
     }
+
+    /**
+     * 토큰의 Claim 디코딩
+     */
+    private Claims getAllClaims(String token) {
+        return Jwts.parser()
+                .setSigningKey(SECRET)
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    /**
+     * Claim 에서 userEmail 가져오기
+     */
+    public String getUserEmailFromToken(String token) {
+        String userEmail = String.valueOf(getAllClaims(token).get("userEmail"));
+        return userEmail;
+    }
+
 }
