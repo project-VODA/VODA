@@ -41,7 +41,7 @@ public class EmailService {
         content += "<br/>";
         content += "<p> 안녕하세요, VODA입니다.</p><br/>";
         content += "<p> 아래 인증코드를 회원가입 창으로 돌아가 입력해주세요!</p><br/>";
-        content += "<div align='center' style='border:1px solid black;'>";
+        content += "<div align='center' style='border:1px solid black; font-size: 150%;'>";
         content += "<h3 style='color:#000435;'>회원가입 인증 코드</h3>";
         content += "CODE : <strong>" + authenticationCode + "</strong></div><br/>";
         content += "</div>";
@@ -75,7 +75,7 @@ public class EmailService {
         content += "<br/>";
         content += "<p> 안녕하세요, VODA입니다.</p><br/>";
         content += "<p> 아래 임시 비밀번호를 통해 로그인 후 비밀번호를 변경해주세요!</p><br/>";
-        content += "<div align='center' style='border:1px solid black;'>";
+        content += "<div align='center' style='border:1px solid black; font-size: 150%;'>";
         content += "<h3 style='color:#000435;'>임시 비밀번호</h3>";
         content += "CODE : <strong>" + temporaryPassword + "</strong></div><br/>";
         content += "</div>";
