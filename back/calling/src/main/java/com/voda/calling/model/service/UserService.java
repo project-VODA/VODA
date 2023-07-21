@@ -89,18 +89,31 @@ public class UserService {
         return user;
     }
 
-    public User logout(String token) {
+    public User getUserByToken(String token){
         String userEmail = jwtUtil.getUserEmailFromToken(token);
-        User user = userRepository.findUserByUserEmail(userEmail);
-        user.setUserToken(null);
-        return userRepository.save(user);
+        return userRepository.findUserByUserEmail(userEmail);
     }
 
-    public User updatePassword(String userEmail, String userPass) {
+    public User logout(User user){
+        user.setUserToken(null);
+        return user;
+    }
+
+    public User checkOriginalPass(String userEmail, String originalPass) {
         User user = userRepository.findUserByUserEmail(userEmail);
-        String encodedPassword = passwordEncoder.encode(userPass);
+        if(!passwordEncoder.matches(originalPass, user.getUserPass())){
+            //비밀번호 일치하지 않으면 PasswordWrongException 발생
+            log.info("{}비밀번호 변경 실패: 비밀번호 오류", userEmail);
+            System.out.println(user.getUserPass());
+            System.out.println(passwordEncoder.encode(originalPass));
+            throw new PasswordWrongException();
+        }
+        return user;
+    }
+
+    public void updatePassword(User user, String newPass) {
+        String encodedPassword = passwordEncoder.encode(newPass);
         user.setUserPass(encodedPassword);
-        return userRepository.save(user);
     }
 
     public void updateUser(User user) {

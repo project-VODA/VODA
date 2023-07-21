@@ -41,7 +41,7 @@ public class JwtUtil {
      */
     private Claims getAllClaims(String token) {
         return Jwts.parser()
-                .setSigningKey(secretKey)
+                .setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8))
                 .parseClaimsJws(token)
                 .getBody();
     }
@@ -51,6 +51,7 @@ public class JwtUtil {
      */
     public String getUserEmailFromToken(String token) {
         String userEmail = String.valueOf(getAllClaims(token).get("userEmail"));
+        System.out.println(userEmail);
         return userEmail;
     }
 
