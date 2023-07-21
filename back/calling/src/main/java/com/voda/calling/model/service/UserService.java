@@ -33,9 +33,10 @@ public class UserService {
     JwtUtil jwtUtil;
 
     private static final int IS_CANCELED = 1; // 탈퇴 유저
+    private static final int IS_NOT_CANCELED = 0; // 탈퇴 안 한 유저
 
     public User regist(String userEmail, String userPass, String userName, int userHandicap) {
-        User existed = userRepository.findUserByUserEmail(userEmail);
+        User existed = userRepository.findUserByUserEmailAndUserCancel(userEmail, IS_NOT_CANCELED);
         if(existed != null){
             throw new EmailExistedException(userEmail);
         }
@@ -54,8 +55,6 @@ public class UserService {
 
         return userRepository.save(user);
     }
-
-
 
     public Map<String, Object> login(String userEmail, String userPass) {
         User user = userRepository.findUserByUserEmail(userEmail);

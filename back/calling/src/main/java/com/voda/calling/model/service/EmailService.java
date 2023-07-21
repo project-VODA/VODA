@@ -56,7 +56,7 @@ public class EmailService {
         // 이메일 내용 작성
         String content = "";
         content += "<div style='margin:100px;'>";
-        content += "<h1> VODA 회원가입 인증번호 </h1>";
+        content += "<h1> VODA 임시 비밀번호 발급 </h1>";
         content += "<br/>";
         content += "<p> 안녕하세요, VODA입니다.</p><br/>";
         content += "<p> 아래 임시 비밀번호를 통해 로그인 후 비밀번호를 변경해주세요!</p><br/>";
@@ -70,7 +70,7 @@ public class EmailService {
         // 수신자
         message.addRecipients(MimeMessage.RecipientType.TO, to);
         // 제목
-        message.setSubject("VODA 회원가입 이메일 인증");
+        message.setSubject("VODA 임시 비밀번호 발급");
         // 내용
         message.setText(content, "utf-8", "html");
         // 발신자
