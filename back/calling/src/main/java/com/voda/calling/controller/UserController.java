@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.lang.annotation.Repeatable;
 
 @RestController
 @Api(tags="User")
@@ -74,4 +73,10 @@ public class UserController {
         userService.updatePassword(user.getUserEmail(), user.getUserPass());
         return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
     }
+
+//    @PostMapping("/mypage")
+//    public ResponseEntity<User> updateUserInfo(@RequestBody User user){
+//
+//    }
+
 }
