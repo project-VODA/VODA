@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 //@CrossOrigin("*")
 public class EmailController {
 
+    private static final String SUCCESS = "success";
+
     @Autowired
     EmailService emailService;
 
@@ -54,7 +56,7 @@ public class EmailController {
         userService.updatePassword(user, temporaryPassword);
 
         // 인증 코드 리턴
-        return new ResponseEntity<String>(temporaryPassword, HttpStatus.OK);
+        return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
     }
 
 }
