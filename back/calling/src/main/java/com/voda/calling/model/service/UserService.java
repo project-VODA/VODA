@@ -33,6 +33,7 @@ public class UserService {
     JwtUtil jwtUtil;
 
     private static final int IS_CANCELED = 1; // 탈퇴 유저
+    private static final int IS_NOT_CANCELED = 0; // 탈퇴 안 한 유저
 
     public User regist(String userEmail, String userPass, String userName, int userHandicap) {
         User existed = userRepository.findUserByUserEmail(userEmail);
