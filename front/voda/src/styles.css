@@ -1,7 +1,3 @@
-.body {
-  background-color: aquamarine;
-}
-
 @font-face {
   font-family: 'Koddi';
   src: url('./assets/font/KoddiUDOnGothic-Regular.ttf') format('truetype');

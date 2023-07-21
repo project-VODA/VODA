@@ -40,31 +40,12 @@ const App: React.FC = () => {
       )}
       {screenMode === 'detail' && (
         <Routes>
-          <Route
-            path="/"
-            element={<DetailHomePage />}
-          />
-          <Route
-            path="/about"
-            // path="/about/*"
-            element={<DetailAbout />}
-          />
-          <Route
-            path="/login"
-            element={<DetailLogin />}
-          />
-          <Route
-            path="/mypage"
-            element={<DetailMyPage />}
-          />
-          <Route
-            path="/video"
-            element={<DetailVideo />}
-          />
-          <Route
-            path='*'
-            element={<Navigate replace to="/"/>}
-          />
+          <Route path='/' element={<DetailHomePage />} />
+          <Route path='/about' element={<DetailAbout />} />
+          <Route path='/login' element={<DetailLogin />} />
+          <Route path='/mypage' element={<DetailMyPage />} />
+          <Route path='/video' element={<DetailVideo />} />
+          <Route path='*' element={<Navigate replace to="/"/>} />
         </Routes>
       )}
     </Router>
