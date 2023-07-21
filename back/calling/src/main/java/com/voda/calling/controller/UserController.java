@@ -71,7 +71,7 @@ public class UserController {
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
-    @ApiOperation( value = "로그아웃", notes = "userToken을 null로 바꾸고 세션을 초기화해서 로그아웃하는 API")
+    @ApiOperation( value = "로그아웃", notes = "userToken을 null로 바꾸고 로그아웃하는 API")
     @ApiResponses({
             @ApiResponse(code=200, message="로그아웃 성공"),
             @ApiResponse(code=500, message="로그아웃 실패 - 서버(DB)오류")
@@ -92,7 +92,7 @@ public class UserController {
         }
     }
 
-    @ApiOperation( value = "비밀번호 재설정", notes = "이메일, 변경할 비밀번호, 현재 비밀번호 입력받아서 비밀번호 변경하는 API")
+    @ApiOperation( value = "비밀번호 재설정", notes = "이메일, 현재 비밀번호, 변경할 비밀번호 입력받아서 비밀번호 재설정하고 로그아웃하는 API")
     @ApiResponses({
             @ApiResponse(code=200, message="비밀번호 재설정 성공"),
             @ApiResponse(code=401, message="비밀번호 재설정 실패 - 인증실패(현재 비밀번호 틀림)"),

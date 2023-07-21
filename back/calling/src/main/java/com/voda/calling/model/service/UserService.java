@@ -92,16 +92,16 @@ public class UserService {
 
     public User getUserByToken(String token){
         String userEmail = jwtUtil.getUserEmailFromToken(token);
-        return userRepository.findUserByUserEmail(userEmail);
+        return userRepository.findUserByUserEmailAndUserCancel(userEmail, IS_NOT_CANCELED);
     }
 
     public User logout(User user){
         user.setUserToken(null);
-        return user;
+        return userRepository.save(user);
     }
 
     public User checkOriginalPass(String userEmail, String originalPass) {
-        User user = userRepository.findUserByUserEmail(userEmail);
+        User user = userRepository.findUserByUserEmailAndUserCancel(userEmail, IS_NOT_CANCELED);
         if(!passwordEncoder.matches(originalPass, user.getUserPass())){
             //비밀번호 일치하지 않으면 PasswordWrongException 발생
             log.info("{}비밀번호 변경 실패: 비밀번호 오류", userEmail);
@@ -115,6 +115,7 @@ public class UserService {
     public void updatePassword(User user, String newPass) {
         String encodedPassword = passwordEncoder.encode(newPass);
         user.setUserPass(encodedPassword);
+        userRepository.save(user);
     }
 
     public User updateUser(User user) {
