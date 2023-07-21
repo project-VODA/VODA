@@ -77,26 +77,45 @@ public class UserController {
             @ApiResponse(code=500, message="로그아웃 실패 - 서버(DB)오류")
     })
     @GetMapping("/logout")
-    public ResponseEntity<String> logout(String token, HttpSession session){
-        System.out.println("로그아웃 시도");
-
-        User logoutUser = userService.logout(token);
+    public ResponseEntity<String> logout(String token){
+        log.info("로그아웃 시도");
+        //1. 토큰으로 유저 정보 가져오기
+        User logoutUser = userService.getUserByToken(token);
+        //2. 해당 유저 로그아웃
+        userService.logout(logoutUser);
         if(logoutUser.getUserToken()==null){
-            session.invalidate();
-            System.out.println("로그아웃 성공");
+            log.info("로그아웃 성공");
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }else{
-            System.out.println("로그아웃 실패");
+            log.info("로그아웃 실패");
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    @ApiOperation( value = "비밀번호 재설정", notes = "이메일, 변경할 비밀번호, 현재 비밀번호 입력받아서 비밀번호 변경하는 API")
+    @ApiResponses({
+            @ApiResponse(code=200, message="비밀번호 재설정 성공"),
+            @ApiResponse(code=401, message="비밀번호 재설정 실패 - 인증실패(현재 비밀번호 틀림)"),
+            @ApiResponse(code=500, message="비밀번호 재설정 실패 - 서버(DB)오류")
+    })
     @PostMapping("/pass")
-    public ResponseEntity<String> changePassword(@RequestBody User user) {
-        System.out.println("비밀번호 변경");
-
-        userService.updatePassword(user.getUserEmail(), user.getUserPass());
-        return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+    public ResponseEntity<String> changePassword(String userEmail, String originalPass, String newPass) {
+        log.info("비밀번호 재설정");
+        try{
+            //1. 현재 비밀번호 일치하는지 확인
+            User user = userService.checkOriginalPass(userEmail, originalPass);
+            //2. 현재 비밀번호 일치하면 비밀번호 재설정
+            userService.updatePassword(user, newPass);
+            log.info("비밀번호 재설정 성공");
+            //3. 재설정되면 로그아웃
+            userService.logout(user);
+            log.info("비밀번호 재설정 후 로그아웃 성공");
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }catch (PasswordWrongException e){
+            return new ResponseEntity<String>(FAIL, HttpStatus.UNAUTHORIZED);
+        }catch (Exception e){
+            return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @ApiOperation(value = "마이페이지 개인 회원정보수정", notes = "마이페이지에서 로그인된 회원(User) 1명의 정보를 수정하는 API")
