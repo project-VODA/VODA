@@ -14,15 +14,13 @@ public interface UserRepository extends JpaRepository<User, String> { //JpaRepos
 
     //user insert :  persist 함수 사용
 
-    User findUserByUserEmail(String userEmail);
-
     User findUserByUserEmailAndUserCancel(String userEmail, int userCancel);
 
-    List<User> findAll();
+    List<User> findAllByUserCancel(int userCancel);
 
-    User findUserByUserName(String userName);
+    User findUserByUserNameAndUserCancel(String userName, int userCancel);
 
-    List<User> findAllByUserName(String userName);
+    List<User> findAllByUserNameAndUserCancel(String userName, int userCancel);
 
 
 
