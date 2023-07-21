@@ -16,35 +16,14 @@ public interface UserRepository extends JpaRepository<User, String> { //JpaRepos
 
     User findUserByUserEmail(String userEmail);
 
+    User findUserByUserEmailAndUserCancel(String userEmail, int userCancel);
+
     List<User> findAll();
 
     User findUserByUserName(String userName);
 
     List<User> findAllByUserName(String userName);
 
-    /*
-    private final EntityManager em;
 
-    public User save(User user) {
-        em.persist(user);
-        return user;
-    }
-
-    public User findByEmail(String userEmail) {
-        return em.find(User.class, userEmail);
-    }
-
-    public List<User> findAll() {
-        return em.createQuery("select m from users m", User.class)
-                .getResultList();
-    }
-
-    public List<User> findByName(String userName) {
-        return em.createQuery("select m from users m where m.user_name = :userName", User.class)
-                .setParameter("userName", userName)
-                .getResultList();
-    }
-
-     */
 
 }

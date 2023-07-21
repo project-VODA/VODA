@@ -85,7 +85,7 @@ public class UserService {
     }
 
     public User getUser(String userEmail) {
-        User user = userRepository.findUserByUserEmail(userEmail);
+        User user = userRepository.findUserByUserEmailAndUserCancel(userEmail, 0); //usercancel을 고려하는 쿼리로 함수 변경
         return user;
     }
 
@@ -103,10 +103,9 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void updateUser(User user) {
+    public User updateUser(User user) {
         log.info("updateUser : 사용자 정보 수정");
-        User originUser = getUser("ssafy@gmail.com");
-        //set 변경사항 추가하기
         userRepository.save(user);
+        return userRepository.findUserByUserEmailAndUserCancel(user.getUserEmail(),0);
     }
 }

@@ -1,0 +1,72 @@
+CREATE DATABASE voda;
+
+USE voda;
+
+CREATE TABLE users (
+	user_email		VARCHAR(320) NOT NULL,
+    user_pass 		VARCHAR(200),
+    user_name 		VARCHAR(50),
+    user_token 		VARCHAR(500),
+    user_handicap 	INT,
+    user_cancel 	INT DEFAULT 0,
+    user_regtime	TIMESTAMP,
+
+    PRIMARY KEY (user_email)
+);
+
+CREATE TABLE friends (
+	friend_no		int AUTO_INCREMENT,
+    user_email		VARCHAR(320) NOT NULL,
+    friend_email	VARCHAR(320) NOT NULL,
+    friend_cancel	INT DEFAULT 0,
+    friend_regtime	TIMESTAMP,
+
+    PRIMARY KEY (friend_no),
+    FOREIGN KEY (user_email) REFERENCES users (user_email)
+);
+
+CREATE TABLE callhistory (
+	call_no			INT AUTO_INCREMENT,
+    call_sender		VARCHAR(320),
+    call_receiver	VARCHAR(320),
+    call_starttime	TIMESTAMP,
+    call_endtime	TIMESTAMP,
+    call_url		VARCHAR(500),
+    call_cancel		INT DEFAULT 0,
+    call_status		INT DEFAULT 0,
+
+    PRIMARY KEY (call_no)
+);
+
+CREATE TABLE user_callhistory (
+	user_call_no	INT AUTO_INCREMENT,
+	call_no 		INT,
+    user_email		VARCHAR(320) NOT NULL,
+
+    PRIMARY KEY (user_call_no),
+    FOREIGN KEY (call_no) REFERENCES callhistory (call_no),
+    FOREIGN KEY (user_email) REFERENCES users (user_email)
+);
+
+CREATE TABLE usersetting (
+	user_email VARCHAR(320) NOT NULL,
+    usersetting_type_no INT DEFAULT 1,
+    usersetting_screen_type INT DEFAULT 0,
+
+    PRIMARY KEY (user_email),
+    FOREIGN KEY (user_email) REFERENCES users (user_email)
+);
+
+
+CREATE TABLE emotion (
+	emotion_no 				INT AUTO_INCREMENT,
+    emotion_name 			VARCHAR(100),
+    emotion_sound			VARCHAR(100),
+    emotion_voice			VARCHAR(100),
+    emotion_voice_advice		VARCHAR(100),
+
+    PRIMARY KEY (emotion_no)
+);
+
+# 가입일 타입 변경
+ALTER TABLE users MODIFY user_regtime DATE;
