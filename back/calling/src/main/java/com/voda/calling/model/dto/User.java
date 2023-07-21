@@ -32,7 +32,7 @@ public class User {
     @ApiModelProperty(value="회원 이름", example = "김이름", required = true)
     private String userName;
     @Column(name = "user_token")
-    @ApiModelProperty(value="로그인 시 발행되는 refresh token", example = "ajfbafjkbiuqfugkh", required = false)
+    @ApiModelProperty(value="로그인 시 발행되는 refresh token", example = "", required = false)
     private String userToken;
     @Column(name = "user_handicap")
     @ApiModelProperty(value="시각장애 여부 (0:비장애인, 1:시각장애인)", example = "0", required = true)
