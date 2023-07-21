@@ -16,11 +16,11 @@ public interface UserRepository extends JpaRepository<User, String> { //JpaRepos
 
     User findUserByUserEmailAndUserCancel(String userEmail, int userCancel);
 
-    List<User> findAll();
+    List<User> findAllByUserCancel(int userCancel);
 
-    User findUserByUserName(String userName);
+    User findUserByUserNameAndUserCancel(String userName, int userCancel);
 
-    List<User> findAllByUserName(String userName);
+    List<User> findAllByUserNameAndUserCancel(String userName, int userCancel);
 
 
 
