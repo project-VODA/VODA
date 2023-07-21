@@ -79,6 +79,8 @@ public class UserService {
         // !!!!!!!!!! refresh token 주입 필요 !!!!!!!!!!!!!!
         String refreshToken = jwtUtil.createRefreshToken();
         loginInfo.put("refreshToken", refreshToken);
+        user.setUserToken(refreshToken);
+        userRepository.save(user);
 
         // 정상적 로그인이 이루어진 경우 accessToken, refreshToken, userInfo 반환
         return loginInfo;
