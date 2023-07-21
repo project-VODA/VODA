@@ -36,10 +36,7 @@ public class UserService {
     private static final int IS_NOT_CANCELED = 0; // 탈퇴 안 한 유저
 
     public User regist(String userEmail, String userPass, String userName, int userHandicap) {
-        User existed = userRepository.findUserByUserEmailAndUserCancel(userEmail, IS_NOT_CANCELED);
-        if(existed != null){
-            throw new EmailExistedException(userEmail);
-        }
+
         // 가입일 설정
         String userRegTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
