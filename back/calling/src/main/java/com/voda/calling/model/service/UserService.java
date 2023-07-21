@@ -57,7 +57,7 @@ public class UserService {
     }
 
     public Map<String, Object> login(String userEmail, String userPass) {
-        User user = userRepository.findUserByUserEmail(userEmail);
+        User user = userRepository.findUserByUserEmailAndUserCancel(userEmail, IS_NOT_CANCELED);
         if (user == null || user.getUserCancel() == IS_CANCELED) { // 등록이 안된 유저인 경우
             log.info("{}에 해당하는 유저 없음", userEmail);
             throw new NotRegisteredException();
