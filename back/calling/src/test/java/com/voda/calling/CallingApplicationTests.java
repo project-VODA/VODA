@@ -49,11 +49,19 @@ class CallingApplicationTests {
 
 	@Test
 	public void updateUserTest() {
-		logger.info("updateUserTest");
+		logger.info("updateUserServiceTest");
 		User user = userService.getUser("ssafy@gmail.com");
-		user.setUserPass("123");
+		user.setUserName("박싸피");
 		userService.updateUser(user);
 		Assertions.assertEquals("1234", user.getUserPass());
+	}
 
+	@Test
+	public void updateUserInfoControlTest() {
+		logger.info("updateUserInfoControlTest");
+		User user = userService.getUser("ssafy@gmail.com");
+		user.setUserName("박싸피");
+		userService.updateUser(user);
+		Assertions.assertEquals("박싸피", user.getUserName());
 	}
 }

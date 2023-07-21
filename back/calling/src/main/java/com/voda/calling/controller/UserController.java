@@ -60,6 +60,11 @@ public class UserController {
         }
     }
 
+    @ApiOperation(value = "마이페이지 개인 회원정보조회", notes = "마이페이지에서 로그인된 회원(User) 1명을 조회하는 API")
+    @ApiResponses({
+            @ApiResponse(code=200, message="조회 성공"),
+            @ApiResponse(code=500, message="조회 실패 - 서버(DB)오류")
+    })
     @GetMapping("/mypage/{userEmail}")
     public ResponseEntity<User> getUserInfo(@PathVariable String userEmail){
         User user = userService.getUser(userEmail);
@@ -94,9 +99,20 @@ public class UserController {
         return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
     }
 
-//    @PostMapping("/mypage")
-//    public ResponseEntity<User> updateUserInfo(@RequestBody User user){
-//
-//    }
+    @ApiOperation(value = "마이페이지 개인 회원정보수정", notes = "마이페이지에서 로그인된 회원(User) 1명의 정보를 수정하는 API")
+    @ApiResponses({
+            @ApiResponse(code=200, message="수정 성공"),
+            @ApiResponse(code=500, message="수정 실패 - 서버(DB)오류")
+    })
+    @PatchMapping("/mypage")
+    public ResponseEntity<User> updateUserInfo(@RequestBody User user){
+        log.info("마이페이지 수정");
+        User updateUser = userService.updateUser(user);
+        if(user!=null){
+            return new ResponseEntity<User>(updateUser, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<User>(updateUser, HttpStatus.UNAUTHORIZED );
+        }
+    }
 
 }
