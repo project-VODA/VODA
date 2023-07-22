@@ -28,6 +28,8 @@ const InputField = styled.input<ThemeProps>`
   color: ${({ theme }) => theme.text};
   background-color: ${({ theme }) => theme.body};
 
+  text-align: center;
+
   &::placeholder {
     text-align: center;
   }
