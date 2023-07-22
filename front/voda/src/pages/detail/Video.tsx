@@ -1,13 +1,13 @@
 import React from "react";
 
+import Title from '../../components/Title';
+
 const DetailVideo = () => {
   return (
-    <div>
-      <h1>Detail - Video</h1>
-      <div>
-
-      </div>
-    </div>
+    <>
+      <Title title="Video" />
+      {/* Add other content for the home page */}
+    </>
   );
 };
 

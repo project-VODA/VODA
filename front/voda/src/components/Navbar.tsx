@@ -20,6 +20,7 @@ const Navbar: React.FC<Props> = ({ screenMode, setScreenMode }) => {
         <button onClick={handleModeChange}>
           {screenMode === 'simple' ? 'Detail Mode' : 'Simple Mode'}
         </button>
+        <p>Current Mode: {screenMode}</p>
         {/* <button onClick={() => handleModeChange('simple')}>Simple Mode</button>
         <button onClick={() => handleModeChange('detail')}>Detail Mode</button> */}
       </div>
@@ -40,7 +41,6 @@ const Navbar: React.FC<Props> = ({ screenMode, setScreenMode }) => {
           <button>Video</button>
         </Link>
       </div>
-      <p>Current Mode: {screenMode}</p>
       <hr />
     </nav>
   );

@@ -6,14 +6,16 @@ import Input from '../../components/Input';
 import LoginButton from '../../components/LoginButton';
 import RegisterButton from '../../components/RegisterButton';
 
-const SimpleLogin = () => {
+const SimpleSignup = () => {
   return (
     <>
-      <Title title='로그인'/>
+      <Title title='회원가입'/>
       
-      <Input placeholder="이메일을 입력하세요" />
-
-      <Input placeholder="비밀번호를 입력하세요" />
+      <Input placeholder="이메일" />
+      <Input placeholder="이름" />
+      <Input placeholder="비밀번호" />
+      <Input placeholder="비밀번호 확인" />
+      <Input placeholder="전화번호" />
 
       <LoginButton />
       <RegisterButton />
@@ -21,6 +23,6 @@ const SimpleLogin = () => {
   );
 };
 
-export default SimpleLogin;
+export default SimpleSignup;
 
 

@@ -1,10 +1,13 @@
 import React from 'react';
 
+import Title from '../../components/Title';
+
 const SimpleHomePage = () => {
   return (
-    <div>
-      <h1>Simple Page</h1>
-    </div>
+    <>
+      <Title title='Homepage' />
+      {/* Add other content for the home page */}
+    </>
   );
 };
 
