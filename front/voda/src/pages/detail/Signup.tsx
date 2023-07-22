@@ -3,7 +3,7 @@ import React from "react";
 import Title from '../../components/Title';
 
 import Input from '../../components/Input';
-import LoginButton from '../../components/LoginButton';
+// import LoginButton from '../../components/LoginButton';
 import RegisterButton from '../../components/RegisterButton';
 
 const SimpleSignup = () => {
@@ -17,8 +17,8 @@ const SimpleSignup = () => {
       <Input placeholder="비밀번호 확인" />
       <Input placeholder="전화번호" />
 
-      <LoginButton />
-      <RegisterButton />
+      <RegisterButton text='로그인' />
+      <RegisterButton text='회원가입' />
     </>
   );
 };

@@ -3,7 +3,7 @@ import React from "react";
 import Title from '../../components/Title';
 
 import Input from '../../components/Input';
-import LoginButton from '../../components/LoginButton';
+// import LoginButton from '../../components/LoginButton';
 import RegisterButton from '../../components/RegisterButton';
 
 const DetailLogin = () => {
@@ -15,8 +15,8 @@ const DetailLogin = () => {
 
       <Input placeholder="비밀번호를 입력하세요" />
 
-      <LoginButton />
-      <RegisterButton />
+      <RegisterButton text='로그인' />
+      <RegisterButton text='회원가입' />
     </>
   );
 };

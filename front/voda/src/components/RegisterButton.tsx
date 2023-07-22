@@ -22,10 +22,11 @@ const RegisterButton = styled('button')<ThemeProps>`
   height: 40px;
   border-radius: 20px;
   font-size: 20px;
-  border: 1px solid #FFC300;
+  padding: 8px;
+  margin-bottom: 16px;
+  border: 1px solid ${({ theme }) => theme.text};
   background: ${({ theme }) => theme.text};
   color: ${({ theme }) => theme.body};
-  margin-bottom: 16px;
 
   &:hover {
     background: ${({ theme }) =>
@@ -38,13 +39,16 @@ const RegisterButton = styled('button')<ThemeProps>`
 // color: ${({ theme }) =>
 // theme === SimpleTheme ? theme.mainColor : theme.body};
 
+export interface ButtonProps {
+  text: string;
+}
 
-export default function Register() {
+export default function Register({ text }: ButtonProps ) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <ButtonContainer>
-      <RegisterButton theme={theme}>회원가입</RegisterButton>
+      <RegisterButton theme={theme}>{text}</RegisterButton>
     </ButtonContainer>
   );
 }

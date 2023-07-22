@@ -57,7 +57,7 @@ export default function ModeToggle(): ReactElement {
         <>
           <Emoji>
             <span role="img" aria-label="darkMoon">
-              🌚
+              👨‍🦯
             </span>
           </Emoji>
           <ModeContent>심플 모드</ModeContent>
@@ -66,7 +66,7 @@ export default function ModeToggle(): ReactElement {
         <>
           <Emoji>
             <span role="img" aria-label="lightSun">
-              🌞
+              🚶‍♂
             </span>
           </Emoji>
           <ModeContent>일반 모드</ModeContent>
