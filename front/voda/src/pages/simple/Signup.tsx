@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Title from '../../components/Title';
 
-import Input from '../../components/Input';
+import Input from '../../components/InputText';
 import RegisterButton from '../../components/RegisterButton';
 import CheckBox from '../../components/CheckBox';
 

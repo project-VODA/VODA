@@ -2,7 +2,7 @@ import React from "react";
 
 import Title from '../../components/Title';
 
-import Input from '../../components/Input';
+import Input from '../../components/InputText';
 // import LoginButton from '../../components/LoginButton';
 import RegisterButton from '../../components/RegisterButton';
 

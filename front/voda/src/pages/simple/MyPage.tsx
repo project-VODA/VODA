@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import Title from '../../components/Title';
 
-import Input from '../../components/Input';
+import Input from '../../components/InputText';
 import SettingButton from '../../components/SettingButton';
 import DeleteButton from '../../components/DeleteButton';
 import CheckBox from '../../components/CheckBox';
