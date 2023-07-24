@@ -74,3 +74,6 @@ ALTER TABLE users MODIFY user_regtime DATE;
 # 친구 추가 일자 타입 변경
 ALTER TABLE friends MODIFY friend_regtime DATE;
 
+# 친구 테이블 cancel 컬럼 삭제
+ALTER TABLE friends drop friend_cancel;
+
