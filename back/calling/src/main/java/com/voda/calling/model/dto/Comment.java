@@ -23,7 +23,7 @@ public class Comment {
 
     @Id
     @Column(name = "comment_no")
-    @ApiModelProperty(value="댓글 번호", example = "1", required = true)
+    @ApiModelProperty(value="댓글 번호", example = "1", required = false)
     private int commentNo;
 
     @Column(name = "user_email")
@@ -39,7 +39,11 @@ public class Comment {
     private String commentContent;
 
     @Column(name = "comment_regtime")
-    @ApiModelProperty(value="댓글 작성 시간", example = "2023-07-24 14:33", required = false)
+    @ApiModelProperty(value="댓글 작성/수정 시간", example = "2023-07-24 14:33", required = false)
     private String commentRegTime;
+
+    @Column(name = "comment_modified")
+    @ApiModelProperty(value="댓글 수정 여부 (0: 수정 안 함, 1: 수정 함)", example = "0", required = false)
+    private int commentModified;
 
 }
