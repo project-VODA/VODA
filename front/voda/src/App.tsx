@@ -9,11 +9,11 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-d
 import Navigation from './components/Navigation';
 
 import SimpleHomePage from './pages/simple/HomePage';
-import SimpleAbout from './pages/simple/About';
-import SimpleLogin from './pages/simple/Login';
-import SimpleSignup from './pages/simple/Signup';
+import SimpleAbout from './pages/simple/AboutPage';
+import SimpleLogin from './pages/simple/LoginPage';
+import SimpleSignup from './pages/simple/SignupPage';
 import SimpleMyPage from './pages/simple/MyPage';
-import SimpleVideo from './pages/simple/Video';
+import SimpleVideo from './pages/simple/VideoPage';
 
 import DetailHomePage from './pages/detail/HomePage';
 import DetailAbout from './pages/detail/About';
