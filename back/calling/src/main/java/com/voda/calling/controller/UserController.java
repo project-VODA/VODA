@@ -134,4 +134,16 @@ public class UserController {
         }
     }
 
+    @ApiOperation(value = "회원 탈퇴", notes = "로그인된 회원(User)이 회원 탈퇴를 진행하는 API")
+    @ApiResponses({
+            @ApiResponse(code=200, message="탈퇴 성공"),
+            @ApiResponse(code=500, message="탈퇴 실패 - 서버(DB)오류")
+    })
+    @DeleteMapping("/{userEmail}")
+    public ResponseEntity<String> canceledUser(@PathVariable String userEmail){
+        log.info("UserController - canceledUser : 회원탈퇴");
+        userService.canceledUser(userEmail);
+        return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
+    }
+
 }

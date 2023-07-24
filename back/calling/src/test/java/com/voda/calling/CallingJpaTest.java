@@ -2,6 +2,7 @@ package com.voda.calling;
 
 import com.voda.calling.model.dto.User;
 import com.voda.calling.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -15,16 +16,17 @@ import java.util.Optional;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Slf4j
 public class CallingJpaTest {
 
-    private Logger logger = LoggerFactory.getLogger(CallingJpaTest.class);
+//    private Logger logger = LoggerFactory.getLogger(CallingJpaTest.class);
 
     @Autowired
     UserRepository userRepository;
 
     @Test
     public void beanTypeTest() {
-        logger.debug("repo 구현체 : ", userRepository.getClass().getName());
+        log.debug("repo 구현체 : ", userRepository.getClass().getName());
     }
 
     @Test
@@ -46,7 +48,7 @@ public class CallingJpaTest {
     @Test
     public void selectUserByUserNameTest() {
         String uname = "김싸피";
-        User user = userRepository.findUserByUserName(uname);
+        User user = userRepository.findUserByUserEmailAndUserCancel(uname,0);
         Assertions.assertNotNull(user);
         Assertions.assertEquals("1234", user.getUserPass());
     }
@@ -54,7 +56,7 @@ public class CallingJpaTest {
     @Test
     public void selectListUserByUserNameTest() {
         String uname = "김싸피";
-        List<User> selectedList = userRepository.findAllByUserName(uname);
+        List<User> selectedList = userRepository.findAllByUserNameAndUserCancel(uname,0);
         Assertions.assertNotNull(selectedList);
         Assertions.assertEquals(2, selectedList.size());
 
