@@ -118,6 +118,13 @@ public class UserService {
     public User updateUser(User user) {
         log.info("updateUser : 사용자 정보 수정");
         userRepository.save(user);
-        return userRepository.findUserByUserEmailAndUserCancel(user.getUserEmail(),0);
+        return userRepository.findUserByUserEmailAndUserCancel(user.getUserEmail(),IS_NOT_CANCELED);
+    }
+
+    public void canceledUser(String userEmail) {
+        log.info("canceledUser : users 테이블에서 해당 사용자 IS_CANCELED 처리");
+        User user = userRepository.findUserByUserEmailAndUserCancel(userEmail, IS_NOT_CANCELED);
+        user.setUserCancel(IS_CANCELED);
+        userRepository.save(user);
     }
 }

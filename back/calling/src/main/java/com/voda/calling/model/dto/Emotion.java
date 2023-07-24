@@ -1,5 +1,6 @@
 package com.voda.calling.model.dto;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Table(name = "emotion")
+@ApiModel(value  = "감정")
 public class Emotion {
 
     @Id

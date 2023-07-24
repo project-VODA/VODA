@@ -3,6 +3,7 @@ package com.voda.calling;
 import com.voda.calling.model.dto.User;
 import com.voda.calling.model.service.UserService;
 import com.voda.calling.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,8 +20,8 @@ import javax.transaction.Transactional;
 
 @SpringBootTest
 @Transactional
+@Slf4j
 class CallingApplicationTests {
-	private Logger logger = LoggerFactory.getLogger(CallingJpaTest.class);
 
 	@Autowired
 	private EntityManagerFactory emFactory;
@@ -29,6 +30,9 @@ class CallingApplicationTests {
 
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	UserRepository userRepository;
 
 	@Test
 	void contextLoads() {
@@ -49,7 +53,7 @@ class CallingApplicationTests {
 
 	@Test
 	public void updateUserTest() {
-		logger.info("updateUserServiceTest");
+		log.info("updateUserServiceTest");
 		User user = userService.getUser("ssafy@gmail.com");
 		user.setUserName("박싸피");
 		userService.updateUser(user);
@@ -58,7 +62,7 @@ class CallingApplicationTests {
 
 	@Test
 	public void updateUserInfoControlTest() {
-		logger.info("updateUserInfoControlTest");
+		log.info("updateUserInfoControlTest");
 		User user = userService.getUser("ssafy@gmail.com");
 		user.setUserName("박싸피");
 		userService.updateUser(user);
@@ -67,8 +71,17 @@ class CallingApplicationTests {
 
 	@Test
 	public void joinUserTest() {
-		logger.info("joinUserTest");
+		log.info("joinUserTest");
 		User user = userService.regist("kyuh2002@gmail.com", "1234", "최키키", 0);
 		Assertions.assertEquals("최키키", user.getUserName());
+	}
+
+	@Test
+	public void canceledUserTest() {
+		log.info("Userservice - canceledUserTest");
+		String uEmail = "voda@voda.com";
+		userService.canceledUser(uEmail);
+		User user = userRepository.findUserByUserEmail(uEmail);
+		Assertions.assertEquals(1, user.getUserCancel());
 	}
 }
