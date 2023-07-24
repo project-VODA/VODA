@@ -77,3 +77,33 @@ ALTER TABLE friends MODIFY friend_regtime DATE;
 # 친구 테이블 cancel 컬럼 삭제
 ALTER TABLE friends drop friend_cancel;
 
+# 고객의 소리함 테이블 추가
+DROP TABLE IF EXISTS `article`;
+CREATE TABLE article (
+    article_no            INT NOT NULL AUTO_INCREMENT,
+    article_title         VARCHAR(100) NOT NULL,
+    user_email            VARCHAR(320) NOT NULL,
+    article_content        VARCHAR(2000) NOT NULL,
+    article_regtime            TIMESTAMP NOT NULL,
+    article_cancel        TINYINT NOT NULL DEFAULT 0 COMMENT '1: 삭제된 게시글',
+
+    PRIMARY KEY (article_no),
+    FOREIGN KEY (user_email) REFERENCES users (user_email)
+);
+
+# 유저 테이블에 관리자 role 추가
+alter table users add column `role` int default 0;
+
+# 댓글 테이블 추가
+DROP TABLE IF EXISTS `comments`;
+CREATE TABLE `comments` (
+  `comment_no` int NOT NULL AUTO_INCREMENT,
+  `user_email` varchar(320) NOT NULL, 
+  `article_no` int NOT NULL,
+  `comment_content` varchar(500) NOT NULL,
+  `comment_regtime` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`comment_no`),
+  CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`article_no`) REFERENCES `article` (`article_no`),
+  CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_email`) REFERENCES `users` (`user_email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
