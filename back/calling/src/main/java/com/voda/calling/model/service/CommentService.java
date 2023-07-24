@@ -16,7 +16,6 @@ public class CommentService {
     @Autowired
     CommentRepository commentRepository;
 
-
     public Comment write(String userEmail, int articleNo, String commentContent){
 
         Comment comment = Comment.builder()
@@ -36,6 +35,11 @@ public class CommentService {
                 .userEmail(userEmail)
                 .articleNo(articleNo)
                 .commentContent(commentContent)
-                .commentRegTime()
+                .commentRegTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")))
+                .build();
+
+        return commentRepository.save(comment);
     }
+
+    
 }
