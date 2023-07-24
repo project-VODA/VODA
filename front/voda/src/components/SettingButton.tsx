@@ -35,7 +35,7 @@ export interface ButtonProps {
   text: string;
 }
 
-export default function Register({ text }: ButtonProps ) {
+export default function Setting({ text }: ButtonProps ) {
   const { theme } = useContext(ThemeContext);
 
   return (
