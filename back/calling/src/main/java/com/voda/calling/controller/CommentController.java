@@ -39,8 +39,10 @@ public class CommentController {
         try{
             List<Comment> comments = commentService.searchAll(articleNo);
 
+            log.info("댓글 목록 가져오기 성공");
             return new ResponseEntity<List<Comment>>(comments, HttpStatus.OK);
         }catch (Exception e) {
+            log.info("댓글 목록 가져오기 실패 - 서버(DB) 오류");
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -56,9 +58,10 @@ public class CommentController {
         log.info("CommentController - writeComment : 댓글 작성");
         try{
             commentService.write(comment.getUserEmail(), comment.getArticleNo(), comment.getCommentContent());
-
+            log.info("댓글 작성 성공");
             return new ResponseEntity<Comment>(comment, HttpStatus.OK);
         }catch (Exception e) {
+            log.info("댓글 작성 실패 - 서버(DB) 오류");
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -74,9 +77,10 @@ public class CommentController {
         log.info("CommentController - modifyComment : 댓글 수정");
         try{
             commentService.modify(comment.getCommentNo(), comment.getUserEmail(), comment.getArticleNo(), comment.getCommentContent());
-
+            log.info("댓글 수정 성공");
             return new ResponseEntity<Comment>(comment, HttpStatus.OK);
         }catch (Exception e) {
+            log.info("댓글 수정 실패 - 서버(DB) 오류");
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -93,9 +97,10 @@ public class CommentController {
 
         try{
             commentService.delete(commentNo);
-
+            log.info("댓글 삭제 성공");
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         } catch (Exception e) {
+            log.info("댓글 삭제 실패 - 서버(DB) 오류");
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
