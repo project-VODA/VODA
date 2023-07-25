@@ -1,7 +1,12 @@
 // Navigation.tsx
 
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../constants/types';
+
+// 로그인 관련
+// import { useAppSelector } from "../../constants/types";
+
 
 import styled from 'styled-components';
 import { ThemeContext } from '../App';
@@ -103,9 +108,18 @@ const ChannelButton = styled('button')<ThemeProps>`
 //   }
 // `;
 
+// 임시
+const NavLi = styled.li`
+  display: inline-block;
+  cursor: pointer;
+  font-weight: 600;
+`;
+const LoginBtn = styled.a`
+  padding: 1em 0.5em 25px;
+`;
+
 export default function Navigation() {
   const { theme } = useContext(ThemeContext);
-
   const logoSrc = theme === SimpleTheme ? simpleLogo : detailLogo;
 
   return (
@@ -116,14 +130,24 @@ export default function Navigation() {
         </Link>
         {/* <TitleContainer color={theme.mainColor}>제목</TitleContainer> */}
         <InfoContainer>
-          <ChannelButton theme={theme}>test</ChannelButton>
-          <ChannelButton theme={theme}><Link to="/about">ABOUT</Link></ChannelButton>
+          {/* <ChannelButton theme={theme}>test</ChannelButton> */}
+          {/* <ChannelButton theme={theme}><Link to="/about">ABOUT</Link></ChannelButton> */}
           <ChannelButton theme={theme}><Link to="/login">LOGIN</Link></ChannelButton>
           <ChannelButton theme={theme}><Link to="/signup">SIGNUP</Link></ChannelButton>
-          <ChannelButton theme={theme}><Link to="/mypage">MYPAGE</Link></ChannelButton>
           <ChannelButton theme={theme}><Link to="/video">VIDEO</Link></ChannelButton>
+          <ChannelButton theme={theme}><Link to="/mypage">MYPAGE</Link></ChannelButton>
+          {/* {isLogin ? (
+            <NavLi>
+              <ChannelButton theme={theme} >마이페이지</ChannelButton>
+            </NavLi>
+          ) : (
+            <NavLi>
+              <ChannelButton theme={theme} >로그인</ChannelButton>
+            </NavLi>
+          )} */}
         </InfoContainer>
       </NavContentContainer>
+      {/* {loginModalOpen && <LoginModal setLoginModalOpen={setLoginModalOpen} />} */}
     </NavContainer>
   );
 }

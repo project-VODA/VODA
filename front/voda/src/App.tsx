@@ -5,12 +5,22 @@ import React, { createContext } from 'react';
 // import { RootState } from './store/reducers'; // 가정: RootState는 redux store의 전체 상태 타입입니다.
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 
+// redux
+import { useAppDispatch, useAppSelector } from "./constants/types";
+import { axiosInstance } from "./apis/instance";
+import {
+  updateAccessToken, updateLoginStatus,
+} from "./store/authReducer";
+
+
 // import Navbar from './components/Navbar';
 import Navigation from './components/Navigation';
 
 import SimpleHomePage from './pages/simple/HomePage';
 import SimpleAbout from './pages/simple/AboutPage';
 import SimpleLogin from './pages/simple/LoginPage';
+// 소셜 로그인 - KMJ
+import SocialLogin from './pages/simple/LoginRedirectPage';
 import SimpleSignup from './pages/simple/SignupPage';
 import SimpleMyPage from './pages/simple/MyPage';
 import SimpleVideo from './pages/simple/VideoPage';
@@ -22,9 +32,7 @@ import DetailSignup from './pages/detail/Signup';
 import DetailMyPage from './pages/detail/MyPage';
 import DetailVideo from './pages/detail/Video';
 
-// import './styles/simple/common.css';
-// import './styles/detail/common.css';
-
+// 스타일 & 모드(mode)
 import { GlobalStyle } from './styles/global-styles';
 import { SimpleTheme, DetailTheme, Theme } from './styles/theme';
 import { useMode } from './hooks/useMode';
@@ -48,8 +56,54 @@ export const ThemeContext = createContext<ContextProps>({
 
 
 const App: React.FC = () => {
-  // redux store의 screenMode 상태를 가져옵니다.
-  // const screenMode = useSelector((state: RootState) => state.screenMode);
+  const accessToken = useAppSelector((state) => state.auth.accessToken);
+  // 헤더 디폴트 추가
+  if (accessToken) {
+    axiosInstance.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${accessToken}`;
+  }
+
+  const dispatch = useAppDispatch();
+
+  // 토큰 갱신
+  axiosInstance.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    async (error) => {
+      const {
+        config,
+        response: { status, data },
+      } = error;
+      const originalRequest = config;
+      if (status === 401 && data.error === "TokenExpiredException") {
+        try {
+          // 갱신 요청
+          const res = await axiosInstance.post<any>(`/user/login/token`);
+          const newAccessToken = res.data.data.accessToken;
+          dispatch(updateAccessToken(newAccessToken));
+          // 실패했던 요청 새로운 accessToken으로 헤더 변경하고 재요청
+          axiosInstance.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${newAccessToken}`;
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+          return axiosInstance(originalRequest);
+        } catch (err) {
+          // 갱신 실패시 임의 로그아웃 처리
+          console.log("갱신실패", err);
+          dispatch(updateLoginStatus(false));
+          dispatch(updateAccessToken(""));
+          <Navigate replace to="/" />;
+        }
+      }
+      return Promise.reject(error);
+    }
+  );
+
+
+
+
 
   const { theme, toggleTheme } = useMode();
 
@@ -57,6 +111,8 @@ const App: React.FC = () => {
     { path: '/', element: theme === SimpleTheme ? <SimpleHomePage /> : <DetailHomePage /> },
     { path: '/about', element: theme === SimpleTheme ? <SimpleAbout /> : <DetailAbout /> },
     { path: '/login', element: theme === SimpleTheme ? <SimpleLogin /> : <DetailLogin /> },
+    // KMJ
+    { path: '/social-login', element: theme === SimpleTheme ? <SocialLogin /> : <SocialLogin /> },
     { path: '/signup', element: theme === SimpleTheme ? <SimpleSignup /> : <DetailSignup /> },
     { path: '/mypage', element: theme === SimpleTheme ? <SimpleMyPage /> : <DetailMyPage /> },
     { path: '/video', element: theme === SimpleTheme ? <SimpleVideo /> : <DetailVideo /> },
