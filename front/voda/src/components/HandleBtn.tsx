@@ -44,7 +44,7 @@ export default function Button({ onClick, text }: ButtonProps ) {
     <>
       <HandleButton onClick={onClick} theme={theme}>
         {text}
-      </HandleButton>;
+      </HandleButton>
     </>
   );
 }
