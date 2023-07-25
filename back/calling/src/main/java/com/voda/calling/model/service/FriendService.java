@@ -1,8 +1,7 @@
 package com.voda.calling.model.service;
 
-import com.voda.calling.model.dto.Article;
 import com.voda.calling.model.dto.Friend;
-import com.voda.calling.model.dto.User;
+import com.voda.calling.model.dto.UserSearch;
 import com.voda.calling.repository.FriendRepository;
 import com.voda.calling.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -32,9 +31,8 @@ public class FriendService {
         friendRepository.save(friend);
     }
 
-    public List<Friend> searchFriend(String userEmail) {
-        List<Friend> friendList = userRepository.findUserByUserEmailAndUserCancel(userEmail, 0);
-        return friendList;
+    public List<UserSearch> searchUser(String keyword) {
+        return userRepository.searchUsersByKeyword(keyword);
     }
 
 }
