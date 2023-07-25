@@ -102,9 +102,6 @@ const App: React.FC = () => {
   );
 
 
-
-
-
   const { theme, toggleTheme } = useMode();
 
   const commonRoutes = [
@@ -112,7 +109,8 @@ const App: React.FC = () => {
     { path: '/about', element: theme === SimpleTheme ? <SimpleAbout /> : <DetailAbout /> },
     { path: '/login', element: theme === SimpleTheme ? <SimpleLogin /> : <DetailLogin /> },
     // KMJ
-    { path: '/social-login', element: theme === SimpleTheme ? <SocialLogin /> : <SocialLogin /> },
+    { path: '/login', element: theme === SimpleTheme ? <SimpleLogin /> : <DetailLogin/> },
+    { path: '/login/oauth2/kakao/*', element: <SocialLogin /> },
     { path: '/signup', element: theme === SimpleTheme ? <SimpleSignup /> : <DetailSignup /> },
     { path: '/mypage', element: theme === SimpleTheme ? <SimpleMyPage /> : <DetailMyPage /> },
     { path: '/video', element: theme === SimpleTheme ? <SimpleVideo /> : <DetailVideo /> },

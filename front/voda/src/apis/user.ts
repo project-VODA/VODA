@@ -70,3 +70,4 @@ export const redirectYoutube = () => {
   const GOOGLE_Upload_URL = `https://accounts.google.com/o/oauth2/auth/oauthchooseaccount?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/youtube.upload`;
   window.location.href = GOOGLE_Upload_URL;
 };
+

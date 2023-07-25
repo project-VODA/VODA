@@ -2,7 +2,7 @@ import { SERVER_URL } from "./../constants/url";
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-  baseURL: `${SERVER_URL}/api`,
+  baseURL: `${SERVER_URL}`,
   // baseURL: "http://localhost:8080/api",
   withCredentials: true,
   headers: {
