@@ -33,9 +33,16 @@ public class UserController {
             @ApiResponse(code=500, message="회원가입 실패 - 서버(DB)오류")
     })
     @PostMapping("/regist")
-    public ResponseEntity<User> regist(@RequestBody User user) {
-        userService.regist(user.getUserEmail(), user.getUserPass(), user.getUserName(), user.getUserHandicap());
-        return new ResponseEntity<User>(user, HttpStatus.OK);
+    public ResponseEntity<?> regist(@RequestBody User user) {
+        try{
+            userService.regist(user.getUserEmail(), user.getUserPass(), user.getUserName(), user.getUserHandicap());
+            log.info("회원가입 성공");
+            return new ResponseEntity<User>(user, HttpStatus.OK);    
+        }catch (Exception e) {
+            log.info("회원가입 실패 - 서버(DB) 오류");
+            return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        
     }
 
     @ApiOperation(value = "로그인", notes = "User 객체를 이용해 로그인을 하는 API")
@@ -66,9 +73,14 @@ public class UserController {
             @ApiResponse(code=500, message="조회 실패 - 서버(DB)오류")
     })
     @GetMapping("/mypage/{userEmail}")
-    public ResponseEntity<User> getUserInfo(@PathVariable String userEmail){
-        User user = userService.getUser(userEmail);
-        return new ResponseEntity<User>(user, HttpStatus.OK);
+    public ResponseEntity<?> getUserInfo(@PathVariable String userEmail){
+        try{
+            User user = userService.getUser(userEmail);
+            return new ResponseEntity<User>(user, HttpStatus.OK);    
+        }catch (Exception e) {
+            return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        
     }
 
     @ApiOperation( value = "로그아웃", notes = "userToken을 null로 바꾸고 로그아웃하는 API")
@@ -128,8 +140,10 @@ public class UserController {
         log.info("마이페이지 수정");
         User updateUser = userService.updateUser(user);
         if(user!=null){
+            log.info("마이페이지 수정 성공");
             return new ResponseEntity<User>(updateUser, HttpStatus.OK);
         }else{
+            log.info("마이페이지 수정 실패 - 사용자 정보 인증 실패");
             return new ResponseEntity<User>(updateUser, HttpStatus.UNAUTHORIZED );
         }
     }
@@ -142,8 +156,15 @@ public class UserController {
     @DeleteMapping("/{userEmail}")
     public ResponseEntity<String> canceledUser(@PathVariable String userEmail){
         log.info("UserController - canceledUser : 회원탈퇴");
-        userService.canceledUser(userEmail);
-        return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
+        try {
+            userService.canceledUser(userEmail);
+            log.info("회원탈퇴 성공");
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);    
+        }catch (Exception e) {
+            log.info("회원탈퇴 실패 - 서버(DB) 오류");
+            return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        
     }
 
 }
