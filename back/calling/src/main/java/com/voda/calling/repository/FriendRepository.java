@@ -13,4 +13,5 @@ public interface FriendRepository extends JpaRepository<Friend, Integer> {
 
     void deleteFriendByUserEmailAndFriendEmail(String userEmail, String friendEmail);
 
+    void deleteFriendByUserEmail(String userEmail);
 }
