@@ -4,7 +4,9 @@ import com.voda.calling.exception.EmailExistedException;
 import com.voda.calling.exception.NotRegisteredException;
 import com.voda.calling.exception.PasswordWrongException;
 import com.voda.calling.model.dto.User;
+import com.voda.calling.model.dto.UserSetting;
 import com.voda.calling.repository.UserRepository;
+import com.voda.calling.repository.UserSettingRepository;
 import com.voda.calling.util.JwtUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +27,9 @@ public class UserService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    UserSettingRepository userSettingRepository;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -50,7 +55,17 @@ public class UserService {
                 .userRegTime(userRegTime)
                 .build();
 
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+
+        //userSetting 테이블에 초기 사용자 설정 저장
+        UserSetting userSetting = UserSetting.builder()
+                .userEmail(userEmail)
+                .usersettingTypeNo(1)
+                .usersettingScreenType(userHandicap == 1 ? 0 : 1) //시각장애인이면 심플모드(0), 비장애인이면 디테일모드(0)
+                .build();
+        userSettingRepository.save(userSetting);
+
+        return savedUser;
     }
 
     public Map<String, Object> login(String userEmail, String userPass) {
