@@ -37,4 +37,21 @@ public class FriendService {
         return friendList;
     }
 
+
+    public Friend searchRelationship(String userEmail, String friendEmail) {
+
+        return friendRepository.findByUserEmailAndFriendEmail(userEmail, friendEmail);
+    }
+
+    public List<Friend> searchAllFriend(String userEmail) {
+        List<Friend> friendList = friendRepository.findAllByUserEmail(userEmail);
+
+        return friendList;
+    }
+
+    public void deleteFriend(String userEmail, String friendEmail) {
+        friendRepository.deleteFriendByUserEmailAndFriendEmail(userEmail, friendEmail);
+
+    }
+
 }

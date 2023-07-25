@@ -33,10 +33,6 @@ public class Friend {
     @ApiModelProperty(value="친구 이메일", example = "ssafy@gmail.com", required = true)
     private String friendEmail;
 
-    @Column(name = "friend_cancel")
-    @ApiModelProperty(value="친구목록 삭제여부", example = "0")
-    private int friendCancel;
-
     @Column(name = "friend_regtime")
     @ApiModelProperty(value="친구 등록일자", example = "2023-07-23")
     private String friendRegtime;
