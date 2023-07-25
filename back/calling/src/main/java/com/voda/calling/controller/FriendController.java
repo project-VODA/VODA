@@ -36,7 +36,7 @@ public class FriendController {
             @ApiResponse(code = 500, message = "친구 추가 실패 - 서버(DB)오류")
     })
     @PostMapping("/regist")
-    public ResponseEntity<?> registFriend(Friend friend) {
+    public ResponseEntity<?> registFriend(@RequestBody Friend friend) {
         log.info("FriendController - registFriend : 친구 추가");
 
         String userEmail = friend.getUserEmail();
@@ -106,7 +106,7 @@ public class FriendController {
             @ApiResponse(code=500, message="친구 삭제 실패 - 서버(DB) 오류")
     })
     @DeleteMapping()
-    public ResponseEntity<String> deleteFriend(Friend friend) {
+    public ResponseEntity<String> deleteFriend(@RequestBody Friend friend) {
         log.info("FriendController - deleteFriend : 친구 삭제");
 
         String userEmail = friend.getUserEmail();
