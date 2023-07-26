@@ -35,3 +35,7 @@
 
 - 23.07.26 KSH & Choi
   - merge login & signup page(function)
+
+- 23.07.26 Choi
+  - 회원가입 / 로그인 axios 연결
+  - Redux로 Access Token 관리 필요
