@@ -35,14 +35,14 @@ const SimpleMyPage = () => {
     <>
       <Title title='마이페이지' />
 
-      <Input placeholder="이메일" />
+      {/* <Input placeholder="이메일" />
       <Input placeholder="이름" />
-      <Input placeholder="비밀번호" />
-      <CheckBox
+      <Input placeholder="비밀번호" /> */}
+      {/* <CheckBox
         label="장애 여부" // 체크박스 옆에 표시될 텍스트
         checked={isDisabled} // 체크 여부를 state로 전달
         onChange={(checked) => setIsDisabled(checked)} // 체크 상태가 변경될 때 state 업데이트
-      />
+      /> */}
 
       <ButtonContainer>
         <SettingButton text='정보 수정' />

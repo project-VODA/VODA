@@ -11,12 +11,12 @@ const DetailLogin = () => {
     <>
       <Title title='로그인'/>
       
-      <Input placeholder="이메일을 입력하세요" />
+      {/* <Input placeholder="이메일을 입력하세요" />
 
       <Input placeholder="비밀번호를 입력하세요" />
 
       <RegisterButton text='로그인' />
-      <RegisterButton text='회원가입' />
+      <RegisterButton text='회원가입' /> */}
     </>
   );
 };

@@ -1,6 +1,21 @@
 import { SERVER_URL } from "../constants/url";
 import { axiosInstance } from "./instance";
 
+import { axiosServer } from "./server";
+
+
+// 서버 DB 유저 회원가입
+export const registServer = async (userData: object) => {
+  const res = await axiosServer.post<any>(`/users/regist`, userData);
+  return res.data;
+}
+
+// 서버 DB 유저 로그인
+export const loginServer = async (userData: object) => {
+  const res = await axiosServer.post<any>(`/users/login`, userData);
+  return res.data;
+};
+
 // 카카오 로그인 리다이렉트
 export const redirectKakao = () => {
   const CLIENT_ID = "573c93c75e5690082f119bc3a6f8215d";

@@ -14,6 +14,7 @@ const TitleContainer = styled('header')<ColorProps>`
   height: 120px;
   font-size: 2em;
   color: ${({ color }) => color};
+  font-weight: bolder;
   display: flex;
   justify-content: center;
   align-items: center;
