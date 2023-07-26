@@ -113,6 +113,14 @@
 <!--			<artifactId>querydsl-jpa</artifactId>-->
 <!--			<version>${querydsl.version}</version>-->
 <!--		</dependency>-->
+
+		<!-- OpenVidu -->
+		<dependency>
+			<groupId>io.openvidu</groupId>
+			<artifactId>openvidu-java-client</artifactId>
+			<version>2.28.0</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
