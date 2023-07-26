@@ -41,7 +41,7 @@ public class UserService {
     private static final int IS_NOT_CANCELED = 0; // 탈퇴 안 한 유저
 
     public User regist(String userEmail, String userPass, String userName, int userHandicap) {
-
+        log.info("회원가입 서비스 호출 - ");
         // 가입일 설정
         String userRegTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
