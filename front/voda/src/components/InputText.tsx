@@ -36,16 +36,25 @@ const InputField = styled.input<ThemeProps>`
 `;
 
 interface InputProps {
+  type: string;
   placeholder: string;
+  value: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 
-export default function Input({ placeholder }: InputProps) {
+export default function Input({ type, placeholder, value, onChange }: InputProps) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <TextContainer>
-      <InputField type="text" placeholder={placeholder} theme={theme} />
+      <InputField
+        type={type}
+        placeholder={placeholder}
+        theme={theme}
+        value={value}
+        onChange={onChange}
+      />
     </TextContainer>
   )
 };

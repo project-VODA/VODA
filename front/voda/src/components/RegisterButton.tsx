@@ -41,14 +41,15 @@ const RegisterButton = styled('button')<ThemeProps>`
 
 export interface ButtonProps {
   text: string;
+  onClick: (event: any) => void;
 }
 
-export default function Register({ text }: ButtonProps ) {
+export default function Register({ text, onClick }: ButtonProps ) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <ButtonContainer>
-      <RegisterButton theme={theme}>{text}</RegisterButton>
+      <RegisterButton theme={theme} onClick={onClick}>{text}</RegisterButton>
     </ButtonContainer>
   );
 }

@@ -8,7 +8,7 @@ import { SimpleTheme, Theme } from '../styles/theme';
 interface CheckboxProps {
   label: string;
   checked: boolean;
-  onChange: (checked: boolean) => void;
+  onChange: (event: any) => void;
 }
 
 const CheckboxContainer = styled.label`
@@ -49,7 +49,12 @@ export default function CheckBox({ label, checked, onChange }: CheckboxProps) {
 
   return (
     <CheckboxContainer>
-      <CheckboxInput theme={theme} type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} />
+      <CheckboxInput 
+        theme={theme} 
+        type="checkbox" 
+        checked={checked} 
+        onChange={onChange} 
+      />
       <CheckboxLabel>{label}</CheckboxLabel>
     </CheckboxContainer>
   );
