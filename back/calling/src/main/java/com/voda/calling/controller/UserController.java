@@ -33,7 +33,7 @@ public class UserController {
             @ApiResponse(code=500, message="회원가입 실패 - 서버(DB)오류")
     })
     @PostMapping("/regist")
-    public ResponseEntity<?> regist(@RequestBody User user) {
+    public ResponseEntity<?> regist(@RequestBody User user) {   
         try{
             userService.regist(user.getUserEmail(), user.getUserPass(), user.getUserName(), user.getUserHandicap());
             log.info("회원가입 성공");
