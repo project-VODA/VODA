@@ -21,3 +21,17 @@
   - 모드 변경(테마); src/hooks/ 생성 & 파일 - useMode.ts, ModeToggle.ts + global.ts, theme.ts
   - 이미지 폴더(src/assets/image/) 및 로고 추가
   - [v] 색상 변경 제대로 되는지 체크해야 됌
+
+- 23.07.24 KMJ
+  - Change page name(ex - Login -> LoginPage)
+  - npm; install - 'axios'
+  - video on/off; RTCVideo.tsx
+  - Video.tsx 에 컴포넌트 불러오기
+
+- 23.07.25 KMJ
+  - redux & login
+  - kakao oauth 기능 추가(back api 추가 처리 필요)
+  - npm; install - 'react-hook-form'
+
+- 23.07.26 KSH & Choi
+  - merge login & signup page(function)
