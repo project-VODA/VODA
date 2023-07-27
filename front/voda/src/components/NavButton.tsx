@@ -1,4 +1,5 @@
 // components/Button.tsx
+// 이거 handle 버튼으로 바뀌었음.
 
 import React, { useContext } from 'react';
 

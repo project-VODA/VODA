@@ -35,7 +35,7 @@ public class ArticleController {
             @ApiResponse(code = 204, message = "게시글 목록 불러오기 실패 - 게시글 없음"),
             @ApiResponse(code = 500, message = "게시글 목록 불러오기 실패 - 서버(DB)오류")
     })
-    @GetMapping("/")
+    @GetMapping()
     public ResponseEntity<?> getArticleList() {
         log.info("게시글 목록 불러오기");
         try {
@@ -81,7 +81,7 @@ public class ArticleController {
             @ApiResponse(code = 200, message = "게시글 등록 성공"),
             @ApiResponse(code = 500, message = "게시글 등록 실패 - 서버(DB)오류")
     })
-    @PostMapping("/")
+    @PostMapping()
     public ResponseEntity<?> registArticle(@RequestBody Article article) {
         log.info("게시글 작성");
         try {
@@ -99,7 +99,7 @@ public class ArticleController {
             @ApiResponse(code = 200, message = "게시글 수정 성공"),
             @ApiResponse(code = 500, message = "게시글 수정 실패 - 서버(DB)오류")
     })
-    @PutMapping("/")
+    @PutMapping()
     public ResponseEntity<?> updateArticle(@RequestBody Article article) {
         log.info("게시글 수정");
         try {
@@ -118,8 +118,8 @@ public class ArticleController {
             @ApiResponse(code = 204, message = "게시글 삭제 실패 - 게시글 없음"),
             @ApiResponse(code = 500, message = "게시글 삭제 실패 - 서버(DB)오류")
     })
-    @DeleteMapping("/")
-    public ResponseEntity<?> deleteArticle(int articleNo) {
+    @DeleteMapping("/{articleNo}")
+    public ResponseEntity<?> deleteArticle(@PathVariable int articleNo) {
         log.info("게시글 삭제");
         try {
             articleService.deleteArticle(articleNo);

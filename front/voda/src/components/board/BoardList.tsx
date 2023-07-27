@@ -1,65 +1,92 @@
-import React, { useState, useContext } from 'react';
-
+import { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
+import { getAricles } from '../../apis/board';
 import styled from 'styled-components';
-import { ThemeContext } from '../../App';
-import { SimpleTheme, Theme } from '../../styles/theme';
 
-import Title from '../Title';
-// import { BoardType } from '../../../interface/BoardType'
+type Article = {
+  articleNo: number;
+  articleTitle: string;
+  userEmail: string;
+  articleRegTime: string;
+};
 
-const BoardList = () => {
-    // const [boardList, setBoardList] = useState<BoardType[]>([])
+type ArticleList = Article[];
+
+const TableContainer = styled.div`
+  justify-content: center;
+  font-size: 30px;
+
+  .boardTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .boardTable th, .boardTable td {
+    padding: 10px;
+    text-align: center;
+  }
+
+  .boardTable tbody tr:hover {
+    background-color: black;
+  }
+
+  .boardTable a {
+    color: #FFC300;
+    text-decoration: none;
+  }
+`;
+
+const BoardList: React.FC = () => {
   
-    // const boardLength = boardList.length
+  const [articles, setArticles] = useState<ArticleList>([]);
+
+  useEffect(() => {
+    getAricles()
+    .then((res: ArticleList) => {
+      console.log(res);
+      setArticles(res);
+    })
+    .catch((err: Error) => {
+      console.log(err);
+    })
+  }, [])
   
-    // useEffect(() => {
-    //   axios.get('http://localhost:3001/board')
-    //     .then((response) => {
-    //       setBoardList(response.data)
-    //     })
-  
-    //     .catch(function(error) {
-    //       console.log(error)
-    //     })
-    // }, [])
-  
-    return (
-      <div className="board-list">
-        <Title title="Board list"/>
-  
-        {/* <h4>Total post : {boardLength}</h4> */}
-  
-        <table>
+  return (
+    <TableContainer>
+      <div className='boardList'>
+        <table className='boardTable'>
           <colgroup>
-            <col width="15%"/>
-            <col width="65%"/>
-            <col width="20%"/>
+            <col width="10%" />
+            <col width="40%" />
+            <col width="20%" />
+            <col width="30%" />
           </colgroup>
-  
           <thead>
             <tr>
-              <th>No</th>
-              <th>Title</th>
-              <th>Date</th>
+              <th>번호</th>
+              <th>제목</th>
+              <th>작성자</th>
+              <th>작성일자</th>
             </tr>
           </thead>
-  
           <tbody>
-            {/* {
-              boardList.map((board, index) => {
-                return (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td className="title"><Link to={`/board/${board.id}`}>{board.title}</Link></td>
-                    <td>{dayjs(board.created_at).format('YYYY.MM.DD')}</td>
-                  </tr>
-                )
-              })
-            } */}
+            {articles.map((article: Article) => (
+              <tr key={article.articleNo}>
+                <td>{article.articleNo}</td>
+                <td>
+                  <Link to={`/view/${article.articleNo}`}>
+                    {article.articleTitle}
+                  </Link>
+                </td>
+                <td>{article.userEmail}</td>
+                <td>{article.articleRegTime}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
-    )
-  }
+    </TableContainer>
+  );
+}
   
-  export default BoardList
+export default BoardList;
