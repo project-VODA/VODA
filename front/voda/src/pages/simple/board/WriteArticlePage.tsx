@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -11,15 +11,21 @@ import RegistButton from '../../../components/RegisterButton';
 
 
 const SimpleWriteArticle = () => {
+  const [email, setEmail] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
   const articleData = {
     // --------------------- 추후 redux 활용 --------------------------
-    userEmail: "voda@voda.com",
+    userEmail: email,
     articleTitle: title,
     articleContent: content,
   }
+
+  // 현재 로그인 중인 유저 이메일을 작성자 이메일로 화면 마운트 시 적용
+  useEffect(() => {
+    setEmail(sessionStorage.getItem("userEmail"));
+  }, []);
 
   const handleRegist = () => {
     registArticle(articleData)
