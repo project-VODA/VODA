@@ -88,11 +88,13 @@ public class UserController {
             @ApiResponse(code=200, message="로그아웃 성공"),
             @ApiResponse(code=500, message="로그아웃 실패 - 서버(DB)오류")
     })
-    @GetMapping("/logout")
-    public ResponseEntity<String> logout(String token){
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(@RequestBody String token){
         log.info("로그아웃 시도");
+        token = token.replace("\"","");
         //1. 토큰으로 유저 정보 가져오기
         User logoutUser = userService.getUserByToken(token);
+        log.info(logoutUser.getUserEm
         //2. 해당 유저 로그아웃
         userService.logout(logoutUser);
         if(logoutUser.getUserToken()==null){
