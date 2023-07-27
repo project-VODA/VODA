@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 
 import Title from '../../components/Title';
-import NavButton from '../../components/NavButton';
 import HandleButton from '../../components/HandleBtn';
 import { redirectKakao, logout } from '../../apis/user';
 
@@ -36,21 +35,25 @@ const SimpleHomePage = () => {
     redirectKakao();
   };
 
-  const handleAbout = () => {
+  const redirectAbout = () => {
     navigate('/about')
-  }
+  };
 
-  const handleVideo = () => {
+  const redirectVideo = () => {
     navigate('/video')
-  }
+  };
 
-  const handleMyPage = () => {
+  const redirectMyPage = () => {
     navigate('/mypage')
-  }
+  };
 
-  const handleLogin = () => {
+  const redirectLogin = () => {
     navigate('/login')
-  }
+  };
+
+  const redirectFeedback = () => {
+    navigate('/feedback')
+  };
 
   const handleLogout = () => {
     const token = sessionStorage.getItem("accessToken");
@@ -67,13 +70,13 @@ const SimpleHomePage = () => {
         console.log(err);
       })
     }
-  }
+  };
 
   const naviagte = useNavigate();
 
   const RedirectHomePage = () => {
     naviagte('/');
-  }
+  };
   
   //로그인 여부 확인
   const accessToken = sessionStorage.getItem("accessToken");
@@ -82,29 +85,20 @@ const SimpleHomePage = () => {
     <>
       <Title title='Homepage' />
       <ButtonContainer>
-        {/* <NavButton text="서비스 소개" to="/about" /> */}
-        <HandleButton text='서비스 소개' onClick={handleAbout} />
-        {/* <NavButton text="영상 통화" to='/video' /> */}
-        <HandleButton text='영상통화' onClick={handleVideo} />
-        {/* <NavButton text="마이 페이지" to='/mypage' /> */}
-        <HandleButton text='마이 페이지' onClick={handleMyPage} />
-        <HandleButton text='redirect' onClick={RedirectSocialLogin} />
-
+        <HandleButton text='서비스 소개' onClick={redirectAbout} />
+        <HandleButton text='영상통화' onClick={redirectVideo} />
+        <HandleButton text='마이 페이지' onClick={redirectMyPage} />
+        {/* <HandleButton text='redirect' onClick={RedirectSocialLogin} /> */}
         <HandleButton text='카카오 로그인' onClick={handleSocialLogin} />
-        {/* <NavButton text="로그인" to='/login' /> */}
-        <HandleButton text='로그인' onClick={handleLogin} />
-        <NavButton text="고객의 소리함" to='/feedback' />
-        <HandleButton text='소셜 로그인/카카오' onClick={handleSocialLogin} />
+        <HandleButton text="고객의 소리함" onClick={redirectFeedback} />
 
         {/* 로그인 유저 존재 여부에 따라 버튼 렌더링 */}
         {accessToken !== null ? (
           <HandleButton text="로그아웃" onClick={handleLogout} />
           ) : (
-          <NavButton text="로그인" to="/login" />
+          <HandleButton text="로그인" onClick={redirectLogin} />
         )}
       </ButtonContainer>
-
-      {/* Add other content for the home page */}
     </>
   );
 };
