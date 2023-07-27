@@ -40,10 +40,10 @@ public class ArticleController {
         log.info("게시글 목록 불러오기");
         try {
             List<Article> list = articleService.getArticleList();
-            if (list == null || list.size() == 0) {
-                log.info("게시글 목록 불러오기 실패 - 게시글 없음");
-                return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-            }
+//            if (list == null || list.size() == 0) {
+//                log.info("게시글 목록 불러오기 실패 - 게시글 없음");
+//                return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+//            }
             log.info("게시글 목록 불러오기 성공");
             return new ResponseEntity<List<Article>>(list, HttpStatus.OK);
         } catch (Exception e) {
@@ -83,6 +83,7 @@ public class ArticleController {
     })
     @PostMapping()
     public ResponseEntity<?> registArticle(@RequestBody Article article) {
+        log.info("작성 게시글 정보: " + article);
         log.info("게시글 작성");
         try {
             Article newArticle = articleService.registArticle(article);

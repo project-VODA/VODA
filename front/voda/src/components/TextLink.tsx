@@ -23,8 +23,7 @@ const InputField = styled.span`
   text-align: center;
   
   &:hover {
-    background: ${({ theme }) =>
-      theme === SimpleTheme ? '#FFD60A' : '#003566'};
+    font-size: 150%;
     transition: all 0.1s ease-in-out;
   }
 `;

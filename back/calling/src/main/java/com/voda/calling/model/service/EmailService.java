@@ -11,6 +11,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import javax.mail.internet.MimeMessage;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 @Service
@@ -67,15 +69,14 @@ public class EmailService {
         return authenticationCode;
     }
 
-    public String sendTemporaryPassword(String to) throws Exception{
-
+    public Map<String, Object> sendTemporaryPassword(String to) throws Exception{
+        log.info("emailService 호출 - 임시 비밀번호 발급 :" + to);
         // 중복 메일 체크
-        User existed = userRepository.findUserByUserEmailAndUserCancel(to, IS_NOT_CANCELED);
-        log.info("유저 정보" + existed);
-
+        User existed = userRepository.findUserByUserEmail(to);
         if(existed == null){
             throw new NotRegisteredException();
         }
+        log.info("서비스단 유저정보: " + existed);
 
         // 임시 비밀번호 생성
         String temporaryPassword = createKey();
@@ -106,8 +107,13 @@ public class EmailService {
         // 이메일 발신
         javaMailSender.send(message);
 
+        // 유저 정보와 인증 코드 발송
+        Map<String, Object> returnData = new HashMap<>();
+        returnData.put("user", existed);
+        returnData.put("temporaryPassword", temporaryPassword);
+
         // 인증 코드 리턴
-        return temporaryPassword;
+        return returnData;
     }
 
     private static String createKey() {

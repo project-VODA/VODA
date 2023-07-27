@@ -31,9 +31,9 @@ import SimpleDetailArticle from './pages/simple/board/DetailArticlePage';
 
 import DetailHomePage from './pages/detail/HomePage';
 import DetailAbout from './pages/detail/About';
-import DetailLogin from './pages/detail/Login';
+import DetailLogin from './pages/detail/LoginPage';
 import DetailPass from './pages/detail/TemporaryPassPage';
-import DetailSignup from './pages/detail/Signup';
+import DetailSignup from './pages/detail/SignupPage';
 import DetailMyPage from './pages/detail/MyPage';
 import DetailVideo from './pages/detail/Video';
 import DetailFeedBack from './pages/detail/FeedBack';
