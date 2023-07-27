@@ -11,7 +11,7 @@ interface ColorProps {
 
 const TitleContainer = styled('header')<ColorProps>`
   width: 100%;
-  height: 120px;
+  height: 60px;
   font-size: 2em;
   color: ${({ color }) => color};
   font-weight: bolder;
