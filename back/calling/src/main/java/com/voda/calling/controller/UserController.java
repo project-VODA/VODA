@@ -94,7 +94,6 @@ public class UserController {
         token = token.replace("\"","");
         //1. 토큰으로 유저 정보 가져오기
         User logoutUser = userService.getUserByToken(token);
-        log.info(logoutUser.getUserEm
         //2. 해당 유저 로그아웃
         userService.logout(logoutUser);
         if(logoutUser.getUserToken()==null){

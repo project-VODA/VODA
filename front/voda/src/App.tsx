@@ -26,6 +26,7 @@ import SimpleMyPage from './pages/simple/MyPage';
 import SimpleVideo from './pages/simple/VideoPage';
 import SimpleFeedBack from './pages/simple/FeedBackPage';
 import SimpleWriteArticle from './pages/simple/board/WriteArticlePage';
+import SimpleDetailArticle from './pages/simple/board/DetailArticlePage';
 
 import DetailHomePage from './pages/detail/HomePage';
 import DetailAbout from './pages/detail/About';
@@ -122,6 +123,9 @@ const App: React.FC = () => {
     { path: '*', element: <Navigate replace to="/" /> },
     { path: '/feedback', element: theme === SimpleTheme ? <SimpleFeedBack/> : <DetailFeedBack/> },
     { path: '/write', element: theme === SimpleTheme ? <SimpleWriteArticle/> : <DetailWriteArticle/> },
+    { path: '/view/:articleNo', element: theme === SimpleTheme ? <SimpleDetailArticle/> : <SimpleDetailArticle/> },
+    
+
     // { path: '/', element: screenMode === 'simple' ? <SimpleHomePage /> : <DetailHomePage /> },
     // { path: '/about', element: screenMode === 'simple' ? <SimpleAbout /> : <DetailAbout /> },
     // { path: '/login', element: screenMode === 'simple' ? <SimpleLogin /> : <DetailLogin /> },
