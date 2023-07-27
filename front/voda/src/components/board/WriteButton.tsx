@@ -1,21 +1,22 @@
-// HandleBtn.tsx
-// NavButton 스타일 따옴
-
 import React, { useContext } from 'react';
 
+import { Link } from 'react-router-dom';
+
 import styled from 'styled-components';
-import { ThemeContext } from '../App';
-import { SimpleTheme, Theme } from '../styles/theme';
+import { ThemeContext } from '../../App';
+import { SimpleTheme, Theme } from '../../styles/theme';
+
 
 interface ThemeProps {
   theme: Theme;
 }
 
-const HandleButton = styled.button<ThemeProps>`
-  width: 50vh;
-  height: 30vh;
+// 테마(모드) 별로 색상 고려해줘야됌!!
+const SquareButton = styled(Link)<ThemeProps>`
+  width: 10vh;
+  height: 10vh;
   border-radius: 10px;
-  font-size: 50px;
+  font-size: 16px;
   margin: 16px;
   display: flex;
   justify-content: center;
@@ -32,19 +33,19 @@ const HandleButton = styled.button<ThemeProps>`
   }
 `;
 
-export interface ButtonProps {
-  onClick?: () => void;
+export interface WriteButtonProps {
   text: string;
+  to: string;
 }
 
-export default function Button({ onClick, text }: ButtonProps ) {
+export default function WriteArticle({ text, to }: WriteButtonProps ) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <>
-      <HandleButton onClick={onClick} theme={theme}>
+      <SquareButton to={to} theme={theme}>
         {text}
-      </HandleButton>
+      </SquareButton>
     </>
   );
 }

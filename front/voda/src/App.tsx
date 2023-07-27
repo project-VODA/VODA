@@ -24,6 +24,8 @@ import SocialLogin from './pages/simple/LoginRedirectPage';
 import SimpleSignup from './pages/simple/SignupPage';
 import SimpleMyPage from './pages/simple/MyPage';
 import SimpleVideo from './pages/simple/VideoPage';
+import SimpleFeedBack from './pages/simple/FeedBackPage';
+import SimpleWriteArticle from './pages/simple/board/WriteArticlePage';
 
 import DetailHomePage from './pages/detail/HomePage';
 import DetailAbout from './pages/detail/About';
@@ -31,6 +33,8 @@ import DetailLogin from './pages/detail/Login';
 import DetailSignup from './pages/detail/Signup';
 import DetailMyPage from './pages/detail/MyPage';
 import DetailVideo from './pages/detail/Video';
+import DetailFeedBack from './pages/detail/FeedBack';
+
 
 // 스타일 & 모드(mode)
 import { GlobalStyle } from './styles/global-styles';
@@ -38,6 +42,7 @@ import { SimpleTheme, DetailTheme, Theme } from './styles/theme';
 import { useMode } from './hooks/useMode';
 
 import ModeToggle from './components/ModeToggle';
+import DetailWriteArticle from './pages/detail/board/WriteArticle';
 
 // 1) 다수의 props 발생 시 interface 설정
 interface ContextProps {
@@ -115,6 +120,8 @@ const App: React.FC = () => {
     { path: '/mypage', element: theme === SimpleTheme ? <SimpleMyPage /> : <DetailMyPage /> },
     { path: '/video', element: theme === SimpleTheme ? <SimpleVideo /> : <DetailVideo /> },
     { path: '*', element: <Navigate replace to="/" /> },
+    { path: '/feedback', element: theme === SimpleTheme ? <SimpleFeedBack/> : <DetailFeedBack/> },
+    { path: '/write', element: theme === SimpleTheme ? <SimpleWriteArticle/> : <DetailWriteArticle/> },
     // { path: '/', element: screenMode === 'simple' ? <SimpleHomePage /> : <DetailHomePage /> },
     // { path: '/about', element: screenMode === 'simple' ? <SimpleAbout /> : <DetailAbout /> },
     // { path: '/login', element: screenMode === 'simple' ? <SimpleLogin /> : <DetailLogin /> },
