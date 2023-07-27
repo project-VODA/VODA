@@ -1,9 +1,11 @@
 package com.voda.calling.model.service;
 
 import com.voda.calling.exception.EmailExistedException;
+import com.voda.calling.exception.NotRegisteredException;
 import com.voda.calling.model.dto.User;
 import com.voda.calling.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import java.util.Random;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class EmailService {
 
     private static final int IS_CANCELED = 1; // 탈퇴 유저
@@ -65,9 +68,18 @@ public class EmailService {
     }
 
     public String sendTemporaryPassword(String to) throws Exception{
+
+        // 중복 메일 체크
+        User existed = userRepository.findUserByUserEmailAndUserCancel(to, IS_NOT_CANCELED);
+        log.info("유저 정보" + existed);
+
+        if(existed == null){
+            throw new NotRegisteredException();
+        }
+
         // 임시 비밀번호 생성
         String temporaryPassword = createKey();
-
+        log.info(temporaryPassword);
         // 이메일 내용 작성
         String content = "";
         content += "<div style='margin:100px;'>";
