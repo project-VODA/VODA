@@ -1,0 +1,52 @@
+/* .bounds > :first-child {
+  position: fixed;
+  right: 0;
+  width: 30%;
+  height: 30%;
+} */
+
+
+#localUser {
+  /* position: fixed !important; */
+  position: absolute;
+  /* right: 50% !important; */
+  left: 67% !important;
+  top: 50% !important;
+  /* bottom: 0 !important; */
+}
+
+#localUser video {
+  /* right: 10% !important; */
+  width: 50% !important;
+  height: 50% !important;
+}
+
+
+#remoteUsers {
+  /* position: fixed !important; */
+  position: absolute;
+  right: 0% !important;
+  left: 5% !important;
+  /* width: 70% !important; */
+  /* height: 70% !important; */
+}
+
+#remoteUsers video{
+  width: 100% !important;
+  height: 100% !important;
+}
+
+#layout {
+  /* height: 100%; */
+  background-color: #001D3D;
+}
+
+#session {
+  width: 100% !important;
+  bottom: 10% !important;
+  right: 30% !important;
+}
+
+#header{
+  display: none;
+}
