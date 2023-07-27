@@ -99,7 +99,7 @@ public class UserController {
         if(logoutUser.getUserToken()==null){
             log.info("로그아웃 성공");
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-        }else{
+        }else{gir
             log.info("로그아웃 실패");
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
