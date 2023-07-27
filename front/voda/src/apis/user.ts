@@ -3,6 +3,23 @@ import { axiosInstance } from "./instance";
 
 import { axiosServer } from "./server";
 
+// 서버 DB 유저 회원탈퇴
+export const cancelUser = async (userEmail: string) => {
+  const res = await axiosServer.delete<any>(`/users/mypage/${userEmail}`);
+  return res.data;
+}
+
+// 서버 DB 유저 회원정보 수정
+export const updateUserInfo = async (userData: object) => {
+  const res = await axiosServer.post<any>(`/users/mypage/`, userData);
+  return res.data;
+}
+
+// 서버 DB 유저 회원정보 조회
+export const getUserInfo = async (userEmail: string) => {
+  const res = await axiosServer.get<any>(`/users/mypage/${userEmail}`);
+  return res.data;
+}
 
 // 서버 DB 유저 회원가입
 export const registServer = async (userData: object) => {

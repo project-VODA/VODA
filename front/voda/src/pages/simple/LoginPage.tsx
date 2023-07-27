@@ -25,6 +25,7 @@ const SimpleLogin = () => {
           // 세션에 유저 정보 저장
           sessionStorage.setItem("userEmail", res.user.userEmail);
           sessionStorage.setItem("userName", res.user.userName);
+          sessionStorage.setItem("userHandicap", res.user.userHandicap);
           sessionStorage.setItem("accessToken", res.accessToken);
           sessionStorage.setItem("refreshToken", res.refreshToken);
 
