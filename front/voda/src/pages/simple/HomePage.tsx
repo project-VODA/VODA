@@ -92,7 +92,7 @@ const SimpleHomePage = () => {
 
         <HandleButton text='카카오 로그인' onClick={handleSocialLogin} />
         {/* <NavButton text="로그인" to='/login' /> */}
-        <HandleButton text='로그인' onClick={handleLogin} />
+        {/* <HandleButton text='로그인' onClick={handleLogin} /> */}
         <NavButton text="고객의 소리함" to='/feedback' />
         <HandleButton text='소셜 로그인/카카오' onClick={handleSocialLogin} />
 
@@ -100,7 +100,7 @@ const SimpleHomePage = () => {
         {accessToken !== null ? (
           <HandleButton text="로그아웃" onClick={handleLogout} />
           ) : (
-          <NavButton text="로그인" to="/login" />
+          <HandleButton text='로그인' onClick={handleLogin} />
         )}
       </ButtonContainer>
 

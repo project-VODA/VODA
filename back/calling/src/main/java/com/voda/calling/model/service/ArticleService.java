@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,12 +33,15 @@ public class ArticleService {
     }
 
     public Article registArticle(Article article){
+        String registTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:MM:SS"));
+        article.setArticleRegTime(registTime);
         return articleRepository.save(article);
     }
 
     public Article updateArticle(Article article){
         article.setArticleModified(1);
-        article.setArticleRegTime(new Timestamp(System.currentTimeMillis()));
+        String registTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:MM:SS"));
+        article.setArticleRegTime(registTime);
         return articleRepository.save(article);
     }
 

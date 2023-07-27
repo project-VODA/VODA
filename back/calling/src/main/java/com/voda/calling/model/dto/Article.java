@@ -39,10 +39,9 @@ public class Article {
     @ApiModelProperty(value="게시글 내용", example = "게시글 내용입니다.", required = true)
     private String articleContent;
 
-    @CreationTimestamp // INSERT 시 자동으로 값을 채워줌
     @Column(name = "article_regtime")
-    @ApiModelProperty(value="게시글 작성일", example = "2023/07/24", required = true)
-    private Timestamp articleRegTime;
+    @ApiModelProperty(value="게시글 작성일", example = "2023-07-24 08:10:30", required = true)
+    private String articleRegTime;
 
     @Column(name = "article_modified")
     @ApiModelProperty(value="게시글 수정 여부 (기본값 0, 수정된 게시글이면 1)", example = "0", required = true)
