@@ -32,6 +32,14 @@ export const GlobalStyle = createGlobalStyle<ThemeInterface>`
         width: 100%;
         height: 100%;
     }
+    #join {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      line-height: 200%;
+    }
 `;
 
 // * {
