@@ -71,8 +71,10 @@ public class EmailService {
 
     public Map<String, Object> sendTemporaryPassword(String to) throws Exception{
         log.info("emailService 호출 - 임시 비밀번호 발급 :" + to);
+        to = to.replace("\"","");
         // 중복 메일 체크
         User existed = userRepository.findUserByUserEmail(to);
+
         if(existed == null){
             throw new NotRegisteredException();
         }
