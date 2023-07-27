@@ -11,7 +11,6 @@ interface ThemeProps {
   theme: Theme;
 }
 
-
 const SettingButton = styled('button')<ThemeProps>`
   width: 130px;
   height: 40px;

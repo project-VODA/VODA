@@ -13,15 +13,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/email")
 @Api(tags = "Email")
 @Slf4j
-//@CrossOrigin("*")
+@CrossOrigin("*")
 public class EmailController {
 
     private static final String SUCCESS = "success";
@@ -39,7 +37,7 @@ public class EmailController {
             @ApiResponse(code=200, message="메일 전송 성공"),
             @ApiResponse(code=500, message="메일 전송 실패 - 호스트 연결 실패")
     })
-    public ResponseEntity<?> emailAuthenticationCodeSend(String email) throws Exception {
+    public ResponseEntity<?> emailAuthenticationCodeSend(@RequestBody String email) throws Exception {
 
         try {
             // email로 인증 코드 발송 후 authenticationCode에 저장
@@ -55,13 +53,9 @@ public class EmailController {
 
     @PostMapping("/pass")
     @ApiOperation(value = "임시 비밀번호 이메일 전송", notes = "비밀번호를 잊은 상황에서 임시 비밀번호가 담긴 이메일 보내기")
-    public ResponseEntity<?> sendTemporaryPassword(String email) throws Exception {
+    public ResponseEntity<?> sendTemporaryPassword(@RequestBody String email) throws Exception {
         // 해당 email로 된 유저 정보가 존재하는지 검사
         User user = userService.getUser(email);
-        if (user == null) {
-            log.info("비밀번호 찾기 - 일치되는 이메일 존재하지 않음");
-            throw new NotRegisteredException();
-        }
 
         try{
             // email로 임시 비밀번호 발송 후 temporaryPassword에 저장
