@@ -39,3 +39,9 @@
 - 23.07.26 Choi
   - 회원가입 / 로그인 axios 연결
   - Redux로 Access Token 관리 필요
+
+- 23.07.27 Choi
+  - 회원가입 성공 로직 변경
+  - 로그인 시 세션 스토리지에 유저 이메일 / 유저 이름 / AccessToken / RefreshToken 저장
+  - 마이페이지 회원정보 조회 / 수정 / 비밀번호 변경 페이지 구현
+  
