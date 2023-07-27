@@ -39,3 +39,6 @@
 - 23.07.26 Choi
   - 회원가입 / 로그인 axios 연결
   - Redux로 Access Token 관리 필요
+
+- 23.07.27 KJW
+  - 로그아웃 axios 연결
