@@ -40,6 +40,7 @@ const SimpleHomePage = () => {
         <HandleButton text='redirect' onClick={RedirectSocialLogin} />
         <HandleButton text='소셜 로그인/카카오' onClick={handleSocialLogin} />
         <NavButton text="로그인" to='/login' />
+        <NavButton text="고객의 소리함" to='/feedback' />
       </ButtonContainer>
 
       {/* Add other content for the home page */}
