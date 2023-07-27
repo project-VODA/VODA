@@ -29,7 +29,7 @@ const SimpleSignup = () => {
     let err = false;
     let msg = '';
     // 이메일 정규표현식
-    var emailReg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    let emailReg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     // 비밀번호 정규표현식 - 8~15자 영문 숫자 특수문자
     let pwReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/
 
@@ -62,8 +62,7 @@ const SimpleSignup = () => {
     } else {
       registServer(userData)
         .then((res) => {
-          if(res.user.userEmail === userData.userEmail) {
-            
+          if(res.userEmail === userData.userEmail) {
             alert("가입 완료");
             // 로그인 화면으로 리다이렉트
             RedirectLogin();

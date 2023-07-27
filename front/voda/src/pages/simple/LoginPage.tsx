@@ -22,6 +22,12 @@ const SimpleLogin = () => {
       .then((res) => {
         if (res.user.userEmail === userData.userEmail){
           alert("로그인 성공");
+          // 세션에 유저 정보 저장
+          sessionStorage.setItem("userEmail", res.user.userEmail);
+          sessionStorage.setItem("userName", res.user.userName);
+          sessionStorage.setItem("accessToken", res.accessToken);
+          sessionStorage.setItem("refreshToken", res.refreshToken);
+
           // 메인페이지로 리다이렉트
           RedirectHomePage();
         }else {
