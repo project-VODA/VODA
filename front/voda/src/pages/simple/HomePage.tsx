@@ -1,4 +1,4 @@
-import React from 'react';
+import React , { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 
@@ -18,6 +18,14 @@ const ButtonContainer = styled.div`
 `;
 
 const SimpleHomePage = () => {
+  //임시 유저 정보 확인용
+  useEffect(() => {
+    console.log(sessionStorage.getItem("userEmail"))
+    console.log(sessionStorage.getItem("userName"))
+    console.log(sessionStorage.getItem("accessToken"))
+    console.log(sessionStorage.getItem("refreshToken"))
+  })
+
   const navigate = useNavigate();
 
   const RedirectSocialLogin = () => {
