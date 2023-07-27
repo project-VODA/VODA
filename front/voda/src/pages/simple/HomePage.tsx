@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Title from '../../components/Title';
 import NavButton from '../../components/NavButton';
 import HandleButton from '../../components/HandleBtn';
-import { redirectKakao } from '../../apis/user';
+import { redirectKakao, logout } from '../../apis/user';
 
 
 const ButtonContainer = styled.div`
@@ -52,7 +52,32 @@ const SimpleHomePage = () => {
     navigate('/login')
   }
 
+  const handleLogout = () => {
+    const token = sessionStorage.getItem("accessToken");
+    console.log(token);
+    if(token!==null && token!==''){
+      console.log(token);
+      logout(token)
+      .then((res) => {
+        console.log(res);
+        sessionStorage.clear();
+        RedirectHomePage();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    }
+  }
+
+  const naviagte = useNavigate();
+
+  const RedirectHomePage = () => {
+    naviagte('/');
+  }
   
+  //로그인 여부 확인
+  const accessToken = sessionStorage.getItem("accessToken");
+
   return (
     <>
       <Title title='Homepage' />
@@ -69,6 +94,14 @@ const SimpleHomePage = () => {
         {/* <NavButton text="로그인" to='/login' /> */}
         <HandleButton text='로그인' onClick={handleLogin} />
         <NavButton text="고객의 소리함" to='/feedback' />
+        <HandleButton text='소셜 로그인/카카오' onClick={handleSocialLogin} />
+
+        {/* 로그인 유저 존재 여부에 따라 버튼 렌더링 */}
+        {accessToken !== null ? (
+          <HandleButton text="로그아웃" onClick={handleLogout} />
+          ) : (
+          <NavButton text="로그인" to="/login" />
+        )}
       </ButtonContainer>
 
       {/* Add other content for the home page */}
