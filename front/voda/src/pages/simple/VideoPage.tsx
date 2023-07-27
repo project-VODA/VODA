@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import Title from '../../components/Title';
 
-import RTCVideo from '../../components/RTCVideo'
+import OpenVidu from "../../components/OpenVidu";
 
 
 const SimpleVideo = () => {
@@ -19,7 +19,7 @@ const SimpleVideo = () => {
     <>
       <Title title="Video" />
       
-      <RTCVideo mediaStream={localStream} />
+      <OpenVidu/>
 
       {/* <button onClick={startVideo}>start</button> */}
     </>
