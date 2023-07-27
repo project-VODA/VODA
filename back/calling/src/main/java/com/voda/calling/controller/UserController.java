@@ -3,6 +3,7 @@ package com.voda.calling.controller;
 import com.voda.calling.exception.NotRegisteredException;
 import com.voda.calling.exception.PasswordWrongException;
 import com.voda.calling.model.dto.User;
+import com.voda.calling.model.dto.UserChangePasswordRequest;
 import com.voda.calling.model.service.UserService;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @RestController
@@ -94,7 +94,6 @@ public class UserController {
         token = token.replace("\"","");
         //1. 토큰으로 유저 정보 가져오기
         User logoutUser = userService.getUserByToken(token);
-        log.info(logoutUser.getUserEm
         //2. 해당 유저 로그아웃
         userService.logout(logoutUser);
         if(logoutUser.getUserToken()==null){
@@ -113,13 +112,14 @@ public class UserController {
             @ApiResponse(code=500, message="비밀번호 재설정 실패 - 서버(DB)오류")
     })
     @PostMapping("/pass")
-    public ResponseEntity<String> changePassword(String userEmail, String originalPass, String newPass) {
+    public ResponseEntity<String> changePassword(@RequestBody UserChangePasswordRequest userChangePassword) {
         log.info("비밀번호 재설정");
+        log.info(userChangePassword.getUserEmail() + userChangePassword.getOriginalPass() + userChangePassword.getNewPass());
         try{
             //1. 현재 비밀번호 일치하는지 확인
-            User user = userService.checkOriginalPass(userEmail, originalPass);
+            User user = userService.checkOriginalPass(userChangePassword.getUserEmail(), userChangePassword.getOriginalPass());
             //2. 현재 비밀번호 일치하면 비밀번호 재설정
-            userService.updatePassword(user, newPass);
+            userService.updatePassword(user, userChangePassword.getNewPass());
             log.info("비밀번호 재설정 성공");
             //3. 재설정되면 로그아웃
             userService.logout(user);
@@ -132,16 +132,17 @@ public class UserController {
         }
     }
 
+
     @ApiOperation(value = "마이페이지 개인 회원정보수정", notes = "마이페이지에서 로그인된 회원(User) 1명의 정보를 수정하는 API")
     @ApiResponses({
             @ApiResponse(code=200, message="수정 성공"),
             @ApiResponse(code=500, message="수정 실패 - 서버(DB)오류")
     })
-    @PatchMapping("/mypage")
+    @PutMapping("/mypage")
     public ResponseEntity<User> updateUserInfo(@RequestBody User user){
         log.info("마이페이지 수정");
         User updateUser = userService.updateUser(user);
-        if(user!=null){
+        if(updateUser!=null){
             log.info("마이페이지 수정 성공");
             return new ResponseEntity<User>(updateUser, HttpStatus.OK);
         }else{

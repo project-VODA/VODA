@@ -132,8 +132,12 @@ public class UserService {
 
     public User updateUser(User user) {
         log.info("updateUser : 사용자 정보 수정");
-        userRepository.save(user);
-        return userRepository.findUserByUserEmailAndUserCancel(user.getUserEmail(),IS_NOT_CANCELED);
+        User find = userRepository.findUserByUserEmailAndUserCancel(user.getUserEmail(), IS_NOT_CANCELED);
+        find.setUserName(user.getUserName());
+        find.setUserHandicap(user.getUserHandicap());
+
+        userRepository.save(find);
+        return find;
     }
 
     public void canceledUser(String userEmail) {
