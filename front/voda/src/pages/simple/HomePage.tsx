@@ -64,9 +64,11 @@ const SimpleHomePage = () => {
         {/* <NavButton text="마이 페이지" to='/mypage' /> */}
         <HandleButton text='마이 페이지' onClick={handleMyPage} />
         <HandleButton text='redirect' onClick={RedirectSocialLogin} />
+
         <HandleButton text='카카오 로그인' onClick={handleSocialLogin} />
         {/* <NavButton text="로그인" to='/login' /> */}
         <HandleButton text='로그인' onClick={handleLogin} />
+        <NavButton text="고객의 소리함" to='/feedback' />
       </ButtonContainer>
 
       {/* Add other content for the home page */}
