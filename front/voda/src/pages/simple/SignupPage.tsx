@@ -8,6 +8,7 @@ import Input from '../../components/InputText';
 import RegisterButton from '../../components/RegisterButton';
 import CheckBox from '../../components/CheckBox';
 import Info from '../../components/InfoText';
+import { sendAuthenticationCode } from '../../apis/email';
 
 
 const SimpleSignup = () => {
@@ -17,6 +18,10 @@ const SimpleSignup = () => {
   const [handicap, setHandicap] = useState(false); // 기본값을 0으로 설정
   const [passwordCheck, setPasswordCheck] = useState('');
   const [pwFlag, setPwFlag] = useState(false);
+  const [emailSend, setEmailSend] = useState(false);
+  const [emailAuthentication, setEmailAuthentication] = useState(false);
+  const [authenticationCode, setAuthenticationCode] = useState('');
+  const [userCode, setUserCode] = useState('');
 
   const userData = {
     userEmail: email,
@@ -51,12 +56,14 @@ const SimpleSignup = () => {
     }else if(!err && !name) {
       msg = '이름을 입력해주세요';
       err = true;
-    }
-
-    if (!pwFlag) {
-      msg = '비밀번호가 일치하지 않습니다.';
+    }else if (!err && !pwFlag) {
+      msg = '비밀번호가 일치하지 않습니다';
+      err = true;
+    }else if (!err && !emailAuthentication) {
+      msg = '이메일 인증이 진행되지 않았습니다';
       err = true;
     }
+
     if (err) {
       alert(msg);
     } else {
@@ -75,6 +82,26 @@ const SimpleSignup = () => {
         });
     }
   };
+
+  const handleEmailSender = (e: any) => {
+    sendAuthenticationCode(email)
+      .then((res) => {
+        setEmailSend(true);
+        setAuthenticationCode(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
+  const handleEmailAuthentication = (e: any) => {
+    if (authenticationCode === userCode) {
+      alert("인증 성공");
+      setEmailAuthentication(true);
+    }else{
+      alert("인증 코드가 일치하지 않습니다")
+    }
+  }
 
   const handlePasswordCheckChange = (e: any) => {
     setPasswordCheck(e.target.value);
@@ -98,6 +125,18 @@ const SimpleSignup = () => {
         value={email} 
         onChange={(e) => setEmail(e.target.value)}
       />
+      {!emailSend && !emailAuthentication && <RegisterButton text='이메일 인증 코드 발송' onClick={handleEmailSender}/>}
+      {emailSend && !emailAuthentication && 
+        <>
+          <Input 
+            type="text"
+            placeholder="인증코드 입력"
+            value={userCode}
+            onChange={(e) => setUserCode(e.target.value)}
+          />
+          <RegisterButton text='이메일 인증' onClick={handleEmailAuthentication}/>
+        </>
+      }
       <Input 
         type="text"
         placeholder="이름" 
@@ -122,7 +161,7 @@ const SimpleSignup = () => {
         checked={handicap} // 체크 여부를 state로 전달
         onChange={(e) => setHandicap(e.target.checked)} // 체크 상태가 변경될 때 state 업데이트
       />
-
+      
       <RegisterButton text='회원가입' onClick={handleSignup}/>
     </>
   );
