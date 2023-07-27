@@ -1,3 +1,4 @@
+import { resourceLimits } from "worker_threads";
 import { SERVER_URL } from "../constants/url";
 import { axiosInstance } from "./instance";
 
@@ -48,8 +49,9 @@ export const loginGoogle = async (code: string) => {
 };
 
 // 로그아웃
-export const logout = async () => {
-  await axiosInstance.post<any>(`/user/logout`);
+export const logout = async (token: string) => {
+  const res = await axiosServer.post<any>(`/users/logout`, token);
+  return res.data;
 };
 
 // 탈퇴하기
