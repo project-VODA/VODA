@@ -21,10 +21,10 @@ interface ThemeProps {
 
 // 테마(모드) 별로 색상 고려해줘야됌!!
 const SquareButton = styled(Link)<ThemeProps>`
-  width: 30vh;
+  width: 50vh;
   height: 30vh;
   border-radius: 10px;
-  font-size: 20px;
+  font-size: 200px;
   margin: 16px;
   display: flex;
   justify-content: center;

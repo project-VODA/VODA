@@ -12,10 +12,10 @@ interface ThemeProps {
 }
 
 const HandleButton = styled.button<ThemeProps>`
-  width: 30vh;
+  width: 50vh;
   height: 30vh;
   border-radius: 10px;
-  font-size: 20px;
+  font-size: 50px;
   margin: 16px;
   display: flex;
   justify-content: center;
