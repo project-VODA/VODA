@@ -33,14 +33,15 @@ const DeleteButton = styled('button')<ThemeProps>`
 
 export interface ButtonProps {
   text: string;
+  onClick: (event: any) => void;
 }
 
-export default function Register({ text }: ButtonProps ) {
+export default function Register({ text, onClick }: ButtonProps ) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <>
-      <DeleteButton theme={theme}>{text}</DeleteButton>
+      <DeleteButton theme={theme} onClick={onClick}>{text}</DeleteButton>
     </>
   );
 }
