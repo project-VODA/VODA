@@ -6,6 +6,7 @@ import { loginServer } from "../../apis/user";
 import Title from '../../components/Title';
 import Input from '../../components/InputText';
 import LoginButton from '../../components/RegisterButton';
+import Link from "../../components/TextLink";
 
 const SimpleLogin = () => {
   const [email, setEmail] = useState('');
@@ -40,7 +41,9 @@ const SimpleLogin = () => {
       });
 
   };
-
+  const RedirectTemporaryPass = () => {
+    naviagte('/pass')
+  }
   
   const naviagte = useNavigate();
 
@@ -65,6 +68,8 @@ const SimpleLogin = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
       />
+
+      <Link text='비밀번호를 잊으셨나요?' onClick={RedirectTemporaryPass}/> 
 
       <LoginButton text='로그인' onClick={handleLogin} />
     </>

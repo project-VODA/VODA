@@ -19,6 +19,7 @@ import Navigation from './components/Navigation';
 import SimpleHomePage from './pages/simple/HomePage';
 import SimpleAbout from './pages/simple/AboutPage';
 import SimpleLogin from './pages/simple/LoginPage';
+import SimplePass from './pages/simple/TemporaryPassPage';
 // 소셜 로그인 - KMJ
 import SocialLogin from './pages/simple/LoginRedirectPage';
 import SimpleSignup from './pages/simple/SignupPage';
@@ -30,6 +31,7 @@ import SimpleWriteArticle from './pages/simple/board/WriteArticlePage';
 import DetailHomePage from './pages/detail/HomePage';
 import DetailAbout from './pages/detail/About';
 import DetailLogin from './pages/detail/Login';
+import DetailPass from './pages/detail/TemporaryPassPage';
 import DetailSignup from './pages/detail/Signup';
 import DetailMyPage from './pages/detail/MyPage';
 import DetailVideo from './pages/detail/Video';
@@ -114,7 +116,7 @@ const App: React.FC = () => {
     { path: '/about', element: theme === SimpleTheme ? <SimpleAbout /> : <DetailAbout /> },
     { path: '/login', element: theme === SimpleTheme ? <SimpleLogin /> : <DetailLogin /> },
     // KMJ
-    { path: '/login', element: theme === SimpleTheme ? <SimpleLogin /> : <DetailLogin/> },
+    { path: '/pass', element: theme === SimpleTheme ? <SimplePass /> : <DetailPass />},
     { path: '/login/oauth2/kakao/*', element: <SocialLogin /> },
     { path: '/signup', element: theme === SimpleTheme ? <SimpleSignup /> : <DetailSignup /> },
     { path: '/mypage', element: theme === SimpleTheme ? <SimpleMyPage /> : <DetailMyPage /> },
