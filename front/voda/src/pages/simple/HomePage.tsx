@@ -14,7 +14,6 @@ const ButtonContainer = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-
 `;
 
 const SimpleHomePage = () => {
@@ -37,17 +36,37 @@ const SimpleHomePage = () => {
     redirectKakao();
   };
 
+  const handleAbout = () => {
+    navigate('/about')
+  }
+
+  const handleVideo = () => {
+    navigate('/video')
+  }
+
+  const handleMyPage = () => {
+    navigate('/mypage')
+  }
+
+  const handleLogin = () => {
+    navigate('/login')
+  }
+
   
   return (
     <>
       <Title title='Homepage' />
       <ButtonContainer>
-        <NavButton text="서비스 소개" to="/about" />
-        <NavButton text="영상 통화" to='/video' />
-        <NavButton text="마이 페이지" to='/mypage' />
+        {/* <NavButton text="서비스 소개" to="/about" /> */}
+        <HandleButton text='서비스 소개' onClick={handleAbout} />
+        {/* <NavButton text="영상 통화" to='/video' /> */}
+        <HandleButton text='영상통화' onClick={handleVideo} />
+        {/* <NavButton text="마이 페이지" to='/mypage' /> */}
+        <HandleButton text='마이 페이지' onClick={handleMyPage} />
         <HandleButton text='redirect' onClick={RedirectSocialLogin} />
-        <HandleButton text='소셜 로그인/카카오' onClick={handleSocialLogin} />
-        <NavButton text="로그인" to='/login' />
+        <HandleButton text='카카오 로그인' onClick={handleSocialLogin} />
+        {/* <NavButton text="로그인" to='/login' /> */}
+        <HandleButton text='로그인' onClick={handleLogin} />
       </ButtonContainer>
 
       {/* Add other content for the home page */}
