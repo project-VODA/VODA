@@ -5,3 +5,8 @@ export const sendAuthenticationCode = async (email: string) => {
     const res = await axiosServer.post<any>(`/email/regist/`, email);
     return res.data;
 }
+
+export const sendTemporaryPassword = async (email: string) => {
+    const res = await axiosServer.post<any>(`/email/pass/`, email);
+    return res.data;
+}
