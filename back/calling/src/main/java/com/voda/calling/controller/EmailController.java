@@ -56,10 +56,6 @@ public class EmailController {
     public ResponseEntity<?> sendTemporaryPassword(@RequestBody String email) throws Exception {
         // 해당 email로 된 유저 정보가 존재하는지 검사
         User user = userService.getUser(email);
-        if (user == null) {
-            log.info("비밀번호 찾기 - 일치되는 이메일 존재하지 않음");
-            throw new NotRegisteredException();
-        }
 
         try{
             // email로 임시 비밀번호 발송 후 temporaryPassword에 저장

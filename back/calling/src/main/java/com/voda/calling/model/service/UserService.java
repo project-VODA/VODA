@@ -98,7 +98,7 @@ public class UserService {
     }
 
     public User getUser(String userEmail) {
-        User user = userRepository.findUserByUserEmailAndUserCancel(userEmail, 0); //usercancel을 고려하는 쿼리로 함수 변경
+        User user = userRepository.findUserByUserEmailAndUserCancel(userEmail, IS_NOT_CANCELED); //usercancel을 고려하는 쿼리로 함수 변경
         return user;
     }
 
