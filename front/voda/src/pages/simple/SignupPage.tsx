@@ -93,28 +93,28 @@ const SimpleSignup = () => {
       <Title title='회원가입'/>
       
       <Input 
-          type="email"
-          placeholder="이메일" 
-          value={email} 
-          onChange={(e) => setEmail(e.target.value)}
+        type="email"
+        placeholder="이메일" 
+        value={email} 
+        onChange={(e) => setEmail(e.target.value)}
       />
       <Input 
-          type="text"
-          placeholder="이름" 
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+        type="text"
+        placeholder="이름" 
+        value={name}
+        onChange={(e) => setName(e.target.value)}
       />
       <Input 
-          type="password"
-          placeholder="비밀번호" 
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+        type="password"
+        placeholder="비밀번호" 
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
       />
       <Input 
-          type="password"
-          placeholder="비밀번호 확인" 
-          value={passwordCheck}
-          onChange={handlePasswordCheckChange}
+        type="password"
+        placeholder="비밀번호 확인" 
+        value={passwordCheck}
+        onChange={handlePasswordCheckChange}
       />
       {pwFlag === false && passwordCheck.length !== 0 && <Info text='비밀번호가 일치하지 않습니다.'/>}
       <CheckBox
