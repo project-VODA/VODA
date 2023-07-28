@@ -98,7 +98,7 @@ public class UserService {
     }
 
     public User getUser(String userEmail) {
-        User user = userRepository.findUserByUserEmailAndUserCancel(userEmail, 0); //usercancel을 고려하는 쿼리로 함수 변경
+        User user = userRepository.findUserByUserEmailAndUserCancel(userEmail, IS_NOT_CANCELED); //usercancel을 고려하는 쿼리로 함수 변경
         return user;
     }
 
@@ -132,8 +132,12 @@ public class UserService {
 
     public User updateUser(User user) {
         log.info("updateUser : 사용자 정보 수정");
-        userRepository.save(user);
-        return userRepository.findUserByUserEmailAndUserCancel(user.getUserEmail(),IS_NOT_CANCELED);
+        User find = userRepository.findUserByUserEmailAndUserCancel(user.getUserEmail(), IS_NOT_CANCELED);
+        find.setUserName(user.getUserName());
+        find.setUserHandicap(user.getUserHandicap());
+
+        userRepository.save(find);
+        return find;
     }
 
     public void canceledUser(String userEmail) {

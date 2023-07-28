@@ -64,3 +64,6 @@
   
 - 23.07.27 KJW
   - 로그아웃 axios 연결
+  - 엔터키로 로그인할 수 있도록 SubmitInputText 컴포넌트 생성
+  - 로그인 axios 에러 처리 구현
+  - 게시글 목록 컴포넌트 & axios연결

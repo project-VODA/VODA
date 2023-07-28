@@ -39,3 +39,4 @@
 
 - 23.07.27 KJW
   - 로그아웃 api GET에서 POST로 변경
+  - Article의 articleRegTime TimeStamp에서 String으로 변경

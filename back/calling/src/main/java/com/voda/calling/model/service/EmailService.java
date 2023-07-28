@@ -1,18 +1,23 @@
 package com.voda.calling.model.service;
 
 import com.voda.calling.exception.EmailExistedException;
+import com.voda.calling.exception.NotRegisteredException;
 import com.voda.calling.model.dto.User;
 import com.voda.calling.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import javax.mail.internet.MimeMessage;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class EmailService {
 
     private static final int IS_CANCELED = 1; // 탈퇴 유저
@@ -25,6 +30,8 @@ public class EmailService {
     UserRepository userRepository;
 
     public String sendAuthenticationCode(String to) throws Exception{
+        to = to.replace("\"","");
+
         // 중복 메일 체크
         User existed = userRepository.findUserByUserEmailAndUserCancel(to, IS_NOT_CANCELED);
         if(existed != null){
@@ -64,10 +71,20 @@ public class EmailService {
         return authenticationCode;
     }
 
-    public String sendTemporaryPassword(String to) throws Exception{
+    public Map<String, Object> sendTemporaryPassword(String to) throws Exception{
+        log.info("emailService 호출 - 임시 비밀번호 발급 :" + to);
+        to = to.replace("\"","");
+        // 중복 메일 체크
+        User existed = userRepository.findUserByUserEmail(to);
+
+        if(existed == null){
+            throw new NotRegisteredException();
+        }
+        log.info("서비스단 유저정보: " + existed);
+
         // 임시 비밀번호 생성
         String temporaryPassword = createKey();
-
+        log.info(temporaryPassword);
         // 이메일 내용 작성
         String content = "";
         content += "<div style='margin:100px;'>";
@@ -94,8 +111,13 @@ public class EmailService {
         // 이메일 발신
         javaMailSender.send(message);
 
+        // 유저 정보와 인증 코드 발송
+        Map<String, Object> returnData = new HashMap<>();
+        returnData.put("user", existed);
+        returnData.put("temporaryPassword", temporaryPassword);
+
         // 인증 코드 리턴
-        return temporaryPassword;
+        return returnData;
     }
 
     private static String createKey() {

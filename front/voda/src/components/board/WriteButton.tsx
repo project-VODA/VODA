@@ -1,22 +1,21 @@
-import React, { useContext } from 'react';
+// HandleBtn.tsx
+// NavButton 스타일 따옴
 
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
 
 import styled from 'styled-components';
 import { ThemeContext } from '../../App';
 import { SimpleTheme, Theme } from '../../styles/theme';
 
-
 interface ThemeProps {
   theme: Theme;
 }
 
-// 테마(모드) 별로 색상 고려해줘야됌!!
-const SquareButton = styled(Link)<ThemeProps>`
-  width: 10vh;
+const WriteButton = styled.button<ThemeProps>`
+  width: 20vh;
   height: 10vh;
   border-radius: 10px;
-  font-size: 16px;
+  font-size: 20px;
   margin: 16px;
   display: flex;
   justify-content: center;
@@ -33,19 +32,19 @@ const SquareButton = styled(Link)<ThemeProps>`
   }
 `;
 
-export interface WriteButtonProps {
+export interface ButtonProps {
+  onClick?: () => void;
   text: string;
-  to: string;
 }
 
-export default function WriteArticle({ text, to }: WriteButtonProps ) {
+export default function Button({ onClick, text }: ButtonProps ) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <>
-      <SquareButton to={to} theme={theme}>
+      <WriteButton onClick={onClick} theme={theme}>
         {text}
-      </SquareButton>
+      </WriteButton>
     </>
   );
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
 import Title from '../../components/Title';
@@ -6,8 +7,9 @@ import Input from '../../components/InputText';
 import SettingButton from '../../components/SettingButton';
 import DeleteButton from '../../components/DeleteButton';
 import CheckBox from '../../components/CheckBox';
-import { getUserInfo } from '../../apis/user';
+import { cancelUser, changePassword, getUserInfo, logout, updateUserInfo } from '../../apis/user';
 import Info from '../../components/InfoText';
+
 
 
 const ButtonContainer = styled.div`
@@ -36,8 +38,19 @@ const SimpleMyPage = () => {
     userHandicap: handicap ? 1 : 0,
   };
 
-  useEffect(() => {
+  const changePasswordData = {
+    userEmail: email,
+    originalPass: originPassword,
+    newPass: password,
+  };
 
+  const naviagte = useNavigate();
+
+  const RedirectHomePage = () => {
+    naviagte('/');
+  }
+
+  useEffect(() => {
     getUserInfo(sessionStorage.getItem("userEmail"))
       .then((res) => {
         setEmail(res.userEmail);
@@ -47,18 +60,134 @@ const SimpleMyPage = () => {
       .catch((err) => {
         console.log(err);
       })
-  })
+  }, []);
 
   const handleModify = () => {
+    let err = false;
+    let msg = '';
     
+    if(!err && !name) {
+      msg = '이름을 입력해주세요';
+      err = true;
+    }
+
+    if (err) {
+      alert(msg);
+    } else {
+      updateUserInfo(userData)
+        .then((res) => {
+          if(res.userEmail === userData.userEmail) {
+            alert("회원 정보 수정 완료");
+            // 로그아웃 처리
+            const token = sessionStorage.getItem("accessToken");
+            console.log(token);
+            if(token!==null && token!==''){
+              console.log(token);
+              logout(token)
+              .then((res) => {
+                console.log(res);
+                sessionStorage.clear();
+                RedirectHomePage();
+              })
+              .catch((err) => {
+                console.log(err);
+              })
+            }
+            // 홈 화면으로 리다이렉트
+            RedirectHomePage();
+          }else{
+            console.log("회원 정보 수정 실패");
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        });
+    }
   }
 
   const handleWithdrawal = () => {
+    var confirmWithdrawal = window.confirm("정말 탈퇴하시겠습니까?");
+    if(confirmWithdrawal) {
+      cancelUser(userData.userEmail)
+      .then((res) => {
+        alert("회원 탈퇴 성공");
+        console.log(res);
 
+        // 로그아웃 처리
+        const token = sessionStorage.getItem("accessToken");
+        console.log(token);
+        if(token!==null && token!==''){
+          console.log(token);
+          logout(token)
+          .then((res) => {
+            console.log(res);
+            sessionStorage.clear();
+            RedirectHomePage();
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+        }
+        // 홈 화면으로 리다이렉트
+        RedirectHomePage(); 
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    }
   }
 
   const handleChangePassword = () => {
+    let err = false;
+    let msg = '';
+    // 비밀번호 정규표현식 - 8~15자 영문 숫자 특수문자
+    let pwReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/
 
+    // 비밀번호 유효성 검사
+    if(!err && password.length === 0){
+      msg = '비밀번호를 입력해주세요';
+      err = true;
+    }else if(!err && passwordCheck.length === 0){
+      msg = '비밀번호 확인을 입력해주세요';
+      err = true;
+    }else if(!err && !password.match(pwReg)) {
+      msg = '비밀번호는 8자 이상 15자 이하 영문/특수문자/숫자 조합이어야 합니다'
+      err = true;
+    }else if(!err && !pwFlag) {
+      msg = '비밀번호가 일치하지 않습니다'
+      err = true;
+    }
+
+    if(err) {
+      alert(msg);
+    }else{
+      console.log(changePasswordData);
+      changePassword(changePasswordData)
+        .then((res) => {
+          alert("비밀번호 변경 성공")
+          
+          // 로그아웃 처리
+          const token = sessionStorage.getItem("accessToken");
+          console.log(token);
+          if(token!==null && token!==''){
+            console.log(token);
+            logout(token)
+            .then((res) => {
+              console.log(res);
+              sessionStorage.clear();
+              RedirectHomePage();
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+          }
+          // 홈 화면으로 리다이렉트
+          RedirectHomePage();
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
   }
 
   const handlePasswordCheckChange = (e: any) => {
@@ -93,7 +222,9 @@ const SimpleMyPage = () => {
         <SettingButton text='비밀번호 변경' onClick={handleChangePassword}/>
       </ButtonContainer>
       
-      <hr/>
+      <br/>
+      <br/>
+      <br/>
       <Input 
         type="email"
         placeholder="이메일" 
