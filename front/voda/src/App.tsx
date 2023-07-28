@@ -19,6 +19,7 @@ import Navigation from './components/Navigation';
 import SimpleHomePage from './pages/simple/HomePage';
 import SimpleAbout from './pages/simple/AboutPage';
 import SimpleLogin from './pages/simple/LoginPage';
+import SimplePass from './pages/simple/TemporaryPassPage';
 // 소셜 로그인 - KMJ
 import SocialLogin from './pages/simple/LoginRedirectPage';
 import SimpleSignup from './pages/simple/SignupPage';
@@ -26,11 +27,13 @@ import SimpleMyPage from './pages/simple/MyPage';
 import SimpleVideo from './pages/simple/VideoPage';
 import SimpleFeedBack from './pages/simple/FeedBackPage';
 import SimpleWriteArticle from './pages/simple/board/WriteArticlePage';
+import SimpleDetailArticle from './pages/simple/board/DetailArticlePage';
 
 import DetailHomePage from './pages/detail/HomePage';
 import DetailAbout from './pages/detail/About';
-import DetailLogin from './pages/detail/Login';
-import DetailSignup from './pages/detail/Signup';
+import DetailLogin from './pages/detail/LoginPage';
+import DetailPass from './pages/detail/TemporaryPassPage';
+import DetailSignup from './pages/detail/SignupPage';
 import DetailMyPage from './pages/detail/MyPage';
 import DetailVideo from './pages/detail/Video';
 import DetailFeedBack from './pages/detail/FeedBack';
@@ -114,7 +117,7 @@ const App: React.FC = () => {
     { path: '/about', element: theme === SimpleTheme ? <SimpleAbout /> : <DetailAbout /> },
     { path: '/login', element: theme === SimpleTheme ? <SimpleLogin /> : <DetailLogin /> },
     // KMJ
-    { path: '/login', element: theme === SimpleTheme ? <SimpleLogin /> : <DetailLogin/> },
+    { path: '/pass', element: theme === SimpleTheme ? <SimplePass /> : <DetailPass />},
     { path: '/login/oauth2/kakao/*', element: <SocialLogin /> },
     { path: '/signup', element: theme === SimpleTheme ? <SimpleSignup /> : <DetailSignup /> },
     { path: '/mypage', element: theme === SimpleTheme ? <SimpleMyPage /> : <DetailMyPage /> },
@@ -122,6 +125,8 @@ const App: React.FC = () => {
     { path: '/feedback', element: theme === SimpleTheme ? <SimpleFeedBack/> : <DetailFeedBack/> },
     { path: '/write', element: theme === SimpleTheme ? <SimpleWriteArticle/> : <DetailWriteArticle/> },
     { path: '*', element: <Navigate replace to="/" /> },
+    { path: '/view/:articleNo', element: theme === SimpleTheme ? <SimpleDetailArticle/> : <SimpleDetailArticle/> },
+    
     // { path: '/', element: screenMode === 'simple' ? <SimpleHomePage /> : <DetailHomePage /> },
     // { path: '/about', element: screenMode === 'simple' ? <SimpleAbout /> : <DetailAbout /> },
     // { path: '/login', element: screenMode === 'simple' ? <SimpleLogin /> : <DetailLogin /> },

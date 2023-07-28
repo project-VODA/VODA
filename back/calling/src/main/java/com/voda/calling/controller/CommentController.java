@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/comments/{articleNo}")
+@RequestMapping("/comments")
 @Api(tags = "Comment")
 @Slf4j
 public class CommentController {
@@ -91,8 +91,8 @@ public class CommentController {
             @ApiResponse(code=200, message="댓글 삭제 성공"),
             @ApiResponse(code=500, message="댓글 삭제 실패 - 서버(DB) 오류")
     })
-    @DeleteMapping()
-    public ResponseEntity<String> deleteComment(int commentNo) {
+    @DeleteMapping("/{commentNo}")
+    public ResponseEntity<String> deleteComment(@PathVariable int commentNo) {
         log.info("CommentController - deleteComment : 댓글 삭제");
 
         try{
