@@ -25,6 +25,7 @@ import SocialLogin from './pages/simple/LoginRedirectPage';
 import SimpleSignup from './pages/simple/SignupPage';
 import SimpleMyPage from './pages/simple/MyPage';
 import SimpleVideo from './pages/simple/VideoPage';
+import SimpleRoom from './pages/simple/WaitingRoomPage';
 import SimpleFeedBack from './pages/simple/FeedBackPage';
 import SimpleWriteArticle from './pages/simple/board/WriteArticlePage';
 import SimpleDetailArticle from './pages/simple/board/DetailArticlePage';
@@ -36,6 +37,7 @@ import DetailPass from './pages/detail/TemporaryPassPage';
 import DetailSignup from './pages/detail/SignupPage';
 import DetailMyPage from './pages/detail/MyPage';
 import DetailVideo from './pages/detail/Video';
+import DetailRoom from './pages/detail/WaitingRoomPage';
 import DetailFeedBack from './pages/detail/FeedBack';
 
 
