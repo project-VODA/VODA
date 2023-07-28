@@ -30,6 +30,8 @@ public class EmailService {
     UserRepository userRepository;
 
     public String sendAuthenticationCode(String to) throws Exception{
+        to = to.replace("\"","");
+
         // 중복 메일 체크
         User existed = userRepository.findUserByUserEmailAndUserCancel(to, IS_NOT_CANCELED);
         if(existed != null){
