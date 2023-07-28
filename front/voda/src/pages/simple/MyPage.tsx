@@ -222,7 +222,9 @@ const SimpleMyPage = () => {
         <SettingButton text='비밀번호 변경' onClick={handleChangePassword}/>
       </ButtonContainer>
       
-      <hr/>
+      <br/>
+      <br/>
+      <br/>
       <Input 
         type="email"
         placeholder="이메일" 

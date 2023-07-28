@@ -3,6 +3,7 @@ package com.voda.calling.model.service;
 import com.voda.calling.exception.NoContentException;
 import com.voda.calling.model.dto.Article;
 import com.voda.calling.repository.ArticleRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class ArticleService {
 
     @Autowired
