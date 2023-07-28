@@ -1,9 +1,10 @@
 import React, { useRef, useEffect } from "react";
 import Title from '../../components/Title';
 import * as faceapi from 'face-api.js';
-// import "./video.css"; // Import the CSS file where you define the styles
+import "./video.css";
+// import * as model from '../../../public/models'
 
-const DetailVideo: React.FC = () => {
+const DetailVideo = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -12,12 +13,15 @@ const DetailVideo: React.FC = () => {
     loadModels();
   }, []);
 
+
   const startVideo = () => {
-    navigator.mediaDevices.getUserMedia({ video: true })
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
       .then((currentStream) => {
         if (videoRef.current) {
           videoRef.current.srcObject = currentStream;
         }
+        console.log('video on')
       })
       .catch((err) => {
         console.log(err);
@@ -27,14 +31,15 @@ const DetailVideo: React.FC = () => {
   const loadModels = async () => {
     try {
       await Promise.all([
-        faceapi.nets.tinyFaceDetector.loadFromUri("/models"),
-        faceapi.nets.faceLandmark68Net.loadFromUri("/models"),
-        faceapi.nets.faceRecognitionNet.loadFromUri("/models"),
-        faceapi.nets.faceExpressionNet.loadFromUri("/models")
+        faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
+        faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
+        faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
+        faceapi.nets.faceExpressionNet.loadFromUri('/models')
       ]);
       faceMyDetect();
+      console.log('face detect')
     } catch (error) {
-      // console.error("Error loading models:", error);
+      console.error("Error loading models:", error);
     }
   };
 
@@ -44,7 +49,6 @@ const DetailVideo: React.FC = () => {
         const detections = await faceapi.detectAllFaces(videoRef.current,
           new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions();
 
-        // DRAW YOUR FACE IN WEBCAM
         const canvas = faceapi.createCanvasFromMedia(videoRef.current);
         if (canvas) {
           canvasRef.current.innerHTML = '';
