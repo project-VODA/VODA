@@ -35,7 +35,7 @@ import DetailLogin from './pages/detail/LoginPage';
 import DetailPass from './pages/detail/TemporaryPassPage';
 import DetailSignup from './pages/detail/SignupPage';
 import DetailMyPage from './pages/detail/MyPage';
-import DetailVideo from './pages/detail/Video';
+import DetailVideo from './pages/detail/faceExpressions';
 import DetailFeedBack from './pages/detail/FeedBack';
 
 
