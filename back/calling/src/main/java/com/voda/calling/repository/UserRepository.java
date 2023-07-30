@@ -21,6 +21,8 @@ public interface UserRepository extends JpaRepository<User, String> { //JpaRepos
 
     List<User> findAllByUserNameAndUserCancel(String userName, int userCancel);
 
+    User findUserByUserTokenAndUserCancel(String userToken, int userCancel);
+
 
     //탈퇴하지 않은 유저 중 검색어에 해당하는 유저 이메일, 유저 이름, 친구 여부 찾는 쿼리
     @Query("SELECT NEW com.voda.calling.model.dto.UserSearchResponse(u.userEmail, u.userName, CASE WHEN f.friendEmail IS NOT NULL THEN true ELSE false END) " +
