@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import Title from '../../components/Title';
+import Title from '../components/Title';
 import * as faceapi from 'face-api.js';
 import "./video.css";
 // import * as model from '../../../public/models'
