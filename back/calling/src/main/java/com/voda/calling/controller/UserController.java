@@ -97,7 +97,7 @@ public class UserController {
             @ApiResponse(code=500, message="로그아웃 실패 - 서버(DB)오류")
     })
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(@RequestHeader(value = AUTH, required = false) String auth){
+    public ResponseEntity<String> logout(@ApiParam(hidden = true) @RequestHeader(value = AUTH) String auth){
         log.info("로그아웃 시도");
         String accessToken = jwtUtil.extractTokenFromHeader(auth);
         //1. 토큰으로 유저 정보 가져오기
@@ -185,7 +185,7 @@ public class UserController {
             @ApiResponse(code=500, message = "발급 실패 - 서버 오류")
     })
     @GetMapping("/token")
-    public ResponseEntity<Map<String, Object>> getNewAccessToken(@RequestHeader(value = AUTH, required = false) String auth){
+    public ResponseEntity<Map<String, Object>> getNewAccessToken(@ApiParam(hidden = true) @RequestHeader(value = AUTH) String auth){
         String refreshToken = jwtUtil.extractTokenFromHeader(auth);
         log.info(refreshToken);
         String accessToken = userService.getNewAccessToken(refreshToken);
