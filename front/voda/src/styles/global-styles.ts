@@ -18,7 +18,7 @@ interface ThemeInterface {
 export const GlobalStyle = createGlobalStyle<ThemeInterface>`
     ${reset}
     body {
-        font-family: 'NanumSquare', sans-serif;
+        font-family: 'Koddi';
         background: ${({ theme }) => theme.body};
         color: ${({ theme }) => theme.text};
         transition: all 0.5s ease-in-out;
