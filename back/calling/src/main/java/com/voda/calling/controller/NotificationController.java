@@ -1,7 +1,12 @@
 package com.voda.calling.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.voda.calling.model.service.NotificationService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -11,10 +16,13 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 @Slf4j
 public class NotificationController {
 
-    @GetMapping(value = "/subscribe/{userEmail}", produces = "text/event-stream")
+    @Autowired
+    NotificationService notificationService;
+
+    @GetMapping(value = "/subscribe/{userEmail}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter makeSseConnection(
             @PathVariable String userEmail,
             @RequestHeader(value = "Last-Event-Id", required = false, defaultValue = "") String lastEventId){
-        return null;
+        return notificationService.subscribe(userEmail, lastEventId);
     }
 }
