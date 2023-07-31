@@ -19,9 +19,9 @@ const FaceExpressionsComponent: React.FC = () => {
     }
 
     async function detectFaceExpressions() {
-      await faceapi.nets.tinyFaceDetector.loadFromUri('/models');
-      await faceapi.nets.faceExpressionNet.loadFromUri('/models');
-      await faceapi.nets.faceLandmark68Net.loadFromUri('/models');
+      await faceapi.nets.tinyFaceDetector.loadFromUri('/public/models');
+      await faceapi.nets.faceExpressionNet.loadFromUri('/public/models');
+      await faceapi.nets.faceLandmark68Net.loadFromUri('/public/models');
       
       if (videoRef.current && videoRef.current.srcObject) {
         videoRef.current.play();
