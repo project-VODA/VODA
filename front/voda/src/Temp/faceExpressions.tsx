@@ -1,66 +1,90 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import * as faceapi from 'face-api.js';
 
-const FaceExpressionsComponent: React.FC = () => {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
+function FaceExpressionsComponent() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    async function startCamera() {
-      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        try {
-          const stream = await navigator.mediaDevices.getUserMedia({ video: {} });
-          if (videoRef.current) {
-            videoRef.current.srcObject = stream;
-          }
-        } catch (err) {
-          console.error('Error accessing the camera:', err);
-        }
-      }
-    }
-
-    async function detectFaceExpressions() {
-      await faceapi.nets.tinyFaceDetector.loadFromUri('/public/models');
-      await faceapi.nets.faceExpressionNet.loadFromUri('/public/models');
-      await faceapi.nets.faceLandmark68Net.loadFromUri('/public/models');
-      
-      if (videoRef.current && videoRef.current.srcObject) {
-        videoRef.current.play();
-        
-        const canvas = faceapi.createCanvasFromMedia(videoRef.current);
-        document.body.append(canvas);
-        const displaySize = { width: videoRef.current.width, height: videoRef.current.height };
-        faceapi.matchDimensions(canvas, displaySize);
-
-        setInterval(async () => {
-          const detectionsWithExpressions = await faceapi.detectSingleFace(videoRef.current, 
-            new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions();
-          if (detectionsWithExpressions) {
-            const expressions = detectionsWithExpressions.expressions;
-            const landmarks = detectionsWithExpressions.landmarks;
-            console.log(expressions); // face expressions 값
-            console.log(landmarks); // face landmarks 값
-          }
-        }, 100); // 100ms 간격으로 얼굴 표정과 랜드마크를 감지합니다.
-      }
-    }
-
-    startCamera();
-    detectFaceExpressions();
-
-    return () => {
-      if (videoRef.current && videoRef.current.srcObject) {
-        const stream = videoRef.current.srcObject as MediaStream;
-        const tracks = stream.getTracks();
-        tracks.forEach((track) => track.stop());
-      }
-    };
+    startVideo();
+    videoRef.current && loadModels();
   }, []);
 
+  const startVideo = () => {
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then((currentStream) => {
+        if (videoRef.current) {
+          videoRef.current.srcObject = currentStream;
+          console.log('video on');
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const loadModels = () => {
+    Promise.all([
+      faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
+      faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
+      faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
+      faceapi.nets.faceExpressionNet.loadFromUri('/models')
+    ]).then(() => {
+      faceMyDetect();
+      console.log('video detect');
+    });
+  };
+
+  const faceMyDetect = () => {
+    setInterval(async () => {
+      if (videoRef.current) {
+        const detections = await faceapi.detectSingleFace(videoRef.current,
+          new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions();
+
+        if (canvasRef.current) {
+          // Clear the canvas before drawing new detections
+          const context = canvasRef.current.getContext('2d');
+          if (context) {
+            context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+          }
+
+          if (detections) {
+            faceapi.matchDimensions(canvasRef.current, {
+              width: 940,
+              height: 650
+            });
+
+            const resized = faceapi.resizeResults(detections, {
+              width: 940,
+              height: 650
+            });
+
+            faceapi.draw.drawDetections(canvasRef.current, resized);
+            faceapi.draw.drawFaceLandmarks(canvasRef.current, resized);
+            faceapi.draw.drawFaceExpressions(canvasRef.current, resized);
+            
+            const expressions = detections.expressions;
+            const landmarks = detections.landmarks;
+            console.log(expressions); // face expressions 값
+            console.log(landmarks); // face landmarks 값
+          } else{
+            console.log("감지된 얼굴이 없습니다.");
+          }
+        }
+
+      }
+    }, 1000);
+  };
+
   return (
-    <div>
-      <video ref={videoRef} width="720" height="560" muted autoPlay />
+    <div className="myapp">
+      <h1>Face Detection</h1>
+      <div className="appvide">
+        <video crossOrigin="anonymous" ref={videoRef} autoPlay></video>
+      </div>
+      <canvas ref={canvasRef} width={940} height={650} className="appcanvas" />
     </div>
   );
-};
+}
 
 export default FaceExpressionsComponent;
