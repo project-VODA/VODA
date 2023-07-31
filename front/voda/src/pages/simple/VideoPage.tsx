@@ -20,7 +20,7 @@ const SimpleVideo = () => {
   return (
     <>
       <Title title="Video" />
-      <VideoRoomComponent />, document.getElementById('root')
+      <VideoRoomComponent />
       {/* <OpenVidu/> */}
 
       {/* <button onClick={startVideo}>start</button> */}
