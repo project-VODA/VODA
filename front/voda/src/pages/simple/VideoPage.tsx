@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 
 import Title from '../../components/Title';
 
-import OpenVidu from "../../components/OpenVidu";
+// import OpenVidu from "../../components/OpenVidu";
+import VideoRoomComponent from '../../components/VideoRoomComponent';
 import '../../styles/simple/video.css'
 
 
@@ -19,7 +20,8 @@ const SimpleVideo = () => {
   return (
     <>
       <Title title="Video" />
-      <OpenVidu/>
+      <VideoRoomComponent />, document.getElementById('root')
+      {/* <OpenVidu/> */}
 
       {/* <button onClick={startVideo}>start</button> */}
     </>
