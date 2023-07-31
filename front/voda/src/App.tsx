@@ -35,7 +35,7 @@ import DetailLogin from './pages/detail/LoginPage';
 import DetailPass from './pages/detail/TemporaryPassPage';
 import DetailSignup from './pages/detail/SignupPage';
 import DetailMyPage from './pages/detail/MyPage';
-// import DetailVideo from './pages/detail/faceExpressions';
+import DetailVideo from './pages/detail/faceExpressions';
 import DetailFeedBack from './pages/detail/FeedBack';
 
 
@@ -121,7 +121,7 @@ const App: React.FC = () => {
     { path: '/login/oauth2/kakao/*', element: <SocialLogin /> },
     { path: '/signup', element: theme === SimpleTheme ? <SimpleSignup /> : <DetailSignup /> },
     { path: '/mypage', element: theme === SimpleTheme ? <SimpleMyPage /> : <DetailMyPage /> },
-    { path: '/video', element: theme === SimpleTheme ? <SimpleVideo /> : <SimpleVideo /> },
+    { path: '/video', element: theme === SimpleTheme ? <SimpleVideo /> : <DetailVideo /> },
     { path: '/feedback', element: theme === SimpleTheme ? <SimpleFeedBack/> : <DetailFeedBack/> },
     { path: '/write', element: theme === SimpleTheme ? <SimpleWriteArticle/> : <DetailWriteArticle/> },
     { path: '*', element: <Navigate replace to="/" /> },
