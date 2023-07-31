@@ -27,7 +27,7 @@ public class NotificationService {
      * @param lastEventId
      * @return SseEmitter 객체
      */
-    public SseEmitter subscribe(String userEmail, String lastEventId){
+    public SseEmitter subscribe(String userEmail, String lastEventId) throws AlarmFailedException{
         // id 생성
         String id = getIdWithTime(userEmail);
 
@@ -64,7 +64,7 @@ public class NotificationService {
      * @param receiverEmail
      * @param content
      */
-    public void send(String senderEmail, String receiverEmail, String content){
+    public void send(String senderEmail, String receiverEmail, String content) throws AlarmFailedException {
         // 전달할 내용 생성
         CallNotification callNotification = makeNotification(senderEmail, receiverEmail, content);
         // receiver에게 해당되어 있는 sseEmitter 가져오기
