@@ -4,6 +4,8 @@ import authReducer from './authReducer';
 // import myDanceRuducer from "./myDanceReducer";
 import persistReducer from 'redux-persist/es/persistReducer';
 import persistStore from 'redux-persist/es/persistStore';
+import thunk from "redux-thunk";
+
 
 const rootReducer = combineReducers({
   auth: authReducer.reducer,
@@ -19,6 +21,7 @@ const persistdReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
   reducer: persistdReducer,
+  middleware: [thunk],
 })
 
 export const persistor = persistStore(store);
