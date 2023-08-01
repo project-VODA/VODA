@@ -34,14 +34,15 @@ export interface ButtonProps {
   text: string;
   onClick: (event: any) => void;
   'aria-label'?: string
+  id? : string;
 }
 
-export default function Setting({ text, onClick, "aria-label":ariaLabel }: ButtonProps ) {
+export default function Setting({ text, onClick, "aria-label":ariaLabel, id }: ButtonProps ) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <>
-      <SettingButton theme={theme} onClick={onClick} aria-label={ariaLabel}>{text}</SettingButton>
+      <SettingButton theme={theme} onClick={onClick} aria-label={ariaLabel} id={id}>{text}</SettingButton>
     </>
   );
 }

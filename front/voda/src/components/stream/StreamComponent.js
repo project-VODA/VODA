@@ -13,6 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 import HighlightOff from '@material-ui/icons/HighlightOff';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
+
 export default class StreamComponent extends Component {
 	constructor(props) {
 		super(props);
@@ -51,40 +52,40 @@ export default class StreamComponent extends Component {
 		}
 	}
 
-	render() {
-		return (
-			<div className="OT_widget-container">
-				<div className="pointer nickname">
-					{this.state.showForm ? (
-						<FormControl id="nicknameForm">
-							<IconButton color="inherit" id="closeButton" onClick={this.toggleNicknameForm}>
-								<HighlightOff />
-							</IconButton>
-							<InputLabel htmlFor="name-simple" id="label">
-								Nickname
-							</InputLabel>
-							<Input
-								color="inherit"
-								id="input"
-								value={this.state.nickname}
-								onChange={this.handleChange}
-								onKeyPress={this.handlePressKey}
-								required
-							/>
-							{!this.state.isFormValid && this.state.nickname.length <= 3 && (
-								<FormHelperText id="name-error-text">Nickname is too short!</FormHelperText>
-							)}
-							{!this.state.isFormValid && this.state.nickname.length >= 20 && (
-								<FormHelperText id="name-error-text">Nickname is too long!</FormHelperText>
-							)}
-						</FormControl>
-					) : (
-						<div onClick={this.toggleNicknameForm}>
-							<span id="nickname">{this.props.user.getNickname()}</span>
-							{this.props.user.isLocal() && <span id=""> (edit)</span>}
-						</div>
-					)}
-				</div>
+    render() {
+      return (
+        <div className="OT_widget-container">
+          <div className="pointer nickname" id='nicknameContainer'>
+            {this.state.showForm ? (
+              <FormControl id="nicknameForm">
+                <IconButton color="inherit" id="closeButton" onClick={this.toggleNicknameForm}>
+                  <HighlightOff />
+                </IconButton>
+                <InputLabel htmlFor="name-simple" id="label">
+                  Nickname
+                </InputLabel>
+                <Input
+                  color="inherit"
+                  id="input"
+                  value={this.state.nickname}
+                  onChange={this.handleChange}
+                  onKeyPress={this.handlePressKey}
+                  required
+                />
+                {!this.state.isFormValid && this.state.nickname.length <= 3 && (
+                  <FormHelperText id="name-error-text">Nickname is too short!</FormHelperText>
+                )}
+                {!this.state.isFormValid && this.state.nickname.length >= 20 && (
+                  <FormHelperText id="name-error-text">Nickname is too long!</FormHelperText>
+                )}
+              </FormControl>
+            ) : (
+              <div onClick={this.toggleNicknameForm}>
+                <span id="nickname">{this.props.user.getNickname()}</span>
+                {this.props.user.isLocal() && <span id="">(사용자)</span>}
+              </div>
+            )}
+          </div>
 
 				{this.props.user !== undefined && this.props.user.getStreamManager() !== undefined ? (
 					<div className="streamComponent">
@@ -96,22 +97,22 @@ export default class StreamComponent extends Component {
 								</div>
 							) : null}
 
-							{!this.props.user.isAudioActive() ? (
-								<div id="micIcon">
-									<MicOff id="statusMic" />
-								</div>
-							) : null}
-						</div>
-						<div>
-							{!this.props.user.isLocal() && (
-								<IconButton id="volumeButton" onClick={this.toggleSound}>
-									{this.state.mutedSound ? <VolumeOff color="secondary" /> : <VolumeUp />}
-								</IconButton>
-							)}
-						</div>
-					</div>
-				) : null}
-			</div>
-		);
-	}
+              {!this.props.user.isAudioActive() ? (
+                <div id="micIcon">
+                  <MicOff id="statusMic" />
+                </div>
+              ) : null}
+            </div>
+            <div>
+              {!this.props.user.isLocal() && (
+                <IconButton id="volumeButton" onClick={this.toggleSound} aria-label='상대방 소리 음소거 버튼'>
+                  {this.state.mutedSound ? <VolumeOff color="secondary" /> : <VolumeUp />}
+                </IconButton>
+              )}
+            </div>
+          </div>
+        ) : null}
+      </div>
+    );
+  }
 }
