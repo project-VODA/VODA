@@ -6,6 +6,7 @@ import com.voda.calling.repository.SseRepository;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -45,7 +46,7 @@ public class NotificationService {
         sseEmitter.onError((e) -> sseRepository.deleteById(id));
 
         // 에러 방지 위해 더미 데이터 보내기
-        sendToClient(sseEmitter, id, "SSE Connection Success");
+        sendToClient(sseEmitter, id, CallNotification.builder().senderEmail("me").content("call to you").build());
 
         // 본인에게 미수신된 이벤트 수신
         if(!lastEventId.isEmpty()){
@@ -55,7 +56,7 @@ public class NotificationService {
                     .forEach(entry -> sendToClient(sseEmitter, entry.getKey(), entry.getValue()));
         }
 
-        return null;
+        return sseEmitter;
     }
 
     /**
@@ -87,7 +88,7 @@ public class NotificationService {
      */
     private void sendToClient(SseEmitter emitter, String id, Object data){
         try{
-            emitter.send(SseEmitter.event().id(id).name("sse").data(data));
+            emitter.send(SseEmitter.event().id(id).name("sse").data(data, MediaType.APPLICATION_JSON));
         }catch (IOException e){
             sseRepository.deleteById(id);
             throw new AlarmFailedException();
