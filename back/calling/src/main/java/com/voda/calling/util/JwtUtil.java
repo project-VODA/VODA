@@ -1,5 +1,6 @@
 package com.voda.calling.util;
 
+import com.voda.calling.model.dto.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
@@ -20,15 +21,18 @@ public class JwtUtil {
     private Long expiredMs = 1000 * 60 * 60L;// 토큰 유효기간: 1시간
 
     /**
-     * userEmail을 담고있는 accessToken 발행하기
+     * user정보를 담고있는 accessToken 발행하기
      *
-     * @param userEmail
+     * @param user
      * @return accessToken
      */
-    public String createAccessToken(String userEmail){
+    public String createAccessToken(User user){
         // payload 내용
         Claims claims = Jwts.claims();
-        claims.put("userEmail", userEmail);
+        claims.put("userEmail", user.getUserEmail());
+        claims.put("userName", user.getUserName());
+        claims.put("userHandicap", user.getUserHandicap());
+        claims.put("role", user.getRole());
 
         return Jwts.builder()
                 .setHeaderParam("typ", "JWT") // 헤더에 타입 명시

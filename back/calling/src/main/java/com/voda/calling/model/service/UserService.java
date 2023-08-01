@@ -80,7 +80,7 @@ public class UserService {
 
         Map<String, Object> loginInfo = new HashMap<>();
         // accessToken
-        loginInfo.put("accessToken", jwtUtil.createAccessToken(userEmail));
+        loginInfo.put("accessToken", jwtUtil.createAccessToken(user));
         // refreshToken
         String refreshToken = jwtUtil.createRefreshToken();
         loginInfo.put("refreshToken", refreshToken);
@@ -150,7 +150,7 @@ public class UserService {
     public String getNewAccessToken(String refreshToken){
         User user = userRepository.findUserByUserTokenAndUserCancel(refreshToken, IS_NOT_CANCELED);
         if(user !=  null){
-            return jwtUtil.createAccessToken(user.getUserEmail());
+            return jwtUtil.createAccessToken(user);
         }
 
         return null;
