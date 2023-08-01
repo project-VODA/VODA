@@ -45,7 +45,7 @@
 
 
 .bounds {
-  background-color: #494949;
+  background-color: #001d3d;
   overflow: hidden;
   position: absolute;
   left: 0;
@@ -54,8 +54,8 @@
   bottom: 0;
   height: 65%;
   min-width: 400px !important;
-  width: 65%;
-  margin-top: 120px;
+  width: 100%;
+  margin-top: 80px;
 }
 
 
@@ -258,7 +258,14 @@
 
 /* Publisher and Subscriber styles */
 
-.OT_publisher,
+.OT_publisher {
+  position: relative;
+  min-width: 48px;
+	min-height: 48px;
+	width: 50%;
+	height: 50%;
+}
+
 .OT_subscriber {
   position: relative;
   min-width: 48px;
@@ -889,3 +896,32 @@
   margin-top: 40px;
 }
   
+
+
+/* custom localuser */
+#localUser {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+#localUser video{
+  position: absolute;
+  bottom: 20%;
+  right: 2%;
+  height: 50%;
+  width: 50%;
+  /* position: fixed; */
+  
+}
+
+#hearExpression {
+  width: 200% !important;
+  padding: 100px 200px !important;
+}
+
+#sendExpression {
+  width: 90% !important;
+  height: 20%;
+  /* padding: 100px 200px !important; */
+}
