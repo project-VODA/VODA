@@ -5,6 +5,7 @@ import { SimpleTheme, Theme } from '../styles/theme';
 
 interface ToggleProps {
   theme: Theme;
+  'aria-label'?: string
 }
 
 const ToggleButton = styled('button')<ToggleProps>`
@@ -56,7 +57,7 @@ export default function ModeToggle(): ReactElement {
       {theme !== SimpleTheme ? (
         <>
           <Emoji>
-            <span role="img" aria-label="darkMoon">
+            <span role="img" aria-label="현재 일반 모드입니다. 심플 모드로의 전환을 원한다면 버튼을 눌러주세요   ">
               👨‍🦯
             </span>
           </Emoji>
@@ -65,7 +66,7 @@ export default function ModeToggle(): ReactElement {
       ) : (
         <>
           <Emoji>
-            <span role="img" aria-label="lightSun">
+            <span role="img" aria-label="현재 심플 모드입니다. 일반 모드로의 전환을 원한다면 버튼을 눌러주세요   ">
               🚶‍♂
             </span>
           </Emoji>

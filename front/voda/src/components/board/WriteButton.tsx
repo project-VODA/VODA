@@ -35,14 +35,15 @@ const WriteButton = styled.button<ThemeProps>`
 export interface ButtonProps {
   onClick?: () => void;
   text: string;
+  'aria-label'?: string;
 }
 
-export default function Button({ onClick, text }: ButtonProps ) {
+export default function Button({ onClick, text, "aria-label":ariaLabel }: ButtonProps ) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <>
-      <WriteButton onClick={onClick} theme={theme}>
+      <WriteButton onClick={onClick} theme={theme} aria-label={ariaLabel}>
         {text}
       </WriteButton>
     </>

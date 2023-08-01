@@ -117,15 +117,16 @@ const SimpleSignup = () => {
 
   return (
     <>
-      <Title title='회원가입'/>
+      <Title title='회원가입' aria-label='회원가입 페이지입니다.'/>
       
       <Input 
         type="email"
         placeholder="이메일" 
         value={email} 
         onChange={(e) => setEmail(e.target.value)}
+        aria-label='이메일 입력 칸입니다. 회원가입을 위한 이메일을 입력해주세요.'
       />
-      {!emailSend && !emailAuthentication && <RegisterButton text='이메일 인증 코드 발송' onClick={handleEmailSender}/>}
+      {!emailSend && !emailAuthentication && <RegisterButton text='이메일 인증 코드 발송' onClick={handleEmailSender} aria-label='회원가입을 위한 이메일 인증 코드 발송 버튼입니다.'/>}
       {emailSend && !emailAuthentication && 
         <>
           <Input 
@@ -133,6 +134,7 @@ const SimpleSignup = () => {
             placeholder="인증코드 입력"
             value={userCode}
             onChange={(e) => setUserCode(e.target.value)}
+            aria-label='발송된 인증 코드를 입력해주세요.'
           />
           <RegisterButton text='이메일 인증' onClick={handleEmailAuthentication}/>
         </>
@@ -142,27 +144,31 @@ const SimpleSignup = () => {
         placeholder="이름" 
         value={name}
         onChange={(e) => setName(e.target.value)}
+        aria-label='이름 입력 칸입니다. 회원가입을 위해 이름을 입력해주세요.'
       />
       <Input 
         type="password"
         placeholder="비밀번호" 
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        aria-label='비밀번호 입력 칸입니다. 회원가입을 위해 8자 이상, 15자 이하, 그리고 영문, 특수문자, 숫자 조합의 비밀번호를 입력해주세요.'
       />
       <Input 
         type="password"
         placeholder="비밀번호 확인" 
         value={passwordCheck}
         onChange={handlePasswordCheckChange}
+        aria-label='비밀번호 확인 칸입니다. 작성하신 비밀번호를 한번 더 입력해주세요.'
       />
       {pwFlag === false && passwordCheck.length !== 0 && <Info text='비밀번호가 일치하지 않습니다.'/>}
       <CheckBox
         label="시각 장애 여부" // 체크박스 옆에 표시될 텍스트
         checked={handicap} // 체크 여부를 state로 전달
         onChange={(e) => setHandicap(e.target.checked)} // 체크 상태가 변경될 때 state 업데이트
+        aria-label='사이트 이용의 편의성을 위해 시각 장애 여부를 체크합니다. 기본 상태는 체크가 안된 상태이며 해당되신다면 체크해주세요.'
       />
       
-      <RegisterButton text='회원가입' onClick={handleSignup}/>
+      <RegisterButton text='회원가입' onClick={handleSignup} aria-label='회원가입 버튼입니다.'/>
     </>
   );
 };
