@@ -33,14 +33,15 @@ const SettingButton = styled('button')<ThemeProps>`
 export interface ButtonProps {
   text: string;
   onClick: (event: any) => void;
+  'aria-label'?: string
 }
 
-export default function Setting({ text, onClick }: ButtonProps ) {
+export default function Setting({ text, onClick, "aria-label":ariaLabel }: ButtonProps ) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <>
-      <SettingButton theme={theme} onClick={onClick}>{text}</SettingButton>
+      <SettingButton theme={theme} onClick={onClick} aria-label={ariaLabel}>{text}</SettingButton>
     </>
   );
 }
