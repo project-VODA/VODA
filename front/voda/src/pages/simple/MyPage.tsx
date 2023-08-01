@@ -197,29 +197,32 @@ const SimpleMyPage = () => {
 
   return (
     <>
-      <Title title='마이페이지' />
+      <Title title='마이페이지' aria-label='마이 페이지 입니다.'/>
 
       <Input 
         type="password"
         placeholder="기존 비밀번호"
         value={originPassword}
         onChange={(e) => setOriginPassword(e.target.value)}
+        aria-label='비밀번호 변경을 위해 기존의 비밀번호를 입력해주세요.'
       />
       <Input 
         type="password"
         placeholder="새 비밀번호" 
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        aria-label=' 8자 이상, 15자 이하, 그리고 영문, 특수문자, 숫자 조합의 새로운 비밀번호를 입력해주세요.'
       />
       <Input 
         type="password"
         placeholder="새 비밀번호 확인" 
         value={passwordCheck}
         onChange={handlePasswordCheckChange}
+        aria-label='비밀번호 확인 칸입니다. 작성하신 비밀번호를 한번 더 입력해주세요.'
       />
       {pwFlag === false && passwordCheck.length !== 0 && <Info text='비밀번호가 일치하지 않습니다.'/>}
       <ButtonContainer>
-        <SettingButton text='비밀번호 변경' onClick={handleChangePassword}/>
+        <SettingButton text='비밀번호 변경' onClick={handleChangePassword} aria-label='비밀번호 변경 버튼입니다.'/>
       </ButtonContainer>
       
       <br/>
@@ -241,6 +244,7 @@ const SimpleMyPage = () => {
         label="시각 장애 여부" // 체크박스 옆에 표시될 텍스트
         checked={handicap} // 체크 여부를 state로 전달
         onChange={(e) => setHandicap(e.target.checked)} // 체크 상태가 변경될 때 state 업데이트
+        aria-label='시각장애 여부를 변경하시려면 체크해주세요'
       />
 
       <ButtonContainer>

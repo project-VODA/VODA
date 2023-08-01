@@ -72,23 +72,27 @@ const SimpleLogin = () => {
 
       <Input
         type="email"
+        alt="Input Email"
         placeholder="이메일을 입력하세요"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         onKeyPress={handleKeyPress}
+        aria-label="이메일을 입력하세요"
       />
 
       <Input
+      alt="password"
         type="password"
         placeholder="비밀번호"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         onKeyPress={handleKeyPress}
+        aria-label="비밀번호를 입력하세요"
       />
 
-      <Link text='비밀번호를 잊으셨나요?' onClick={RedirectTemporaryPass}/> 
+      <LoginButton text='비밀번호를 잊으셨나요?' onClick={RedirectTemporaryPass} aria-label="비밀번호 찾기 버튼입니다. 비밀번호 찾기 페이지로 이동합니다."/> 
 
-      <LoginButton text='로그인' onClick={handleLogin} />
+      <LoginButton text='로그인' onClick={handleLogin} aria-label="로그인 버튼입니다."/>
     </>
   );
 };

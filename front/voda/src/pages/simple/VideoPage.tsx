@@ -21,9 +21,6 @@ const SimpleVideo = () => {
     <>
       <Title title="Video" />
       <VideoRoomComponent />
-      {/* <OpenVidu/> */}
-
-      {/* <button onClick={startVideo}>start</button> */}
     </>
   );
 };
