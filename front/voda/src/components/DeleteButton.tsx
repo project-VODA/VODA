@@ -9,6 +9,7 @@ import { SimpleTheme, Theme } from '../styles/theme';
 
 interface ThemeProps {
   theme: Theme;
+  'aria-label'?: string;
 }
 
 const DeleteButton = styled('button')<ThemeProps>`
@@ -34,14 +35,15 @@ const DeleteButton = styled('button')<ThemeProps>`
 export interface ButtonProps {
   text: string;
   onClick: (event: any) => void;
+  'aria-label'?: string
 }
 
-export default function Register({ text, onClick }: ButtonProps ) {
+export default function Register({ text, onClick, "aria-label":ariaLabel }: ButtonProps ) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <>
-      <DeleteButton theme={theme} onClick={onClick}>{text}</DeleteButton>
+      <DeleteButton theme={theme} onClick={onClick} aria-label={ariaLabel}>{text}</DeleteButton>
     </>
   );
 }

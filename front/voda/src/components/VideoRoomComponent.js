@@ -6,6 +6,7 @@ import DialogExtensionComponent from './dialog-extension/DialogExtension';
 import StreamComponent from './stream/StreamComponent';
 import './VideoRoomComponent.css';
 
+import SettingButton from '../components/SettingButton';
 import OpenViduLayout from '../layout/openvidu-layout';
 import UserModel from '../models/user-model';
 import ToolbarComponent from './toolbar/ToolbarComponent';
@@ -14,6 +15,8 @@ import '../styles/simple/video.css'
 
 var localUser = new UserModel();
 const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8080/voda/';
+
+const userHandicap = sessionStorage.getItem("userHandicap")
 
 
 class VideoRoomComponent extends Component {
@@ -517,13 +520,8 @@ class VideoRoomComponent extends Component {
                 <DialogExtensionComponent showDialog={this.state.showExtensionDialog} cancelClicked={this.closeDialogExtension} />
 
                 <div id="layout" className="bounds">
-                    {localUser !== undefined && localUser.getStreamManager() !== undefined && (
-                        <div className="OT_root OT_publisher custom-class" id="localUser">
-                            <StreamComponent user={localUser} handleNickname={this.nicknameChanged} />
-                        </div>
-                    )}
                     {this.state.subscribers.map((sub, i) => (
-                        <div key={i} className="OT_root OT_publisher custom-class" id="remoteUsers">
+                      <div key={i} className="OT_root OT_subscriber custom-class" id="remoteUsers">
                             <StreamComponent user={sub} streamId={sub.streamManager.stream.streamId} />
                         </div>
                     ))}
@@ -534,7 +532,17 @@ class VideoRoomComponent extends Component {
                                 chatDisplay={this.state.chatDisplay}
                                 close={this.toggleChat}
                                 messageReceived={this.checkNotification}
-                            />
+                                />
+                        </div>
+                    )}
+                    {localUser !== undefined && localUser.getStreamManager() !== undefined && (
+                        <div className="OT_root OT_publisher custom-class" id="localUser">
+                          <span>
+                            {userHandicap ? (<SettingButton id='hearExpression' text='표정 듣기' onClick={this.switchCamera} aria-label='표정 듣기 버튼입니다.' />
+                              ) : ( <SettingButton id='sendExpression' text='표정 보내기' onClick={this.switchCamera} aria-label='표정 보내기 버튼입니다.' />
+                              )}
+                        </span>
+                            <StreamComponent user={localUser} handleNickname={this.nicknameChanged} />
                         </div>
                     )}
                 </div>
