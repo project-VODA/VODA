@@ -7,6 +7,7 @@ import { ThemeContext } from '../App';
 
 interface ColorProps {
   color: string;
+  'aria-label'?: string;
 }
 
 const TitleContainer = styled('header')<ColorProps>`
@@ -23,10 +24,11 @@ const TitleContainer = styled('header')<ColorProps>`
 
 interface TitleProps {
   title: string;
+  'aria-label'?: string;
 }
 
-export default function Title({ title }: TitleProps) {
+export default function Title({ title, 'aria-label':ariaLabel }: TitleProps) {
   const { theme } = useContext(ThemeContext);
 
-  return <TitleContainer color={theme.text}>{title}</TitleContainer>;
+  return <TitleContainer aria-label={ariaLabel} color={theme.text}>{title}</TitleContainer>;
 }
