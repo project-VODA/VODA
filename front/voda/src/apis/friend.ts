@@ -8,7 +8,7 @@ export const registFriend = async (friend: object) => {
 
 // 유저 검색
 export const searchUser = async (userSearchRequest: object) => {
-    const res = await axiosServer.get<any>(`/friends/search`, userSearchRequest);
+    const res = await axiosServer.post<any>(`/friends/search`, userSearchRequest);
     return res.data;
 }
 
