@@ -31,8 +31,11 @@ public class UserCallHistory {
     private int callNo;
 
     @Column(name = "user_email")
-    @ApiModelProperty(value="송신자 이메일")
+    @ApiModelProperty(value="회원 이메일")
     private String userEmail;
 
-
+    public UserCallHistory(int callNo, String userEmail) {
+        this.callNo = callNo;
+        this.userEmail = userEmail;
+    }
 }

@@ -8,6 +8,7 @@ public interface CallingHistoryRepositoryCustom {
 
     CallHistory findCallHistoryByReceiverEmail(String email); //수신자의 통화상태가 0(대기중), 1(통화중)인 데이터 조회
 
-    CallHistory findCurrentCallHistoryByReceiverEmail(String email); //전화 받을때 찾아오는 callhistorynum;
+    CallHistory findCallHistoryByCallNo(int callNo); //callNo으로 특정 callhostory 찾기
+
 
 }

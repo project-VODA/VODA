@@ -43,5 +43,8 @@ public class User {
     @Column(name = "user_regtime")
     @ApiModelProperty(value="회원가입일", example = "2023-07-09", required = true)
     private String userRegTime;
+    @Column(name = "role")
+    @ApiModelProperty(value="관리자 여부 (0: 일반 회원, 1: 관리자)", example = "0", required = true)
+    private int role;
 
 }
