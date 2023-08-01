@@ -126,7 +126,7 @@ export default function Navigation() {
     <NavContainer navbar={theme.navbar}>
       <NavContentContainer>
         <Link to="/">
-          <LogoImage src={logoSrc} alt='voda_logo'/>
+          <LogoImage src={logoSrc} alt='voda_logo'aria-label='홈으로 이동, VODA 로고'/>
         </Link>
         {/* <TitleContainer color={theme.mainColor}>제목</TitleContainer> */}
         <InfoContainer>

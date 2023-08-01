@@ -92,3 +92,10 @@ video {
 #label {
     color: white;
 }
+
+
+#nicknameContainer {
+  position: absolute;
+  right: 0;
+  bottom: 50px;
+}

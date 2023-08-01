@@ -13,6 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 import HighlightOff from '@material-ui/icons/HighlightOff';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
+
 export default class StreamComponent extends Component {
     constructor(props) {
         super(props);
@@ -51,10 +52,11 @@ export default class StreamComponent extends Component {
         }
     }
 
+
     render() {
         return (
             <div className="OT_widget-container">
-                <div className="pointer nickname">
+                <div className="pointer nickname" id='nicknameContainer'>
                     {this.state.showForm ? (
                         <FormControl id="nicknameForm">
                             <IconButton color="inherit" id="closeButton" onClick={this.toggleNicknameForm}>
@@ -81,7 +83,7 @@ export default class StreamComponent extends Component {
                     ) : (
                         <div onClick={this.toggleNicknameForm}>
                             <span id="nickname">{this.props.user.getNickname()}</span>
-                            {this.props.user.isLocal() && <span id=""> (edit)</span>}
+                            {this.props.user.isLocal() && <span id="">(사용자)</span>}
                         </div>
                     )}
                 </div>
@@ -104,7 +106,7 @@ export default class StreamComponent extends Component {
                         </div>
                         <div>
                             {!this.props.user.isLocal() && (
-                                <IconButton id="volumeButton" onClick={this.toggleSound}>
+                                <IconButton id="volumeButton" onClick={this.toggleSound} aria-label='상대방 소리 음소거 버튼'>
                                     {this.state.mutedSound ? <VolumeOff color="secondary" /> : <VolumeUp />}
                                 </IconButton>
                             )}
