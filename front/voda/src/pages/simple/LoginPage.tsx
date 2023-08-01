@@ -1,5 +1,8 @@
 import React, { useState, KeyboardEvent } from "react";
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+
+import { login } from "../../store/authReducer";
 
 import { loginServer } from "../../apis/user";
 
@@ -7,6 +10,7 @@ import Title from '../../components/Title';
 import Input from '../../components/SubmitInputText';
 import LoginButton from '../../components/RegisterButton';
 import Link from "../../components/TextLink";
+import { access } from "fs";
 
 const SimpleLogin = () => {
   const [email, setEmail] = useState('');
@@ -16,8 +20,9 @@ const SimpleLogin = () => {
     userEmail: email,
     userPass: password,
   };
-
-  const handleLogin = () => {
+  const dispatch = useDispatch();
+  const HandleLogin = () => {
+    
     if (email === '') {
       alert("이메일을 입력해주세요");
     } else if (password === '') {
@@ -32,11 +37,12 @@ const SimpleLogin = () => {
           sessionStorage.setItem("userHandicap", res.user.userHandicap);
           sessionStorage.setItem("accessToken", res.accessToken);
           sessionStorage.setItem("refreshToken", res.refreshToken);
-
+          dispatch(login(res.accessToken)); 
           // 메인페이지로 리다이렉트
           RedirectHomePage();
         })
         .catch((err) => {
+          console.log(err);
           console.log(err.response.status);
           if (err.response.status === 401 || err.response.status === 404) {
             alert("가입되지 않은 이메일이거나 비밀번호가 틀렸습니다.");
@@ -62,7 +68,7 @@ const SimpleLogin = () => {
 
   const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      handleLogin();
+      HandleLogin();
     }
   };
 
@@ -92,7 +98,7 @@ const SimpleLogin = () => {
 
       <LoginButton text='비밀번호를 잊으셨나요?' onClick={RedirectTemporaryPass} aria-label="비밀번호 찾기 버튼입니다. 비밀번호 찾기 페이지로 이동합니다."/> 
 
-      <LoginButton text='로그인' onClick={handleLogin} aria-label="로그인 버튼입니다."/>
+      <LoginButton text='로그인' onClick={HandleLogin} aria-label="로그인 버튼입니다."/>
     </>
   );
 };
