@@ -126,8 +126,8 @@ const App: React.FC = () => {
     { path: '/video', element: theme === SimpleTheme ? <SimpleVideo /> : <DetailVideo /> },
     { path: '/feedback', element: theme === SimpleTheme ? <SimpleFeedBack/> : <DetailFeedBack/> },
     { path: '/write', element: theme === SimpleTheme ? <SimpleWriteArticle/> : <DetailWriteArticle/> },
-    { path: '*', element: <Navigate replace to="/" /> },
     { path: '/view/:articleNo', element: theme === SimpleTheme ? <SimpleDetailArticle/> : <SimpleDetailArticle/> },
+    { path: '*', element: <Navigate replace to="/" /> },
     
     // { path: '/', element: screenMode === 'simple' ? <SimpleHomePage /> : <DetailHomePage /> },
     // { path: '/about', element: screenMode === 'simple' ? <SimpleAbout /> : <DetailAbout /> },
