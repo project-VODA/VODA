@@ -5,33 +5,34 @@ import Title from '../../components/Title';
 import DivideContainer from '../../components/DivideHorizontalContainer'
 import FriendList from "../../components/FriendList";
 import RecentCalls from "../../components/RecentCall";
+import Button from "../../components/SettingButton";
+import RedButton from "../../components/DeleteButton";
 import Input from "../../components/InputText";
 import { searchUser } from "../../apis/friend";
 
-type userSearchResponse = {
+type User = {
   userEmail: string;
   userName: string;
-  isFriend: boolean;
+  friend: boolean;
 };
 
-type userList = userSearchResponse[];
+type UserList = User[];
 
 const SimpleRoom = () => {
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [keyword, setKeyword] = useState('');
-  const [userResults, setUserResults] = useState<userList>([]);
+  const [userList, setUserList] = useState<UserList>([]);
+  
+  const userSearchRequest = {
+    keyword: keyword,
+    userEmail: sessionStorage.getItem("userEmail"),
+  };
 
   useEffect(() => {
-    const userSearchRequest = {
-      keyword: keyword,
-      userEmail: sessionStorage.getItem("userEmail"),
-    };
-
     searchUser(userSearchRequest)
       .then((res) => {
-        setUserResults(res);
-        console.log(res);
+        setUserList(res);
       })
       .catch((err) => {
         console.error(err);
@@ -46,7 +47,15 @@ const SimpleRoom = () => {
   const handleCloseModal = () => {
     setModalOpen(false);
     setKeyword('');
-    setUserResults([]);
+    setUserList([]);
+  };
+
+  const handleCalling = () => {
+
+  };
+
+  const handleRegistFriend = () => {
+
   };
 
   return (
@@ -57,36 +66,39 @@ const SimpleRoom = () => {
         leftChild={<FriendList></FriendList>}
         rightChild={<RecentCalls></RecentCalls>}
       />
-      <div>
-        <button onClick={handleOpenModal}>친구 찾기</button>
+      <>
+        <Button onClick={handleOpenModal} text="친구찾기" />
         <Modal 
           isOpen={isModalOpen} 
           onRequestClose={handleCloseModal}
           ariaHideApp={false}
         >
-          <h2>Search Results</h2>
           <Input 
             type="text"
             placeholder="검색어"
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
           />
-          <button onClick={handleCloseModal}>Close</button>
-          
-          <thead>
-            
-          </thead>
-          <tbody>
-            {/* {userResults.map((user : userSearchResponse) => (
-              <tr key={user.isFriend ? 1 : 0}>
-                <td>{user.userName}</td>
-                <td>{user.userEmail}</td>
-                <td>{user.isFriend ? "전화걸기" : "친구추가"}</td>
-              </tr>
-            ))} */}
-          </tbody>
+          <RedButton onClick={handleCloseModal} text="X" />
+          <table>
+            <colgroup>
+              <col width = "40%" />
+              <col width = "40%" />
+              <col width = "20%" />
+            </colgroup>
+            <tbody>
+              {userList.length === 0 ? <tr><td colSpan={3}>검색 결과가 없습니다.</td></tr> : 
+                userList.map((user : User) => (
+                  <tr key={user.userName}>
+                    <td>{user.userName}</td>
+                    <td>{user.userEmail}</td>
+                    <td>{user.friend ? <Button onClick={handleCalling} text="통화 걸기" /> : <Button onClick={handleRegistFriend} text="친구추가" />}</td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
         </Modal>
-      </div>
+      </>
     </>
   );
 };
