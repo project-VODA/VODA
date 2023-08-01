@@ -52,6 +52,11 @@
 - 23.07.27 KSH
   - navigate 버튼으로 통일
   - 저시력자 모드에 맞춰 글자 크기 확대
+  - localUser와 remoteUser 화면 위치 전환
+  - localUser와 remoteUser 화면 크기 비율 변경
+  - src/styles/simple/video.css 추가
+  - header height 감소
+  - 추후 다른 커스텀 방식 연구(2인 초과 시에 어려움)
 
 - 23.07.27 YSH & NG
   - 메인페이지에 고객의 소리함 버튼 추가
@@ -68,6 +73,28 @@
   - 로그인 axios 에러 처리 구현
   - 게시글 목록 컴포넌트 & axios연결
 
+- 23.07.31 KSH
+  - 메인 페이지 접속시 직렬화 오류 해결(middleware 지정),
+  - 미적용된 Font 부분 수정
+
+- 23.08.01 KSH
+  - simpleSignup 페이지 및 하위 컴포넌트 aria-label 작업
+  - slimpeLogin 페이지 및 하위 컴포넌트 aria-label 작업
+  - simpleHompage 페이지 및 하위 컴포넌트 aria-label 작업
+  - simpleMyPage 페이지 및 하위 컴포넌트 aria-label 작업
+  - simpleFeedBackPage 페이지 및 하위 컴포넌트 aria-label 작업
+
 - 23.08.01 Choi
   - 친구 페이지 임시 저장
   - 통화목록 등 추가 api 필요
+
+
+- 23.08.01 KSH
+  - 비디오 페이지 UI 커스텀 초안
+  - Navbar 항목 수정
+  - Navbar UI 수정
+  - 비디오 위치 변경 및 사이즈 조절
+  - 통화 종료시 Hompage로 이동하도록 수정
+  - 표정 보내기 버튼 추가 (함수는 아직 switchCamera로 임시)
+  - openvidu logo image 변경
+  - openvidu background color 변경
