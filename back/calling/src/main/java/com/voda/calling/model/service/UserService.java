@@ -70,7 +70,7 @@ public class UserService {
 
     public Map<String, Object> login(String userEmail, String userPass) {
         User user = userRepository.findUserByUserEmailAndUserCancel(userEmail, IS_NOT_CANCELED);
-        if (user == null || user.getUserCancel() == IS_CANCELED) { // 등록이 안된 유저인 경우
+        if (user == null) { // 등록이 안된 유저인 경우
             log.info("{}에 해당하는 유저 없음", userEmail);
             throw new NotRegisteredException();
         } else if(!passwordEncoder.matches(userPass, user.getUserPass())) {// 비밀번호가 틀린 경우
@@ -78,22 +78,22 @@ public class UserService {
             throw new PasswordWrongException();
         }
 
-        //!!!!!!!!!!!!! repository 수정 필요!!!!!!!!
+        Map<String, Object> loginInfo = new HashMap<>();
+        // accessToken
+        loginInfo.put("accessToken", jwtUtil.createAccessToken(userEmail));
+        // refreshToken
+        String refreshToken = jwtUtil.createRefreshToken();
+        loginInfo.put("refreshToken", refreshToken);
+        user.setUserToken(refreshToken);
+        userRepository.save(user);
+        // user information
         User userInfo = User.builder()
                 .userEmail(user.getUserEmail())
                 .userName(user.getUserName())
                 .userHandicap(user.getUserHandicap())
                 .build();
-        Map<String, Object> loginInfo = new HashMap<>();
-        loginInfo.put("accessToken", jwtUtil.createAccessToken(userEmail));
         loginInfo.put("user", userInfo);
-        // !!!!!!!!!! refresh token 주입 필요 !!!!!!!!!!!!!!
-        String refreshToken = jwtUtil.createRefreshToken();
-        loginInfo.put("refreshToken", refreshToken);
-        user.setUserToken(refreshToken);
-        userRepository.save(user);
 
-        // 정상적 로그인이 이루어진 경우 accessToken, refreshToken, userInfo 반환
         return loginInfo;
     }
 
@@ -145,5 +145,14 @@ public class UserService {
         User user = userRepository.findUserByUserEmailAndUserCancel(userEmail, IS_NOT_CANCELED);
         user.setUserCancel(IS_CANCELED);
         userRepository.save(user);
+    }
+
+    public String getNewAccessToken(String refreshToken){
+        User user = userRepository.findUserByUserTokenAndUserCancel(refreshToken, IS_NOT_CANCELED);
+        if(user !=  null){
+            return jwtUtil.createAccessToken(user.getUserEmail());
+        }
+
+        return null;
     }
 }

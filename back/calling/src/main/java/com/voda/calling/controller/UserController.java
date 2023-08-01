@@ -5,9 +5,11 @@ import com.voda.calling.exception.PasswordWrongException;
 import com.voda.calling.model.dto.User;
 import com.voda.calling.model.dto.UserChangePasswordRequest;
 import com.voda.calling.model.service.UserService;
+import com.voda.calling.util.JwtUtil;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +25,13 @@ public class UserController {
 
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
+    private static final String AUTH = "Authorization";
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    JwtUtil jwtUtil;
 
     @ApiOperation( value = "회원가입", notes = "User 객체를 이용해 회원가입을 하는 API")
     @ApiResponses({
@@ -70,6 +76,7 @@ public class UserController {
     @ApiOperation(value = "마이페이지 개인 회원정보조회", notes = "마이페이지에서 로그인된 회원(User) 1명을 조회하는 API")
     @ApiResponses({
             @ApiResponse(code=200, message="조회 성공"),
+            @ApiResponse(code=401, message="인증 실패"),
             @ApiResponse(code=500, message="조회 실패 - 서버(DB)오류")
     })
     @GetMapping("/mypage/{userEmail}")
@@ -86,14 +93,15 @@ public class UserController {
     @ApiOperation( value = "로그아웃", notes = "userToken을 null로 바꾸고 로그아웃하는 API")
     @ApiResponses({
             @ApiResponse(code=200, message="로그아웃 성공"),
+            @ApiResponse(code=401, message="인증 실패"),
             @ApiResponse(code=500, message="로그아웃 실패 - 서버(DB)오류")
     })
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(@RequestBody String token){
+    public ResponseEntity<String> logout(@ApiParam(hidden = true) @RequestHeader(value = AUTH) String auth){
         log.info("로그아웃 시도");
-        token = token.replace("\"","");
+        String accessToken = jwtUtil.extractTokenFromHeader(auth);
         //1. 토큰으로 유저 정보 가져오기
-        User logoutUser = userService.getUserByToken(token);
+        User logoutUser = userService.getUserByToken(accessToken);
         //2. 해당 유저 로그아웃
         userService.logout(logoutUser);
         if(logoutUser.getUserToken()==null){
@@ -168,6 +176,25 @@ public class UserController {
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         
+    }
+    
+    @ApiOperation(value = "새로운 accessToken 발급", notes = "accessToken이 만료되었을 경우 refreshToken을 통해 재발급 받는 API")
+    @ApiResponses({
+            @ApiResponse(code=200, message = "발급 성공 - 새로운 accessToken 발급 성공"),
+            @ApiResponse(code=401, message = "발급 실패 - 유효하지 않은 refreshToken"),
+            @ApiResponse(code=500, message = "발급 실패 - 서버 오류")
+    })
+    @GetMapping("/token")
+    public ResponseEntity<Map<String, Object>> getNewAccessToken(@ApiParam(hidden = true) @RequestHeader(value = AUTH) String auth){
+        String refreshToken = jwtUtil.extractTokenFromHeader(auth);
+        log.info(refreshToken);
+        String accessToken = userService.getNewAccessToken(refreshToken);
+        if(accessToken != null){
+            return ResponseEntity.ok()
+                    .body(Map.of("accessToken", accessToken));
+        }else{
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 
 }
