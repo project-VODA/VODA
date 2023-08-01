@@ -21,7 +21,7 @@ const FriendList = () => {
       .catch((err) => {
         console.log(err);
       })
-  })
+  }, []);
 
   return (
     <>
@@ -39,12 +39,13 @@ const FriendList = () => {
           </tr>
         </thead>
         <tbody>
-          {friendList.map((friend: Friend) => (
-            <tr>
-              <td text-align='center'>{friend.userName}</td>
-              <td text-align='center'>{friend.userEmail}</td>
-              <td text-align='center'>X</td>
-            </tr>
+          {friendList.length === 0 ? <tr><td colSpan={3}>친구가 존재하지 않습니다.</td></tr> :
+            friendList.map((friend: Friend) => (
+              <tr key={friend.userName}>
+                <td text-align='center'>{friend.userName}</td>
+                <td text-align='center'>{friend.userEmail}</td>
+                <td text-align='center'>X</td>
+              </tr>
           ))}
         </tbody>
       </table>

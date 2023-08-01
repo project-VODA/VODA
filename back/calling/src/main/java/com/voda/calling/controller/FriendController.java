@@ -59,15 +59,12 @@ public class FriendController {
             @ApiResponse(code = 204, message = "유저 검색 실패 - 유저 없음"),
             @ApiResponse(code = 500, message = "유저 검색 실패 - 서버(DB)오류")
     })
-    @GetMapping("/search")
-    public ResponseEntity<?> searchUser(UserSearchRequest userSearchRequest) {
+    @PostMapping("/search")
+    public ResponseEntity<?> searchUser(@RequestBody UserSearchRequest userSearchRequest) {
         log.info("FriendController - searchUser : 유저 검색");
         try {
             List<UserSearchResponse> searchUserlist = friendService.searchUser(userSearchRequest.getKeyword(), userSearchRequest.getUserEmail());
-            if (searchUserlist == null || searchUserlist.size() == 0) {
-                log.info("유저 검색 실패 - {} 해당하는 유저 없음", userSearchRequest.getKeyword());
-                return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
-            }
+
             log.info("유저 검색 성공");
             return new ResponseEntity<List<UserSearchResponse>>(searchUserlist, HttpStatus.OK);
         } catch (Exception e) {
@@ -89,9 +86,6 @@ public class FriendController {
         try{
             List<UserSearchResponse> friendList = friendService.searchAllFriend(userEmail);
 
-            if (friendList == null || friendList.size() == 0) {
-                return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
-            }
             return new ResponseEntity<List<UserSearchResponse>>(friendList, HttpStatus.OK);
         }catch (Exception e) {
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);

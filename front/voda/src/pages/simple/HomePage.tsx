@@ -40,8 +40,8 @@ const SimpleHomePage = () => {
   };
 
   const redirectVideo = () => {
-    // navigate('/waiting')
-    navigate('/video')
+    navigate('/waiting')
+    // navigate('/video')
   };
 
   const redirectMyPage = () => {
@@ -86,18 +86,18 @@ const SimpleHomePage = () => {
     <>
       <Title title='Homepage' />
       <ButtonContainer>
-        <HandleButton text='서비스 소개' onClick={redirectAbout} aria-label='서비스 소개 버튼'/>
-        <HandleButton text='영상통화' onClick={redirectVideo} aria-label='영상 통화 버튼'/>
-        <HandleButton text='마이 페이지' onClick={redirectMyPage} aria-label='마이 페이지 버튼'/>
+        <HandleButton text='서비스 소개' onClick={redirectAbout} />
+        <HandleButton text='영상통화' onClick={redirectVideo} />
+        <HandleButton text='마이 페이지' onClick={redirectMyPage} />
         {/* <HandleButton text='redirect' onClick={RedirectSocialLogin} /> */}
-        <HandleButton text='카카오 로그인' onClick={handleSocialLogin} aria-label='카카오 로그인 버튼'/>
-        <HandleButton text="고객의 소리함" onClick={redirectFeedback} aria-label='고객의 소리함 버튼'/>
+        <HandleButton text='카카오 로그인' onClick={handleSocialLogin} />
+        <HandleButton text="고객의 소리함" onClick={redirectFeedback} />
 
         {/* 로그인 유저 존재 여부에 따라 버튼 렌더링 */}
         {accessToken !== null ? (
-          <HandleButton text="로그아웃" onClick={handleLogout} aria-label='로그아웃 버튼'/>
+          <HandleButton text="로그아웃" onClick={handleLogout} />
           ) : (
-          <HandleButton text="로그인" onClick={redirectLogin} aria-label='로그인 버튼'/>
+          <HandleButton text="로그인" onClick={redirectLogin} />
         )}
       </ButtonContainer>
     </>
