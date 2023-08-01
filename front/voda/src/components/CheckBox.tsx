@@ -9,6 +9,7 @@ interface CheckboxProps {
   label: string;
   checked: boolean;
   onChange: (event: any) => void;
+  'aria-label'?: string;
 }
 
 const CheckboxContainer = styled.label`
@@ -44,7 +45,7 @@ const CheckboxLabel = styled.span`
 `;
 
 
-export default function CheckBox({ label, checked, onChange }: CheckboxProps) {
+export default function CheckBox({ label, checked, onChange, "aria-label":ariaLabel }: CheckboxProps) {
   const { theme } = useContext(ThemeContext);
 
   return (
@@ -54,6 +55,7 @@ export default function CheckBox({ label, checked, onChange }: CheckboxProps) {
         type="checkbox" 
         checked={checked} 
         onChange={onChange} 
+        aria-label={ariaLabel}
       />
       <CheckboxLabel>{label}</CheckboxLabel>
     </CheckboxContainer>
