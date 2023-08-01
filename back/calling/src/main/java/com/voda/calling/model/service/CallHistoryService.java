@@ -1,6 +1,8 @@
 package com.voda.calling.model.service;
 
 import com.voda.calling.model.dto.CallHistory;
+import com.voda.calling.model.dto.CallReceiver;
+import com.voda.calling.model.dto.UserCallHistory;
 import com.voda.calling.repository.CallHistoryRepository;
 import io.openvidu.java.client.*;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,15 +55,24 @@ public class CallHistoryService {
         return callHistoryRepository.save(newCallHistory);
     }
 
-    public void updateCallStatus(int currentStatus){
-
+    public CallHistory getCallHistory (int callNo){
+        return callHistoryRepository.findCallHistoryByCallNo(callNo);
     }
 
-    public void updateCallTime(String msg){
+    public void updateCallStatus(CallHistory currentcallHistory, int currentStatus){
+        currentcallHistory.setCallStatus(currentStatus);
+        callHistoryRepository.save(currentcallHistory);
+    }
+
+    public void updateCallTime(CallHistory currentcallHistory, String msg){
+        Timestamp nowTime = new Timestamp(System.currentTimeMillis());
+        SimpleDateFormat sdf = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
+        nowTime = Timestamp.valueOf(sdf.format(nowTime));
+
         if(msg.equals("start")){
-
+            currentcallHistory.setCallStarttime(nowTime);
         }else if(msg.equals("end")){
-
+            currentcallHistory.setCallEndtime(nowTime);
         }
     }
 

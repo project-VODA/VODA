@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel("전화 요청시 전달할 객체")
-public class CallSender {
+public class CallSendRequest {
 
     @ApiModelProperty(value="송신자(전화를 건 사람)", required = true)
     private String senderEmail;
