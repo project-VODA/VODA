@@ -82,7 +82,7 @@ public class JwtUtil {
     /**
      * request header에서 token을 추출하는 함수
      *
-     * @param request
+     * @param bearer
      * @return token
      */
     public String extractTokenFromHeader(String bearer){
