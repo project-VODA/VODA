@@ -9,14 +9,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel("전화 받을 때 객체")
-public class CallReceiver {
+@ApiModel("전화 종료시 받을 객체")
+public class CallOffRequest {
 
-    @ApiModelProperty(value="수신자(전화를 받는 사람)", required = true)
-    private String receiverEmail;
-    @ApiModelProperty(value="유니크한 세션id", required = true)
+    @ApiModelProperty(value="고유한 세션id", required = true)
     private String sessionId;
-    @ApiModelProperty(value="callNo", required = true)
+    @ApiModelProperty(value="callNo(키값)", required = true)
     private int callNo;
-
 }
