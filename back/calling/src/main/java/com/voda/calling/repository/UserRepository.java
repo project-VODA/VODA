@@ -38,7 +38,9 @@ public interface UserRepository extends JpaRepository<User, String> { //JpaRepos
             "FROM User u " +
             "LEFT JOIN Friend f ON u.userEmail = f.friendEmail AND f.userEmail = :userEmail " +
             "WHERE u.userCancel = 0 " +
-            "AND u.userEmail != :userEmail ")
+            "AND u.userEmail != :userEmail " +
+            "AND f.friendEmail IS NOT NULL"
+            )
     List<UserSearchResponse> searchFriendsByUserEmail(String userEmail);
 
 

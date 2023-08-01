@@ -30,4 +30,9 @@ public class CallingHistoryRepositoryCustomImpl implements CallingHistoryReposit
                         .and((callHistory.callSender.eq(email)).or(callHistory.callReceiver.eq(email))))
                 .fetchOne();
     }
+
+    @Override
+    public CallHistory findCurrentCallHistoryByReceiverEmail(String email) {
+        return null;
+    }
 }
