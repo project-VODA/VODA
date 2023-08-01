@@ -78,23 +78,16 @@ public class UserService {
             throw new PasswordWrongException();
         }
 
-        Map<String, Object> loginInfo = new HashMap<>();
+        Map<String, Object> tokens = new HashMap<>();
         // accessToken
-        loginInfo.put("accessToken", jwtUtil.createAccessToken(user));
+        tokens.put("accessToken", jwtUtil.createAccessToken(user));
         // refreshToken
         String refreshToken = jwtUtil.createRefreshToken();
-        loginInfo.put("refreshToken", refreshToken);
+        tokens.put("refreshToken", refreshToken);
         user.setUserToken(refreshToken);
         userRepository.save(user);
-        // user information
-        User userInfo = User.builder()
-                .userEmail(user.getUserEmail())
-                .userName(user.getUserName())
-                .userHandicap(user.getUserHandicap())
-                .build();
-        loginInfo.put("user", userInfo);
 
-        return loginInfo;
+        return tokens;
     }
 
     public User getUser(String userEmail) {
