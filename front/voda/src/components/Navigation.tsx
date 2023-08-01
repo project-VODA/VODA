@@ -1,19 +1,18 @@
 // Navigation.tsx
 
-import React, { useContext } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../constants/types';
+import React, { useContext } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAppSelector } from "../constants/types";
 
 // 로그인 관련
 // import { useAppSelector } from "../../constants/types";
 
+import styled from "styled-components";
+import { ThemeContext } from "../App";
+import { SimpleTheme, Theme } from "../styles/theme";
 
-import styled from 'styled-components';
-import { ThemeContext } from '../App';
-import { SimpleTheme, Theme } from '../styles/theme';
-
-import simpleLogo from '../assets/image/logo_yellow.png'
-import detailLogo from '../assets/image/logo_black.png'
+import simpleLogo from "../assets/images/logo_yellow.png";
+import detailLogo from "../assets/images/logo_black.png";
 
 // KMJ 스타일 가이드에 대한 설명 - typescript styled-components
 // 1) 단일 props 사용 시, props 명 : 타입 지정
@@ -24,7 +23,7 @@ interface NavProps {
   navbar: string;
 }
 
-const NavContainer = styled('nav')<NavProps>`
+const NavContainer = styled("nav")<NavProps>`
   width: 100%;
   height: 63px;
   display: flex;
@@ -53,7 +52,7 @@ const LogoImage = styled.img`
   height: auto;
 `;
 
-const TitleContainer = styled('header')<ColorProps>`
+const TitleContainer = styled("header")<ColorProps>`
   height: 100%;
   font-size: 2rem;
   font-weight: 900;
@@ -78,7 +77,7 @@ interface ThemeProps {
 }
 
 // 원래는 LoginButton
-const ChannelButton = styled('button')<ThemeProps>`
+const ChannelButton = styled("button")<ThemeProps>`
   width: 90px;
   height: 40px;
   border-radius: 30px;
@@ -126,16 +125,28 @@ export default function Navigation() {
     <NavContainer navbar={theme.navbar}>
       <NavContentContainer>
         <Link to="/">
-          <LogoImage src={logoSrc} alt='voda_logo'aria-label='홈으로 이동, VODA 로고'/>
+          <LogoImage
+            src={logoSrc}
+            alt="voda_logo"
+            aria-label="홈으로 이동, VODA 로고"
+          />
         </Link>
         {/* <TitleContainer color={theme.mainColor}>제목</TitleContainer> */}
         <InfoContainer>
           {/* <ChannelButton theme={theme}>test</ChannelButton> */}
           {/* <ChannelButton theme={theme}><Link to="/about">ABOUT</Link></ChannelButton> */}
-          <ChannelButton theme={theme}><Link to="/login">LOGIN</Link></ChannelButton>
-          <ChannelButton theme={theme}><Link to="/signup">SIGNUP</Link></ChannelButton>
-          <ChannelButton theme={theme}><Link to="/video">VIDEO</Link></ChannelButton>
-          <ChannelButton theme={theme}><Link to="/mypage">MYPAGE</Link></ChannelButton>
+          <ChannelButton theme={theme}>
+            <Link to="/login">LOGIN</Link>
+          </ChannelButton>
+          <ChannelButton theme={theme}>
+            <Link to="/signup">SIGNUP</Link>
+          </ChannelButton>
+          <ChannelButton theme={theme}>
+            <Link to="/video">VIDEO</Link>
+          </ChannelButton>
+          <ChannelButton theme={theme}>
+            <Link to="/mypage">MYPAGE</Link>
+          </ChannelButton>
           {/* {isLogin ? (
             <NavLi>
               <ChannelButton theme={theme} >마이페이지</ChannelButton>
