@@ -74,11 +74,6 @@ public class MeetingController {
                 return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR); //http 500
             }
             // 4. receiver에게 통화 알림 및 token 전달
-            if(){
-
-            }else{
-
-            }
 
             // 5. sender에게 token 전달
             int currentCallNo = callHistory.getCallNo();
