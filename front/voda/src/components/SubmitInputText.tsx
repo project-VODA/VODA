@@ -39,12 +39,14 @@ interface InputProps {
   type: string;
   placeholder: string;
   value: string;
+  alt?: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyPress?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  'aria-label'?: string;
 }
 
 
-export default function Input({ type, placeholder, value, onChange, onKeyPress}: InputProps) {
+export default function Input({ type, placeholder, value, onChange, onKeyPress, 'aria-label':ariaLabel}: InputProps) {
   const { theme } = useContext(ThemeContext);
 
   return (
@@ -56,6 +58,7 @@ export default function Input({ type, placeholder, value, onChange, onKeyPress}:
         value={value}
         onChange={onChange}
         onKeyPress={onKeyPress}
+        aria-label={ariaLabel}
       />
     </TextContainer>
   )

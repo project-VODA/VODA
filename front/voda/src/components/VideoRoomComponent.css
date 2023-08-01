@@ -36,7 +36,7 @@
 }
 
 #navChatButton{
-  position: absolute;
+  align-self: baseline;
   right: 0;
 }
 .stream-container {
@@ -52,9 +52,10 @@
   right: 0;
   top: 40px;
   bottom: 0;
-  height: inherit;
+  height: 65%;
   min-width: 400px !important;
-  width: inherit;
+  width: 65%;
+  margin-top: 120px;
 }
 
 

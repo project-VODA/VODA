@@ -39,16 +39,18 @@ const SimplePass = () => {
 
 	return (
 		<>
-			<Title title='임시 비밀번호 발급'/>
+			{/* <Title title='임시 비밀번호 발급' aria-label='임시 비밀번호 발급 페이지입니다.'/> */}
+      <Title title='임시 비밀번호 발급' aria-label='임시 비밀번호 발급 페이지입니다.'></Title>
 
 			<Input 
 				type="email"
 				placeholder="이메일을 입력하세요" 
 				value={email}
 				onChange={(e) => setEmail(e.target.value)}
+        aria-label='임시 비밀번호 발급을 위한 이메일을 입력해주세요.'
 			/>
 			<ButtonContainer>
-				<SettingButton text="이메일 발송" onClick={handleEmailSender}/>
+				<SettingButton text="이메일 발송" onClick={handleEmailSender} aria-label='이메일 발송 버튼입니다.'/>
 			</ButtonContainer>
 		</>
 );

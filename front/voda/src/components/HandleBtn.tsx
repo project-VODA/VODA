@@ -35,14 +35,16 @@ const HandleButton = styled.button<ThemeProps>`
 export interface ButtonProps {
   onClick?: () => void;
   text: string;
+  alt?: string;
+  'aria-label'?: string;
 }
 
-export default function Button({ onClick, text }: ButtonProps ) {
+export default function Button({ onClick, text, alt, 'aria-label':ariaLabel }: ButtonProps ) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <>
-      <HandleButton onClick={onClick} theme={theme}>
+      <HandleButton onClick={onClick} theme={theme} aria-label={ariaLabel}>
         {text}
       </HandleButton>
     </>

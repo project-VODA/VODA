@@ -25,11 +25,11 @@ const SimpleFeedBack = () => {
     return (
         <>
             <ListContainer>
-                <Title title='고객의 소리함' />
+                <Title title='고객의 소리함' aria-label='고객의 소리함 페이지입니다.'/>
 
                 <BoardList />
 
-                <WriteButton text='글 작성' onClick={handleWriteArticle} />
+                <WriteButton text='글 작성' onClick={handleWriteArticle} aria-label='새 글 작성하기'/>
             </ListContainer>
 
 
