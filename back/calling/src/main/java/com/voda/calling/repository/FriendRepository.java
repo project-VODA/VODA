@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface FriendRepository extends JpaRepository<Friend, Integer> {
 
-    List<Friend> findAllByUserEmail(String UserEmail);
-
     Friend findByUserEmailAndFriendEmail(String userEmail, String friendEmail);
 
     void deleteFriendByUserEmailAndFriendEmail(String userEmail, String friendEmail);

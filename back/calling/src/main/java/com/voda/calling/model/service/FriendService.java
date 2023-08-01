@@ -41,8 +41,8 @@ public class FriendService {
         return friendRepository.findByUserEmailAndFriendEmail(userEmail, friendEmail);
     }
 
-    public List<Friend> searchAllFriend(String userEmail) {
-        List<Friend> friendList = friendRepository.findAllByUserEmail(userEmail);
+    public List<UserSearchResponse> searchAllFriend(String userEmail) {
+        List<UserSearchResponse> friendList = userRepository.searchFriendsByUserEmail(userEmail);
 
         return friendList;
     }

@@ -87,12 +87,12 @@ public class FriendController {
         log.info("FriendController - searchAllFriend : 친구 목록");
 
         try{
-            List<Friend> friendList = friendService.searchAllFriend(userEmail);
+            List<UserSearchResponse> friendList = friendService.searchAllFriend(userEmail);
 
             if (friendList == null || friendList.size() == 0) {
                 return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
             }
-            return new ResponseEntity<List<Friend>>(friendList, HttpStatus.OK);
+            return new ResponseEntity<List<UserSearchResponse>>(friendList, HttpStatus.OK);
         }catch (Exception e) {
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }

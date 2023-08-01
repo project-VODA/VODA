@@ -31,7 +31,13 @@ public interface UserRepository extends JpaRepository<User, String> { //JpaRepos
             "AND u.userEmail != :userEmail")
     List<UserSearchResponse> searchUsersByKeyword(String keyword, String userEmail);
 
-
+    // 탈퇴하지 않은 유저 중 사용자 이메일에 해당하는 친구 목록을 찾는 쿼리
+    @Query("SELECT NEW com.voda.calling.model.dto.UserSearchResponse(u.userEmail, u.userName, CASE WHEN f.friendEmail IS NOT NULL THEN true ELSE false END) " +
+            "FROM User u " +
+            "LEFT JOIN Friend f ON u.userEmail = f.friendEmail AND f.userEmail = :userEmail " +
+            "WHERE u.userCancel = 0 " +
+            "AND u.userEmail != :userEmail ")
+    List<UserSearchResponse> searchFriendsByUserEmail(String userEmail);
 
 
 

@@ -40,6 +40,7 @@ const SimpleHomePage = () => {
   };
 
   const redirectVideo = () => {
+    // navigate('/waiting')
     navigate('/video')
   };
 
