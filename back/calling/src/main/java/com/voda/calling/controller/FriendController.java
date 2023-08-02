@@ -1,6 +1,7 @@
 package com.voda.calling.controller;
 
 import com.voda.calling.model.dto.Friend;
+import com.voda.calling.model.dto.FriendResponse;
 import com.voda.calling.model.dto.UserSearchRequest;
 import com.voda.calling.model.dto.UserSearchResponse;
 import com.voda.calling.model.service.FriendService;
@@ -84,9 +85,9 @@ public class FriendController {
         log.info("FriendController - searchAllFriend : 친구 목록");
 
         try{
-            List<UserSearchResponse> friendList = friendService.searchAllFriend(userEmail);
+            List<FriendResponse> friendList = friendService.searchAllFriend(userEmail);
 
-            return new ResponseEntity<List<UserSearchResponse>>(friendList, HttpStatus.OK);
+            return new ResponseEntity<List<FriendResponse>>(friendList, HttpStatus.OK);
         }catch (Exception e) {
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -99,23 +100,17 @@ public class FriendController {
             @ApiResponse(code=204, message="친구 삭제 실패 - 존재하지 않는 친구 관계"),
             @ApiResponse(code=500, message="친구 삭제 실패 - 서버(DB) 오류")
     })
-    @DeleteMapping()
-    public ResponseEntity<String> deleteFriend(@RequestBody Friend friend) {
+    @DeleteMapping("/{friendNo}")
+    public ResponseEntity<String> deleteFriend(@PathVariable int friendNo) {
         log.info("FriendController - deleteFriend : 친구 삭제");
 
-        String userEmail = friend.getUserEmail();
-        String friendEmail = friend.getFriendEmail();
-
-        Friend find = friendService.searchRelationship(userEmail, friendEmail);
-
-        if (find == null) {
-            return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
-        }
         try{
-            friendService.deleteFriend(userEmail, friendEmail);
-
+            Friend friend = friendService.searchFriend(friendNo);
+            friendService.deleteFriend(friend);
+            log.info("친구 삭제 성공");
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }catch (Exception e) {
+            log.info("친구 삭제 실패");
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
