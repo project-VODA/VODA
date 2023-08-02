@@ -6,7 +6,7 @@ import React, { createContext } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 
 // redux
-import { useAppDispatch, useAppSelector } from "./constants/types";
+//import { useAppDispatch, useAppSelector } from "./constants/types";
 import { axiosInstance } from "./apis/instance";
 import {
   updateAccessToken, updateLoginStatus,
@@ -66,7 +66,7 @@ export const ThemeContext = createContext<ContextProps>({
 
 
 const App: React.FC = () => {
-  const accessToken = useAppSelector((state) => state.auth.accessToken);
+  /*const accessToken = useAppSelector((state) => state.auth.accessToken);
   // 헤더 디폴트 추가
   if (accessToken) {
     axiosInstance.defaults.headers.common[
@@ -109,7 +109,7 @@ const App: React.FC = () => {
       }
       return Promise.reject(error);
     }
-  );
+  );*/
 
 
   const { theme, toggleTheme } = useMode();

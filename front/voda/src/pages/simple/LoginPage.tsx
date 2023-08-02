@@ -2,7 +2,7 @@ import React, { useState, KeyboardEvent } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 
-import { login } from "../../store/authReducer";
+import { userSliceLogin } from "../../store/userSlice";
 
 import { loginServer } from "../../apis/user";
 
@@ -30,14 +30,13 @@ const SimpleLogin = () => {
     } else {
       loginServer(userData)
         .then((res) => {
+          console.log(res);
           alert("로그인 성공");
-          // 세션에 유저 정보 저장
-          sessionStorage.setItem("userEmail", res.user.userEmail);
-          sessionStorage.setItem("userName", res.user.userName);
-          sessionStorage.setItem("userHandicap", res.user.userHandicap);
-          sessionStorage.setItem("accessToken", res.accessToken);
-          sessionStorage.setItem("refreshToken", res.refreshToken);
-          dispatch(login(res.accessToken)); 
+          // userSlice에 저장
+          dispatch(userSliceLogin ({
+            accessToken: res.accessToken,
+            refreshToken: res.refreshToken
+          })); 
           // 메인페이지로 리다이렉트
           RedirectHomePage();
         })
