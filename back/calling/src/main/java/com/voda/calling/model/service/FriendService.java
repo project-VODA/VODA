@@ -1,6 +1,7 @@
 package com.voda.calling.model.service;
 
 import com.voda.calling.model.dto.Friend;
+import com.voda.calling.model.dto.FriendResponse;
 import com.voda.calling.model.dto.UserSearchResponse;
 import com.voda.calling.repository.FriendRepository;
 import com.voda.calling.repository.UserRepository;
@@ -22,6 +23,10 @@ public class FriendService {
     @Autowired
     UserRepository userRepository;
 
+    public Friend searchFriend(int friendNo) {
+        return friendRepository.findByFriendNo(friendNo);
+    }
+
     public void registFriend(String userEmail, String friendEmail) {
         Friend friend = Friend.builder()
                 .userEmail(userEmail)
@@ -41,14 +46,15 @@ public class FriendService {
         return friendRepository.findByUserEmailAndFriendEmail(userEmail, friendEmail);
     }
 
-    public List<UserSearchResponse> searchAllFriend(String userEmail) {
-        List<UserSearchResponse> friendList = userRepository.searchFriendsByUserEmail(userEmail);
+    public List<FriendResponse> searchAllFriend(String userEmail) {
+        List<FriendResponse> friendList = userRepository.searchFriendsByUserEmail(userEmail);
 
         return friendList;
     }
 
-    public void deleteFriend(String userEmail, String friendEmail) {
-        friendRepository.deleteFriendByUserEmailAndFriendEmail(userEmail, friendEmail);
+    public void deleteFriend(Friend friend) {
+        log.info("친구 삭제 서비스 호출");
+        friendRepository.delete(friend);
 
     }
 
