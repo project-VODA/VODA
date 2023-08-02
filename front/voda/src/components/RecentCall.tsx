@@ -1,71 +1,68 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { deleteFriend, getFriendList } from '../apis/friend';
 
-const RecentCalls: React.FC = () => {
-  const recentCalls = ['Call 1', 'Call 2', 'Call 3', /* ... */];
+import Button from "./SettingButton";
+import { getRecentCallList } from '../apis/calling';
+
+
+type CallHistory = {
+  callSender: string;
+  callReceiver: string;
+  callStartTime: string;
+  callEndTime: string;
+};
+
+type CallHistoryList = CallHistory[];
+
+
+const RecentCalls = () => {
+  const [callHistoryList, setCallHistoryList] = useState<CallHistoryList>([]);
+
+  useEffect(() => {
+    getRecentCallList()
+      .then((res: CallHistoryList) => {
+        setCallHistoryList(res);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+  }, []);
+
+  const handleCalling = (callHistory: CallHistory) => {
+
+  };
 
   return (
-    <div>
-      {recentCalls.map((call, index) => (
-        <div key={index}>{call}</div>
-      ))}
-    </div>
+    <>
+      <table className = 'recentCallTable'>
+        <colgroup>
+          <col width = "25%" />
+          <col width = "25%" />
+          <col width = "25%" />
+          <col width = "25%" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>송신자</th>
+            <th>수신자</th>
+            <th>통화날짜</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {callHistoryList.length === 0 ? <tr><td colSpan={3}>통화 기록이 존재하지 않습니다.</td></tr> :
+            callHistoryList.map((callHistory: CallHistory) => (
+              <tr key={callHistory.callSender}>
+                <td text-align='center'>{callHistory.callSender}</td>
+                <td text-align='center'>{callHistory.callReceiver}</td>
+                <td text-align='center'>{callHistory.callStartTime}</td>
+                <td text-align='center'><Button text="통화" onClick={() => handleCalling(callHistory)}/></td>
+              </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
   );
 };
 
 export default RecentCalls;
-
-// 추후 통화목록으로 개조 필요
-// import React, { useEffect, useState } from 'react';
-// import DivideHorizontalContainer from './DivideHorizontalContainer';
-// import { getFriendList } from '../apis/friend';
-
-// type Friend = {
-//   userEmail: string;
-//   userName: string;
-//   isFriend: boolean;
-// };
-
-// type FriendList = Friend[];
-
-// const FriendList = () => {
-  
-//   const [friendList, setFriendList] = useState<FriendList>([]);
-
-//   useEffect(() => {
-//     getFriendList(sessionStorage.getItem("userEmail"))
-//       .then((res: FriendList) => {
-//         setFriendList(res);
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//       })
-//   })
-
-//   return (
-//     <>
-//       <table className = 'friendTable'>
-//         <colgroup>
-//           <col width = "50%" />
-//           <col width = "50%" />
-//         </colgroup>
-//         <thead>
-//           <tr>
-//             <th>이름</th>
-//             <th>이메일</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {friendList.map((friend: Friend) => (
-//             <tr>
-//               <td>{friend.userName}</td>
-//               <td>{friend.userEmail}</td>
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-//     </>
-//   );
-// };
-
-// export default FriendList;
-
