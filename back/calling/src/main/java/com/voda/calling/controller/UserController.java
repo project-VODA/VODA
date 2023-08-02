@@ -22,7 +22,6 @@ import java.util.Map;
 @CrossOrigin("*")
 @Slf4j
 public class UserController {
-
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
     private static final String AUTH = "Authorization";

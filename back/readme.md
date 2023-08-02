@@ -40,3 +40,10 @@
 - 23.07.27 KJW
   - 로그아웃 api GET에서 POST로 변경
   - Article의 articleRegTime TimeStamp에서 String으로 변경
+
+- 23.08.02 YSH
+  - 영상통화 걸기 api 구현
+  - 영상통화 받기 api 구현
+  - 영상통화 끊기 api 구현
+  - 영상통화를 걸면 VODA DB에 callhistory 데이터 insert 후 openvidu 미팅룸을 생성한다.
+  - 영상통화를 끊으면 VODA DB안 해당 callhistory 데이터의 status, endtime을 업데이트한다.
