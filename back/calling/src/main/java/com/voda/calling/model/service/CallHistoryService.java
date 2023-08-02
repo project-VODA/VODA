@@ -2,17 +2,21 @@ package com.voda.calling.model.service;
 
 import com.voda.calling.model.dto.CallHistory;
 import com.voda.calling.model.dto.CallReceiver;
+import com.voda.calling.model.dto.RecentCall;
 import com.voda.calling.model.dto.UserCallHistory;
 import com.voda.calling.repository.CallHistoryRepository;
 import io.openvidu.java.client.*;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -32,6 +36,9 @@ public class CallHistoryService {
 
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
+
+    @PostConstruct
+    public void init() { this.openVidu = new OpenVidu(openViduUrl, openViduSecret);}
 
     public boolean canCall(String senderEmail, String receiverEmail){
         // 통화상태 0(대기중) : 먼저 전화를 건 사람이 있는 상태
@@ -78,9 +85,11 @@ public class CallHistoryService {
 
 
     public String initializeSession(String sessionId) throws OpenViduJavaClientException, OpenViduHttpException {
-        Map<String,String> params = new HashMap<>();
+        Map<String,Object> params = new HashMap<>();
         params.put("customSessionId",sessionId);
-        SessionProperties properties = SessionProperties.fromJson(params).build();
+        // Map -> JSON
+        JSONObject jsonParam = new JSONObject(params);
+        SessionProperties properties = SessionProperties.fromJson(jsonParam).build();
         Session session = openVidu.createSession(properties);
         return session.getSessionId();
     }
@@ -90,11 +99,17 @@ public class CallHistoryService {
         if (session == null) {
             return FAIL;
         }
-        Map<String,String> params = new HashMap<>();
-        params.put("","");
-        ConnectionProperties properties = ConnectionProperties.fromJson(params).build();
+        Map<String,Object> params = new HashMap<>();
+        // Map -> JSON
+        JSONObject jsonParam = new JSONObject(params);
+        ConnectionProperties properties = ConnectionProperties.fromJson(jsonParam).build();
         Connection connection = session.createConnection(properties);
         return connection.getToken();
+    }
+
+    public List<RecentCall> getRecentCallList(String email) {
+        List<RecentCall> list = callHistoryRepository.findAllByUserEmail(email);
+        return list;
     }
 
 

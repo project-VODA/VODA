@@ -120,6 +120,13 @@
 			<artifactId>openvidu-java-client</artifactId>
 			<version>2.28.0</version>
 		</dependency>
+
+		<!--	json으로 변환	-->
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+		</dependency>
 		
 	</dependencies>
 
