@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @ApiModel("전화 요청후 받을 객체")
 public class CallSendResponse {
 
-    @ApiModelProperty(value="고유한 세션id", required = true)
-    private String sessionId;
+    @ApiModelProperty(value="고유한 세션토큰 값", required = true)
+    private String sessionToken;
     @ApiModelProperty(value="callNo(키값)", required = true)
     private int callNo;
 }

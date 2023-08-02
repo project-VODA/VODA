@@ -51,3 +51,10 @@
 
 - 23.08.01 NG
   - jwt token을 활용한 Interceptor 구현
+  
+- 23.08.02 YSH
+  - 영상통화 걸기 api 구현
+  - 영상통화 받기 api 구현
+  - 영상통화 끊기 api 구현
+  - 영상통화를 걸면 VODA DB에 callhistory 데이터 insert 후 openvidu 미팅룸을 생성한다.
+  - 영상통화를 끊으면 VODA DB안 해당 callhistory 데이터의 status, endtime을 업데이트한다.
