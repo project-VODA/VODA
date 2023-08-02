@@ -88,17 +88,6 @@ const SimpleMyPage = () => {
         .then((res) => {
           if(res.userEmail === userData.userEmail) {
             alert("회원 정보 수정 완료");
-            // 로그아웃 처리
-            if(accessToken !== null && accessToken !== ''){
-              logout()
-              .then((res) => {
-                userSliceLogout();
-                RedirectHomePage();
-              })
-              .catch((err) => {
-                console.log(err);
-              })
-            }
             // 홈 화면으로 리다이렉트
             RedirectHomePage();
           }else{
@@ -229,6 +218,7 @@ const SimpleMyPage = () => {
         placeholder="이메일" 
         value={email} 
         onChange={(e) => setEmail(e.target.value)}
+        readonly={true}
       />
       <Input 
         type="text"
