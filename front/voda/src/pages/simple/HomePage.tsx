@@ -5,6 +5,9 @@ import styled from 'styled-components';
 import Title from '../../components/Title';
 import HandleButton from '../../components/HandleBtn';
 import { redirectKakao, logout } from '../../apis/user';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
+import { userSliceLogout } from '../../store/userSlice';
 
 
 const ButtonContainer = styled.div`
@@ -16,15 +19,15 @@ const ButtonContainer = styled.div`
 `;
 
 const SimpleHomePage = () => {
-  //임시 유저 정보 확인용
-  useEffect(() => {
-    console.log(sessionStorage.getItem("userEmail"))
-    console.log(sessionStorage.getItem("userName"))
-    console.log(sessionStorage.getItem("accessToken"))
-    console.log(sessionStorage.getItem("refreshToken"))
-  })
 
   const navigate = useNavigate();
+  const accessToken = useSelector((state:RootState) => {
+    return state.user.accessToken;
+  })
+
+  const isLogin = useSelector((state:RootState) => {
+    return state.user.isLogin;
+  })
 
   const RedirectSocialLogin = () => {
     navigate('/social-login');
@@ -57,14 +60,10 @@ const SimpleHomePage = () => {
   };
 
   const handleLogout = () => {
-    const token = sessionStorage.getItem("accessToken");
-    console.log(token);
-    if(token!==null && token!==''){
-      console.log(token);
-      logout(token)
+    if(accessToken !== null && accessToken !== ''){
+      logout()
       .then((res) => {
-        console.log(res);
-        sessionStorage.clear();
+        userSliceLogout();
         RedirectHomePage();
       })
       .catch((err) => {
@@ -80,7 +79,7 @@ const SimpleHomePage = () => {
   };
   
   //로그인 여부 확인
-  const accessToken = sessionStorage.getItem("accessToken");
+  //const accessToken = sessionStorage.getItem("accessToken");
 
   return (
     <>
@@ -94,7 +93,7 @@ const SimpleHomePage = () => {
         <HandleButton text="고객의 소리함" onClick={redirectFeedback} />
 
         {/* 로그인 유저 존재 여부에 따라 버튼 렌더링 */}
-        {accessToken !== null ? (
+        {isLogin ? (
           <HandleButton text="로그아웃" onClick={handleLogout} />
           ) : (
           <HandleButton text="로그인" onClick={redirectLogin} />

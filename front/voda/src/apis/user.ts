@@ -4,30 +4,6 @@ import { axiosInstance } from "./instance";
 
 import {axiosServer} from "./server";
 
-// 서버 DB 유저 비밀번호 변경
-export const changePassword = async (changePasswordData: object) => {
-  const res = await axiosServer().post<any>(`/users/pass`, changePasswordData);
-  return res.data;
-}
-
-// 서버 DB 유저 회원탈퇴
-export const cancelUser = async (userEmail: string) => {
-  const res = await axiosServer().delete<any>(`/users/${userEmail}`);
-  return res.data;
-}
-
-// 서버 DB 유저 회원정보 수정
-export const updateUserInfo = async (userData: object) => {
-  const res = await axiosServer().put<any>(`/users/mypage`, userData);
-  return res.data;
-}
-
-// 서버 DB 유저 회원정보 조회
-export const getUserInfo = async (userEmail: string) => {
-  const res = await axiosServer().get<any>(`/users/mypage/${userEmail}`);
-  return res.data;
-}
-
 // 서버 DB 유저 회원가입
 export const registServer = async (userData: object) => {
   const res = await axiosServer().post<any>(`/users/regist`, userData);
@@ -39,6 +15,38 @@ export const loginServer = async (userData: object) => {
   const res = await axiosServer().post<any>(`/users/login`, userData);
   return res.data;
 };
+
+// 로그아웃
+export const logout = async () => {
+  const res = await axiosServer().post<any>(`/users/logout`);
+  return res.data;
+};
+
+// 서버 DB 유저 비밀번호 변경
+export const changePassword = async (changePasswordData: object) => {
+  const res = await axiosServer().post<any>(`/users/pass`, changePasswordData);
+  return res.data;
+}
+
+// 서버 DB 유저 회원정보 조회
+export const getUserInfo = async (userEmail: string) => {
+  const res = await axiosServer().get<any>(`/users/mypage/${userEmail}`);
+  return res.data;
+}
+
+// 서버 DB 유저 회원정보 수정
+export const updateUserInfo = async (userData: object) => {
+  const res = await axiosServer().put<any>(`/users/mypage`, userData);
+  return res.data;
+}
+
+// 서버 DB 유저 회원탈퇴
+export const cancelUser = async () => {
+  const res = await axiosServer().delete<any>(`/users`);
+  return res.data;
+}
+
+/* -----------------------------------------------------------------------------------*/
 
 // 카카오 로그인 리다이렉트
 export const redirectKakao = () => {
@@ -68,12 +76,6 @@ export const loginKakao = async (code: string) => {
 // 구글 로그인
 export const loginGoogle = async (code: string) => {
   const res = await axiosInstance.get<any>(`/user/login/google?code=${code}`);
-  return res.data;
-};
-
-// 로그아웃
-export const logout = async (token: string) => {
-  const res = await axiosServer().post<any>(`/users/logout`, token);
   return res.data;
 };
 

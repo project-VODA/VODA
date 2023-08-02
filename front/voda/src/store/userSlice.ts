@@ -5,32 +5,46 @@ const userSlice = createSlice({
     initialState: {
         accessToken: '',
         refreshToken: '',
-        user:{
+        userInfo:{
             userEmail: '',
             userName: '',
-            userHandiCap: '',
+            userHandicap: false,
             role: '',
         },
         isLogin: false,
     },
     reducers: {
-        login:(state, action) =>{
+        userSliceLogin:(state, action) =>{
             state.accessToken = action.payload.accessToken;
             state.refreshToken = action.payload.refreshToken;
             // accessToken 복호화 및 유저 정보 저장
+            let jwtPayload = JSON.parse(atob(action.payload.accessToken.split('.')[1]));
+            state.userInfo = {
+                userEmail: jwtPayload.userEmail,
+                userName: decodeURI(escape(jwtPayload.userName)),
+                userHandicap: jwtPayload.userHandicap,
+                role: jwtPayload.role,
+            }
             state.isLogin = true;
         },
-        allocate: (state, action) => {
+        userSliceAllocate: (state, action) => {
             state.accessToken = action.payload.accessToken;
             // accessToken 복호화 및 유저 정보 저장
+            let jwtPayload = JSON.parse(atob(action.payload.accessToken.split('.')[1]));
+            state.userInfo = {
+                userEmail: jwtPayload.userEmail,
+                userName: decodeURI(escape(jwtPayload.userName)),
+                userHandicap: jwtPayload.userHandicap,
+                role: jwtPayload.role,
+            }
         },
-        logout:(state, action) => {
+        userSliceLogout:(state) => {
             state.accessToken = '';
             state.refreshToken = '';
-            state.user = {
+            state.userInfo = {
                 userEmail: '',
                 userName: '',
-                userHandiCap: '',
+                userHandicap: false,
                 role: '',
             };
             state.isLogin = false;
@@ -39,4 +53,11 @@ const userSlice = createSlice({
 });
 
 export default userSlice;
-export const {login, allocate, logout} = userSlice.actions;
+export const {userSliceLogin, userSliceLogout, userSliceAllocate} = userSlice.actions;
+
+export interface UserInfoType{
+    userEmail: string,
+    userName: string,
+    userHandicap: boolean,
+    role: string,
+}

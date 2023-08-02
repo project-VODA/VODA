@@ -9,6 +9,9 @@ import DeleteButton from '../../components/DeleteButton';
 import CheckBox from '../../components/CheckBox';
 import { cancelUser, changePassword, getUserInfo, logout, updateUserInfo } from '../../apis/user';
 import Info from '../../components/InfoText';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
+import { UserInfoType, userSliceLogout } from '../../store/userSlice';
 
 
 
@@ -22,20 +25,27 @@ const ButtonContainer = styled.div`
 
 
 const SimpleMyPage = () => {
+  // redux에서 저장된 정보 가져오기
+  const [accessToken, userInfo]: [string, UserInfoType] = useSelector((state:RootState) => {
+    return [state.user.accessToken, state.user.userInfo];
+  })
+  // 컴포넌트 지역 변수에 연결
+  const [email, setEmail] = useState(userInfo.userEmail);
+  const [name, setName] = useState(userInfo.userName);
+  const [handicap, setHandicap] = useState(userInfo.userHandicap);
 
-  const [email, setEmail] = useState('');
   const [originPassword, setOriginPassword] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
-  const [handicap, setHandicap] = useState(false); // 기본값을 0으로 설정
   const [passwordCheck, setPasswordCheck] = useState('');
   const [pwFlag, setPwFlag] = useState(false);
+
+  
 
   const userData = {
     userEmail: email,
     userName: name,
     userPass: password,
-    userHandicap: handicap ? 1 : 0,
+    userHandicap: handicap,
   };
 
   const changePasswordData = {
@@ -50,7 +60,7 @@ const SimpleMyPage = () => {
     naviagte('/');
   }
 
-  useEffect(() => {
+  /*useEffect(() => {
     getUserInfo(sessionStorage.getItem("userEmail"))
       .then((res) => {
         setEmail(res.userEmail);
@@ -60,7 +70,7 @@ const SimpleMyPage = () => {
       .catch((err) => {
         console.log(err);
       })
-  }, []);
+  }, []);*/
 
   const handleModify = () => {
     let err = false;
@@ -79,14 +89,10 @@ const SimpleMyPage = () => {
           if(res.userEmail === userData.userEmail) {
             alert("회원 정보 수정 완료");
             // 로그아웃 처리
-            const token = sessionStorage.getItem("accessToken");
-            console.log(token);
-            if(token!==null && token!==''){
-              console.log(token);
-              logout(token)
+            if(accessToken !== null && accessToken !== ''){
+              logout()
               .then((res) => {
-                console.log(res);
-                sessionStorage.clear();
+                userSliceLogout();
                 RedirectHomePage();
               })
               .catch((err) => {
@@ -108,20 +114,14 @@ const SimpleMyPage = () => {
   const handleWithdrawal = () => {
     var confirmWithdrawal = window.confirm("정말 탈퇴하시겠습니까?");
     if(confirmWithdrawal) {
-      cancelUser(userData.userEmail)
+      cancelUser()
       .then((res) => {
         alert("회원 탈퇴 성공");
-        console.log(res);
-
         // 로그아웃 처리
-        const token = sessionStorage.getItem("accessToken");
-        console.log(token);
-        if(token!==null && token!==''){
-          console.log(token);
-          logout(token)
+        if(accessToken !== null && accessToken !== ''){
+          logout()
           .then((res) => {
-            console.log(res);
-            sessionStorage.clear();
+            userSliceLogout();
             RedirectHomePage();
           })
           .catch((err) => {
@@ -167,14 +167,10 @@ const SimpleMyPage = () => {
           alert("비밀번호 변경 성공")
           
           // 로그아웃 처리
-          const token = sessionStorage.getItem("accessToken");
-          console.log(token);
-          if(token!==null && token!==''){
-            console.log(token);
-            logout(token)
+          if(accessToken !== null && accessToken !== ''){
+            logout()
             .then((res) => {
-              console.log(res);
-              sessionStorage.clear();
+              userSliceLogout();
               RedirectHomePage();
             })
             .catch((err) => {
