@@ -288,29 +288,33 @@ class VideoRoomComponent extends Component {
         });
     }
 
+    // voda - KJW
     subscribeToUserChanged() {
+        this.state.session.on('signal:request', (event) => {
+            // remote user에 대해서만 sendExpression함수 실행
+            if (event.from.connectionId !== this.state.session.connection.connectionId) {
+                this.sendExpression();
+            }
+        });
+
         this.state.session.on('signal:userChanged', (event) => {
             let remoteUsers = this.state.subscribers;
             remoteUsers.forEach((user) => {
                 if (user.getConnectionId() === event.from.connectionId) {
                     const data = JSON.parse(event.data);
                     console.log('EVENTO REMOTE: ', event.data);
-                    if (event.type === 'request' && data.expression) {
-                        this.sendExpression();
-                      } else {
-                        if (data.isAudioActive !== undefined) {
-                            user.setAudioActive(data.isAudioActive);
-                        }
-                        if (data.isVideoActive !== undefined) {
-                            user.setVideoActive(data.isVideoActive);
-                        }
-                        if (data.nickname !== undefined) {
-                            user.setNickname(data.nickname);
-                        }
-                        if (data.isScreenShareActive !== undefined) {
-                            user.setScreenShareActive(data.isScreenShareActive);
-                        }
+                    if (data.isAudioActive !== undefined) {
+                        user.setAudioActive(data.isAudioActive);
                     }
+                    if (data.isVideoActive !== undefined) {
+                        user.setVideoActive(data.isVideoActive);
+                    }
+                    if (data.nickname !== undefined) {
+                        user.setNickname(data.nickname);
+                    }
+                    if (data.isScreenShareActive !== undefined) {
+                        user.setScreenShareActive(data.isScreenShareActive);
+                    }        
                 }
             });
             this.setState(
@@ -500,8 +504,8 @@ class VideoRoomComponent extends Component {
         }
     }
 
-
-    sendExpressionData = () => {
+    // voda - KJW
+    sendExpression = () => {
         // Check if the localUser is connected and has a stream manager
         if (this.state.localUser && this.state.localUser.getStreamManager()) {
           // Send the text data as a broadcast message to all participants
@@ -519,10 +523,11 @@ class VideoRoomComponent extends Component {
         }
     }
 
-    hearExpression= () => {
+    // voda - KJW
+    hearExpression = () => {
         if (this.state.localUser && this.state.localUser.getStreamManager()) {
           this.state.session.signal({
-            data: "expression",
+            data: '요청',
             to: [],
             type: 'request', // Use the same type as the receiver is listening to
           })
@@ -579,10 +584,10 @@ class VideoRoomComponent extends Component {
                         <div className="OT_root OT_publisher custom-class" id="localUser">
                           <span>
                             {/* {userHandicap ? (<SettingButton id='hearExpression' text='표정 듣기' onClick={this.hearExpression} aria-label='표정 듣기 버튼입니다.' />
-                              ) : ( <SettingButton id='sendExpression' text='표정 보내기' onClick={this.sendExpressionData} aria-label='표정 보내기 버튼입니다.' />
+                              ) : ( <SettingButton id='sendExpression' text='표정 보내기' onClick={this.sendExpression} aria-label='표정 보내기 버튼입니다.' />
                               )} */}
                               <SettingButton id='hearExpression' text='표정 듣기' onClick={this.hearExpression} aria-label='표정 듣기 버튼입니다.' />
-                              <SettingButton id='sendExpression' text='표정 보내기' onClick={this.sendExpressionData} aria-label='표정 보내기 버튼입니다.' />
+                              <SettingButton id='sendExpression' text='표정 보내기' onClick={this.sendExpression} aria-label='표정 보내기 버튼입니다.' />
                         </span>
                             <StreamComponent user={localUser} handleNickname={this.nicknameChanged} />
                         </div>
