@@ -1,6 +1,8 @@
 package com.voda.calling;
 
+import com.voda.calling.model.dto.RecentCall;
 import com.voda.calling.model.dto.User;
+import com.voda.calling.repository.CallHistoryRepository;
 import com.voda.calling.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
@@ -19,10 +21,11 @@ import java.util.Optional;
 @Slf4j
 public class CallingJpaTest {
 
-//    private Logger logger = LoggerFactory.getLogger(CallingJpaTest.class);
-
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    CallHistoryRepository callHistoryRepository;
 
     @Test
     public void beanTypeTest() {
@@ -69,6 +72,7 @@ public class CallingJpaTest {
         userRepository.save(user);
         Assertions.assertEquals(1,user.getUserCancel());
     }
+
 
 
 }

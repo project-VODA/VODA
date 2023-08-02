@@ -1,7 +1,9 @@
 package com.voda.calling;
 
+import com.voda.calling.model.dto.RecentCall;
 import com.voda.calling.model.dto.User;
 import com.voda.calling.model.service.UserService;
+import com.voda.calling.repository.CallHistoryRepository;
 import com.voda.calling.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
@@ -17,6 +19,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @SpringBootTest
 @Transactional
@@ -33,6 +36,9 @@ class CallingApplicationTests {
 
 	@Autowired
 	UserRepository userRepository;
+
+	@Autowired
+	CallHistoryRepository callHistoryRepository;
 
 	@Test
 	void contextLoads() {
@@ -83,5 +89,12 @@ class CallingApplicationTests {
 		userService.canceledUser(uEmail);
 		User user = userRepository.findUserByUserEmail(uEmail);
 		Assertions.assertEquals(1, user.getUserCancel());
+	}
+
+	@Test
+	public void getRecentCallListTest() {
+		String email = "voda@voda.com";
+		List<RecentCall> list = callHistoryRepository.findAllByUserEmail(email);
+		Assertions.assertEquals(2, list.size());
 	}
 }

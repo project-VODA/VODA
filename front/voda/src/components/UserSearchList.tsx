@@ -2,6 +2,11 @@ import React, { useEffect, useState } from "react";
 import Button from "./SettingButton";
 import Input from "./InputText";
 import { registFriend, searchUser } from "../apis/friend";
+import { UserInfoType } from "../store/userSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
+import { sendCalling } from "../apis/calling";
+import { useNavigate } from "react-router-dom";
 
 type User = {
   userEmail: string;
@@ -12,12 +17,17 @@ type User = {
 type UserList = User[];
 
 const UserSearchList = () => {
+  // redux에서 저장된 정보 가져오기
+  const [accessToken, userInfo]: [string, UserInfoType] = useSelector((state:RootState) => {
+    return [state.user.accessToken, state.user.userInfo];
+  })
+
   const [keyword, setKeyword] = useState('');
   const [userList, setUserList] = useState<UserList>([]);
 
   const userSearchRequest = {
     keyword: keyword,
-    userEmail: sessionStorage.getItem("userEmail"),
+    userEmail: userInfo.userEmail,
   };
 
   useEffect(() => {
@@ -31,13 +41,32 @@ const UserSearchList = () => {
 
   }, [keyword]);
 
-  const handleCalling = () => {
+  const navigate = useNavigate();
 
+  const handleCalling = (user: User) => {
+    const callSendRequest = {
+      senderEmail : userInfo.userEmail,
+      receiverEmail : user.userEmail
+    }
+
+    sendCalling(callSendRequest)
+      .then((res) => {
+        console.log(res.sessionToken);
+        navigate('/video',{
+          state: {
+            sessionToken : `${res.sessionToken}`,
+            callNo : `${res.callNo}`
+          }
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   const handleRegistFriend = (user: User) => {
     const friendRegistRequest = {
-      userEmail: sessionStorage.getItem("userEmail"),
+      userEmail: userInfo.userEmail,
       friendEmail: user.userEmail,
     };
     registFriend(friendRegistRequest)
@@ -82,7 +111,7 @@ const UserSearchList = () => {
                 <td>{user.userEmail}</td>
                 <td>
                   {user.friend ? (
-                    <Button onClick={handleCalling} text="통화" />
+                    <Button onClick={() => handleCalling(user)} text="통화" />
                   ) : (
                     <Button onClick={() => handleRegistFriend(user)} text="친구추가" />
                   )}

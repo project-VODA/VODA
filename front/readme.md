@@ -119,8 +119,11 @@
   - 기존 메인 페이지 url이 ('/') 에서 ('/home') 으로 변경
   - 대신 랜딩페이지가 ('/') url을 차지
   - 통화 화면 표정 보내기 버튼 UI 수정
-
-- 23.08.02 KSH
   - 통화 종료시 ('/') 에서 ('/home')으로 수정
   - VODA로고 클릭시 ('/') 에서 ('/home')으로 수정
   - 로그인 시 ('/') 에서 ('/home')으로 수정(심플 디테일 both)
+
+- 23.08.02 YSH
+  - WaitingRoomPage, VideoPage영상통화 대기방에서 친구에게 전화거는 action 추가
+  - VideoRoomComponent 영상통화 종료시 back에 종료 api요청 action 추가 
+
