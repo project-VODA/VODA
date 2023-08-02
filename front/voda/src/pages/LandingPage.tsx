@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useMode } from "../hooks/useMode";
-import { Route } from "react-router-dom";
 
 
 import Title from '../components/Title';
@@ -22,7 +20,6 @@ const ButtonContainer = styled.div`
 
 const LandingPage = () => {
   const navigate = useNavigate();
-  const { toggleTheme } = useMode();
   
   const simpleModeClick = () => {
     window.localStorage.setItem('theme', 'simple')
