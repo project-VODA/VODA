@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Modal from 'react-modal';
+import { useNavigate } from "react-router-dom";
 
 import Title from '../../components/Title';
 import DivideContainer from '../../components/DivideHorizontalContainer'
@@ -8,7 +9,9 @@ import RecentCalls from "../../components/RecentCall";
 import Button from "../../components/SettingButton";
 import RedButton from "../../components/DeleteButton";
 import Input from "../../components/InputText";
+
 import { searchUser } from "../../apis/friend";
+import { sendCalling } from "../../apis/calling";
 
 type User = {
   userEmail: string;
@@ -23,10 +26,18 @@ const SimpleRoom = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [keyword, setKeyword] = useState('');
   const [userList, setUserList] = useState<UserList>([]);
+
+  const navigate = useNavigate();
   
   const userSearchRequest = {
     keyword: keyword,
     userEmail: sessionStorage.getItem("userEmail"),
+  };
+
+  // 통화 연결시 전달객체
+  let callSendRequest = {
+    senderEmail : "",
+    receiverEmail : ""
   };
 
   useEffect(() => {
@@ -50,8 +61,25 @@ const SimpleRoom = () => {
     setUserList([]);
   };
 
-  const handleCalling = () => {
+  const handleCalling = (user: User) => {
+    callSendRequest = {
+      senderEmail : sessionStorage.getItem("userEmail"),
+      receiverEmail : user.userEmail
+    }
 
+    sendCalling(callSendRequest)
+      .then((res) => {
+        console.log(res.sessionToken);
+        navigate('/video',{
+          state: {
+            sessionToken : `${res.sessionToken}`,
+            callNo : `${res.callNo}`
+          }
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   const handleRegistFriend = () => {
@@ -92,7 +120,7 @@ const SimpleRoom = () => {
                   <tr key={user.userName}>
                     <td>{user.userName}</td>
                     <td>{user.userEmail}</td>
-                    <td>{user.friend ? <Button onClick={handleCalling} text="통화 걸기" /> : <Button onClick={handleRegistFriend} text="친구추가" />}</td>
+                    <td>{user.friend ? <Button onClick={() => handleCalling(user)} text="통화 걸기" /> : <Button onClick={handleRegistFriend} text="친구추가" />}</td>
                   </tr>
                 ))}
             </tbody>

@@ -5,19 +5,20 @@ import ChatComponent from './chat/ChatComponent';
 import DialogExtensionComponent from './dialog-extension/DialogExtension';
 import StreamComponent from './stream/StreamComponent';
 import './VideoRoomComponent.css';
+import '../styles/simple/video.css'
 
 import SettingButton from '../components/SettingButton';
 import OpenViduLayout from '../layout/openvidu-layout';
 import UserModel from '../models/user-model';
 import ToolbarComponent from './toolbar/ToolbarComponent';
 
-import '../styles/simple/video.css'
+import { offCalling } from "../apis/calling";
+
 
 var localUser = new UserModel();
 const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8080/voda/';
 
 const userHandicap = sessionStorage.getItem("userHandicap")
-
 
 class VideoRoomComponent extends Component {
     constructor(props) {
@@ -69,12 +70,15 @@ class VideoRoomComponent extends Component {
             animate: true, // Whether you want to animate the transitions
         };
 
+        // console.log(this.props.token);
+
         this.layout.initLayoutContainer(document.getElementById('layout'), openViduLayoutOptions);
         window.addEventListener('beforeunload', this.onbeforeunload);
         window.addEventListener('resize', this.updateLayout);
         window.addEventListener('resize', this.checkSize);
         this.joinSession();
     }
+
 
     componentWillUnmount() {
         window.removeEventListener('beforeunload', this.onbeforeunload);
@@ -203,6 +207,7 @@ class VideoRoomComponent extends Component {
 
     leaveSession() {
         const mySession = this.state.session;
+        // console.log("video컴포넌트 에 왔니? : " + this.props.callNo);
 
         if (mySession) {
             mySession.disconnect();
@@ -220,6 +225,19 @@ class VideoRoomComponent extends Component {
         if (this.props.leaveSession) {
             this.props.leaveSession();
         }
+
+        //voda :ysh
+        const callOffRequest = {
+            sessionId: mySession.sessionId,
+            callNo: this.props.callNo
+        }
+
+        //back server 통화 종료
+        offCalling(callOffRequest)
+        .then((res)=>{
+            console.log(res);
+        });
+
     }
     camStatusChanged() {
         localUser.setVideoActive(!localUser.isVideoActive());
@@ -565,23 +583,24 @@ class VideoRoomComponent extends Component {
      * Visit https://docs.openvidu.io/en/stable/application-server to learn
      * more about the integration of OpenVidu in your application server.
      */
-    async getToken() {
-        const sessionId = await this.createSession(this.state.mySessionId);
-        return await this.createToken(sessionId);
-    }
+    // async getToken() {
+    //     const sessionId = await this.createSession(this.state.mySessionId);
+    //     return await this.createToken(sessionId);
+    // }
 
-    async createSession(sessionId) {
-        const response = await axios.post(APPLICATION_SERVER_URL + 'meetings/sessions', { customSessionId: sessionId }, {
-            headers: { 'Content-Type': 'application/json', },
-        });
-        return response.data; // The sessionId
-    }
+    // async createSession(sessionId) {
+    //     const response = await axios.post(APPLICATION_SERVER_URL + 'meetings/sessions', { customSessionId: sessionId }, {
+    //         headers: { 'Content-Type': 'application/json', },
+    //     });
+    //     return response.data; // The sessionId
+    // }
 
-    async createToken(sessionId) {
-        const response = await axios.post(APPLICATION_SERVER_URL + 'meetings/sessions/' + sessionId + '/connections', {}, {
-            headers: { 'Content-Type': 'application/json', },
-        });
-        return response.data; // The token
-    }
+    // async createToken(sessionId) {
+    //     const response = await axios.post(APPLICATION_SERVER_URL + 'meetings/sessions/' + sessionId + '/connections', {}, {
+    //         headers: { 'Content-Type': 'application/json', },
+    //     });
+    //     return response.data; // The token
+    // }
 }
+
 export default VideoRoomComponent;
