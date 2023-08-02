@@ -45,7 +45,7 @@ export default function OvVideoComponent(props) {
       expressionDataRef.current.push(detections[0]?.expressions);
       expressionDataRef.current = expressionDataRef.current.slice(-20); // 최근 2초 (0.1초마다 갱신이므로 20개)
 
-      console.log(expressionDataRef.current)
+      // console.log(expressionDataRef.current)
     }, 100); // 0.1초 대기
   };
 
