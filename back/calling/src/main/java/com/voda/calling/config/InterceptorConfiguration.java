@@ -14,7 +14,7 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry){
         registry.addInterceptor(tokenInterceptor)
-                .addPathPatterns("/users/*")
+                .addPathPatterns("/users").addPathPatterns("/users/*")
                 .addPathPatterns("/friends").addPathPatterns("/friends/*")
                 .addPathPatterns("/emotions")
                 .addPathPatterns("/articles").addPathPatterns("/articles/*")

@@ -164,11 +164,12 @@ public class UserController {
             @ApiResponse(code=200, message="탈퇴 성공"),
             @ApiResponse(code=500, message="탈퇴 실패 - 서버(DB)오류")
     })
-    @DeleteMapping("/{userEmail}")
-    public ResponseEntity<String> canceledUser(@PathVariable String userEmail){
+    @DeleteMapping("")
+    public ResponseEntity<String> canceledUser(@ApiParam(hidden = true) @RequestHeader(value = AUTH) String auth){
         log.info("UserController - canceledUser : 회원탈퇴");
         try {
-            userService.canceledUser(userEmail);
+            String accessToken = jwtUtil.extractTokenFromHeader(auth);
+            userService.canceledUser(jwtUtil.getUserEmailFromToken(accessToken));
             log.info("회원탈퇴 성공");
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);    
         }catch (Exception e) {
