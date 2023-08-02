@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { deleteFriend, getFriendList } from '../apis/friend';
 
 import Button from "./SettingButton";
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
+import { UserInfoType } from '../store/userSlice';
+import { sendCalling } from '../apis/calling';
+import { useNavigate } from 'react-router-dom';
 
 type Friend = {
   friendNo: number;
@@ -12,11 +17,15 @@ type Friend = {
 type FriendsList = Friend[];
 
 const FriendList = () => {
-
+  // redux에서 저장된 정보 가져오기
+  const [accessToken, userInfo]: [string, UserInfoType] = useSelector((state:RootState) => {
+    return [state.user.accessToken, state.user.userInfo];
+  })
+  
   const [friendList, setFriendList] = useState<FriendsList>([]);
 
   useEffect(() => {
-    getFriendList(sessionStorage.getItem("userEmail"))
+    getFriendList(userInfo.userEmail)
       .then((res: FriendsList) => {
         setFriendList(res);
       })
@@ -25,13 +34,14 @@ const FriendList = () => {
       })
   }, []);
 
+  const navigate = useNavigate();
+
   const handleDeleteFriend = (friend: Friend) => {
-    console.log(friend.friendNo);
 
     deleteFriend(friend.friendNo)
       .then((res) => {
         alert("친구 삭제 성공");
-        getFriendList(sessionStorage.getItem("userEmail"))
+        getFriendList(userInfo.userEmail)
           .then((res: FriendsList) => {
             setFriendList(res);
           })
@@ -44,9 +54,27 @@ const FriendList = () => {
       })
   }
 
-  const handleCalling = () => {
+  const handleCalling = (friend: Friend) => {
+    
+    const callSendRequest = {
+      senderEmail : userInfo.userEmail,
+      receiverEmail : friend.userEmail
+    }
 
-  }
+    sendCalling(callSendRequest)
+      .then((res) => {
+        console.log(res.sessionToken);
+        navigate('/video',{
+          state: {
+            sessionToken : `${res.sessionToken}`,
+            callNo : `${res.callNo}`
+          }
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
   return (
     <>
@@ -69,7 +97,7 @@ const FriendList = () => {
               <tr key={friend.friendNo}>
                 <td text-align='center'>{friend.userName}</td>
                 <td text-align='center'>{friend.userEmail}</td>
-                <td text-align='center'><Button onClick={handleCalling} text="통화" /></td>
+                <td text-align='center'><Button onClick={() => handleCalling(friend)} text="통화" /></td>
                 <td text-align='center'><Button onClick={() => handleDeleteFriend(friend)} text="친구삭제" /></td>
               </tr>
           ))}

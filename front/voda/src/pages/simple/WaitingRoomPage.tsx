@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Modal from 'react-modal';
+import { useNavigate } from "react-router-dom";
 
 import Title from '../../components/Title';
 import DivideContainer from '../../components/DivideHorizontalContainer'
@@ -8,6 +9,10 @@ import RecentCalls from "../../components/RecentCall";
 import UserSearchList from "../../components/UserSearchList";
 import Button from "../../components/SettingButton";
 import RedButton from "../../components/DeleteButton";
+import Input from "../../components/InputText";
+
+import { searchUser } from "../../apis/friend";
+import { sendCalling } from "../../apis/calling";
 
 const SimpleRoom = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -24,7 +29,7 @@ const SimpleRoom = () => {
   //           console.log(err);
   //         })
   // }, [isModalOpen])
-  
+
   return (
     <>
       <Title title="영상통화" />
