@@ -5,8 +5,15 @@ import { useNavigate } from "react-router-dom";
 
 import Title from '../components/Title';
 import LandingButton from '../components/LandingBtn';
-
+import { Link } from "react-router-dom";
 import '../styles/simple/common.css'
+
+
+const StyledLink = styled(Link)`
+text-decoration: none;
+color: inherit;
+`;
+
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -44,7 +51,9 @@ const LandingPage = () => {
 
   return (
     <>
-      <Title title='LandingPage' />
+      <StyledLink to='' aria-label="테마를 선택하는 페이지입니다. 시각 장애인을 배려한 심플 모드와 비장애인을 위한 디테일 모드가 있습니다.">
+        <Title title='LandingPage' />
+      </StyledLink>
       <ButtonContainer>
         <LandingButton text='SimpleMode' onClick={simpleModeClick} aria-label="심플 모드 적용" />
         <LandingButton text='DetailMode' onClick={detailModeClick} aria-label="디테일 모드 적용"/>

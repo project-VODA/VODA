@@ -601,11 +601,11 @@ class VideoRoomComponent extends Component {
                     {localUser !== undefined && localUser.getStreamManager() !== undefined && (
                         <div className="OT_root OT_publisher custom-class" id="localUser">
                           <span>
-                            {/* {userHandicap ? (<SettingButton id='hearExpression' text='표정 듣기' onClick={this.hearExpression} aria-label='표정 듣기 버튼입니다.' />
-                              ) : ( <SettingButton id='sendExpression' text='표정 보내기' onClick={this.sendExpression} aria-label='표정 보내기 버튼입니다.' />
-                              )} */}
-                              <SettingButton id='hearExpression' text='표정 듣기' onClick={this.hearExpression} aria-label='표정 듣기 버튼입니다.' />
-                              <SettingButton id='sendExpression' text='표정 보내기' onClick={this.sendExpression} aria-label='표정 보내기 버튼입니다.' />
+                            {userHandicap ? (<SettingButton id='hearExpression' text='표정 듣기' onClick={this.hearExpression} aria-label='표정 듣기 버튼입니다.' />
+                              ) : ( <SettingButton id='sendExpression' text='표정 보내기' onClick={this.sendExpressionData} aria-label='표정 보내기 버튼입니다.' />
+                              )}
+                              {/* <SettingButton id='hearExpression' text='표정 듣기' onClick={this.hearExpression} aria-label='표정 듣기 버튼입니다.' />
+                              <SettingButton id='sendExpression' text='표정 보내기' onClick={this.sendExpressionData} aria-label='표정 보내기 버튼입니다.' /> */}
                         </span>
                             <StreamComponent user={localUser} handleNickname={this.nicknameChanged} />
                         </div>

@@ -5,12 +5,19 @@ import { useDispatch } from "react-redux";
 import { userSliceLogin } from "../../store/userSlice";
 
 import { loginServer } from "../../apis/user";
-
+import { Link as TitleLink } from "react-router-dom" ;
 import Title from '../../components/Title';
 import Input from '../../components/SubmitInputText';
 import LoginButton from '../../components/RegisterButton';
 import Link from "../../components/TextLink";
 import { access } from "fs";
+
+import styled from "styled-components";
+
+const StyledLink = styled(TitleLink)`
+text-decoration: none;
+color: inherit;
+`;
 
 const SimpleLogin = () => {
   const [email, setEmail] = useState('');
@@ -73,8 +80,9 @@ const SimpleLogin = () => {
 
   return (
     <>
-      <Title title='로그인' />
-
+      <StyledLink to='' aria-label="로그인 페이지입니다.">
+        <Title title='로그인' />
+      </StyledLink>
       <Input
         type="email"
         alt="Input Email"
