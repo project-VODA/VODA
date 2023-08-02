@@ -2,7 +2,7 @@
 
 import React, { useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAppSelector } from "../constants/types";
+//import { useAppSelector } from "../constants/types";
 
 // 로그인 관련
 // import { useAppSelector } from "../../constants/types";
