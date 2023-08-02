@@ -1,6 +1,7 @@
 import React , { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import Title from '../../components/Title';
 import HandleButton from '../../components/HandleBtn';
@@ -9,6 +10,10 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { userSliceLogout } from '../../store/userSlice';
 
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+`;
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -83,7 +88,9 @@ const SimpleHomePage = () => {
 
   return (
     <>
-      <Title title='Homepage' />
+    <StyledLink to=''>
+      <Title title='Homepage' aria-label='홈페이지 입니다.'/>
+    </StyledLink>
       <ButtonContainer>
         <HandleButton text='서비스 소개' onClick={redirectAbout} />
         <HandleButton text='영상통화' onClick={redirectVideo} />

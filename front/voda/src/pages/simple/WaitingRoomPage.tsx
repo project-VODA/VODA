@@ -14,6 +14,15 @@ import Input from "../../components/InputText";
 import { searchUser } from "../../apis/friend";
 import { sendCalling } from "../../apis/calling";
 
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+
+
+const StyledLink = styled(Link)`
+text-decoration: none;
+color: inherit;
+`;
+
 const SimpleRoom = () => {
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -32,8 +41,9 @@ const SimpleRoom = () => {
 
   return (
     <>
-      <Title title="영상통화" />
-      
+      <StyledLink to='' aria-label="영상통화를 걸 친구를 찾는 페이지입니다.">
+        <Title title="Friend" />
+      </StyledLink>
       <DivideContainer
         leftChild={<FriendList></FriendList>}
         rightChild={<RecentCalls></RecentCalls>}
