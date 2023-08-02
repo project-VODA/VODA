@@ -98,3 +98,16 @@
   - 표정 보내기 버튼 추가 (함수는 아직 switchCamera로 임시)
   - openvidu logo image 변경
   - openvidu background color 변경
+
+- 23.08.02 KSH
+  - 랜딩 페이지 추가
+  - LandingBtn 컴포넌트 추가
+  - 각 버튼 누를 시 hompage로 navigate 후 reload해 Theme 적용
+  - 기존 메인 페이지 url이 ('/') 에서 ('/home') 으로 변경
+  - 대신 랜딩페이지가 ('/') url을 차지
+  - 통화 화면 표정 보내기 버튼 UI 수정
+
+- 23.08.02 KSH
+  - 통화 종료시 ('/') 에서 ('/home')으로 수정
+  - VODA로고 클릭시 ('/') 에서 ('/home')으로 수정
+  - 로그인 시 ('/') 에서 ('/home')으로 수정(심플 디테일 both)

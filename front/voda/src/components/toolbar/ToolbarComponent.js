@@ -65,7 +65,7 @@ export default class ToolbarComponent extends Component {
 
   leaveSession() {
     this.props.leaveSession();
-    window.location.href = "/";
+    window.location.href = "/home";
   }
 
   toggleChat() {
