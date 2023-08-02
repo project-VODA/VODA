@@ -45,7 +45,7 @@ const SimpleMyPage = () => {
     userEmail: email,
     userName: name,
     userPass: password,
-    userHandicap: handicap,
+    userHandicap: handicap ? 1 : 0,
   };
 
   const changePasswordData = {
