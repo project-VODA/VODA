@@ -12,6 +12,13 @@ import Info from '../../components/InfoText';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { UserInfoType, userSliceLogout } from '../../store/userSlice';
+import { Link } from "react-router-dom";
+
+
+const StyledLink = styled(Link)`
+text-decoration: none;
+color: inherit;
+`;
 
 
 
@@ -170,8 +177,9 @@ const SimpleMyPage = () => {
 
   return (
     <>
-      <Title title='마이페이지' aria-label='마이 페이지 입니다.'/>
-
+      <StyledLink to='' aria-label='마이페이지입니다.'>
+        <Title title='마이페이지' aria-label='마이 페이지 입니다.'/>
+      </StyledLink>
       <Input 
         type="password"
         placeholder="기존 비밀번호"
