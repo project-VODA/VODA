@@ -6,9 +6,7 @@ import Title from "../../components/Title";
 const DetailPage = () => {
   return (
     <>
-      <Link to=''>
         <Title title="Homepage" />
-      </Link>
     </>
   );
 };

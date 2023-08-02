@@ -12,6 +12,7 @@ import LoginButton from '../../components/RegisterButton';
 import Link from "../../components/TextLink";
 import { access } from "fs";
 
+import '../../styles/simple/RegisterContainer.css'
 import styled from "styled-components";
 
 const StyledLink = styled(TitleLink)`
@@ -83,6 +84,7 @@ const SimpleLogin = () => {
       <StyledLink to='' aria-label="로그인 페이지입니다.">
         <Title title='로그인' />
       </StyledLink>
+      <div id='RegisterContainer'>
       <Input
         type="email"
         alt="Input Email"
@@ -106,6 +108,7 @@ const SimpleLogin = () => {
       <LoginButton text='비밀번호를 잊으셨나요?' onClick={RedirectTemporaryPass} aria-label="비밀번호 찾기 버튼입니다. 비밀번호 찾기 페이지로 이동합니다."/> 
 
       <LoginButton text='로그인' onClick={HandleLogin} aria-label="로그인 버튼입니다."/>
+      </div>
     </>
   );
 };

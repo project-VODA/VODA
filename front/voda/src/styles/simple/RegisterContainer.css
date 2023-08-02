@@ -1,0 +1,5 @@
+/* simple signup 페이지와 simple login 페이지의 중앙 배치를 위한 id=RegisterContainer css입니다. */
+
+#RegisterContainer {
+  margin: 3.8% 9%;
+}

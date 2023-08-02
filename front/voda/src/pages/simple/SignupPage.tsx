@@ -12,6 +12,7 @@ import { sendAuthenticationCode } from '../../apis/email';
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+import '../../styles/simple/RegisterContainer.css'
 
 const StyledLink = styled(Link)`
 text-decoration: none;
@@ -129,6 +130,7 @@ const SimpleSignup = () => {
         <Title title='회원가입' aria-label='회원가입 페이지입니다.'/>
       </StyledLink>
       
+    <div id='RegisterContainer'>
       <Input 
         type="email"
         placeholder="이메일" 
@@ -179,6 +181,7 @@ const SimpleSignup = () => {
       />
       
       <RegisterButton text='회원가입' onClick={handleSignup} aria-label='회원가입 버튼입니다.'/>
+    </div>
     </>
   );
 };

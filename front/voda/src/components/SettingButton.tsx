@@ -14,7 +14,7 @@ interface ThemeProps {
 const SettingButton = styled('button')<ThemeProps>`
   width: 130px;
   height: 40px;
-  border-radius: 20px;
+  border-radius: 15px;
   font-size: 18px;
   padding: 8px;
   margin: 8px;
