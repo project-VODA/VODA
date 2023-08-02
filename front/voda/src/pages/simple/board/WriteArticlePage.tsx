@@ -8,9 +8,16 @@ import Title from '../../../components/Title';
 import Input from '../../../components/InputText';
 import InputTextArea from '../../../components/InputTextArea';
 import RegistButton from '../../../components/RegisterButton';
+import { UserInfoType } from '../../../store/userSlice';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/store';
 
 
 const SimpleWriteArticle = () => {
+  // redux에서 저장된 정보 가져오기
+  const [accessToken, userInfo]: [string, UserInfoType] = useSelector((state:RootState) => {
+    return [state.user.accessToken, state.user.userInfo];
+  })
   const [email, setEmail] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -24,7 +31,7 @@ const SimpleWriteArticle = () => {
 
   // 현재 로그인 중인 유저 이메일을 작성자 이메일로 화면 마운트 시 적용
   useEffect(() => {
-    setEmail(sessionStorage.getItem("userEmail"));
+    setEmail(userInfo.userEmail);
   }, []);
 
   const handleRegist = () => {
