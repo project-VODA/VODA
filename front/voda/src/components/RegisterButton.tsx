@@ -19,7 +19,7 @@ const ButtonContainer = styled.div`
 // 테마(모드) 별로 색상 고려해줘야됌!!
 const RegisterButton = styled('button')<ThemeProps>`
   width: 60%;
-  height: 40px;
+  height: 60px;
   border-radius: 20px;
   font-size: 20px;
   padding: 8px;
@@ -27,6 +27,7 @@ const RegisterButton = styled('button')<ThemeProps>`
   border: 1px solid ${({ theme }) => theme.text};
   background: ${({ theme }) => theme.text};
   color: ${({ theme }) => theme.body};
+  max-width: 467px;
 
   &:hover {
     background: ${({ theme }) =>

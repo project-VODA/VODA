@@ -39,7 +39,7 @@ const CheckboxInput = styled.input`
 `;
 
 const CheckboxLabel = styled.span`
-  font-size: 18px;
+  font-size: 20px;
   margin: 4px;
   margin-bottom: 12px;
 `;
