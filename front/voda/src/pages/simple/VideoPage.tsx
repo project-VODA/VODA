@@ -6,6 +6,14 @@ import Title from '../../components/Title';
 // import OpenVidu from "../../components/OpenVidu";
 import VideoRoomComponent from '../../components/VideoRoomComponent';
 import '../../styles/simple/video.css'
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+
+
+const StyledLink = styled(Link)`
+text-decoration: none;
+color: inherit;
+`;
 
 
 const SimpleVideo = () => {
@@ -26,7 +34,9 @@ const SimpleVideo = () => {
 
   return (
     <>
+    <StyledLink to='' aria-label="영상통화 페이지입니다.">
       <Title title="Video" />
+    </StyledLink>
       <VideoRoomComponent token={sessionToken} callNo={callNo} />
     </>
   );

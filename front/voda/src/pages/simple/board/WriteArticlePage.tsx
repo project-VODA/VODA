@@ -8,6 +8,12 @@ import Title from '../../../components/Title';
 import Input from '../../../components/InputText';
 import InputTextArea from '../../../components/InputTextArea';
 import RegistButton from '../../../components/RegisterButton';
+import { Link } from "react-router-dom";
+
+const StyledLink = styled(Link)`
+text-decoration: none;
+color: inherit;
+`;
 
 
 const SimpleWriteArticle = () => {
@@ -47,8 +53,9 @@ const SimpleWriteArticle = () => {
 
   return (
     <>
-      <Title title='문의글 작성' />
-
+      <StyledLink to='' aria-label='새 문의글을 작성하는 페이지입니다.'>
+        <Title title='문의글 작성' />
+      </StyledLink>
       <Input
         type="text"
         placeholder="제목"

@@ -9,6 +9,14 @@ import RegisterButton from '../../components/RegisterButton';
 import CheckBox from '../../components/CheckBox';
 import Info from '../../components/InfoText';
 import { sendAuthenticationCode } from '../../apis/email';
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+
+
+const StyledLink = styled(Link)`
+text-decoration: none;
+color: inherit;
+`;
 
 
 const SimpleSignup = () => {
@@ -117,7 +125,9 @@ const SimpleSignup = () => {
 
   return (
     <>
-      <Title title='회원가입' aria-label='회원가입 페이지입니다.'/>
+      <StyledLink to='' aria-label='회원가입 페이지입니다.'>
+        <Title title='회원가입' aria-label='회원가입 페이지입니다.'/>
+      </StyledLink>
       
       <Input 
         type="email"
