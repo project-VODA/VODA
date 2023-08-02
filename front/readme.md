@@ -103,6 +103,9 @@
   - openvidu logo image 변경
   - openvidu background color 변경
 
+- 23.08.01 KMJ
+  - openVidu에 face-api 적용
+
 - 23.08.02 Choi
   - 친구 페이지 구현
   - 친구 목록/추가/삭제 api 연결
@@ -127,3 +130,6 @@
   - WaitingRoomPage, VideoPage영상통화 대기방에서 친구에게 전화거는 action 추가
   - VideoRoomComponent 영상통화 종료시 back에 종료 api요청 action 추가 
 
+- 23.08.02 KJW
+  - 표정 보내기 버튼 누르면 시그널로 임시 데이터 전송 기능 구현
+  - 표정 듣기 버튼 누르면 시그널로 데이터 요청해서 임시 데이터 받는 기능 구현
