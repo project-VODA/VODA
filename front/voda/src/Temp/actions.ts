@@ -10,3 +10,14 @@ export const setScreenMode = (mode: 'simple' | 'detail') => ({
   type: ActionTypes.SET_SCREEN_MODE,
   payload: mode,
 });
+
+export const setSimpleMode = (mode: 'simple') => ({
+  type: ActionTypes.SET_SCREEN_MODE,
+  payload: mode,
+})
+
+
+export const setDetailMode = (mode: 'detail') => ({
+  type: ActionTypes.SET_SCREEN_MODE,
+  payload: mode,
+})
