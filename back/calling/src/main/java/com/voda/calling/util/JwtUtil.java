@@ -78,7 +78,9 @@ public class JwtUtil {
     /**
      * Claim 에서 userEmail 가져오기
      */
-    public String getUserEmailFromToken(String token) {
+    public String getUserEmailFromToken(String bearer) {
+        String token = extractTokenFromHeader(bearer);
+        if(token == null) return null;
         String userEmail = String.valueOf(getAllClaims(token).get("userEmail"));
         return userEmail;
     }
