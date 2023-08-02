@@ -124,7 +124,7 @@ export default function Navigation() {
   return (
     <NavContainer navbar={theme.navbar}>
       <NavContentContainer>
-        <Link to="/">
+        <Link to="/home">
           <LogoImage
             src={logoSrc}
             alt="voda_logo"

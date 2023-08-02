@@ -62,7 +62,7 @@ const SimpleLogin = () => {
   const naviagte = useNavigate();
 
   const RedirectHomePage = () => {
-    naviagte('/');
+    naviagte('/home');
   }
 
   const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
