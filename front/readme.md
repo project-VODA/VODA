@@ -98,3 +98,10 @@
   - 표정 보내기 버튼 추가 (함수는 아직 switchCamera로 임시)
   - openvidu logo image 변경
   - openvidu background color 변경
+
+- 23.08.01 KMJ
+  - openVidu에 face-api 적용
+
+- 23.08.02 KJW
+  - 표정 보내기 버튼 누르면 시그널로 임시 데이터 전송 기능 구현
+  - 표정 듣기 버튼 누르면 시그널로 데이터 요청해서 임시 데이터 받는 기능 구현
