@@ -60,18 +60,6 @@ const SimpleMyPage = () => {
     naviagte('/');
   }
 
-  /*useEffect(() => {
-    getUserInfo(sessionStorage.getItem("userEmail"))
-      .then((res) => {
-        setEmail(res.userEmail);
-        setName(res.userName);
-        setHandicap(res.userHandicap);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-  }, []);*/
-
   const handleModify = () => {
     let err = false;
     let msg = '';
