@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel("회원 검색 결과")
 public class UserSearchResponse {
-    
+
     private String userEmail;
     private String userName;
     private boolean isFriend;//친구 여부

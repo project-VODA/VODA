@@ -5,59 +5,26 @@ import Title from '../../components/Title';
 import DivideContainer from '../../components/DivideHorizontalContainer'
 import FriendList from "../../components/FriendList";
 import RecentCalls from "../../components/RecentCall";
+import UserSearchList from "../../components/UserSearchList";
 import Button from "../../components/SettingButton";
 import RedButton from "../../components/DeleteButton";
-import Input from "../../components/InputText";
-import { searchUser } from "../../apis/friend";
-
-type User = {
-  userEmail: string;
-  userName: string;
-  friend: boolean;
-};
-
-type UserList = User[];
 
 const SimpleRoom = () => {
-
   const [isModalOpen, setModalOpen] = useState(false);
-  const [keyword, setKeyword] = useState('');
-  const [userList, setUserList] = useState<UserList>([]);
+
+  // 모달 닫힐 때 친구 목록 갱신 필요, 리덕스 이용해야 함.. 
+  // isModalOpen을 FriendList 컴포넌트로 넘기는 식이 이상적일듯
+
+  // useEffect(() => {
+  //   getFriendList(sessionStorage.getItem("userEmail"))
+  //         .then((res: FriendsList) => {
+  //           setFriendList(res);
+  //         })
+  //         .catch((err) => {
+  //           console.log(err);
+  //         })
+  // }, [isModalOpen])
   
-  const userSearchRequest = {
-    keyword: keyword,
-    userEmail: sessionStorage.getItem("userEmail"),
-  };
-
-  useEffect(() => {
-    searchUser(userSearchRequest)
-      .then((res) => {
-        setUserList(res);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-
-  }, [keyword]);
-
-  const handleOpenModal = () => {
-    setModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setModalOpen(false);
-    setKeyword('');
-    setUserList([]);
-  };
-
-  const handleCalling = () => {
-
-  };
-
-  const handleRegistFriend = () => {
-
-  };
-
   return (
     <>
       <Title title="영상통화" />
@@ -67,36 +34,14 @@ const SimpleRoom = () => {
         rightChild={<RecentCalls></RecentCalls>}
       />
       <>
-        <Button onClick={handleOpenModal} text="친구찾기" />
+        <Button onClick={(e) => setModalOpen(true)} text="친구찾기" />
         <Modal 
           isOpen={isModalOpen} 
-          onRequestClose={handleCloseModal}
+          onRequestClose={(e) => setModalOpen(false)}
           ariaHideApp={false}
         >
-          <Input 
-            type="text"
-            placeholder="검색어"
-            value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
-          />
-          <RedButton onClick={handleCloseModal} text="X" />
-          <table>
-            <colgroup>
-              <col width = "40%" />
-              <col width = "40%" />
-              <col width = "20%" />
-            </colgroup>
-            <tbody>
-              {userList.length === 0 ? <tr><td colSpan={3}>검색 결과가 없습니다.</td></tr> : 
-                userList.map((user : User) => (
-                  <tr key={user.userName}>
-                    <td>{user.userName}</td>
-                    <td>{user.userEmail}</td>
-                    <td>{user.friend ? <Button onClick={handleCalling} text="통화 걸기" /> : <Button onClick={handleRegistFriend} text="친구추가" />}</td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+          <RedButton onClick={(e) => setModalOpen(false)} text="X" />
+          <UserSearchList/>
         </Modal>
       </>
     </>
