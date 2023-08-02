@@ -295,17 +295,21 @@ class VideoRoomComponent extends Component {
                 if (user.getConnectionId() === event.from.connectionId) {
                     const data = JSON.parse(event.data);
                     console.log('EVENTO REMOTE: ', event.data);
-                    if (data.isAudioActive !== undefined) {
-                        user.setAudioActive(data.isAudioActive);
-                    }
-                    if (data.isVideoActive !== undefined) {
-                        user.setVideoActive(data.isVideoActive);
-                    }
-                    if (data.nickname !== undefined) {
-                        user.setNickname(data.nickname);
-                    }
-                    if (data.isScreenShareActive !== undefined) {
-                        user.setScreenShareActive(data.isScreenShareActive);
+                    if (event.type === 'request' && data.expression) {
+                        this.sendExpression();
+                      } else {
+                        if (data.isAudioActive !== undefined) {
+                            user.setAudioActive(data.isAudioActive);
+                        }
+                        if (data.isVideoActive !== undefined) {
+                            user.setVideoActive(data.isVideoActive);
+                        }
+                        if (data.nickname !== undefined) {
+                            user.setNickname(data.nickname);
+                        }
+                        if (data.isScreenShareActive !== undefined) {
+                            user.setScreenShareActive(data.isScreenShareActive);
+                        }
                     }
                 }
             });
@@ -496,6 +500,42 @@ class VideoRoomComponent extends Component {
         }
     }
 
+
+    sendExpressionData = () => {
+        // Check if the localUser is connected and has a stream manager
+        if (this.state.localUser && this.state.localUser.getStreamManager()) {
+          // Send the text data as a broadcast message to all participants
+          this.state.session.signal({
+            data: "표정 데이터 보내기",
+            to: [], // Empty array means broadcast to everyone
+            type: 'my-chat', // Use the same type as the receiver is listening to
+          })
+          .then(() => {
+            console.log('Expression data successfully sent');
+          })
+          .catch(error => {
+            console.error('Error sending expression data:', error);
+          });
+        }
+    }
+
+    hearExpression= () => {
+        if (this.state.localUser && this.state.localUser.getStreamManager()) {
+          this.state.session.signal({
+            data: "expression",
+            to: [],
+            type: 'request', // Use the same type as the receiver is listening to
+          })
+          .then(() => {
+            console.log('Expression data successfully requested');
+          })
+          .catch(error => {
+            console.error('Error getting expression data:', error);
+          });
+        }
+    }
+
+
     render() {
         const mySessionId = this.state.mySessionId;
         const localUser = this.state.localUser;
@@ -538,9 +578,11 @@ class VideoRoomComponent extends Component {
                     {localUser !== undefined && localUser.getStreamManager() !== undefined && (
                         <div className="OT_root OT_publisher custom-class" id="localUser">
                           <span>
-                            {userHandicap ? (<SettingButton id='hearExpression' text='표정 듣기' onClick={this.switchCamera} aria-label='표정 듣기 버튼입니다.' />
-                              ) : ( <SettingButton id='sendExpression' text='표정 보내기' onClick={this.switchCamera} aria-label='표정 보내기 버튼입니다.' />
-                              )}
+                            {/* {userHandicap ? (<SettingButton id='hearExpression' text='표정 듣기' onClick={this.hearExpression} aria-label='표정 듣기 버튼입니다.' />
+                              ) : ( <SettingButton id='sendExpression' text='표정 보내기' onClick={this.sendExpressionData} aria-label='표정 보내기 버튼입니다.' />
+                              )} */}
+                              <SettingButton id='hearExpression' text='표정 듣기' onClick={this.hearExpression} aria-label='표정 듣기 버튼입니다.' />
+                              <SettingButton id='sendExpression' text='표정 보내기' onClick={this.sendExpressionData} aria-label='표정 보내기 버튼입니다.' />
                         </span>
                             <StreamComponent user={localUser} handleNickname={this.nicknameChanged} />
                         </div>
