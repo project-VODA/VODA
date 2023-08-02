@@ -41,5 +41,13 @@
   - 로그아웃 api GET에서 POST로 변경
   - Article의 articleRegTime TimeStamp에서 String으로 변경
 
+- 23.08.02 Choi
+  - 친구 삭제 레포지토리 변경
+    - 기존 Friend 객체를 받아서 삭제하는 방식 -> friendNo 로 삭제하는 방식
+  - 친구 api 관련 dto 추가
+  - 유저 검색 쿼리 정렬 기준 추가
+    - 친구인 유저부터 출력
+  - 친구 리스트 출력 쿼리 수정
+
 - 23.08.01 NG
   - jwt token을 활용한 Interceptor 구현

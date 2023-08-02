@@ -102,3 +102,12 @@
   - 표정 보내기 버튼 추가 (함수는 아직 switchCamera로 임시)
   - openvidu logo image 변경
   - openvidu background color 변경
+
+- 23.08.02 Choi
+  - 친구 페이지 구현
+  - 친구 목록/추가/삭제 api 연결
+  - 친구 목록 컴포넌트 구현
+  - 유저 검색 모달 창 구현
+    - 검색 기준 이미 친구부터 출력되게 변경
+  - 유저 검색 api 연결
+  - 최근 통화 목록 컴포넌트 구현
