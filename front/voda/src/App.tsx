@@ -15,6 +15,7 @@ import {
 
 // import Navbar from './components/Navbar';
 import Navigation from './components/Navigation';
+import LandingPage from './pages/LandingPage';
 
 import SimpleHomePage from './pages/simple/HomePage';
 import SimpleAbout from './pages/simple/AboutPage';
@@ -104,7 +105,7 @@ const App: React.FC = () => {
           console.log("갱신실패", err);
           dispatch(updateLoginStatus(false));
           dispatch(updateAccessToken(""));
-          <Navigate replace to="/" />;
+          <Navigate replace to="/home" />;
         }
       }
       return Promise.reject(error);
@@ -115,7 +116,8 @@ const App: React.FC = () => {
   const { theme, toggleTheme } = useMode();
 
   const commonRoutes = [
-    { path: '/', element: theme === SimpleTheme ? <SimpleHomePage /> : <DetailHomePage /> },
+    { path: '/', element: theme === SimpleTheme ? <LandingPage /> : <LandingPage /> },
+    { path: '/home', element: theme === SimpleTheme ? <SimpleHomePage /> : <DetailHomePage /> },
     { path: '/about', element: theme === SimpleTheme ? <SimpleAbout /> : <DetailAbout /> },
     { path: '/login', element: theme === SimpleTheme ? <SimpleLogin /> : <DetailLogin /> },
     // KMJ

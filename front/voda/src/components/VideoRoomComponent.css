@@ -901,23 +901,30 @@
 /* custom localuser */
 #localUser {
   position: relative;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
 
 #localUser video{
   position: absolute;
-  bottom: 20%;
+  bottom: 30%;
   right: 2%;
-  height: 50%;
-  width: 50%;
+  height: 40%;
+  width: auto;
+  max-width: 100%;
   /* position: fixed; */
   
 }
 
 #hearExpression {
-  width: 200% !important;
-  padding: 100px 200px !important;
+  /* width: 100% !important; */
+  /* position: fixed; */
+  /* right: 0; */
+  width: 100%;
+  height: 25%;
+  font-size: 40px;
+  /* padding: 100px 200px !important; */
 }
 
 #sendExpression {

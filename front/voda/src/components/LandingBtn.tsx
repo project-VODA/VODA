@@ -11,11 +11,11 @@ interface ThemeProps {
   theme: Theme;
 }
 
-const HandleButton = styled.button<ThemeProps>`
-  width: 50vh;
-  height: 30vh;
+const LandingButton = styled.button<ThemeProps>`
+  width: 40vw;
+  height: 70vh;
   border-radius: 10px;
-  font-size: 50px;
+  font-size: 6vw;
   margin: 16px;
   display: flex;
   justify-content: center;
@@ -45,9 +45,9 @@ export default function Button({ onClick, text, alt, 'aria-label':ariaLabel }: B
 
   return (
     <>
-      <HandleButton onClick={onClick} theme={theme} aria-label={ariaLabel}>
+      <LandingButton onClick={onClick} theme={theme} aria-label={ariaLabel}>
         {text}
-      </HandleButton>
+      </LandingButton>
     </>
   );
 }
