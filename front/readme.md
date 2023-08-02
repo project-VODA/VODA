@@ -88,6 +88,10 @@
   - 친구 페이지 임시 저장
   - 통화목록 등 추가 api 필요
 
+- 23.08.02 NG
+  - redux 사용해서 jwt token 및 user 정보 저장
+  - jwt token api 적용
+  - user 기능에 redux 활용
 
 - 23.08.01 KSH
   - 비디오 페이지 UI 커스텀 초안
