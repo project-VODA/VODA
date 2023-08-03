@@ -11,8 +11,9 @@ import UserSearchList from "../../components/UserSearchList";
 import RecentCalls from "../../components/RecentCall";
 import { searchUser } from "../../apis/friend";
 import { sendCalling } from "../../apis/calling";
+import DeleteFriendButton from '../../components/DeleteFriendBtn'
 
-
+import '../../styles/simple/SimpleWaitingPage.css'
 
 const StyledLink = styled(Link)`
 text-decoration: none;
@@ -48,22 +49,28 @@ const SimpleRoom = () => {
         <HandleButton text='친구검색' onClick={handleFriendModalOpen} />
         <HandleButton text='최근통화' onClick={handleRecentCallModalOpen} />
       </ButtonContainer>
-      <Modal 
+      <div id="customModalContainer">
+      <Modal id="customModal"
           isOpen={isFriendModalOpen} 
           onRequestClose={(e) => setFriendModalOpen(false)}
           ariaHideApp={false}
         >
-        <RedButton onClick={(e) => setFriendModalOpen(false)} text="X" />
+        <span style={{display: 'flex', justifyContent: 'flex-end'}}>
+          <DeleteFriendButton onClick={(e) => setFriendModalOpen(false)} text="X" aria-label="창 닫기 버튼" />
+        </span>
         <UserSearchList/>
       </Modal>
-      <Modal 
+      <Modal id="customModal"
           isOpen={isRecentCallModalOpen} 
           onRequestClose={(e) => setRecentCallModalOpen(false)}
           ariaHideApp={false}
         >
-        <RedButton onClick={(e) => setRecentCallModalOpen(false)} text="X" />
+        <span style={{display: 'flex', justifyContent: 'flex-end'}}>
+          <DeleteFriendButton onClick={(e) => setRecentCallModalOpen(false)} text="X" aria-label="창 닫기 버튼"/>
+        </span>
         <RecentCalls/>
       </Modal>
+      </div>
     </>
   );
 };
