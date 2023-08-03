@@ -35,12 +35,13 @@ const ContentField = styled.div<ThemeProps>`
 
 interface ContentProps {
     articleContent: String;
+    'aria-label'?: string;
 }
 
-export default function ArticleContent( {articleContent} : ContentProps ) {
+export default function ArticleContent( {articleContent, 'aria-label':ariaLabel} : ContentProps ) {
     const { theme } = useContext(ThemeContext);
 
     return(
-        <ContentField>{articleContent}</ContentField>
+        <ContentField aria-label={ariaLabel}>{articleContent}</ContentField>
     )
 }

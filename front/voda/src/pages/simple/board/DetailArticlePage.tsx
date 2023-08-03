@@ -53,15 +53,19 @@ const SimpleDetailArticle = () => {
     return (
 
         <>
-          <StyledLink to='' aria-label='게시글 상세 조회 페이지입니다.'>
+          <StyledLink to='' aria-label={`${detailBoardData.articleTitle} 상세 조회 페이지입니다.`}>
             <Title title={detailBoardData.articleTitle} />
           </StyledLink>
             <ItemContainer>
                 {/* 게시글 header */}
-                <ArticleHeader articleNo={detailBoardData.articleNo} articleRegDate={detailBoardData.articleRegTime} />
+                {/* <StyledLink to='' aria-label={`${detailBoardData.articleNo}번째 글, 작성일시 ${detailBoardData.articleRegTime}`}> */}
+                  <ArticleHeader articleNo={detailBoardData.articleNo} articleRegDate={detailBoardData.articleRegTime} aria-label={`${detailBoardData.articleNo}번째 글, 작성일시 ${detailBoardData.articleRegTime}`}/>
+                {/* </StyledLink> */}
 
                 {/* 게시글 content */}
-                <ArticleContent articleContent={detailBoardData.articleTitle} />
+                {/* <StyledLink to='' aria-label={`게시글 내용, ${detailBoardData.articleTitle}`}> */}
+                  <ArticleContent articleContent={detailBoardData.articleTitle} aria-label={`게시글 내용, ${detailBoardData.articleTitle}`}/>
+                {/* </StyledLink> */}
             </ItemContainer>
 
             {/* <Button text='수정' onClick={ModifyOneArticle} /> */}
