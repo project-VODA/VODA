@@ -13,5 +13,7 @@ public class CallNotification {
 
     private String receiverEmail;
     private String senderEmail;
+    private String sessionId;
+    private String token;
     private String content;
 }
