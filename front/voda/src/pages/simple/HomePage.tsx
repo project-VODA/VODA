@@ -1,11 +1,11 @@
-import React , { useEffect } from 'react';
+import React , { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 
 import Title from '../../components/Title';
 import HandleButton from '../../components/HandleBtn';
 import { redirectKakao, logout } from '../../apis/user';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { userSliceLogout } from '../../store/userSlice';
 
@@ -21,13 +21,13 @@ const ButtonContainer = styled.div`
 const SimpleHomePage = () => {
 
   const navigate = useNavigate();
-  const accessToken = useSelector((state:RootState) => {
-    return state.user.accessToken;
+  const dispatch = useDispatch();
+  const [accessTokenRedux, isLoginRedux] = useSelector((state:RootState) => {
+    return [state.user.accessToken, state.user.isLogin];
   })
 
-  const isLogin = useSelector((state:RootState) => {
-    return state.user.isLogin;
-  })
+  const [accessToken, setAccessToken] = useState(accessTokenRedux);
+  const [isLogin, setIsLogin] = useState(isLoginRedux);
 
   const RedirectSocialLogin = () => {
     navigate('/social-login');
@@ -63,7 +63,7 @@ const SimpleHomePage = () => {
     if(accessToken !== null && accessToken !== ''){
       logout()
       .then((res) => {
-        userSliceLogout();
+        dispatch(userSliceLogout());
         RedirectHomePage();
       })
       .catch((err) => {

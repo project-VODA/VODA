@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { persistor } from "./store";
 
 const userSlice = createSlice({
     name: 'userSlice',
@@ -8,7 +9,7 @@ const userSlice = createSlice({
         userInfo:{
             userEmail: '',
             userName: '',
-            userHandicap: false,
+            userHandicap: '',
             role: '',
         },
         isLogin: false,
@@ -44,7 +45,7 @@ const userSlice = createSlice({
             state.userInfo = {
                 userEmail: '',
                 userName: '',
-                userHandicap: false,
+                userHandicap: '',
                 role: '',
             };
             state.isLogin = false;
@@ -53,11 +54,11 @@ const userSlice = createSlice({
 });
 
 export default userSlice;
-export const {userSliceLogin, userSliceLogout, userSliceAllocate} = userSlice.actions;
+export const {userSliceLogin, userSliceAllocate, userSliceLogout} = userSlice.actions;
 
 export interface UserInfoType{
     userEmail: string,
     userName: string,
-    userHandicap: boolean,
+    userHandicap: string,
     role: string,
 }
