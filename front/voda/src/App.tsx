@@ -16,6 +16,7 @@ import {
 // import Navbar from './components/Navbar';
 import Navigation from './components/Navigation';
 import LandingPage from './pages/LandingPage';
+import ServerEvent from './components/ServerEvent';
 
 import SimpleHomePage from './pages/simple/HomePage';
 import SimpleAbout from './pages/simple/AboutPage';
@@ -149,6 +150,7 @@ const App: React.FC = () => {
       <>
         <GlobalStyle theme={theme === SimpleTheme ? SimpleTheme : DetailTheme} />
         <Router>
+          <ServerEvent />
           <Navigation />
           <ModeToggle />
           <Routes>
@@ -161,5 +163,6 @@ const App: React.FC = () => {
     </ThemeContext.Provider>
   );
 };
+
 
 export default App;
