@@ -49,11 +49,11 @@ const RecentCalls = () => {
 
     sendCalling(callSendRequest)
       .then((res) => {
-        console.log(res.sessionToken);
+        console.log(res.data.sessionToken);
         navigate('/video',{
           state: {
-            sessionToken : `${res.sessionToken}`,
-            callNo : `${res.callNo}`
+            sessionToken : `${res.data.sessionToken}`,
+            callNo : `${res.data.callNo}`
           }
         });
       })
