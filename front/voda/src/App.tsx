@@ -50,6 +50,8 @@ import { useMode } from './hooks/useMode';
 import ModeToggle from './components/ModeToggle';
 import DetailWriteArticle from './pages/detail/board/WriteArticle';
 
+import ServerEvent from './components/ServerEvent'
+
 // 1) 다수의 props 발생 시 interface 설정
 interface ContextProps {
   theme: Theme;
@@ -146,6 +148,7 @@ const App: React.FC = () => {
       <>
         <GlobalStyle theme={theme === SimpleTheme ? SimpleTheme : DetailTheme} />
         <Router>
+          <ServerEvent />
           <Navigation />
           <ModeToggle />
           <Routes>
