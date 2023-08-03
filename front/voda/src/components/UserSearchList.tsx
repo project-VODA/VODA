@@ -117,9 +117,9 @@ const UserSearchList = () => {
       />
       <table>
         <colgroup>
+          <col width="30%" />
+          <col width="30%" />
           <col width="40%" />
-          <col width="40%" />
-          <col width="20%" />
         </colgroup>
         <tbody>
           {userList.length === 0 ? (
