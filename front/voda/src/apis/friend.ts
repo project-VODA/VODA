@@ -1,5 +1,11 @@
 import {axiosServer} from "./server";
 
+// 친구 번호 찾기
+export const findFriendNo = async (userEmail: string, friendEmail: string) => {
+  const res = await axiosServer().get<any>(`/friends/find/${userEmail}/${friendEmail}`);
+  return res.data;
+}
+
 // 친구 등록
 export const registFriend = async (friend: object) => {
   const res = await axiosServer().post<any>(`/friends/regist`, friend);

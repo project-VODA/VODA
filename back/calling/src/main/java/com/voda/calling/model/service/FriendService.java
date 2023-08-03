@@ -36,14 +36,8 @@ public class FriendService {
         friendRepository.save(friend);
     }
 
-    public List<UserSearchResponse> searchUser(String keyword, String userEmail) {
+    public List<FriendResponse> searchUser(String keyword, String userEmail) {
         return userRepository.searchUsersByKeyword(keyword, userEmail);
-    }
-
-
-    public Friend searchRelationship(String userEmail, String friendEmail) {
-
-        return friendRepository.findByUserEmailAndFriendEmail(userEmail, friendEmail);
     }
 
     public List<FriendResponse> searchAllFriend(String userEmail) {

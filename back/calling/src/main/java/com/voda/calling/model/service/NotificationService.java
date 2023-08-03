@@ -81,6 +81,8 @@ public class NotificationService {
             log.info(receiverId);
             sendToClient(emitter, receiverId, callNotification);
         });
+        
+        log.info("sse 전달성공ㅇ");
     }
 
     /**

@@ -64,6 +64,10 @@ const SimpleHomePage = () => {
     navigate('/feedback')
   };
 
+  const redirectEnvPage = () => {
+    naviagte('/setting')
+  };
+
   const handleLogout = () => {
     if(accessToken !== null && accessToken !== ''){
       logout()
@@ -94,11 +98,11 @@ const SimpleHomePage = () => {
       <ButtonContainer>
         <HandleButton text='서비스 소개' onClick={redirectAbout} />
         <HandleButton text='영상통화' onClick={redirectVideo} />
+        <HandleButton text="고객의 소리함" onClick={redirectFeedback} />
         <HandleButton text='마이 페이지' onClick={redirectMyPage} />
         {/* <HandleButton text='redirect' onClick={RedirectSocialLogin} /> */}
-        <HandleButton text='카카오 로그인' onClick={handleSocialLogin} />
-        <HandleButton text="고객의 소리함" onClick={redirectFeedback} />
-
+        {/* <HandleButton text='카카오 로그인' onClick={handleSocialLogin} /> */}
+        <HandleButton text="환경 설정" onClick={redirectEnvPage} />
         {/* 로그인 유저 존재 여부에 따라 버튼 렌더링 */}
         {isLogin ? (
           <HandleButton text="로그아웃" onClick={handleLogout} />

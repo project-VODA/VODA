@@ -9,6 +9,10 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { useNavigate } from 'react-router-dom';
 
+// react-icons
+import { FiPhoneCall } from "react-icons/fi"
+
+
 
 type CallHistory = {
   senderName: string;
@@ -38,7 +42,7 @@ const RecentCalls = () => {
         console.error(err);
       })
   }, []);
-  
+
   const navigate = useNavigate();
 
   const handleCalling = (email: string) => {
@@ -64,30 +68,71 @@ const RecentCalls = () => {
 
   return (
     <>
-      <table className = 'recentCallTable'>
-        <colgroup>
-          <col width = "40%" />
-          <col width = "40%" />
-          <col width = "20%" />
-        </colgroup>
-        <thead>
-          <tr>
-            <th>대상</th>
-            <th>통화시간</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {callHistoryList.length === 0 ? <tr><td colSpan={3}>통화 기록이 존재하지 않습니다.</td></tr> :
-            callHistoryList.map((callHistory: CallHistory) => (
-              <tr key={callHistory.startTime}>
-                <td text-align='center'>{callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverName : callHistory.senderName}</td>
-                <td text-align='center'>{callHistory.startTime}</td>
-                <td text-align='center'><Button text="통화" onClick={() => handleCalling(callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverEmail : callHistory.senderEmail)}/></td>
-              </tr>
-          ))}
-        </tbody>
-      </table>
+    <span> {localStorage.getItem('theme') === 'simple' ? (<div style={{ display: 'flex', justifyContent: 'center', margin: '0 55px 2%' }}><span style={{ fontSize:'28px', fontWeight:'bolder' }}>최근 통화 목록</span></div>)
+    :(<div style={{  display: 'flex', justifyContent: 'center', margin: '7% 55px 2%'}}>
+        <span style={{ fontSize:'28px', fontWeight:'bolder' }}>최근 통화 목록</span>
+      </div>)} </span>
+      <span> {localStorage.getItem('theme') === 'simple' ? 
+      ( <table className = 'recentCallTable' style={{ margin: '0 auto', justifyContent: 'center', borderCollapse: 'separate', borderSpacing: '10px', maxWidth: '950px' }}>
+      <colgroup>
+        <col width = "45%" />
+        <col width = "45%" />
+        <col width = "10%" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th>대상</th>
+          <th>통화시간</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {callHistoryList.length === 0 ? <tr><td colSpan={3}>통화 기록이 존재하지 않습니다.</td></tr> :
+          callHistoryList.map((callHistory: CallHistory) => (
+            <tr key={callHistory.startTime}  style={{ textAlign: 'center' }}>
+              <td text-align='center'>{callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverName : callHistory.senderName}</td>
+              <td text-align='center'>{callHistory.startTime}</td>
+              <div id='DetailCallContainer'>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '28px', fontSize:'25px'}}>
+              <span>
+                {localStorage.getItem('theme') === 'simple' ?
+              (<td text-align='center'><Button text="통화" onClick={() => handleCalling(callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverEmail : callHistory.senderEmail)} aria-label={`${callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverName : callHistory.senderName} 님에게 전화를 하려면 버튼을 누르세요`}/></td>
+              ) : (<FiPhoneCall onClick={() => handleCalling(callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverEmail : callHistory.senderEmail)} />)}
+              </span></div></div>
+            </tr>
+        ))};
+      </tbody>
+    </table> ) : (
+      <table className = 'recentCallTable' style={{ borderCollapse: 'separate', borderSpacing: '30px 20px' }}>
+      <colgroup>
+        <col width = "45%" />
+        <col width = "45%" />
+        <col width = "10%" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th>대상</th>
+          <th>통화시간</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {callHistoryList.length === 0 ? <tr><td colSpan={3}>통화 기록이 존재하지 않습니다.</td></tr> :
+          callHistoryList.map((callHistory: CallHistory) => (
+            <tr key={callHistory.startTime}  style={{ textAlign: 'center' }}>
+              <td text-align='center'>{callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverName : callHistory.senderName}</td>
+              <td text-align='center'>{callHistory.startTime}</td>
+              <div id='DetailCallContainer'>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '28px', fontSize:'25px'}}>
+              <span>
+                {localStorage.getItem('theme') === 'simple' ?
+              (<td text-align='center'><Button text="통화" onClick={() => handleCalling(callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverEmail : callHistory.senderEmail)} aria-label={`${callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverName : callHistory.senderName} 님에게 전화를 하려면 버튼을 누르세요`}/></td>
+              ) : (<FiPhoneCall onClick={() => handleCalling(callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverEmail : callHistory.senderEmail)} />)}
+              </span></div></div>
+            </tr>
+        ))};
+      </tbody>
+    </table>)}</span>
     </>
   );
 };
