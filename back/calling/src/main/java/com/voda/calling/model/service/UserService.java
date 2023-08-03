@@ -1,6 +1,5 @@
 package com.voda.calling.model.service;
 
-import com.voda.calling.exception.EmailExistedException;
 import com.voda.calling.exception.NotRegisteredException;
 import com.voda.calling.exception.PasswordWrongException;
 import com.voda.calling.model.dto.User;
@@ -12,7 +11,6 @@ import com.voda.calling.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +18,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -78,9 +77,11 @@ public class UserService {
             throw new PasswordWrongException();
         }
 
+
+        Optional<UserSetting> userSetting = userSettingRepository.findById(userEmail);
         Map<String, Object> tokens = new HashMap<>();
         // accessToken
-        tokens.put("accessToken", jwtUtil.createAccessToken(user));
+        tokens.put("accessToken", jwtUtil.createAccessToken(user, userSetting.get()));
         // refreshToken
         String refreshToken = jwtUtil.createRefreshToken();
         tokens.put("refreshToken", refreshToken);
@@ -142,8 +143,9 @@ public class UserService {
 
     public String getNewAccessToken(String refreshToken){
         User user = userRepository.findUserByUserTokenAndUserCancel(refreshToken, IS_NOT_CANCELED);
+        Optional<UserSetting> userSetting = userSettingRepository.findById(user.getUserEmail());
         if(user !=  null){
-            return jwtUtil.createAccessToken(user);
+            return jwtUtil.createAccessToken(user, userSetting.get());
         }
 
         return null;

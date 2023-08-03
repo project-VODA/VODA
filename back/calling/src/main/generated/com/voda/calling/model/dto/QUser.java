@@ -33,6 +33,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath userToken = createString("userToken");
 
+    public final NumberPath<Integer> role = createNumber("role", Integer.class);
+
     public QUser(String variable) {
         super(User.class, forVariable(variable));
     }
