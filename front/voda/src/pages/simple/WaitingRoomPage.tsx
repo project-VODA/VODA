@@ -3,13 +3,7 @@ import Modal from 'react-modal';
 import { useNavigate } from "react-router-dom";
 
 import Title from '../../components/Title';
-import DivideContainer from '../../components/DivideHorizontalContainer'
-import FriendList from "../../components/FriendList";
-import RecentCalls from "../../components/RecentCall";
-import UserSearchList from "../../components/UserSearchList";
-import Button from "../../components/SettingButton";
-import RedButton from "../../components/DeleteButton";
-import Input from "../../components/InputText";
+import HandleButton from '../../components/HandleBtn';
 
 import { searchUser } from "../../apis/friend";
 import { sendCalling } from "../../apis/calling";
@@ -23,42 +17,36 @@ text-decoration: none;
 color: inherit;
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
 const SimpleRoom = () => {
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [isFriendModalOpen, setFriendModalOpen] = useState(false);
+  const [isRecentCallModalOpen, setRecentCallModalOpen] = useState(false);
 
-  // 모달 닫힐 때 친구 목록 갱신 필요, 리덕스 이용해야 함.. 
-  // isModalOpen을 FriendList 컴포넌트로 넘기는 식이 이상적일듯
+  const handleFriendModalOpen = () => {
 
-  // useEffect(() => {
-  //   getFriendList(sessionStorage.getItem("userEmail"))
-  //         .then((res: FriendsList) => {
-  //           setFriendList(res);
-  //         })
-  //         .catch((err) => {
-  //           console.log(err);
-  //         })
-  // }, [isModalOpen])
+  }
+
+  const handleRecentCallModalOpen = () => {
+
+  }
 
   return (
     <>
       <StyledLink to='' aria-label="영상통화를 걸 친구를 찾는 페이지입니다.">
         <Title title="Friend" />
       </StyledLink>
-      <DivideContainer
-        leftChild={<FriendList></FriendList>}
-        rightChild={<RecentCalls></RecentCalls>}
-      />
-      <>
-        <Button onClick={(e) => setModalOpen(true)} text="친구찾기" />
-        <Modal 
-          isOpen={isModalOpen} 
-          onRequestClose={(e) => setModalOpen(false)}
-          ariaHideApp={false}
-        >
-          <RedButton onClick={(e) => setModalOpen(false)} text="X" />
-          <UserSearchList/>
-        </Modal>
-      </>
+      <ButtonContainer>
+        <HandleButton text='친구검색' onClick={handleFriendModalOpen} />
+        <HandleButton text='최근통화' onClick={handleRecentCallModalOpen} />
+      </ButtonContainer>
+
     </>
   );
 };
