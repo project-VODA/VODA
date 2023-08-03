@@ -14,6 +14,7 @@ import { access } from "fs";
 
 import '../../styles/simple/RegisterContainer.css'
 import styled from "styled-components";
+import store from "../../store/store";
 
 const StyledLink = styled(TitleLink)`
 text-decoration: none;
@@ -45,7 +46,8 @@ const SimpleLogin = () => {
             accessToken: res.accessToken,
             refreshToken: res.refreshToken
           })); 
-          const sse = new EventSource("http://localhost:8080/voda/subscribe/sunhee3859@naver.com");
+          const userEmail = store.getState().user.userInfo.userEmail;
+          const sse = new EventSource(`http://localhost:8080/voda/subscribe/${userEmail}`);
           console.log("hi");
           sse.addEventListener("sse", (event) => {
               console.log('start', event);    
