@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
-import Button from "./SettingButton";
-import Input from "./InputText";
-import { registFriend, searchUser } from "../apis/friend";
 import { UserInfoType } from "../store/userSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { sendCalling } from "../apis/calling";
 import { useNavigate } from "react-router-dom";
 
+import Button from "./SettingButton";
+import DeleteFriendButton from '../components/DeleteFriendBtn'
+import Input from "./InputText";
+import { deleteFriend, registFriend, searchUser } from "../apis/friend";
+
+
 type User = {
   userEmail: string;
   userName: string;
   friend: boolean;
+  friendNo: number;
 };
 
 type UserList = User[];
@@ -24,7 +28,7 @@ const UserSearchList = () => {
 
   const [keyword, setKeyword] = useState('');
   const [userList, setUserList] = useState<UserList>([]);
-
+  
   const userSearchRequest = {
     keyword: keyword,
     userEmail: userInfo.userEmail,
@@ -85,6 +89,24 @@ const UserSearchList = () => {
       })
   };
 
+  const handleDeleteFriend = (user: User) => {
+      
+    deleteFriend(user.friendNo)
+    .then((res) => {
+      alert("친구 삭제 성공");
+      searchUser(userSearchRequest)
+        .then((res) => {
+          setUserList(res);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
   return (
     <>
       <Input 
@@ -111,9 +133,15 @@ const UserSearchList = () => {
                 <td>{user.userEmail}</td>
                 <td>
                   {user.friend ? (
-                    <Button onClick={() => handleCalling(user)} text="통화" />
+                    <>
+                      <Button onClick={() => handleCalling(user)} text="통화" />
+                      <DeleteFriendButton onClick={() => handleDeleteFriend(user)} text="삭제" aria-label={`${user.userName} 님을 친구목록에서 삭제하시려면 버튼을 누르세요.`} />
+                    </>
                   ) : (
-                    <Button onClick={() => handleRegistFriend(user)} text="친구추가" />
+                    <>
+                      <Button onClick={() => handleCalling(user)} text="통화" />
+                      <Button onClick={() => handleRegistFriend(user)} text="친구추가" />
+                    </>
                   )}
                 </td>
               </tr>

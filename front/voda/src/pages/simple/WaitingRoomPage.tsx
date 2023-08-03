@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Modal from 'react-modal';
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 import Title from '../../components/Title';
 import HandleButton from '../../components/HandleBtn';
-
+import RedButton from "../../components/DeleteButton";
+import UserSearchList from "../../components/UserSearchList";
+import RecentCalls from "../../components/RecentCall";
 import { searchUser } from "../../apis/friend";
 import { sendCalling } from "../../apis/calling";
 
-import { Link } from "react-router-dom";
-import styled from "styled-components";
 
 
 const StyledLink = styled(Link)`
@@ -30,11 +32,11 @@ const SimpleRoom = () => {
   const [isRecentCallModalOpen, setRecentCallModalOpen] = useState(false);
 
   const handleFriendModalOpen = () => {
-    
+    setFriendModalOpen(true);
   }
 
   const handleRecentCallModalOpen = () => {
-
+    setRecentCallModalOpen(true);
   }
 
   return (
@@ -46,7 +48,22 @@ const SimpleRoom = () => {
         <HandleButton text='친구검색' onClick={handleFriendModalOpen} />
         <HandleButton text='최근통화' onClick={handleRecentCallModalOpen} />
       </ButtonContainer>
-
+      <Modal 
+          isOpen={isFriendModalOpen} 
+          onRequestClose={(e) => setFriendModalOpen(false)}
+          ariaHideApp={false}
+        >
+        <RedButton onClick={(e) => setFriendModalOpen(false)} text="X" />
+        <UserSearchList/>
+      </Modal>
+      <Modal 
+          isOpen={isRecentCallModalOpen} 
+          onRequestClose={(e) => setRecentCallModalOpen(false)}
+          ariaHideApp={false}
+        >
+        <RedButton onClick={(e) => setRecentCallModalOpen(false)} text="X" />
+        <RecentCalls/>
+      </Modal>
     </>
   );
 };
