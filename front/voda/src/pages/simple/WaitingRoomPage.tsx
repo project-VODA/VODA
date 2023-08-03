@@ -30,7 +30,7 @@ const SimpleRoom = () => {
   const [isRecentCallModalOpen, setRecentCallModalOpen] = useState(false);
 
   const handleFriendModalOpen = () => {
-
+    
   }
 
   const handleRecentCallModalOpen = () => {
