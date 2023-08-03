@@ -12,6 +12,10 @@ const userSlice = createSlice({
             userHandicap: '',
             role: '',
         },
+        userSetting:{
+            typeNo: '',
+            screenType: '',
+        },
         isLogin: false,
     },
     reducers: {
@@ -25,6 +29,10 @@ const userSlice = createSlice({
                 userName: decodeURI(escape(jwtPayload.userName)),
                 userHandicap: jwtPayload.userHandicap,
                 role: jwtPayload.role,
+            };
+            state.userSetting = {
+                typeNo: jwtPayload.typeNo,
+                screenType: jwtPayload.screenType,
             }
             state.isLogin = true;
         },
@@ -37,7 +45,11 @@ const userSlice = createSlice({
                 userName: decodeURI(escape(jwtPayload.userName)),
                 userHandicap: jwtPayload.userHandicap,
                 role: jwtPayload.role,
-            }
+            };
+            state.userSetting = {
+                typeNo: jwtPayload.typeNo,
+                screenType: jwtPayload.screenType,
+            };
         },
         userSliceLogout:(state) => {
             state.accessToken = '';
@@ -47,6 +59,10 @@ const userSlice = createSlice({
                 userName: '',
                 userHandicap: '',
                 role: '',
+            };
+            state.userSetting = {
+                typeNo: '',
+                screenType: '',
             };
             state.isLogin = false;
         }
