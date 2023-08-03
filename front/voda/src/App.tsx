@@ -16,6 +16,7 @@ import {
 // import Navbar from './components/Navbar';
 import Navigation from './components/Navigation';
 import LandingPage from './pages/LandingPage';
+import ServerEvent from './components/ServerEvent';
 
 import SimpleHomePage from './pages/simple/HomePage';
 import SimpleAbout from './pages/simple/AboutPage';
@@ -25,6 +26,7 @@ import SimplePass from './pages/simple/TemporaryPassPage';
 import SocialLogin from './pages/simple/LoginRedirectPage';
 import SimpleSignup from './pages/simple/SignupPage';
 import SimpleMyPage from './pages/simple/MyPage';
+import SimpleEnvSettingPage from './pages/simple/EnvSettingPage';
 import SimpleVideo from './pages/simple/VideoPage';
 import SimpleRoom from './pages/simple/WaitingRoomPage';
 import SimpleFeedBack from './pages/simple/FeedBackPage';
@@ -37,6 +39,7 @@ import DetailLogin from './pages/detail/LoginPage';
 import DetailPass from './pages/detail/TemporaryPassPage';
 import DetailSignup from './pages/detail/SignupPage';
 import DetailMyPage from './pages/detail/MyPage';
+import DetailEnvSettingPage from './pages/detail/EnvSettingPage';
 import DetailVideo from './pages/detail/faceExpressions';
 import DetailRoom from './pages/detail/WaitingRoomPage';
 import DetailFeedBack from './pages/detail/FeedBack';
@@ -127,6 +130,7 @@ const App: React.FC = () => {
     { path: '/login/oauth2/kakao/*', element: <SocialLogin /> },
     { path: '/signup', element: theme === SimpleTheme ? <SimpleSignup /> : <DetailSignup /> },
     { path: '/mypage', element: theme === SimpleTheme ? <SimpleMyPage /> : <DetailMyPage /> },
+    { path: '/setting', element: theme === SimpleTheme ? <SimpleEnvSettingPage /> : <DetailEnvSettingPage /> },
     { path: '/waiting', element: theme === SimpleTheme ? <SimpleRoom /> : <DetailRoom/> },
     { path: '/video', element: theme === SimpleTheme ? <SimpleVideo /> : <DetailVideo /> },
     { path: '/feedback', element: theme === SimpleTheme ? <SimpleFeedBack/> : <DetailFeedBack/> },
@@ -161,5 +165,6 @@ const App: React.FC = () => {
     </ThemeContext.Provider>
   );
 };
+
 
 export default App;

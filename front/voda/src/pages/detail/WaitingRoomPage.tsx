@@ -24,7 +24,7 @@ color: inherit;
 `;
 
 const SimpleRoom = () => {
-  const [isModalOpen, setModalOpen] = useState(false);
+  // const [isModalOpen, setModalOpen] = useState(false);
 
   // 모달 닫힐 때 친구 목록 갱신 필요, 리덕스 이용해야 함.. 
   // isModalOpen을 FriendList 컴포넌트로 넘기는 식이 이상적일듯
@@ -48,17 +48,6 @@ const SimpleRoom = () => {
         leftChild={<FriendList></FriendList>}
         rightChild={<RecentCalls></RecentCalls>}
       />
-      <>
-        <Button onClick={(e) => setModalOpen(true)} text="친구찾기" />
-        <Modal 
-          isOpen={isModalOpen} 
-          onRequestClose={(e) => setModalOpen(false)}
-          ariaHideApp={false}
-        >
-          <RedButton onClick={(e) => setModalOpen(false)} text="X" />
-          <UserSearchList/>
-        </Modal>
-      </>
     </>
   );
 };

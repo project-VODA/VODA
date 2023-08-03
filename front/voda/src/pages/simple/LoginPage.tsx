@@ -46,6 +46,7 @@ const SimpleLogin = () => {
             accessToken: res.accessToken,
             refreshToken: res.refreshToken
           })); 
+          
           // 메인페이지로 리다이렉트
           RedirectHomePage();
         })
