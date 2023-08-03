@@ -1,6 +1,7 @@
 package com.voda.calling.util;
 
 import com.voda.calling.model.dto.User;
+import com.voda.calling.model.dto.UserSetting;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
@@ -26,13 +27,18 @@ public class JwtUtil {
      * @param user
      * @return accessToken
      */
-    public String createAccessToken(User user){
+    public String createAccessToken(User user, UserSetting userSetting){
         // payload 내용
         Claims claims = Jwts.claims();
         claims.put("userEmail", user.getUserEmail());
         claims.put("userName", user.getUserName());
         claims.put("userHandicap", user.getUserHandicap());
         claims.put("role", user.getRole());
+
+        if(userSetting != null){
+            claims.put("typeNo", userSetting.getUsersettingTypeNo());
+            claims.put("screenType", userSetting.getUsersettingScreenType());
+        }
 
         return Jwts.builder()
                 .setHeaderParam("typ", "JWT") // 헤더에 타입 명시
@@ -78,7 +84,9 @@ public class JwtUtil {
     /**
      * Claim 에서 userEmail 가져오기
      */
-    public String getUserEmailFromToken(String token) {
+    public String getUserEmailFromToken(String bearer) {
+        String token = extractTokenFromHeader(bearer);
+        if(token == null) return null;
         String userEmail = String.valueOf(getAllClaims(token).get("userEmail"));
         return userEmail;
     }

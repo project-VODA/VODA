@@ -98,9 +98,9 @@ public class UserController {
     @PostMapping("/logout")
     public ResponseEntity<String> logout(@ApiParam(hidden = true) @RequestHeader(value = AUTH) String auth){
         log.info("로그아웃 시도");
-        String accessToken = jwtUtil.extractTokenFromHeader(auth);
+        String userEmail = jwtUtil.getUserEmailFromToken(auth);
         //1. 토큰으로 유저 정보 가져오기
-        User logoutUser = userService.getUserByToken(accessToken);
+        User logoutUser = userService.getUser(userEmail);
         //2. 해당 유저 로그아웃
         userService.logout(logoutUser);
         if(logoutUser.getUserToken()==null){
@@ -167,8 +167,7 @@ public class UserController {
     public ResponseEntity<String> canceledUser(@ApiParam(hidden = true) @RequestHeader(value = AUTH) String auth){
         log.info("UserController - canceledUser : 회원탈퇴");
         try {
-            String accessToken = jwtUtil.extractTokenFromHeader(auth);
-            userService.canceledUser(jwtUtil.getUserEmailFromToken(accessToken));
+            userService.canceledUser(jwtUtil.getUserEmailFromToken(auth));
             log.info("회원탈퇴 성공");
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);    
         }catch (Exception e) {

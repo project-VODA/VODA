@@ -39,7 +39,7 @@ const SimpleMyPage = () => {
   // 컴포넌트 지역 변수에 연결
   const [email, setEmail] = useState(userInfo.userEmail);
   const [name, setName] = useState(userInfo.userName);
-  const [handicap, setHandicap] = useState(userInfo.userHandicap);
+  const [handicap, setHandicap] = useState(userInfo.userHandicap == "1" ? true : false);
 
   const [originPassword, setOriginPassword] = useState('');
   const [password, setPassword] = useState('');
@@ -154,6 +154,7 @@ const SimpleMyPage = () => {
           if(accessToken !== null && accessToken !== ''){
             logout()
             .then((res) => {
+              console.log("hi logout");
               userSliceLogout();
               RedirectHomePage();
             })
