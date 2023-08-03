@@ -151,8 +151,7 @@ const FriendList = () => {
                 <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '28px', fontSize:'25px'}}>
                 <FiPhoneCall onClick={() => handleCalling(friend)} aria-label={`${friend.userName} 님에게 통화하시려면 버튼을 누르세요.`}/>
                 <RiDeleteBin6Line onClick={() => handleDeleteFriend(friend)} aria-label={`${friend.userName} 님을 친구목록에서 삭제하시려면 버튼을 누르세요.`} />
-                </div>
-                </div>
+                </div></div>
               </tr>
           ))}
         </tbody>
