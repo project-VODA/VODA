@@ -87,7 +87,7 @@ public class CallingHistoryRepositoryCustomImpl implements CallingHistoryReposit
                 .fetch();
 
         for(Tuple t : tempList){
-            RecentCall r = new RecentCall(t.get(user1.userEmail),t.get(user1.userName),t.get(user2.userEmail),t.get(user2.userName),t.get(callHistory.callStarttime), t.get(callHistory.callEndtime));
+            RecentCall r = new RecentCall(t.get(user1.userEmail),t.get(user1.userName),t.get(user2.userEmail),t.get(user2.userName),t.get(callHistory.callStarttime.stringValue()), t.get(callHistory.callEndtime.stringValue()));
             recentCallList.add(r);
         }
 

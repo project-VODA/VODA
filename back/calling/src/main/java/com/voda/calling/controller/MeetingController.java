@@ -138,6 +138,7 @@ public class MeetingController {
 
     @PostMapping("/recentcall")
     public ResponseEntity<Object> searchRecentCall(@ApiParam(hidden = true) @RequestHeader(value = AUTH) String auth){
+        log.info("MeetingController - 최근 통화 목록");
         String accessToken = jwtUtil.extractTokenFromHeader(auth);
         String userEmail =jwtUtil.getUserEmailFromToken(accessToken);
 
