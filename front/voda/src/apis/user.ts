@@ -46,6 +46,11 @@ export const cancelUser = async () => {
   return res.data;
 }
 
+// SSE 연결 요청
+export const getSseConnection = async () => {
+  
+}
+
 /* -----------------------------------------------------------------------------------*/
 
 // 카카오 로그인 리다이렉트
