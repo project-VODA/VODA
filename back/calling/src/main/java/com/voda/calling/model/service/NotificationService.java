@@ -66,16 +66,19 @@ public class NotificationService {
      * @param content
      */
     public void send(String senderEmail, String receiverEmail, String sessionId,String token, String content) throws AlarmFailedException {
+        log.info("{} to {}", senderEmail, receiverEmail);
         // 전달할 내용 생성
         CallNotification callNotification = makeNotification(senderEmail, receiverEmail, sessionId, token, content);
         // receiver에게 해당되어 있는 sseEmitter 가져오기
         Map<String, SseEmitter> sseEmitters = sseRepository.findAllEmitterStartWithByEmail(receiverEmail);
+        log.info("{}", sseEmitters.size());
         // receiver id 생성
         String receiverId = getIdWithTime(receiverEmail);
         // eventcache에 저장
         sseRepository.saveEventCache(receiverId, callNotification);
         // 각각의 sseEmitter에게 메시지 전달
         sseEmitters.forEach((key, emitter) -> {
+            log.info(receiverId);
             sendToClient(emitter, receiverId, callNotification);
         });
     }
