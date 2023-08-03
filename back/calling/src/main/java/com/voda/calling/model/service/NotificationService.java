@@ -78,6 +78,8 @@ public class NotificationService {
         sseEmitters.forEach((key, emitter) -> {
             sendToClient(emitter, receiverId, callNotification);
         });
+        
+        log.info("sse 전달성공ㅇ");
     }
 
     /**
