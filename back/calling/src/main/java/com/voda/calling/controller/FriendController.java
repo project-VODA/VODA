@@ -64,10 +64,10 @@ public class FriendController {
     public ResponseEntity<?> searchUser(@RequestBody UserSearchRequest userSearchRequest) {
         log.info("FriendController - searchUser : 유저 검색");
         try {
-            List<UserSearchResponse> searchUserlist = friendService.searchUser(userSearchRequest.getKeyword(), userSearchRequest.getUserEmail());
+            List<FriendResponse> searchUserlist = friendService.searchUser(userSearchRequest.getKeyword(), userSearchRequest.getUserEmail());
 
             log.info("유저 검색 성공");
-            return new ResponseEntity<List<UserSearchResponse>>(searchUserlist, HttpStatus.OK);
+            return new ResponseEntity<List<FriendResponse>>(searchUserlist, HttpStatus.OK);
         } catch (Exception e) {
             log.info("유저 검색 실패 - 서버(DB) 오류");
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
