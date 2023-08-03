@@ -140,3 +140,8 @@
 - 23.08.03 KSH
   - DetailArticle 페이지 aria-label에서 타이틀 읽게 수정
   - 작성 일시와 내용은 읽게 수정, but리더기가 인식 안하고 건너뛰는 문제
+  - 디테일 전화걸기 페이지 레이아웃 변경
+  - react-icons 도입으로 npm install 필요
+  - FriendList.tsx 컴포넌트 변경
+  - SimpleWaitingPage 모달 내용물 변경
+  - 디테일 waitingPage 초안 완성
