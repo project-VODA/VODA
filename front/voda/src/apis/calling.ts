@@ -6,10 +6,11 @@ export const getRecentCallList = async () => {
 
   return res.data;
 }
+
 //통화 요청
 export const sendCalling = async (callRequest:Object) => {
     const res = await axiosServer().post<any>(`/meetings/send`, callRequest);
-    return res.data;
+    return res;
 }
 
 //통화 수락

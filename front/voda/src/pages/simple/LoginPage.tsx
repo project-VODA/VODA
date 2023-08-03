@@ -45,6 +45,11 @@ const SimpleLogin = () => {
             accessToken: res.accessToken,
             refreshToken: res.refreshToken
           })); 
+          const sse = new EventSource("http://localhost:8080/voda/subscribe/sunhee3859@naver.com");
+          console.log("hi");
+          sse.addEventListener("sse", (event) => {
+              console.log('start', event);    
+        })
           // 메인페이지로 리다이렉트
           RedirectHomePage();
         })

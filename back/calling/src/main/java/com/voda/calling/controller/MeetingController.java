@@ -36,10 +36,10 @@ public class MeetingController {
     @Autowired
     JwtUtil jwtUtil;
 
+
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
     private static final String ONCALLING = "oncalling";
-
     private static final String AUTH = "Authorization";
 
     @PostMapping("/send")
@@ -53,7 +53,7 @@ public class MeetingController {
         // 0. receiver가 전화 중일 경우 에러 처리
         if (!callHistoryService.canCall(senderEmail, receiverEmail)) {
             log.info("통화 불가");
-            return new ResponseEntity<>(ONCALLING, HttpStatus.NO_CONTENT); //http 204
+            return new ResponseEntity<>(ONCALLING, HttpStatus.OK); //http 204
         } else {
             log.info("통화가능");
             log.info("receiverEmail : {}", receiverEmail);
@@ -78,6 +78,7 @@ public class MeetingController {
                 return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR); //http 500
             }
             // 3. receiver에게 통화 알림 및 token 전달
+            notificationService.send(senderEmail, receiverEmail, sessionId, sessionToken,"일단 그냥 ㄱ");
 
             // 4. sender에게 token 전달
             int currentCallNo = callHistory.getCallNo();
@@ -134,7 +135,7 @@ public class MeetingController {
         UserCallHistory receiverUserCallHistory = new UserCallHistory(callNo, currnentCallHistory.getCallReceiver());
 
         return new ResponseEntity<>(SUCCESS, HttpStatus.OK); //http 500
-    }
+}
 
     @PostMapping("/recentcall")
     public ResponseEntity<Object> searchRecentCall(@ApiParam(hidden = true) @RequestHeader(value = AUTH) String auth){

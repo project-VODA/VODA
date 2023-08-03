@@ -65,9 +65,9 @@ public class NotificationService {
      * @param receiverEmail
      * @param content
      */
-    public void send(String senderEmail, String receiverEmail, String content) throws AlarmFailedException {
+    public void send(String senderEmail, String receiverEmail, String sessionId,String token, String content) throws AlarmFailedException {
         // 전달할 내용 생성
-        CallNotification callNotification = makeNotification(senderEmail, receiverEmail, content);
+        CallNotification callNotification = makeNotification(senderEmail, receiverEmail, sessionId, token, content);
         // receiver에게 해당되어 있는 sseEmitter 가져오기
         Map<String, SseEmitter> sseEmitters = sseRepository.findAllEmitterStartWithByEmail(receiverEmail);
         // receiver id 생성
@@ -111,10 +111,12 @@ public class NotificationService {
      * @param content
      * @return callNotification
      */
-    private CallNotification makeNotification(String senderEmail, String receiverEmail, String content){
+    private CallNotification makeNotification(String senderEmail, String receiverEmail, String sessionId, String token, String content){
         return CallNotification.builder()
                 .senderEmail(senderEmail)
                 .receiverEmail(receiverEmail)
+                .sessionId(sessionId)
+                .token(token)
                 .content(content)
                 .build();
     }
