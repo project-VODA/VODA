@@ -24,9 +24,9 @@ public class RecentCall {
     @ApiModelProperty(value="수신자 이름", required = true)
     private String receiverName;
     @ApiModelProperty(value="통화시작시간", required = true)
-    private Timestamp startTime;
+    private String startTime;
     @ApiModelProperty(value="통화종료시간", required = true)
-    private Timestamp endTime;
+    private String endTime;
 
 
 }
