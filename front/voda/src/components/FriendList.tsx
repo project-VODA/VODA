@@ -8,6 +8,9 @@ import { UserInfoType } from '../store/userSlice';
 import { sendCalling } from '../apis/calling';
 import { useNavigate } from 'react-router-dom';
 
+import FriendPageButton from '../components/FriendPageBtn'
+import DeleteFriendButton from '../components/DeleteFriendBtn'
+
 type Friend = {
   friendNo: number;
   userEmail: string;
@@ -105,8 +108,8 @@ const FriendList = () => {
               <tr key={friend.friendNo}>
                 <td text-align='center'>{friend.userName}</td>
                 <td text-align='center'>{friend.userEmail}</td>
-                <td text-align='center'><Button onClick={() => handleCalling(friend)} text="통화" /></td>
-                <td text-align='center'><Button onClick={() => handleDeleteFriend(friend)} text="친구삭제" /></td>
+                <td text-align='center'><FriendPageButton onClick={() => handleCalling(friend)} text="통화" aria-label={`${friend.userName} 님에게 통화하시려면 버튼을 누르세요.`}/></td>
+                <td text-align='center'><DeleteFriendButton onClick={() => handleDeleteFriend(friend)} text="삭제" aria-label={`${friend.userName} 님을 친구목록에서 삭제하시려면 버튼을 누르세요.`} /></td>
               </tr>
           ))}
         </tbody>
