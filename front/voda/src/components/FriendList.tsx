@@ -63,15 +63,23 @@ const FriendList = () => {
 
     sendCalling(callSendRequest)
       .then((res) => {
-        console.log(res.sessionToken);
-        navigate('/video',{
-          state: {
-            sessionToken : `${res.sessionToken}`,
-            callNo : `${res.callNo}`
-          }
-        });
+        console.log(res);
+        if(res.data === "oncalling"){
+          navigate('/waiting')
+        }else{
+          navigate('/video',{
+            state: {
+              sessionToken : `${res.data.sessionToken}`,
+              callNo : `${res.data.callNo}`
+            }
+          });
+        }
+        
       })
       .catch((err) => {
+        if(err===204){
+          alert("!!");
+        }
         console.error(err);
       });
   };
