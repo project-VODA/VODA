@@ -9,7 +9,7 @@ import DeleteButton from '../../components/DeleteButton';
 import CheckBox from '../../components/CheckBox';
 import { cancelUser, changePassword, getUserInfo, logout, updateUserInfo, updateUserSetting } from '../../apis/user';
 import Info from '../../components/InfoText';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { UserInfoType, UserSettingType, userSliceLogout } from '../../store/userSlice';
 import { Link } from "react-router-dom";
@@ -44,6 +44,7 @@ const SimpleEnvSettingPage = () => {
   };
 
   const naviagte = useNavigate();
+  const dispatch = useDispatch();
 
   const RedirectHomePage = () => {
     naviagte('/home');
@@ -57,15 +58,13 @@ const SimpleEnvSettingPage = () => {
         if(accessToken !== null && accessToken !== ''){
           logout()
           .then((res) => {
-            userSliceLogout();
+            dispatch(userSliceLogout());
             RedirectHomePage();
           })
           .catch((err) => {
             console.log(err);
           })
         }
-        // 홈 화면으로 리다이렉트
-        RedirectHomePage();
       })
       .catch((err) => {
         console.error(err);
