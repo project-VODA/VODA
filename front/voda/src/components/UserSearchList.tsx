@@ -42,7 +42,6 @@ const UserSearchList = () => {
       .catch((err) => {
         console.error(err);
       });
-
   }, [keyword]);
 
   const navigate = useNavigate();
