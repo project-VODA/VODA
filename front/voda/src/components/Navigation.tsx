@@ -28,10 +28,12 @@ const NavContainer = styled("nav")<NavProps>`
   height: 63px;
   display: flex;
   justify-content: center;
+  box-shadow: 0px 1px 0px 1px gray;
   align-items: center;
   border-bottom: 0.5px solid rgba(0, 0, 0, 0.07);
   background: ${({ navbar }) => navbar};
   transition: all 0.5s ease-in-out;
+
 `;
 
 const NavContentContainer = styled.div`
