@@ -11,7 +11,7 @@ interface ThemeProps {
   theme: Theme;
 }
 
-const FriendPageButton = styled('button')<ThemeProps>`
+const SmallYellowButton = styled('button')<ThemeProps>`
   width: 60px;
   height: 40px;
   border-radius: 15px;
@@ -19,9 +19,8 @@ const FriendPageButton = styled('button')<ThemeProps>`
   padding: 8px;
   margin: 8px;
   border: 1px solid ${({ theme }) => theme.text};
-  background: #FF0000;
-  color: ${({ theme }) =>
-    theme === SimpleTheme ? '#ffffff' : '#003566'};
+  background: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.body};
 
   &:hover {
     background: ${({ theme }) =>
@@ -43,7 +42,7 @@ export default function Setting({ text, onClick, "aria-label":ariaLabel, id }: B
 
   return (
     <>
-      <FriendPageButton theme={theme} onClick={onClick} aria-label={ariaLabel} id={id}>{text}</FriendPageButton>
+      <SmallYellowButton theme={theme} onClick={onClick} aria-label={ariaLabel} id={id}>{text}</SmallYellowButton>
     </>
   );
 }

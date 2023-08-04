@@ -9,41 +9,41 @@ import { SimpleTheme, Theme } from '../styles/theme';
 
 interface ThemeProps {
   theme: Theme;
-  'aria-label'?: string;
 }
 
-const DeleteButton = styled('button')<ThemeProps>`
-  width: 130px;
+const SmallRedButton = styled('button')<ThemeProps>`
+  width: 60px;
   height: 40px;
   border-radius: 15px;
   font-size: 18px;
   padding: 8px;
   margin: 8px;
-  background: #ff0000;
+  border: 1px solid ${({ theme }) => theme.text};
+  background: #FF0000;
   color: ${({ theme }) =>
     theme === SimpleTheme ? '#ffffff' : '#003566'};
 
   &:hover {
+    background: ${({ theme }) =>
+      theme === SimpleTheme ? '#FFD60A' : '#003566'};
     transition: all 0.1s ease-in-out;
   }
 `;
-
-// border: 1px solid ${({ theme }) =>
-// theme === SimpleTheme ? '#ff0000' : '#003566'};
 
 
 export interface ButtonProps {
   text: string;
   onClick: (event: any) => void;
   'aria-label'?: string
+  id? : string;
 }
 
-export default function Register({ text, onClick, "aria-label":ariaLabel }: ButtonProps ) {
+export default function Setting({ text, onClick, "aria-label":ariaLabel, id }: ButtonProps ) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <>
-      <DeleteButton theme={theme} onClick={onClick} aria-label={ariaLabel}>{text}</DeleteButton>
+      <SmallRedButton theme={theme} onClick={onClick} aria-label={ariaLabel} id={id}>{text}</SmallRedButton>
     </>
   );
 }

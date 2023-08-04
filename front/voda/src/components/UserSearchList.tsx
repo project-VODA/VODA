@@ -5,11 +5,17 @@ import { RootState } from "../store/store";
 import { sendCalling } from "../apis/calling";
 import { useNavigate } from "react-router-dom";
 
+import SmallYellowButton from "../components/SmallYellowBtn"
 import Button from "./SettingButton";
-import DeleteFriendButton from '../components/DeleteFriendBtn'
+import RedButton from "./DeleteButton"
 import Input from "./InputText";
 import { deleteFriend, registFriend, searchUser } from "../apis/friend";
 
+import '../styles/simple/SimpleWaitingPage.css'
+
+const inputColor = {
+  backgroundColor: 'white',
+};
 
 type User = {
   userEmail: string;
@@ -111,17 +117,18 @@ const UserSearchList = () => {
     <>
       <Input 
         type="text"
-        placeholder="검색어"
+        placeholder="친구 이름 혹은 이메일을 입력하는 칸입니다."
         value={keyword}
         onChange={(e) => setKeyword(e.target.value)}
+        style = {inputColor}
       />
       <table>
-        <colgroup>
+        {/* <colgroup>
           <col width="30%" />
           <col width="30%" />
           <col width="40%" />
-        </colgroup>
-        <tbody>
+        </colgroup> */}
+        <tbody id="FriendContainer">
           {userList.length === 0 ? (
             <tr>
               <td colSpan={3}>검색 결과가 없습니다.</td>
@@ -134,13 +141,13 @@ const UserSearchList = () => {
                 <td>
                   {user.friend ? (
                     <>
-                      <Button onClick={() => handleCalling(user)} text="통화" />
-                      <DeleteFriendButton onClick={() => handleDeleteFriend(user)} text="삭제" aria-label={`${user.userName} 님을 친구목록에서 삭제하시려면 버튼을 누르세요.`} />
+                      <Button onClick={() => handleCalling(user)} text="통화" aria-label={`${user.userName} 님에게 통화하시려면 버튼을 누르세요.`}/>
+                      <RedButton onClick={() => handleDeleteFriend(user)} text="삭제" aria-label={`${user.userName} 님을 친구목록에서 삭제하시려면 버튼을 누르세요.`} />
                     </>
                   ) : (
                     <>
-                      <Button onClick={() => handleCalling(user)} text="통화" />
-                      <Button onClick={() => handleRegistFriend(user)} text="친구추가" />
+                      <Button onClick={() => handleCalling(user)} text="통화" aria-label={`${user.userName} 님에게 통화하시려면 버튼을 누르세요.`}/>
+                      <Button onClick={() => handleRegistFriend(user)} text="친구추가" aria-label={`${user.userName} 님을 친구목록에 추가 하시려면 버튼을 누르세요.`} />
                     </>
                   )}
                 </td>

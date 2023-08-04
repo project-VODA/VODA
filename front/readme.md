@@ -145,3 +145,7 @@
   - FriendList.tsx 컴포넌트 변경
   - SimpleWaitingPage 모달 내용물 변경
   - 디테일 waitingPage 초안 완성
+
+- 23.08.04 KSH
+  - SIMPLE 친구추가 모달 UI 수정
+  - 배경색 변경
