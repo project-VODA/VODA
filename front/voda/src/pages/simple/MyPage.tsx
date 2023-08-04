@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
-
 import Title from '../../components/Title';
 import Input from '../../components/InputText';
 import SettingButton from '../../components/SettingButton';
@@ -9,7 +8,7 @@ import DeleteButton from '../../components/DeleteButton';
 import CheckBox from '../../components/CheckBox';
 import { cancelUser, changePassword, getUserInfo, logout, updateUserInfo } from '../../apis/user';
 import Info from '../../components/InfoText';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { UserInfoType, userSliceLogout } from '../../store/userSlice';
 import { Link } from "react-router-dom";
@@ -62,6 +61,7 @@ const SimpleMyPage = () => {
   };
 
   const naviagte = useNavigate();
+  const dispatch = useDispatch();
 
   const RedirectHomePage = () => {
     naviagte('/home');
@@ -87,15 +87,13 @@ const SimpleMyPage = () => {
             if(accessToken !== null && accessToken !== ''){
               logout()
               .then((res) => {
-                userSliceLogout();
+                dispatch(userSliceLogout());
                 RedirectHomePage();
               })
               .catch((err) => {
                 console.log(err);
               })
             }
-            // 홈 화면으로 리다이렉트
-            RedirectHomePage();
           }else{
             console.log("회원 정보 수정 실패");
           }
@@ -116,7 +114,7 @@ const SimpleMyPage = () => {
         if(accessToken !== null && accessToken !== ''){
           logout()
           .then((res) => {
-            userSliceLogout();
+            dispatch(userSliceLogout());
             RedirectHomePage();
           })
           .catch((err) => {
@@ -166,7 +164,7 @@ const SimpleMyPage = () => {
             logout()
             .then((res) => {
               console.log("hi logout");
-              userSliceLogout();
+              dispatch(userSliceLogout());
               RedirectHomePage();
             })
             .catch((err) => {
