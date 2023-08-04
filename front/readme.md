@@ -149,3 +149,5 @@
 - 23.08.04 KSH
   - SIMPLE 친구추가 모달 UI 수정
   - 배경색 변경
+  - Simple About Page 레이아웃 및 UI 완료
+  - Simple About Page aria-label 완료
