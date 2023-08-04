@@ -68,12 +68,12 @@ const RecentCalls = () => {
 
   return (
     <>
-    <span> {localStorage.getItem('theme') === 'simple' ? (<div style={{ display: 'flex', justifyContent: 'center', margin: '0 55px 2%' }}><span style={{ fontSize:'28px', fontWeight:'bolder' }}>최근 통화 목록</span></div>)
-    :(<div style={{  display: 'flex', justifyContent: 'center', margin: '7% 55px 2%'}}>
+    <span> {localStorage.getItem('theme') === 'simple' ? (<div style={{ display: 'flex', justifyContent: 'center', margin: '0px 55px 2%' }}><span style={{ fontSize:'28px', fontWeight:'bolder' }}>최근 통화 목록</span></div>)
+    :(<div style={{  display: 'flex', justifyContent: 'center', margin: '6% 55px 2%'}}>
         <span style={{ fontSize:'28px', fontWeight:'bolder' }}>최근 통화 목록</span>
       </div>)} </span>
       <span> {localStorage.getItem('theme') === 'simple' ? 
-      ( <table className = 'recentCallTable' style={{ margin: '0 auto', justifyContent: 'center', borderCollapse: 'separate', borderSpacing: '10px', maxWidth: '950px' }}>
+      ( <table className = 'recentCallTable' style={{ margin: '10px auto', justifyContent: 'center', borderCollapse: 'separate', borderSpacing: '0px, 20px', maxWidth: '950px' }}>
       <colgroup>
         <col width = "45%" />
         <col width = "45%" />
@@ -93,17 +93,17 @@ const RecentCalls = () => {
               <td text-align='center'>{callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverName : callHistory.senderName}</td>
               <td text-align='center'>{callHistory.startTime}</td>
               <div id='DetailCallContainer'>
-              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '28px', fontSize:'25px'}}>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '40%', fontSize:'25px', margin: '7% 55px 2%'}}>
               <span>
                 {localStorage.getItem('theme') === 'simple' ?
               (<td text-align='center'><Button text="통화" onClick={() => handleCalling(callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverEmail : callHistory.senderEmail)} aria-label={`${callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverName : callHistory.senderName} 님에게 전화를 하려면 버튼을 누르세요`}/></td>
               ) : (<FiPhoneCall onClick={() => handleCalling(callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverEmail : callHistory.senderEmail)} />)}
               </span></div></div>
             </tr>
-        ))};
+        ))}
       </tbody>
     </table> ) : (
-      <table className = 'recentCallTable' style={{ borderCollapse: 'separate', borderSpacing: '30px 20px' }}>
+      <table className = 'recentCallTable' style={{ borderCollapse: 'separate', borderSpacing: '0px 20px' }}>
       <colgroup>
         <col width = "45%" />
         <col width = "45%" />
@@ -127,10 +127,10 @@ const RecentCalls = () => {
               <span>
                 {localStorage.getItem('theme') === 'simple' ?
               (<td text-align='center'><Button text="통화" onClick={() => handleCalling(callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverEmail : callHistory.senderEmail)} aria-label={`${callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverName : callHistory.senderName} 님에게 전화를 하려면 버튼을 누르세요`}/></td>
-              ) : (<FiPhoneCall onClick={() => handleCalling(callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverEmail : callHistory.senderEmail)} />)}
+              ) : (<FiPhoneCall style={{ cursor: 'pointer' }} onClick={() => handleCalling(callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverEmail : callHistory.senderEmail)} />)}
               </span></div></div>
             </tr>
-        ))};
+        ))}
       </tbody>
     </table>)}</span>
     </>

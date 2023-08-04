@@ -4,6 +4,12 @@ import { axiosInstance } from "./instance";
 
 import {axiosServer} from "./server";
 
+// 환경 설정 변경
+export const updateUserSetting = async (userSetting: object) => {
+  const res = await axiosServer().put<any>(`/settings`, userSetting);
+  return res.data;
+}
+
 // 서버 DB 유저 회원가입
 export const registServer = async (userData: object) => {
   const res = await axiosServer().post<any>(`/users/regist`, userData);

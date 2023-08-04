@@ -40,13 +40,16 @@ interface InputProps {
   type: string;
   placeholder: string;
   value: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   'aria-label'?: string;
   readonly?: boolean;
+  checked?: boolean;
+  style?: React.CSSProperties;
 }
 
 
-export default function Input({ type, placeholder, value, onChange, 'aria-label':ariaLabel, readonly}: InputProps) {
+export default function Input({ type, placeholder, value, onChange, 'aria-label':ariaLabel, readonly, checked, style}: InputProps) {
+
   const { theme } = useContext(ThemeContext);
 
   return (
@@ -59,6 +62,8 @@ export default function Input({ type, placeholder, value, onChange, 'aria-label'
         onChange={onChange}
         aria-label={ariaLabel}
         readOnly={readonly}
+        checked={checked}
+        style={style}
       />
     </TextContainer>
   )
