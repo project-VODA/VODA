@@ -45,7 +45,7 @@ public class CallHistoryService {
         // 통화상태 1(통화중) : 통화 진행 중
         CallHistory currentSender = callHistoryRepository.findCallHistoryBySenderEmail(senderEmail);
         CallHistory currentReceiver = callHistoryRepository.findCallHistoryByReceiverEmail(receiverEmail);
-
+        log.info("hi{} to {}: {}", senderEmail, receiverEmail, currentSender==null && currentReceiver==null);
         if(currentSender==null && currentReceiver==null){
             return true;
         }

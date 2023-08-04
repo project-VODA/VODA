@@ -8,6 +8,8 @@ import VideoRoomComponent from '../../components/VideoRoomComponent';
 import '../../styles/simple/video.css'
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 
 const StyledLink = styled(Link)`
@@ -20,10 +22,9 @@ const SimpleVideo = () => {
   const [localStream, setLocalStream] = useState<MediaStream>();
 
   const location = useLocation();
-  const sessionToken = location.state.sessionToken;
-  const callNo = location.state.callNo;
-  console.log(sessionToken);
-  console.log(callNo);
+  const sessionToken = useSelector((state: RootState) => {
+    return state.user.videoToken;
+  })
 
   useEffect(() => {
     navigator.mediaDevices.getUserMedia({video: true})
@@ -37,7 +38,7 @@ const SimpleVideo = () => {
     <StyledLink to='' aria-label="영상통화 페이지입니다.">
       <Title title="Video" />
     </StyledLink>
-      <VideoRoomComponent token={sessionToken} callNo={callNo} />
+      <VideoRoomComponent token={sessionToken} callNo={1} />
     </>
   );
 };

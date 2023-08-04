@@ -17,6 +17,7 @@ const userSlice = createSlice({
             screenType: '',
         },
         isLogin: false,
+				videoToken: '',
     },
     reducers: {
         userSliceLogin:(state, action) =>{
@@ -65,12 +66,16 @@ const userSlice = createSlice({
                 screenType: '',
             };
             state.isLogin = false;
-        }
+        },
+				updateVideoToken:(state, action) => {
+					console.log(action.payload.videoToken);
+					state.videoToken = action.payload.videoToken;
+				},
     }
 });
 
 export default userSlice;
-export const {userSliceLogin, userSliceAllocate, userSliceLogout} = userSlice.actions;
+export const {userSliceLogin, userSliceAllocate, userSliceLogout, updateVideoToken} = userSlice.actions;
 
 export interface UserInfoType{
     userEmail: string,

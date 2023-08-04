@@ -60,7 +60,7 @@ public class UserService {
         UserSetting userSetting = UserSetting.builder()
                 .userEmail(userEmail)
                 .usersettingTypeNo(1)
-                .usersettingScreenType(userHandicap == 1 ? 0 : 1) //시각장애인이면 심플모드(0), 비장애인이면 디테일모드(0)
+                .usersettingScreenType(userHandicap == 1 ? 0 : 1) //시각장애인이면 심플모드(1), 비장애인이면 디테일모드(0)
                 .build();
         userSettingRepository.save(userSetting);
 

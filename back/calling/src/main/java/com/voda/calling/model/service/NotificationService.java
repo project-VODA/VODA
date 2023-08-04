@@ -46,14 +46,15 @@ public class NotificationService {
         sseEmitter.onError((e) -> sseRepository.deleteById(id));
 
         // 에러 방지 위해 더미 데이터 보내기
-        sendToClient(sseEmitter, id, CallNotification.builder().senderEmail("me").content("call to you").build());
+
+        sendToClient("connection", sseEmitter, id, CallNotification.builder().senderEmail("me").content("call to you").build());
 
         // 본인에게 미수신된 이벤트 수신
         if(!lastEventId.isEmpty()){
             Map<String, Object> events = sseRepository.findAllEventCacheStartWithByEmail(userEmail);
             events.entrySet().stream()
                     .filter(entry -> lastEventId.compareTo(entry.getKey()) < 0)
-                    .forEach(entry -> sendToClient(sseEmitter, entry.getKey(), entry.getValue()));
+                    .forEach(entry -> sendToClient("call",sseEmitter, entry.getKey(), entry.getValue()));
         }
 
         return sseEmitter;
@@ -65,7 +66,7 @@ public class NotificationService {
      * @param receiverEmail
      * @param content
      */
-    public void send(String senderEmail, String receiverEmail, String sessionId,String token, String content) throws AlarmFailedException {
+    public void send(String eventName, String senderEmail, String receiverEmail, String sessionId,String token, String content) throws AlarmFailedException {
         log.info("{} to {}", senderEmail, receiverEmail);
         // 전달할 내용 생성
         CallNotification callNotification = makeNotification(senderEmail, receiverEmail, sessionId, token, content);
@@ -78,8 +79,7 @@ public class NotificationService {
         sseRepository.saveEventCache(receiverId, callNotification);
         // 각각의 sseEmitter에게 메시지 전달
         sseEmitters.forEach((key, emitter) -> {
-            log.info(receiverId);
-            sendToClient(emitter, receiverId, callNotification);
+            sendToClient(eventName, emitter, receiverId, callNotification);
         });
         
         log.info("sse 전달성공ㅇ");
@@ -91,9 +91,9 @@ public class NotificationService {
      * @param id
      * @param data
      */
-    private void sendToClient(SseEmitter emitter, String id, Object data){
+    private void sendToClient(String eventName, SseEmitter emitter, String id, Object data){
         try{
-            emitter.send(SseEmitter.event().id(id).name("sse").data(data, MediaType.APPLICATION_JSON));
+            emitter.send(SseEmitter.event().id(id).name(eventName).data(data, MediaType.APPLICATION_JSON));
         }catch (IOException e){
             sseRepository.deleteById(id);
             throw new AlarmFailedException();
