@@ -65,7 +65,6 @@ const userSlice = createSlice({
                 screenType: '',
             };
             state.isLogin = false;
-            persistor.purge();
         }
     }
 });
