@@ -16,11 +16,17 @@ export const sendCalling = async (callRequest:Object) => {
 //통화 수락
 export const receiveCalling = async (callReceiver:Object) => {
     const res = await axiosServer().post<any>(`/meetings/receive`, callReceiver);
-    return res.data;
+    return res;
 }
 
 //통화 종료
 export const offCalling = async (callOffRequst:Object) => {
     const res = await axiosServer().post<any>(`/meetings/quit`, callOffRequst);
-    return res.data;
+    return res;
+}
+
+//통화 거절
+export const rejectCalling = async (callNo:Number) => {
+    const res = await axiosServer().get<any>(`/meetings/reject/${callNo}`);
+    return res;
 }

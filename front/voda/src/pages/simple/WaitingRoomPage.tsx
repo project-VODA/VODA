@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Modal from 'react-modal';
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import Title from '../../components/Title';
 import HandleButton from '../../components/HandleBtn';
-import RedButton from "../../components/DeleteButton";
 import UserSearchList from "../../components/UserSearchList";
 import RecentCalls from "../../components/RecentCall";
-import { searchUser } from "../../apis/friend";
-import { sendCalling } from "../../apis/calling";
 import DeleteFriendButton from '../../components/DeleteFriendBtn'
 
 import '../../styles/simple/SimpleWaitingPage.css'

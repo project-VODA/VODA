@@ -40,13 +40,23 @@ public class CallHistoryService {
     @PostConstruct
     public void init() { this.openVidu = new OpenVidu(openViduUrl, openViduSecret);}
 
-    public boolean canCall(String senderEmail, String receiverEmail){
+    public boolean senderCanCall(String senderEmail, String receiverEmail){
         // 통화상태 0(대기중) : 먼저 전화를 건 사람이 있는 상태
         // 통화상태 1(통화중) : 통화 진행 중
         CallHistory currentSender = callHistoryRepository.findCallHistoryBySenderEmail(senderEmail);
+
+        if(currentSender==null){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean receiverCanCall(String senderEmail, String receiverEmail){
+        // 통화상태 0(대기중) : 먼저 전화를 건 사람이 있는 상태
+        // 통화상태 1(통화중) : 통화 진행 중
         CallHistory currentReceiver = callHistoryRepository.findCallHistoryByReceiverEmail(receiverEmail);
 
-        if(currentSender==null && currentReceiver==null){
+        if(currentReceiver==null){
             return true;
         }
         return false;
@@ -81,6 +91,7 @@ public class CallHistoryService {
         }else if(msg.equals("end")){
             currentcallHistory.setCallEndtime(nowTime);
         }
+        callHistoryRepository.save(currentcallHistory);
     }
 
 

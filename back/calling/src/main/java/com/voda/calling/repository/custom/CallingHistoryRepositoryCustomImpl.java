@@ -84,6 +84,7 @@ public class CallingHistoryRepositoryCustomImpl implements CallingHistoryReposit
                         user2.userName
                 )
                 .orderBy(callHistory.callNo.max().desc())
+                .limit(50)
                 .fetch();
 
         for(Tuple t : tempList){
