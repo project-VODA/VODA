@@ -4,6 +4,7 @@ import com.voda.calling.model.dto.*;
 import com.voda.calling.model.service.CallHistoryService;
 import com.voda.calling.model.service.NotificationService;
 import com.voda.calling.model.service.UserCallHistoryService;
+import com.voda.calling.model.service.UserService;
 import com.voda.calling.util.JwtUtil;
 import io.openvidu.java.client.*;
 import io.swagger.annotations.Api;
@@ -34,6 +35,9 @@ public class MeetingController {
     NotificationService notificationService;
 
     @Autowired
+    UserService userService;
+
+    @Autowired
     JwtUtil jwtUtil;
 
 
@@ -50,6 +54,8 @@ public class MeetingController {
         String sessionId = "";
         String senderEmail = callRequest.getSenderEmail();
         String receiverEmail = callRequest.getReceiverEmail();
+        String senderName = userService.getUserName(senderEmail);
+
         CallSendResponse callSendResponse; //전화 요청 성공 후 response 할 객체
 
         // 0. receiver가 전화 중일 경우 에러 처리
@@ -69,13 +75,16 @@ public class MeetingController {
             sessionId = randomStr.toString();
 
             String initSessionId;
-            String sessionToken;
+            String senderToken;
+            String receiverToken;
 
             try {
                 initSessionId = callHistoryService.initializeSession(sessionId);
                 log.info("initSessionId : {}", initSessionId);
-                sessionToken = callHistoryService.createConnection(initSessionId);
-                log.info("sessionToken : {}", sessionToken);
+                senderToken = callHistoryService.createConnection(initSessionId);
+                receiverToken = callHistoryService.createConnection(initSessionId);
+                log.info("senderToken : {}", senderToken);
+                log.info("receiverToken : {}", receiverToken);
             } catch (OpenViduJavaClientException e) {
                 return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR); //http 500
             } catch (OpenViduHttpException e) {
@@ -84,10 +93,10 @@ public class MeetingController {
             // 3. callNo 가져오기
             int currentCallNo = callHistory.getCallNo();
             // 4. receiver에게 통화 알림 및 token 전달
-            notificationService.send("call", senderEmail, receiverEmail, sessionId, sessionToken, currentCallNo,
-                    receiverEmail+"에게 영상통화 요청이 왔습니다.");
+            notificationService.send("call", senderEmail, receiverEmail, sessionId, receiverToken, currentCallNo,
+                    senderName+"님에게 영상통화 요청이 왔습니다.");
             // 5. sender에게 token 전달
-            callSendResponse = new CallSendResponse(sessionToken, currentCallNo);
+            callSendResponse = new CallSendResponse(senderToken, sessionId, currentCallNo);
         }
 
         return new ResponseEntity<>(callSendResponse, HttpStatus.OK); //http 200
@@ -96,12 +105,10 @@ public class MeetingController {
     /*
     통화 받기
      */
-    @PostMapping("/receive")
-    public ResponseEntity<String> receiveMeeting(@RequestBody CallReceiver receiver)  {
+    @GetMapping("/receive/{callNo}")
+    public ResponseEntity<String> receiveMeeting(@PathVariable int callNo)  {
         //이메일과 세션ID를 넘겨주면
-        String receiverEmail = receiver.getReceiverEmail();
-        String sessionId = receiver.getSessionId();
-        int currentCallNo = receiver.getCallNo();
+        int currentCallNo = callNo;
         String receiverSessionToken;
 
         CallHistory currentCall = callHistoryService.getCallHistory(currentCallNo);
@@ -111,25 +118,14 @@ public class MeetingController {
         // 2. 통화 시작 시간 기록?
         callHistoryService.updateCallTime(currentCall, "start");
 
-        try {
-            receiverSessionToken = callHistoryService.createConnection(sessionId);
-        } catch (OpenViduJavaClientException e) {
-            return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR); //http 500
-        } catch (OpenViduHttpException e) {
-            return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR); //http 500
-        }
-
         //수신자는 토큰만 만들어서 전달해주자 -> 어차피 바로 통화방으로 연결할 것이기 때문에
-        return new ResponseEntity<>(receiverSessionToken, HttpStatus.OK); //http 200
+        return new ResponseEntity<>(SUCCESS, HttpStatus.OK); //http 200
     }
 
-    @PostMapping("/quit")
-    public ResponseEntity<String> closeMeeting(@RequestBody CallOffRequest callOffRequest){
+    @GetMapping("/quit/{callNo}")
+    public ResponseEntity<String> closeMeeting(@PathVariable int callNo){
         // 1. sessionId에 맞는 sesison 종료 ->프론트에서 해줌
         // 2. callhistory의 상태를 통화 종료로 변경
-        String sessionId = callOffRequest.getSessionId();
-        int callNo = callOffRequest.getCallNo();
-
         CallHistory currnentCallHistory = callHistoryService.getCallHistory(callNo);
         callHistoryService.updateCallStatus(currnentCallHistory,2);
         callHistoryService.updateCallTime(currnentCallHistory, "end");
@@ -150,11 +146,16 @@ public class MeetingController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @GetMapping("/reject")
+    @GetMapping("/reject/{callNo}")
     public ResponseEntity<String> rejectCall(@PathVariable int callNo){
         CallHistory currnentCallHistory = callHistoryService.getCallHistory(callNo);
         callHistoryService.updateCallStatus(currnentCallHistory,2);
         callHistoryService.updateCallTime(currnentCallHistory, "end");
+
+        notificationService.send("reject",
+                                    currnentCallHistory.getCallSender(),
+                currnentCallHistory.getCallReceiver(), null, null, callNo,
+                "통화가 거절되었습니다.");
 
         return new ResponseEntity<>(REJECT, HttpStatus.OK);
     }

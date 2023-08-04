@@ -150,4 +150,8 @@ public class UserService {
 
         return null;
     }
+
+    public String getUserName(String userEmail){
+        return userRepository.findByUserEmailAndUserCancel(userEmail, IS_NOT_CANCELED);
+    }
 }

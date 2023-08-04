@@ -14,6 +14,8 @@ public class CallSendResponse {
 
     @ApiModelProperty(value="고유한 세션토큰 값", required = true)
     private String sessionToken;
+    @ApiModelProperty(value="고유한 세션Id", required = true)
+    private String sessionId;
     @ApiModelProperty(value="callNo(키값)", required = true)
     private int callNo;
 }

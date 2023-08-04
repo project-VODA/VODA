@@ -56,12 +56,7 @@ const UserSearchList = () => {
     sendCalling(callSendRequest)
       .then((res) => {
         console.log(res.data.sessionToken);
-        navigate('/video',{
-          state: {
-            sessionToken : `${res.data.sessionToken}`,
-            callNo : `${res.data.callNo}`
-          }
-        });
+        navigate('/video');
       })
       .catch((err) => {
         console.error(err);

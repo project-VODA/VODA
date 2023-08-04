@@ -23,8 +23,8 @@ const SimpleVideo = () => {
 
   const location = useLocation();
   const sessionToken = useSelector((state: RootState) => {
-    return state.user.videoToken;
-  })
+    return state.user.call.token;
+  });
 
   useEffect(() => {
     navigator.mediaDevices.getUserMedia({video: true})
