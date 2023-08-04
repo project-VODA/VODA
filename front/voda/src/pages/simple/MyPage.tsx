@@ -64,7 +64,7 @@ const SimpleMyPage = () => {
   const naviagte = useNavigate();
 
   const RedirectHomePage = () => {
-    naviagte('/');
+    naviagte('/home');
   }
 
   const handleModify = () => {
@@ -83,6 +83,17 @@ const SimpleMyPage = () => {
         .then((res) => {
           if(res.userEmail === userData.userEmail) {
             alert("회원 정보 수정 완료");
+            // 로그아웃 처리
+            if(accessToken !== null && accessToken !== ''){
+              logout()
+              .then((res) => {
+                userSliceLogout();
+                RedirectHomePage();
+              })
+              .catch((err) => {
+                console.log(err);
+              })
+            }
             // 홈 화면으로 리다이렉트
             RedirectHomePage();
           }else{
