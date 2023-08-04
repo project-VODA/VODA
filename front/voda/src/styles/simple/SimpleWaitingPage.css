@@ -1,30 +1,3 @@
-/* #customModal {
-  max-width: 850px;
-  top: 50%;
-  left: 50%;
-  transform: translate(35%,2%);
-  position: fixed;
-}
-
-#customModalContainer {
-  max-width: 850px;
-  display: flex;
-} */
-/*                         */
-
-
-/* #customModalContainer {
-  display: grid;
-  place-items: center;
-  height: 100vh;
-}
-
-#customModal {
-  max-width: 768px;
-  position: relative;
-  justify-items: center;
-} */
-
 #customModalContainer {
   /* display: grid !important; */
   /* place-items: center !important; */
@@ -39,4 +12,12 @@
   top: 50% !important;
   left: 50% !important;
   transform: translate(-50%, -50%) !important;
+}
+
+#FriendContainer td {
+  padding: 0px 8px 3%; 
+  font-size: 23px;
+  /* position: absolute; */
+  /* left: 50%; */
+  /* transform: translateX(-50%); */
 }
