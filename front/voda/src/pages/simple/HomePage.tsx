@@ -72,6 +72,7 @@ const SimpleHomePage = () => {
     if(accessToken !== null && accessToken !== ''){
       logout()
       .then((res) => {
+        console.log("hi logout");
         dispatch(userSliceLogout());
         RedirectHomePage();
       })
