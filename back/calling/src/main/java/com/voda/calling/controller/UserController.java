@@ -146,7 +146,7 @@ public class UserController {
             @ApiResponse(code=500, message="수정 실패 - 서버(DB)오류")
     })
     @PutMapping("/mypage")
-    public ResponseEntity<User> updateUserInfo(@RequestBody User user){
+    public ResponseEntity<?> updateUserInfo(@RequestBody User user, @ApiParam(hidden = true) @RequestHeader(value = AUTH) String auth){
         log.info("마이페이지 수정");
         User updateUser = userService.updateUser(user);
         if(updateUser!=null){
@@ -154,7 +154,7 @@ public class UserController {
             return new ResponseEntity<User>(updateUser, HttpStatus.OK);
         }else{
             log.info("마이페이지 수정 실패 - 사용자 정보 인증 실패");
-            return new ResponseEntity<User>(updateUser, HttpStatus.UNAUTHORIZED );
+            return new ResponseEntity<String>(FAIL, HttpStatus.UNAUTHORIZED );
         }
     }
 

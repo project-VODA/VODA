@@ -10,10 +10,10 @@ import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import UserSearchList from "../components/UserSearchList";
 // import Button from "../components/SettingButton";
-import RedButton from "../components/DeleteButton";
+import SmallRedButton from "../components/SmallRedBtn";
 
 import FriendPageButton from '../components/FriendPageBtn'
-import DeleteFriendButton from '../components/DeleteFriendBtn'
+import DeleteFriendButton from './SmallRedBtn'
 
 // react-icons
 import { FiPhoneCall } from "react-icons/fi"
@@ -120,16 +120,23 @@ const FriendList = () => {
       <span style={{ fontSize:'28px', fontWeight:'bolder' }}>연락처</span>
       <ImUserPlus onClick={(e) => setModalOpen(true)} style={{ fontSize: '30px', cursor: 'pointer' }} />
     </div>
-    <Modal 
+    <Modal id='customModal'
       isOpen={isModalOpen} 
       onRequestClose={(e) => setModalOpen(false)}
       ariaHideApp={false}
     >
-      <RedButton onClick={(e) => setModalOpen(false)} text="X" />
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', padding: '10px' }}>
+        <span style={{ marginLeft: 'auto', marginRight: 'auto', fontSize:'30px', fontWeight: 'bolder' }}>친구 찾기</span>
+        <span>
+          <SmallRedButton onClick={(e) => setModalOpen(false)} text="X" />
+        </span>
+      </div>
+
+
       <UserSearchList/>
     </Modal>
   </>
-      <table className = 'friendTable' style={{ borderCollapse: 'separate', borderSpacing: '0px 20px' }}>
+      <table className = 'friendTable' style={{ borderCollapse: 'separate', borderSpacing: '0px 20px',  }}>
         <colgroup>
           <col width = "45%" />
           <col width = "45%" />
@@ -149,8 +156,8 @@ const FriendList = () => {
                 <td>{friend.userEmail}</td>
                 <div id='DetailCallContainer'>
                 <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '28px', fontSize:'25px'}}>
-                <FiPhoneCall onClick={() => handleCalling(friend)} aria-label={`${friend.userName} 님에게 통화하시려면 버튼을 누르세요.`}/>
-                <RiDeleteBin6Line onClick={() => handleDeleteFriend(friend)} aria-label={`${friend.userName} 님을 친구목록에서 삭제하시려면 버튼을 누르세요.`} />
+                <FiPhoneCall style={{ cursor: 'pointer' }} onClick={() => handleCalling(friend)} aria-label={`${friend.userName} 님에게 통화하시려면 버튼을 누르세요.`}/>
+                <RiDeleteBin6Line style={{ cursor: 'pointer' }} onClick={() => handleDeleteFriend(friend)} aria-label={`${friend.userName} 님을 친구목록에서 삭제하시려면 버튼을 누르세요.`} />
                 </div></div>
               </tr>
           ))}

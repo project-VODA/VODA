@@ -13,8 +13,8 @@ const userSlice = createSlice({
             role: '',
         },
         userSetting:{
-            typeNo: '',
-            screenType: '',
+            typeNo: 0,
+            screenType: 0,
         },
         call : {
             token: '',
@@ -67,8 +67,8 @@ const userSlice = createSlice({
                 role: '',
             };
             state.userSetting = {
-                typeNo: '',
-                screenType: '',
+                typeNo: 0,
+                screenType: 0,
             };
             state.isLogin = false;
         },
@@ -89,4 +89,9 @@ export interface UserInfoType{
     userName: string,
     userHandicap: string,
     role: string,
-}
+};
+
+export interface UserSettingType{
+    typeNo: number,
+    screenType: number,
+};
