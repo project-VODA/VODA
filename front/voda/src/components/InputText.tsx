@@ -44,10 +44,12 @@ interface InputProps {
   'aria-label'?: string;
   readonly?: boolean;
   checked?: boolean;
+  style?: React.CSSProperties;
 }
 
 
-export default function Input({ type, placeholder, value, onChange, 'aria-label':ariaLabel, readonly, checked}: InputProps) {
+export default function Input({ type, placeholder, value, onChange, 'aria-label':ariaLabel, readonly, checked, style}: InputProps) {
+
   const { theme } = useContext(ThemeContext);
 
   return (
@@ -61,6 +63,7 @@ export default function Input({ type, placeholder, value, onChange, 'aria-label'
         aria-label={ariaLabel}
         readOnly={readonly}
         checked={checked}
+        style={style}
       />
     </TextContainer>
   )
