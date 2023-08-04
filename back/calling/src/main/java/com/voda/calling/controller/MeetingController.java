@@ -39,7 +39,9 @@ public class MeetingController {
 
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
-    private static final String ONCALLING = "oncalling";
+    private static final String SENDERON = "senderOn";
+    private static final String RECEIVERON = "receiverOn";
+    private static final String REJECT = "reject";
     private static final String AUTH = "Authorization";
 
     @PostMapping("/send")
@@ -48,15 +50,17 @@ public class MeetingController {
         String sessionId = "";
         String senderEmail = callRequest.getSenderEmail();
         String receiverEmail = callRequest.getReceiverEmail();
-        CallSendResponse callSendResponse;
+        CallSendResponse callSendResponse; //전화 요청 성공 후 response 할 객체
 
         // 0. receiver가 전화 중일 경우 에러 처리
-        if (!callHistoryService.canCall(senderEmail, receiverEmail)) {
-            log.info("통화 불가");
-            return new ResponseEntity<>(ONCALLING, HttpStatus.OK); //http 204
+        if (!callHistoryService.senderCanCall(senderEmail, receiverEmail)) {
+            log.info("통화 불가 - sender(송신자)에게 온 통화가 있음");
+            return new ResponseEntity<>(SENDERON, HttpStatus.OK); //http 200
+        } else if(!callHistoryService.receiverCanCall(senderEmail, receiverEmail)) {
+            log.info("통화 불가 - receiver(수신자)에게 온 통화가 있음");
+            return new ResponseEntity<>(RECEIVERON, HttpStatus.OK); //http 200
         } else {
             log.info("통화가능");
-            log.info("receiverEmail : {}", receiverEmail);
             // 1. callhistory에 meeting 기록 (상태는 대기?)
             CallHistory callHistory = callHistoryService.createMainCallHistory(senderEmail, receiverEmail);
 
@@ -77,12 +81,12 @@ public class MeetingController {
             } catch (OpenViduHttpException e) {
                 return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR); //http 500
             }
-            // 3. receiver에게 통화 알림 및 token 전달
-            notificationService.send("call",senderEmail, receiverEmail, sessionId, sessionToken,"일단 그냥 ㄱ");
-
-            // 4. sender에게 token 전달
+            // 3. callNo 가져오기
             int currentCallNo = callHistory.getCallNo();
-//            int currentCallNo = 1;
+            // 4. receiver에게 통화 알림 및 token 전달
+            notificationService.send("call", senderEmail, receiverEmail, sessionId, sessionToken, currentCallNo,
+                    receiverEmail+"에게 영상통화 요청이 왔습니다.");
+            // 5. sender에게 token 전달
             callSendResponse = new CallSendResponse(sessionToken, currentCallNo);
         }
 
@@ -146,7 +150,14 @@ public class MeetingController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    @GetMapping("/reject")
+    public ResponseEntity<String> rejectCall(@PathVariable int callNo){
+        CallHistory currnentCallHistory = callHistoryService.getCallHistory(callNo);
+        callHistoryService.updateCallStatus(currnentCallHistory,2);
+        callHistoryService.updateCallTime(currnentCallHistory, "end");
 
+        return new ResponseEntity<>(REJECT, HttpStatus.OK);
+    }
 
 
     /**
