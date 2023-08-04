@@ -1,9 +1,7 @@
 package com.voda.calling.model.service;
 
 import com.voda.calling.model.dto.CallHistory;
-import com.voda.calling.model.dto.CallReceiver;
 import com.voda.calling.model.dto.RecentCall;
-import com.voda.calling.model.dto.UserCallHistory;
 import com.voda.calling.repository.CallHistoryRepository;
 import io.openvidu.java.client.*;
 import lombok.extern.slf4j.Slf4j;

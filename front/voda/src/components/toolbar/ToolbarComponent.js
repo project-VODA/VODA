@@ -47,6 +47,7 @@ const ToolbarComponent = (props) => {
   const localUser = props.user;
 
   return (
+    <>
     <AppBar className="toolbar" id="header">
               <Toolbar className="toolbar">
           <div id="navSessionInfo">
@@ -133,6 +134,7 @@ const ToolbarComponent = (props) => {
           </div>
         </Toolbar>
     </AppBar>
+    </>
   );
 };
 
