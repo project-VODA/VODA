@@ -1,26 +1,20 @@
-/* [4] 서비스 소개 - 심플모드 */
-
-/* position: relative;
-width: 1440px;
-height: 1024px;
-
-background: #000000; */
-
+/* 서비스 소개 - 심플모드 */
 
 /* 영상통화 중 표정알림 서비스 */
 .aboutTitle{
+max-width: 100%;
+max-height: 100%;
 margin-top: 20px;
 position: absolute;
 width: 100%;
-min-width: 1400px;
+min-width: 800px;
 height: 14%;
 justify-content: center;
 
-/* font-family: 'KoddiUD OnGothic'; */
 color: #FFC300;
 font-style: normal;
 font-weight: 700;
-font-size: 90px;
+font-size: 80px;
 line-height: 122px;
 display: flex;
 align-items: center;
@@ -33,10 +27,12 @@ text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
 /* VODA는 웹 브라우저에서 시각 장애인에게 비언어적 소통을 지원합니다. 지인과 가족을 친구로 등록하여 손쉽게 영상 통화를 시작해보세요. */
 .aboutContent{
-margin: 0px 2%;
+max-width: 100%;
+max-height: 100%;
+margin: 0px;
 position: absolute;
 width: 100%;
-min-width: 1400px;
+min-width: 800px;
 height: 0px;
 justify-content: center;
 top: 270px;
@@ -44,7 +40,7 @@ top: 270px;
 font-family: 'KoddiUD OnGothic';
 font-style: normal;
 font-weight: 700;
-font-size: 38px;
+font-size: 32px;
 line-height: 51px;
 display: flex;
 align-items: center;
@@ -55,30 +51,11 @@ color: #F0F0F0;
 text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
 }
-/* 서비스 소개 */
-/* 
-position: absolute;
-width: 483px;
-height: 107px;
-left: 478px;
-top: 34px;
-
-font-family: 'KoddiUD OnGothic';
-font-style: normal;
-font-weight: 700;
-font-size: 88px;
-line-height: 107px;
-display: flex;
-align-items: center;
-text-align: center; */
-
-/* Dark-Yellow */
-/* color: #FFC300; */
-
-
 
 /* VODA */
 .aboutVODA{
+  max-width: 100%;
+max-height: 100%;
 position: absolute;
 width: 320px;
 height: 154px;
@@ -88,7 +65,7 @@ top: 320px;
 font-family: 'Secular One';
 font-style: normal;
 font-weight: 400;
-font-size: 100px;
+font-size: 80px;
 line-height: 146px;
 display: flex;
 align-items: center;
@@ -102,9 +79,11 @@ text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
 /* Voice Over Diverse Assistance */
 .aboutMean{
+max-width: 100%;
+max-height: 100%;
 position: absolute;
 width: 100%;
-min-width: 1400px;
+min-width: 800px;
 height: 417px;
 left: 15px;
 top: 130px;
@@ -112,8 +91,8 @@ top: 130px;
 /* font-family: 'Secular One'; */
 font-style: normal;
 font-weight: 400;
-font-size: 62px;
-line-height: 90px;
+font-size: 50px;
+line-height: 60px;
 display: flex;
 text-align: left;
 /* align-items: center; */
@@ -125,17 +104,19 @@ color: #F0F0F0;
 
 /* “ 표정을 소리로 보다 ” */
 .aboutSlogan{
+max-width: 100%;
+max-height: 100%;
 position: absolute;
-width: 100%;
-min-width: 1400px;
+width: 62%;
+min-width: 800px;
 height: 154px;
-left: 510px;
+left: 500px;
 top: 450px;
 
 font-family: 'KoddiUD OnGothic';
 font-style: normal;
 font-weight: 700;
-font-size: 90px;
+font-size: 80px;
 line-height: 110px;
 display: flex;
 align-items: center;
