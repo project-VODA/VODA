@@ -39,8 +39,8 @@ export default function SseComponent(){
             setCallNo(temp.callNo);
             setReceiveToken(temp.token);
             dispatch(updateReceiveResponse({
-              receiveToken : receiveToken,
-              callNo : callNo,
+              receiveToken : temp.token,
+              callNo : temp.callNo,
             }));
             // console.log(receiveToken);
         });
@@ -64,6 +64,7 @@ export default function SseComponent(){
         //   receiveToken : receiveToken,
         //   callNo : callNo,
         // }));
+        setisCallModalOpen(false);
         redirectVideo();
       })
       .catch((err)=> {
