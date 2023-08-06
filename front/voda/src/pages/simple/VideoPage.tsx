@@ -22,8 +22,8 @@ const SimpleVideo = () => {
   const [localStream, setLocalStream] = useState<MediaStream>();
 
   const location = useLocation();
-  const sessionToken = useSelector((state: RootState) => {
-    return state.user.call.token;
+  const [sessionToken, callNo] : [string, number] = useSelector((state: RootState) => {
+    return [state.call.sendResponse.sessionToken, state.call.sendResponse.callNo];
   });
 
   useEffect(() => {
@@ -35,10 +35,10 @@ const SimpleVideo = () => {
 
   return (
     <>
-    <StyledLink to='' aria-label="영상통화 페이지입니다.">
-      <Title title="Video" />
-    </StyledLink>
-      <VideoRoomComponent token={sessionToken} callNo={1} />
+      <StyledLink to='' aria-label="영상통화 페이지입니다.">
+        <Title title="Video" />
+      </StyledLink>
+      <VideoRoomComponent token={sessionToken} callNo={callNo} />
     </>
   );
 };

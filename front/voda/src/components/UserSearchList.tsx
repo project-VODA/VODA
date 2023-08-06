@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { UserInfoType } from "../store/userSlice";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
 import { sendCalling } from "../apis/calling";
 import { useNavigate } from "react-router-dom";
+
+import { UserInfoType } from "../store/userSlice";
 
 import SmallYellowButton from "../components/SmallYellowBtn"
 import Button from "./SettingButton";
 import RedButton from "./DeleteButton"
 import Input from "./InputText";
 import { deleteFriend, registFriend, searchUser } from "../apis/friend";
+
+import { updateSendResponse } from "../store/callSlice";
 
 import '../styles/simple/SimpleWaitingPage.css'
 
@@ -34,6 +37,7 @@ const UserSearchList = () => {
 
   const [keyword, setKeyword] = useState('');
   const [userList, setUserList] = useState<UserList>([]);
+  // const [callSend, setCallSend] = useState()
   
   const userSearchRequest = {
     keyword: keyword,
@@ -51,6 +55,7 @@ const UserSearchList = () => {
   }, [keyword]);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleCalling = (user: User) => {
     const callSendRequest = {
@@ -60,7 +65,11 @@ const UserSearchList = () => {
 
     sendCalling(callSendRequest)
       .then((res) => {
-        console.log(res.data.sessionToken);
+        dispatch(updateSendResponse({
+          sessionToken : res.data.sessionToken,
+          sessionId : res.data.sessiondId,
+          callNo : res.data.callNo
+        }));
         navigate('/video');
       })
       .catch((err) => {

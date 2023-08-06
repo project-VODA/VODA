@@ -1,57 +1,85 @@
-import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import React, { Component } from "react";
+import "./ToolbarComponent.css";
+
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
+
+import Mic from "@material-ui/icons/Mic";
+import MicOff from "@material-ui/icons/MicOff";
+import Videocam from "@material-ui/icons/Videocam";
+import VideocamOff from "@material-ui/icons/VideocamOff";
+import Fullscreen from "@material-ui/icons/Fullscreen";
+import FullscreenExit from "@material-ui/icons/FullscreenExit";
+import SwitchVideoIcon from "@material-ui/icons/SwitchVideo";
+import PictureInPicture from "@material-ui/icons/PictureInPicture";
+import ScreenShare from "@material-ui/icons/ScreenShare";
+import StopScreenShare from "@material-ui/icons/StopScreenShare";
+import Tooltip from "@material-ui/core/Tooltip";
+import PowerSettingsNew from "@material-ui/icons/PowerSettingsNew";
+import QuestionAnswer from "@material-ui/icons/QuestionAnswer";
 import SettingButton from "../../components/SettingButton";
 import DeleteButton from "../../components/DeleteButton";
 
-const ToolbarComponent = (props) => {
-  const [fullscreen, setFullscreen] = useState(false);
-  const naviagte = useNavigate();
+import IconButton from "@material-ui/core/IconButton";
 
-  const micStatusChanged = () => {
-    props.micStatusChanged();
-  };
+const logo = require("../../assets/images/logo_yellow.png");
 
-  const camStatusChanged = () => {
-    props.camStatusChanged();
-  };
+export default class ToolbarComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { fullscreen: false };
+    this.camStatusChanged = this.camStatusChanged.bind(this);
+    this.micStatusChanged = this.micStatusChanged.bind(this);
+    this.screenShare = this.screenShare.bind(this);
+    this.stopScreenShare = this.stopScreenShare.bind(this);
+    this.toggleFullscreen = this.toggleFullscreen.bind(this);
+    this.switchCamera = this.switchCamera.bind(this);
+    this.leaveSession = this.leaveSession.bind(this);
+    this.toggleChat = this.toggleChat.bind(this);
+  }
 
-  const screenShare = () => {
-    props.screenShare();
-  };
+  micStatusChanged() {
+    this.props.micStatusChanged();
+  }
 
-  const stopScreenShare = () => {
-    props.stopScreenShare();
-  };
+  camStatusChanged() {
+    this.props.camStatusChanged();
+  }
 
-  const toggleFullscreen = () => {
-    setFullscreen(!fullscreen);
-    props.toggleFullscreen();
-  };
+  screenShare() {
+    this.props.screenShare();
+  }
 
-  const switchCamera = () => {
-    props.switchCamera();
-  };
+  stopScreenShare() {
+    this.props.stopScreenShare();
+  }
 
-  const leaveSession = () => {
-    props.leaveSession();
-    naviagte("/home"); // 버튼 클릭 시 "/home"으로 이동
-  };
+  toggleFullscreen() {
+    this.setState({ fullscreen: !this.state.fullscreen });
+    this.props.toggleFullscreen();
+  }
 
-  const toggleChat = () => {
-    props.toggleChat();
-  };
+  switchCamera() {
+    this.props.switchCamera();
+  }
 
-  const mySessionId = props.sessionId;
-  const localUser = props.user;
+  leaveSession() {
+    this.props.leaveSession();
+    window.location.href = "/home";
+  }
 
-  return (
-    <>
-    <AppBar className="toolbar" id="header">
-              <Toolbar className="toolbar">
+  toggleChat() {
+    this.props.toggleChat();
+  }
+
+  render() {
+    const mySessionId = this.props.sessionId;
+    const localUser = this.props.user;
+    return (
+      <AppBar className="toolbar" id="header">
+        <Toolbar className="toolbar">
           <div id="navSessionInfo">
-            {/* <img id="header_img" alt="OpenVidu Logo" src={logo} /> */}
+            <img id="header_img" alt="OpenVidu Logo" src={logo} />
 
             {this.props.sessionId && (
               <div id="titleContent">
@@ -133,9 +161,7 @@ const ToolbarComponent = (props) => {
                         </IconButton> */}
           </div>
         </Toolbar>
-    </AppBar>
-    </>
-  );
-};
-
-export default ToolbarComponent;
+      </AppBar>
+    );
+  }
+}

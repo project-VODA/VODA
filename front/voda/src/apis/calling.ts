@@ -8,14 +8,14 @@ export const getRecentCallList = async () => {
 }
 
 //통화 요청
-export const sendCalling = async (callRequest:Object) => {
-    const res = await axiosServer().post<any>(`/meetings/send`, callRequest);
+export const sendCalling = async (callSendRequest:Object) => {
+    const res = await axiosServer().post<any>(`/meetings/send`, callSendRequest);
     return res;
 }
 
 //통화 수락
 export const receiveCalling = async (callNo:Number) => {
-    const res = await axiosServer().get<any>(`/meetings/receive${callNo}`);
+    const res = await axiosServer().get<any>(`/meetings/receive/${callNo}`);
     return res;
 }
 
