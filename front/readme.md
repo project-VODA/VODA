@@ -151,3 +151,8 @@
   - 배경색 변경
   - Simple About Page 레이아웃 및 UI 완료
   - Simple About Page aria-label 완료
+
+- 23.08.06 KSH
+  - Simple 서비스 소개 크기 수정
+  - Detail About 호버링까지 완 ( 중앙 배치가 하고싶음...)
+  - 사운드도 넣으려고 했으나, 사용자 경험 이슈로 보류(파일은 살려둠)

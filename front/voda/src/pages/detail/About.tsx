@@ -1,17 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Hovering from "../../components/AboutHover";
+import "../../styles/detail/AboutHover.css"
+import Title from "../../components/Title";
 
-import Title from '../../components/Title';
-
-const DetailAbout = () => {
+const AboutHover = () => {
   return (
-    <>
-    <Link to=''>
-      <Title title="About" />
-      </Link>
-      {/* Add other content for the home page */}
-    </>
+    <div>
+      <Title className="DetAboutTitle" title="Transforming Visions into Sound"/>
+      <Hovering />
+    </div>
   );
 };
 
-export default DetailAbout;
+export default AboutHover;

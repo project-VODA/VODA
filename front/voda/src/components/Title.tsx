@@ -20,10 +20,12 @@ const TitleContainer = styled('header')<ColorProps>`
   justify-content: center;
   align-items: center;
   transition: all 0.5s ease-in-out;
+  padding: 10px 0;
 `;
 
 interface TitleProps {
   title: string;
+  className?: string;
   'aria-label'?: string;
 }
 
