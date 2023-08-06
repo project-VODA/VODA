@@ -12,8 +12,6 @@ public interface UserRepository extends JpaRepository<User, String> { //JpaRepos
 
     //user insert :  persist 함수 사용
 
-    String findByUserEmailAndUserCancel(String userEmail, int userCancel);
-
     User findUserByUserEmailAndUserCancel(String userEmail, int userCancel);
 
     User findUserByUserEmail(String userEmail);

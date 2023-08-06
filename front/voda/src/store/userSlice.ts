@@ -16,13 +16,8 @@ const userSlice = createSlice({
             typeNo: 0,
             screenType: 0,
         },
-        call : {
-            token: '',
-            id:'',
-            no: 0,
-        },
         isLogin: false,
-		
+    
     },
     reducers: {
         userSliceLogin:(state, action) =>{
@@ -72,17 +67,11 @@ const userSlice = createSlice({
             };
             state.isLogin = false;
         },
-				updateCallResponse:(state, action) => {
-					state.call.token = action.payload.sessionToken;
-          state.call.id = action.payload.sessionId;
-          state.call.no = action.payload.callNo;
-
-				},
     }
 });
 
 export default userSlice;
-export const {userSliceLogin, userSliceAllocate, userSliceLogout, updateCallResponse} = userSlice.actions;
+export const {userSliceLogin, userSliceAllocate, userSliceLogout} = userSlice.actions;
 
 export interface UserInfoType{
     userEmail: string,

@@ -152,6 +152,8 @@ public class UserService {
     }
 
     public String getUserName(String userEmail){
-        return userRepository.findByUserEmailAndUserCancel(userEmail, IS_NOT_CANCELED);
+        User user = userRepository.findUserByUserEmailAndUserCancel(userEmail, IS_NOT_CANCELED);
+        String userName = user.getUserName();
+        return userName;
     }
 }
