@@ -22,8 +22,9 @@ const callSlice = createSlice({
         },
         updateReceiveResponse:(state, action) => {
             const { receiveToken, callNo } = action.payload;
-            state.receiveResponse.receiveToken = receiveToken;
-            state.receiveResponse.callNo = callNo;
+            console.log(receiveToken, callNo);
+            state.sendResponse.sessionToken = receiveToken;
+            state.sendResponse.callNo = callNo;
         },
         initCall:(state) => {
             state.sendResponse.sessionToken ='';
