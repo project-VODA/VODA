@@ -126,6 +126,7 @@ public class MeetingController {
     public ResponseEntity<String> closeMeeting(@PathVariable int callNo){
         // 1. sessionId에 맞는 sesison 종료 ->프론트에서 해줌
         // 2. callhistory의 상태를 통화 종료로 변경
+        log.info("meeting controller - closeMeeting : callNo = {}", callNo);
         CallHistory currnentCallHistory = callHistoryService.getCallHistory(callNo);
         callHistoryService.updateCallStatus(currnentCallHistory,2);
         callHistoryService.updateCallTime(currnentCallHistory, "end");
@@ -133,6 +134,8 @@ public class MeetingController {
         // 3. callhistory 및 user 연결 테이블에 기록
         UserCallHistory senderUserCallHistory = new UserCallHistory(callNo,currnentCallHistory.getCallSender());
         UserCallHistory receiverUserCallHistory = new UserCallHistory(callNo, currnentCallHistory.getCallReceiver());
+        userCallHistoryService.createUserCallhistory(senderUserCallHistory);
+        userCallHistoryService.createUserCallhistory(receiverUserCallHistory);
 
         return new ResponseEntity<>(SUCCESS, HttpStatus.OK); //http 500
 }

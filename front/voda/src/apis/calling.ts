@@ -21,7 +21,7 @@ export const receiveCalling = async (callNo:Number) => {
 
 //통화 종료
 export const offCalling = async (callNo:Number) => {
-    const res = await axiosServer().get<any>(`/meetings/quit${callNo}`);
+    const res = await axiosServer().get<any>(`/meetings/quit/${callNo}`);
     return res;
 }
 

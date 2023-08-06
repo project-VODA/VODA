@@ -207,7 +207,17 @@ class VideoRoomComponent extends Component {
 
     leaveSession() {
         const mySession = this.state.session;
-        // console.log("video컴포넌트 에 왔니? : " + this.props.callNo);
+        console.log("video컴포넌트 에 왔니? : " + this.props.callNo);
+
+        //voda :ysh
+        //back server 통화 종료
+        offCalling(this.props.callNo)
+        .then((res)=>{
+            console.log(res);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 
         if (mySession) {
             mySession.disconnect();
@@ -226,17 +236,7 @@ class VideoRoomComponent extends Component {
             this.props.leaveSession();
         }
 
-        //voda :ysh
-        const callOffRequest = {
-            sessionId: mySession.sessionId,
-            callNo: this.props.callNo
-        }
-
-        //back server 통화 종료
-        offCalling(callOffRequest)
-        .then((res)=>{
-            console.log(res);
-        });
+        
 
     }
     camStatusChanged() {
