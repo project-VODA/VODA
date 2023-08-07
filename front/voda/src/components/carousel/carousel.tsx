@@ -19,19 +19,23 @@ const CarouselComponent: React.FC<CarouselProps> = ({ slides }) => {
   const handleNext = () => {
     setActiveIndex((prevIndex) => (prevIndex + 1) % slides.length);
     setSlideTransition("slide-left");
-    setTimeout(() => setSlideTransition("slide-center"), 0);
+    setTimeout(() => {
+      setSlideTransition("slide-center");
+    }, 500); // 0.5초 뒤에 중앙으로 복귀
   };
-
+  
   const handlePrev = () => {
     setActiveIndex((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
     setSlideTransition("slide-right");
-    setTimeout(() => setSlideTransition("slide-center"), 0);
+    setTimeout(() => {
+      setSlideTransition("slide-center");
+    }, 500); // 0.5초 뒤에 중앙으로 복귀
   };
-
+  
   useEffect(() => {
     const interval = setInterval(() => {
       handleNext();
-    }, 3000); // 3초마다 다음 슬라이드로 전환
+    }, 6000); // 3초마다 다음 슬라이드로 전환
 
     return () => {
       clearInterval(interval);
