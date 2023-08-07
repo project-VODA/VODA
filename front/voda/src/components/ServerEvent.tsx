@@ -33,7 +33,7 @@ export default function SseComponent(){
 
     const [content, setContent] = useState('');
     const [callNo, setCallNo] = useState(0);
-    const [isCallModalOpen, setisCallModalOpen] = useState(true);
+    const [isCallModalOpen, setisCallModalOpen] = useState(false);
     const [userEmail, callInfo]:[string, callInfoType] = useSelector((state:RootState) => {
         return [state.user.userInfo.userEmail, state.call.callInfo];
     })
