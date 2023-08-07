@@ -1,5 +1,6 @@
 package com.voda.calling.model.service;
 
+import com.voda.calling.exception.AlreadyLoginedException;
 import com.voda.calling.exception.NotRegisteredException;
 import com.voda.calling.exception.PasswordWrongException;
 import com.voda.calling.model.dto.User;
@@ -72,7 +73,10 @@ public class UserService {
         if (user == null) { // 등록이 안된 유저인 경우
             log.info("{}에 해당하는 유저 없음", userEmail);
             throw new NotRegisteredException();
-        } else if(!passwordEncoder.matches(userPass, user.getUserPass())) {// 비밀번호가 틀린 경우
+        } else if(user.getUserToken() != null) {
+            log.info("{} 이미 로그인 함", userEmail);
+            throw new AlreadyLoginedException();
+        }else if(!passwordEncoder.matches(userPass, user.getUserPass())) {// 비밀번호가 틀린 경우
             log.info("{}유저 로그인 실패: 비밀번호 오류", userEmail);
             throw new PasswordWrongException();
         }
