@@ -23,7 +23,7 @@ const SimpleVideo = () => {
 
   const location = useLocation();
   const [sessionToken, callNo] : [string, number] = useSelector((state: RootState) => {
-    return [state.call.sendResponse.sessionToken, state.call.sendResponse.callNo];
+    return [state.call.callInfo.sessionToken, state.call.callInfo.callNo];
   });
 
   useEffect(() => {
