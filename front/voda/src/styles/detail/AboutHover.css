@@ -1,4 +1,4 @@
-/* AboutHover.css */
+/* AboutHover.css
 
 .hover-container {
   position: relative;
@@ -6,7 +6,12 @@
   align-content: center;
 }
 
+.image-container {
+  display: flex;
+}
+
 .hover-container img {
+  display: flex;
   width: 15%;
   height: 15%;
   object-fit: cover; 
@@ -15,18 +20,24 @@
 }
 
 .hover-container img:hover {
+  display: flex;
   filter: blur(0);
 }
 
 .text-container {
+  display: flex;
   padding: 20px;
 }
 
 .text-container h2 {
+  display: flex;
   font-size: 1.5em;
   font-weight: bold;
 }
 
 .text-container p {
+  display: flex;
   font-size: 1em;
 }
+
+ */
