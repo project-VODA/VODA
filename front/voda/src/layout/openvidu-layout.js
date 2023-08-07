@@ -18,26 +18,26 @@ class OpenViduLayout {
 	}
 
 positionElement(elem, x, y, width, height, animate) {
-		const targetPosition = {
-			left: x + 'px',
-			top: y + 'px',
-			width: width + 'px',
-			height: height + 'px',
-		};
+	const targetPosition = {
+		left: x + 'px',
+		top: y + 'px',
+		width: width + 'px',
+		height: height + 'px',
+	};
 
-		this.fixAspectRatio(elem, width);
+	this.fixAspectRatio(elem, width);
 
-		if (animate && $) {
-			$(elem).stop();
-			$(elem).animate(targetPosition, animate.duration || 200, animate.easing || 'swing', () => {
-				this.fixAspectRatio(elem, width);
-				if (animate.complete) {
-					animate.complete.call(this);
-				}
-			});
-		} else {
-			$(elem).css(targetPosition);
-		}
+	if (animate && $) {
+		$(elem).stop();
+		$(elem).animate(targetPosition, animate.duration || 200, animate.easing || 'swing', () => {
+			this.fixAspectRatio(elem, width);
+			if (animate.complete) {
+				animate.complete.call(this);
+			}
+		});
+	} else {
+		$(elem).css(targetPosition);
+	}
 		this.fixAspectRatio(elem, width);
 	}
 
