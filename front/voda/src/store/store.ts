@@ -31,7 +31,7 @@
 // export type AppDispatch = typeof store.dispatch;
 
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import storage from 'redux-persist/lib/storage'
+import storageSession from 'redux-persist/lib/storage/session'
 import userSlice from "./userSlice";
 import callSlice from "./callSlice";
 import persistStore from "redux-persist/es/persistStore";
@@ -46,7 +46,7 @@ const reducers = combineReducers({
 
 const persistConfig = {
   key: 'root',
-  storage,
+  storage: storageSession,
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

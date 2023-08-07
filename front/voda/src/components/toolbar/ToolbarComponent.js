@@ -4,23 +4,9 @@ import "./ToolbarComponent.css";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 
-import Mic from "@material-ui/icons/Mic";
-import MicOff from "@material-ui/icons/MicOff";
-import Videocam from "@material-ui/icons/Videocam";
-import VideocamOff from "@material-ui/icons/VideocamOff";
-import Fullscreen from "@material-ui/icons/Fullscreen";
-import FullscreenExit from "@material-ui/icons/FullscreenExit";
-import SwitchVideoIcon from "@material-ui/icons/SwitchVideo";
-import PictureInPicture from "@material-ui/icons/PictureInPicture";
-import ScreenShare from "@material-ui/icons/ScreenShare";
-import StopScreenShare from "@material-ui/icons/StopScreenShare";
-import Tooltip from "@material-ui/core/Tooltip";
-import PowerSettingsNew from "@material-ui/icons/PowerSettingsNew";
-import QuestionAnswer from "@material-ui/icons/QuestionAnswer";
 import SettingButton from "../../components/SettingButton";
 import DeleteButton from "../../components/DeleteButton";
 
-import IconButton from "@material-ui/core/IconButton";
 
 const logo = require("../../assets/images/logo_yellow.png");
 
@@ -30,12 +16,9 @@ export default class ToolbarComponent extends Component {
     this.state = { fullscreen: false };
     this.camStatusChanged = this.camStatusChanged.bind(this);
     this.micStatusChanged = this.micStatusChanged.bind(this);
-    this.screenShare = this.screenShare.bind(this);
-    this.stopScreenShare = this.stopScreenShare.bind(this);
     this.toggleFullscreen = this.toggleFullscreen.bind(this);
     this.switchCamera = this.switchCamera.bind(this);
     this.leaveSession = this.leaveSession.bind(this);
-    this.toggleChat = this.toggleChat.bind(this);
   }
 
   micStatusChanged() {
@@ -46,13 +29,6 @@ export default class ToolbarComponent extends Component {
     this.props.camStatusChanged();
   }
 
-  screenShare() {
-    this.props.screenShare();
-  }
-
-  stopScreenShare() {
-    this.props.stopScreenShare();
-  }
 
   toggleFullscreen() {
     this.setState({ fullscreen: !this.state.fullscreen });
@@ -66,10 +42,6 @@ export default class ToolbarComponent extends Component {
   leaveSession() {
     this.props.leaveSession();
     window.location.href = "/home";
-  }
-
-  toggleChat() {
-    this.props.toggleChat();
   }
 
   render() {
@@ -116,18 +88,6 @@ export default class ToolbarComponent extends Component {
                 />
               )}
             </span>
-
-            {/* <IconButton onClick={this.screenShare}>
-                            {localUser !== undefined && localUser.isScreenShareActive() ? <PictureInPicture /> : <ScreenShare />}
-                        </IconButton>
-
-                        {localUser !== undefined &&
-                            localUser.isScreenShareActive() && (
-                                <IconButton onClick={this.stopScreenShare} id="navScreenButton">
-                                    <StopScreenShare color="secondary" />
-                                </IconButton>
-                            )} */}
-
             <span id="navSwitchCamButton" onClick={this.switchCamera}>
               <SettingButton
                 text="카메라 전환"
@@ -153,12 +113,6 @@ export default class ToolbarComponent extends Component {
                 aria-label="통화 종료 버튼입니다."
               />
             </span>
-            {/* <IconButton color="inherit" onClick={this.toggleChat} id="navChatButton" aria-label='채팅 버튼'>
-                            {this.props.showNotification && <div id="point" className="" />}
-                            <Tooltip title="Chat">
-                                <QuestionAnswer />
-                            </Tooltip>
-                        </IconButton> */}
           </div>
         </Toolbar>
       </AppBar>
