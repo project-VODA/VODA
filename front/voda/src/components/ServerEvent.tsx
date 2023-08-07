@@ -33,7 +33,7 @@ export default function SseComponent(){
             setisCallModalOpen(true);
             const response = JSON.parse(event.data);
             dispatch(updateCall({
-              accessToken : response.token,
+              sessionToken : response.token,
               sessionId : response.sessionId,
               callNo : response.callNo,
             }));
@@ -79,6 +79,7 @@ export default function SseComponent(){
           ariaHideApp={false}
         >
 				<p>{content}</p>
+        <br/>
 				<button onClick={acceptCall}>통화 받기</button>
         <br />
         <button onClick={rejectCall}>통화 거절</button>
