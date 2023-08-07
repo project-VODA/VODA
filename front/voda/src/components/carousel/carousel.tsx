@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./carousel.css";
-import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 interface Slide {
   src: string;
@@ -19,19 +19,23 @@ const CarouselComponent: React.FC<CarouselProps> = ({ slides }) => {
   const handleNext = () => {
     setActiveIndex((prevIndex) => (prevIndex + 1) % slides.length);
     setSlideTransition("slide-left");
-    setTimeout(() => setSlideTransition("slide-center"), 0);
+    setTimeout(() => {
+      setSlideTransition("slide-center");
+    }, 500); // 0.5초 뒤에 중앙으로 복귀
   };
-
+  
   const handlePrev = () => {
     setActiveIndex((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
     setSlideTransition("slide-right");
-    setTimeout(() => setSlideTransition("slide-center"), 0);
+    setTimeout(() => {
+      setSlideTransition("slide-center");
+    }, 500); // 0.5초 뒤에 중앙으로 복귀
   };
-
+  
   useEffect(() => {
     const interval = setInterval(() => {
       handleNext();
-    }, 3000); // 3초마다 다음 슬라이드로 전환
+    }, 6000); // 3초마다 다음 슬라이드로 전환
 
     return () => {
       clearInterval(interval);
@@ -42,7 +46,7 @@ const CarouselComponent: React.FC<CarouselProps> = ({ slides }) => {
     <div className="carousel-container">
       <div className="carousel">
         <button className="prev-btn" onClick={handlePrev}>
-          <BsArrowLeft />
+          <FaArrowLeft />
         </button>
         <div className={`slide ${slideTransition}`}>
           <img
@@ -52,7 +56,7 @@ const CarouselComponent: React.FC<CarouselProps> = ({ slides }) => {
           />
         </div>
         <button className="next-btn" onClick={handleNext}>
-          <BsArrowRight />
+          <FaArrowRight />
         </button>
       </div>
       {slides[activeIndex].caption && (

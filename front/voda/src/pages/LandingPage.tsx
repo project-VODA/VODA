@@ -55,8 +55,8 @@ const LandingPage = () => {
         <Title title='LandingPage' />
       </StyledLink>
       <ButtonContainer>
-        <LandingButton text='SimpleMode' onClick={simpleModeClick} aria-label="심플 모드 적용" />
-        <LandingButton text='DetailMode' onClick={detailModeClick} aria-label="디테일 모드 적용"/>
+        <LandingButton text='심플 모드' onClick={simpleModeClick} aria-label="심플 모드 적용" />
+        <LandingButton text='디테일 모드' onClick={detailModeClick} aria-label="디테일 모드 적용"/>
       </ButtonContainer>
     </>
   );
