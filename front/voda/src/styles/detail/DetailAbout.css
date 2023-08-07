@@ -1,0 +1,145 @@
+/* 호버링이미지 */
+.AboutHovering{
+box-sizing: border-box;
+
+position: absolute;
+width: 643px;
+height: 521px;
+left: 128px;
+top: 233px;
+
+/* background: url(logo_black.png); */
+border: 1px solid #000000;
+box-shadow: inset 0px 4px 4px #000000;
+filter: blur(15px);
+backdrop-filter: blur(10px);
+/* Note: backdrop-filter has minimal browser support */
+}
+
+/* “ 표정을 소리로 보다 ” */
+.DetSlogan{
+position: absolute;
+width: 1054px;
+height: 154px;
+left: 480px;
+top: 79%;
+
+font-family: 'KoddiUD OnGothic';
+font-style: normal;
+font-weight: 400;
+font-size: 60px;
+line-height: 110px;
+display: flex;
+align-items: center;
+text-align: center;
+
+/* Dark-Navy */
+color: #001D3D;
+
+text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* VODA */
+.AboutLogo{
+position: absolute;
+width: 320px;
+height: 154px;
+left: 858px;
+top: 20%;
+
+font-family: 'Secular One';
+font-style: normal;
+font-weight: 400;
+font-size: 100px;
+line-height: 146px;
+display: flex;
+align-items: center;
+text-align: center;
+
+/* Dark-Navy */
+color: #001D3D;
+
+text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* Voice Over Diverse Assistance */
+.DetAboutMean{
+position: absolute;
+width: 469px;
+height: 417px;
+left: 887px;
+top: 28%;
+
+font-family: 'Secular One';
+font-style: normal;
+font-weight: 400;
+font-size: 40px;
+line-height: 73px;
+display: flex;
+align-items: center;
+
+color: #000000;
+
+}
+
+.AboutHovering{
+position: absolute;
+width: 643px;
+height: 521px;
+left: 128px;
+top: 233px;
+
+border: 1px solid #000000;
+box-shadow: inset 0px 4px 4px #000000;
+filter: blur(15px);
+backdrop-filter: blur(10px);
+}
+
+
+/* xxxxxxxxxxxxxxxxxxxxxx */
+
+/* AboutHover.css */
+
+.hover-container {
+  /* left: 500px; */
+  justify-content: center;
+  padding-right: 250px;
+  position: relative;
+  display: flex;
+  align-content: center;
+}
+
+.image-container {
+  display: flex;
+}
+
+.hover-container img {
+  display: flex;
+  width: 340px;
+  height: 340px;
+  object-fit: cover; 
+  filter: blur(20px);
+  transition: filter 0.3s ease-in-out;
+}
+
+.hover-container img:hover {
+  display: flex;
+  filter: blur(0);
+}
+
+.text-container {
+  padding: 20px;
+}
+
+.text-container h2 {
+  display: flex;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.text-container p {
+  display: flex;
+  font-size: 1em;
+}
+
+
