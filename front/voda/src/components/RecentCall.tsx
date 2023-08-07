@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 
 // react-icons
 import { FiPhoneCall } from "react-icons/fi"
-
+import '../styles/detail/DetailWaitingPage.css'
 
 
 type CallHistory = {
@@ -68,7 +68,7 @@ const RecentCalls = () => {
 
   return (
     <>
-    <span> {localStorage.getItem('theme') === 'simple' ? (<div style={{ display: 'flex', justifyContent: 'center', margin: '0px 55px 2%' }}><span style={{ fontSize:'28px', fontWeight:'bolder' }}>최근 통화 목록</span></div>)
+    <span> {localStorage.getItem('theme') === 'simple' ? (<div style={{ display: 'flex', justifyContent: 'center', margin: '6% 55px 2%' }}><span style={{ fontSize:'28px', fontWeight:'bolder' }}>최근 통화 목록</span></div>)
     :(<div style={{  display: 'flex', justifyContent: 'center', margin: '6% 55px 2%'}}>
         <span style={{ fontSize:'28px', fontWeight:'bolder' }}>최근 통화 목록</span>
       </div>)} </span>
@@ -80,10 +80,10 @@ const RecentCalls = () => {
         <col width = "10%" />
       </colgroup>
       <thead>
-        <tr>
+        <tr style={{ borderCollapse: 'separate', borderSpacing: '0px 20px',  }}>
           <th>대상</th>
           <th>통화시간</th>
-          <th></th>
+          <th id='DetailCallContainer'></th>
         </tr>
       </thead>
       <tbody>
@@ -103,21 +103,21 @@ const RecentCalls = () => {
         ))}
       </tbody>
     </table> ) : (
-      <table className = 'recentCallTable' style={{ borderCollapse: 'separate', borderSpacing: '0px 20px' }}>
+      <table className = 'recentCallTable'  style={{ borderCollapse: 'separate', borderSpacing: '0px 20px',  }}>
       <colgroup>
         <col width = "45%" />
         <col width = "45%" />
         <col width = "10%" />
       </colgroup>
       <thead>
-        <tr>
+        <tr style={{ borderCollapse: 'separate', borderSpacing: '0px 20px',  }}>
           <th>대상</th>
           <th>통화시간</th>
-          <th></th>
+          <th id='DetailCallContainer'></th>
         </tr>
       </thead>
       <tbody>
-        {callHistoryList.length === 0 ? <tr><td colSpan={3}>통화 기록이 존재하지 않습니다.</td></tr> :
+        {callHistoryList.length === 0 ? <tr><td colSpan={3} style={{ textAlign: 'center' }}>통화 기록이 존재하지 않습니다.</td></tr> :
           callHistoryList.map((callHistory: CallHistory) => (
             <tr key={callHistory.startTime}  style={{ textAlign: 'center' }}>
               <td text-align='center'>{callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverName : callHistory.senderName}</td>
