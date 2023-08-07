@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser';
+import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import StreamComponent from './stream/StreamComponent';
 import './VideoRoomComponent.css';
@@ -38,6 +39,7 @@ class VideoRoomComponent extends Component {
     };
 
     this.audioPlayer = new Audio();
+    this.typeNo = this.props.typeNo;
 
     this.joinSession = this.joinSession.bind(this);
     this.leaveSession = this.leaveSession.bind(this);
@@ -299,13 +301,25 @@ class VideoRoomComponent extends Component {
 
   // voda - KJW
   playAudio = (expression) => {
-    if (expression === "") {
+    if (expression === undefined || expression === "") {
       return;
     }
 
+     console.log('typeNo:', this.typeNo);
     // 음성 파일의 URL을 설정 (public 폴더에 음성 파일 저장)
-    // expression의 값에 따라 url 바꿔주기
-    const audioUrl = `/audio/${expression}.wav`;
+    // typeNo와 expression에 따라 url 바꿔줌
+    let typeName = '';
+    switch(this.typeNo){
+      case 0: 
+        typeName = 'man';
+        break;
+      case 1:
+        typeName = 'woman';
+        break;
+      default:
+        break;
+    }
+    const audioUrl = `/audio/${typeName}/${expression}.wav`;
 
     // Audio 객체의 소스를 설정하고 재생
     this.audioPlayer.src = audioUrl;
@@ -576,4 +590,11 @@ class VideoRoomComponent extends Component {
   // }
 }
 
-export default VideoRoomComponent;
+// 리덕스 스토어의 userSetting 값을 VideoRoomComponent 컴포넌트의 props로 매핑
+const mapStateToProps = state => {
+  return {
+    typeNo: state.user.userSetting.typeNo
+  };
+};
+
+export default connect(mapStateToProps)(VideoRoomComponent);
