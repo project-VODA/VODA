@@ -49,9 +49,9 @@ const SimpleVideo = () => {
 
   return (
     <>
-      <StyledLink to='' aria-label="영상통화 페이지입니다.">
+      {/* <StyledLink to='' aria-label="영상통화 페이지입니다.">
         <Title title="Video" />
-      </StyledLink>
+      </StyledLink> */}
       <VideoRoomComponent token={sessionToken} callNo={callNo} />
     </>
   );
