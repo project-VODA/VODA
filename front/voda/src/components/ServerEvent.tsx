@@ -7,20 +7,18 @@ import { useNavigate } from 'react-router-dom';
 
 import { receiveCalling, rejectCalling } from '../apis/calling';
 
-import { ReceiveResponseType, updateReceiveResponse } from '../store/callSlice';
 import { Session } from 'openvidu-browser';
+import { callInfoType, updateCall } from '../store/callSlice';
 
 export default function SseComponent(){
-    const [isCallModalOpen, setisCallModalOpen] = useState(false);
-		const [data, setData] = useState({senderEmail: '', receiverEmail: '', sessioinId: '', token: '',  callNo: 0, content: ''});
-    const [receiveToken , setReceiveToken] = useState('');
-    const [callNo , setCallNo] = useState(0);
-
 		const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const [userEmail, receiveResponse]:[string, ReceiveResponseType] = useSelector((state:RootState) => {
-        return [state.user.userInfo.userEmail, state.call.receiveResponse];
+    const [content, setContent] = useState('');
+    const [callNo, setCallNo] = useState(0);
+    const [isCallModalOpen, setisCallModalOpen] = useState(false);
+    const [userEmail, callInfo]:[string, callInfoType] = useSelector((state:RootState) => {
+        return [state.user.userInfo.userEmail, state.call.callInfo];
     })
 
     useEffect(() => {
@@ -33,37 +31,28 @@ export default function SseComponent(){
         });
         eventSource.addEventListener("call", (event) => {
             setisCallModalOpen(true);
-						setData(JSON.parse(event.data)); //여기서 다 초기화 되어버림.,.. 뭔지 모르겠음 왜... 웨...
-            const temp = JSON.parse(event.data);
-            console.log(temp);
-            setCallNo(temp.callNo);
-            setReceiveToken(temp.token);
-            dispatch(updateReceiveResponse({
-              receiveToken : temp.token,
-              callNo : temp.callNo,
+            const response = JSON.parse(event.data);
+            dispatch(updateCall({
+              accessToken : response.token,
+              sessionId : response.sessionId,
+              callNo : response.callNo,
             }));
-            // console.log(receiveToken);
+            setContent(response.content);
+            setCallNo(response.callNo);
         });
         eventSource.addEventListener("reject", (event) => {
             setisCallModalOpen(true);
-            setData(JSON.parse(event.data));
             // 통화 거절 추가 로직
         })
     }, [userEmail]);
 
 		function redirectVideo(){
-      console.log(receiveToken);
 			navigate('/video');
 		}
 
 		function acceptCall(){
       receiveCalling(callNo)
       .then((res)=>{
-        console.log(res);
-        // dispatch(updateReceiveResponse({
-        //   receiveToken : receiveToken,
-        //   callNo : callNo,
-        // }));
         setisCallModalOpen(false);
         redirectVideo();
       })
@@ -89,8 +78,7 @@ export default function SseComponent(){
           onRequestClose={(e) => setisCallModalOpen(false)}
           ariaHideApp={false}
         >
-				<p>{data.senderEmail}이 전화를 걸었습니다.</p>
-				{data.token}
+				<p>{content}</p>
 				<button onClick={acceptCall}>통화 받기</button>
         <br />
         <button onClick={rejectCall}>통화 거절</button>
