@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 
-import Title from '../components/Title';
+import SimpleTitle from '../components/SimpleTitle';
 import LandingButton from '../components/LandingBtn';
 import { Link } from "react-router-dom";
 import '../styles/simple/common.css'
@@ -52,7 +52,7 @@ const LandingPage = () => {
   return (
     <>
       <StyledLink to='' aria-label="테마를 선택하는 페이지입니다. 시각 장애인을 배려한 심플 모드와 비장애인을 위한 디테일 모드가 있습니다.">
-        <Title title='LandingPage' />
+        <SimpleTitle imgSrc="SimpleLogo" />
       </StyledLink>
       <ButtonContainer>
         <LandingButton text='심플 모드' onClick={simpleModeClick} aria-label="심플 모드 적용" />

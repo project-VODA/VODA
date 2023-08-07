@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import Title from '../../components/Title';
+import SimpleTitle from '../../components/SimpleTitle';
 import HandleButton from '../../components/HandleBtn';
 import { redirectKakao, logout } from '../../apis/user';
 import { useDispatch, useSelector } from 'react-redux';
@@ -93,8 +93,8 @@ const SimpleHomePage = () => {
 
   return (
     <>
-    <StyledLink to=''>
-      <Title title='Homepage' aria-label='홈페이지 입니다.'/>
+    <StyledLink to='/home' aria-label='홈페이지입니다.'>
+      <SimpleTitle imgSrc='SimpleLogo' aria-live='assertive' aria-label='홈페이지입니다.'/>
     </StyledLink>
       <ButtonContainer>
         <HandleButton text='서비스 소개' onClick={redirectAbout} />

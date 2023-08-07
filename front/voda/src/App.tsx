@@ -158,13 +158,8 @@ const App: React.FC = () => {
         <Router>
           <ServerEvent />
           {theme === SimpleTheme ? 
-          <Link to="/home">
-            <LogoImage
-              src={simpleLogo}
-              alt="voda_logo"
-              aria-label="홈으로 이동, VODA 로고"
-            />
-          </Link> : 
+          <></>
+          : 
           <Navigation />}
           <ModeToggle />
           <Routes>

@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Title from '../../components/Title';
 
 import '../../styles/simple/About.css'
+import SimpleTitle from "../../components/SimpleTitle";
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -14,9 +15,9 @@ const StyledLink = styled(Link)`
 const SimpleAbout = () => {
   return (
     <>
-    {/* <StyledLink to='' aria-label="서비스 소개 페이지입니다."> */}
-      {/* <Title title="About" /> */}
-    {/* </StyledLink> */}
+    <StyledLink to='/home' aria-label="서비스 소개 페이지입니다. 홈 화면으로 이동하시려면 이 버튼을 누르세요">
+      <SimpleTitle imgSrc="SimpleLogo" />
+    </StyledLink>
     <StyledLink to='' aria-label="서비스 소개 페이지입니다. 영상통화 중 표정 알림 서비스">
       <div className="aboutTitle">영상통화중 표정 알림 서비스</div>
     </StyledLink>
