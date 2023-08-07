@@ -47,6 +47,13 @@ export default function StreamComponent(props) {
     }
   };
 
+  const handleExpressionDataFromOvVideo = (expressionsData) => {
+    // 전달 받은 expressionsData를 VideoRoomComponent로 전달합니다.
+    if(props.handleExpressionData){
+      props.handleExpressionData(expressionsData);
+    }
+  };
+
   return (
     <div className="OT_widget-container">
       <div className="pointer nickname" id='nicknameContainer'>
@@ -83,7 +90,7 @@ export default function StreamComponent(props) {
 
       {props.user !== undefined && props.user.getStreamManager() !== undefined ? (
         <div className="streamComponent">
-          <OvVideoComponent user={props.user} mutedSound={mutedSound} />
+          <OvVideoComponent user={props.user} mutedSound={mutedSound} handleExpressionData={handleExpressionDataFromOvVideo}/>
           <div id="statusIcons">
             {!props.user.isVideoActive() ? (
               <div id="camIcon">
