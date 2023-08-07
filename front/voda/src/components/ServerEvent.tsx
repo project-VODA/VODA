@@ -4,11 +4,28 @@ import { RootState } from '../store/store';
 import { API_URL } from '../constants/url';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
+import HandleButton from './HandleBtn';
 
 import { receiveCalling, rejectCalling } from '../apis/calling';
 
 import { Session } from 'openvidu-browser';
 import { callInfoType, updateCall } from '../store/callSlice';
+import { mod } from '@tensorflow/tfjs-core';
+import { styled } from 'styled-components';
+
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
+const modalColor = {
+  content: {
+    backgroundColor: '#001d3d',
+  },
+}
 
 export default function SseComponent(){
 		const navigate = useNavigate();
@@ -16,7 +33,7 @@ export default function SseComponent(){
 
     const [content, setContent] = useState('');
     const [callNo, setCallNo] = useState(0);
-    const [isCallModalOpen, setisCallModalOpen] = useState(false);
+    const [isCallModalOpen, setisCallModalOpen] = useState(true);
     const [userEmail, callInfo]:[string, callInfoType] = useSelector((state:RootState) => {
         return [state.user.userInfo.userEmail, state.call.callInfo];
     })
@@ -77,13 +94,22 @@ export default function SseComponent(){
           isOpen={isCallModalOpen} 
           onRequestClose={(e) => setisCallModalOpen(false)}
           ariaHideApp={false}
+          style={modalColor}
         >
-				<p>{content}</p>
         <br/>
-				<button onClick={acceptCall}>통화 받기</button>
-        <br />
-        <button onClick={rejectCall}>통화 거절</button>
-        
+        <br/>
+        <br/>
+				<p style={{textAlign: 'center', fontSize: 'xx-large'}}>{content}</p>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <ButtonContainer>
+          <HandleButton text='통화 받기' onClick={acceptCall} />
+          <HandleButton text='통화 거절' onClick={rejectCall} />
+        </ButtonContainer>
       </Modal>
     </>
 		)
