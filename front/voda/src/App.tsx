@@ -3,7 +3,7 @@
 import React, { createContext } from 'react';
 // import { useSelector } from 'react-redux';
 // import { RootState } from './store/reducers'; // 가정: RootState는 redux store의 전체 상태 타입입니다.
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate, Link } from "react-router-dom";
 
 // redux
 //import { useAppDispatch, useAppSelector } from "./constants/types";
@@ -52,6 +52,8 @@ import { useMode } from './hooks/useMode';
 
 import ModeToggle from './components/ModeToggle';
 import DetailWriteArticle from './pages/detail/board/WriteArticle';
+import { styled } from 'styled-components';
+import simpleLogo from "./assets/images/logo_yellow.png";
 
 // 1) 다수의 props 발생 시 interface 설정
 interface ContextProps {
@@ -68,6 +70,10 @@ export const ThemeContext = createContext<ContextProps>({
   },
 });
 
+const LogoImage = styled.img`
+  width: 120px;
+  height: auto;
+`;
 
 const App: React.FC = () => {
   /*const accessToken = useAppSelector((state) => state.auth.accessToken);
@@ -151,7 +157,15 @@ const App: React.FC = () => {
         <GlobalStyle theme={theme === SimpleTheme ? SimpleTheme : DetailTheme} />
         <Router>
           <ServerEvent />
-          <Navigation />
+          {theme === SimpleTheme ? 
+          <Link to="/home">
+            <LogoImage
+              src={simpleLogo}
+              alt="voda_logo"
+              aria-label="홈으로 이동, VODA 로고"
+            />
+          </Link> : 
+          <Navigation />}
           <ModeToggle />
           <Routes>
             {commonRoutes.map((route) => (
