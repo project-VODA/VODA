@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 
 import Title from '../../components/Title';
 
@@ -21,16 +21,30 @@ color: inherit;
 const SimpleVideo = () => {
   const [localStream, setLocalStream] = useState<MediaStream>();
 
-  const location = useLocation();
+  // const location = useLocation();
   const [sessionToken, callNo] : [string, number] = useSelector((state: RootState) => {
     return [state.call.callInfo.sessionToken, state.call.callInfo.callNo];
   });
 
   useEffect(() => {
-    navigator.mediaDevices.getUserMedia({video: true})
-    .then(stream => {
-      setLocalStream(stream);
-    })
+    let isMounted = true;
+
+    navigator.mediaDevices.getUserMedia({video: {}})
+      .then(stream => {
+        if (isMounted) {
+          setLocalStream(stream);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    
+    return () => {
+      isMounted = false; // 클린업(cleanup) 시 마운트 상태를 false로 설정하여 업데이트 방지
+      if (localStream) {
+        localStream.getTracks().forEach(track => track.stop());
+      }
+    }
   }, []);
 
   return (

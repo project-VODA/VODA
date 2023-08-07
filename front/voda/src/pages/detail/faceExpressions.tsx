@@ -2,55 +2,41 @@ import React, { useRef, useState, useEffect } from 'react';
 import * as faceapi from 'face-api.js';
 
 import styled from 'styled-components';
-import { PieChart, Pie, Cell } from 'recharts';
 
-
-const AppVideo = styled.div`
-  align-items: center;
-`;
-
-const AppCanvas = styled.canvas`
-  position: absolute;
-  top: 100px;
-`;
-
-const MyApp = styled.div`
+const VideoContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
 `;
-
-type CustomFaceExpressions = {
-  [key: string]: number;
-};
-
 
 function FaceExpressionsComponent() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  const [emotionsData, setEmotionsData] = useState<{ name: string; value: number }[]>([
-    { name: 'neutral', value: 0 },
-    { name: 'happy', value: 0 },
-    { name: 'sad', value: 0 },
-    { name: 'angry', value: 0 },
-    { name: 'fearful', value: 0 },
-    { name: 'disgusted', value: 0 },
-    { name: 'surprised', value: 0 },
-  ]);
+  const [modelsLoaded, setModelsLoaded] = useState<boolean>(false)
+  const [captureVideo, setCaptureVideo] = useState<boolean>(false)
 
   useEffect(() => {
-    startVideo();
-    videoRef.current && loadModels();
+    const loadModels = async () => {
+      await Promise.all([
+        faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
+        faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
+        faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
+        // faceapi.nets.faceExpressionNet.loadFromUri('/models')
+      ]).then(() => {
+        setModelsLoaded(true);
+        console.log('model loaded');
+      });
+    };
+    loadModels();
   }, []);
 
   const startVideo = () => {
-    navigator.mediaDevices.getUserMedia({ video: true })
+    setCaptureVideo(true);
+    navigator.mediaDevices.getUserMedia({ video: {} })
       .then((currentStream) => {
         if (videoRef.current) {
           videoRef.current.srcObject = currentStream;
-          console.log('video on');
+          videoRef.current.play();
         }
       })
       .catch((err) => {
@@ -58,96 +44,64 @@ function FaceExpressionsComponent() {
       });
   };
 
-  const loadModels = () => {
-    Promise.all([
-      faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
-      faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
-      faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
-      faceapi.nets.faceExpressionNet.loadFromUri('/models')
-    ]).then(() => {
-      faceMyDetect();
-      console.log('video detect');
-    });
-  };
+  const handleVideoOnPlay = () => {
+    const canvas = canvasRef.current;
+    const displaySize = { width: 640, height: 480 };
 
-  const faceMyDetect = () => {
-    setInterval(async () => {
-      if (videoRef.current) {
-        const detections = await faceapi.detectSingleFace(videoRef.current,
-          new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions();
+    faceapi.matchDimensions(canvas, displaySize);
 
-        if (canvasRef.current) {
-          // Clear the canvas before drawing new detections
-          const context = canvasRef.current.getContext('2d');
-          if (context) {
-            context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-          }
+    const intervalId = setInterval(async () => {
+      const detections = await faceapi.detectAllFaces(videoRef.current,
+        new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks();
 
-          if (detections) {
-            faceapi.matchDimensions(canvasRef.current, {
-              width: 940,
-              height: 650
-            });
+      const resizedDetections = faceapi.resizeResults(detections, displaySize);
+      canvas.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height);
 
-            const resized = faceapi.resizeResults(detections, {
-              width: 940,
-              height: 650
-            });
-
-            faceapi.draw.drawDetections(canvasRef.current, resized);
-            faceapi.draw.drawFaceLandmarks(canvasRef.current, resized);
-            faceapi.draw.drawFaceExpressions(canvasRef.current, resized);
-
-            // Convert expressions to CustomFaceExpressions using unknown type
-            const expressions = detections.expressions as unknown as CustomFaceExpressions;
-            console.log(expressions); // face expressions 값
-
-            // 감정 데이터 누적
-            setEmotionsData((prevData) => {
-              const newData = prevData.map((item) => ({
-                ...item,
-                value: item.value + (expressions[item.name] || 0),
-              }));
-              return newData;
-            });
-
-            // const landmarks = detections.landmarks;
-            // console.log(landmarks); // face landmarks 값
-
-          } else{
-            console.log("감지된 얼굴이 없습니다.");
-          }
-        }
-      }
+      faceapi.draw.drawDetections(canvas, resizedDetections);
+      faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
     }, 100);
+
+    return () => {
+      clearInterval(intervalId); // 인터벌 정리
+    };
   };
+
+  const closeWebcam = () => {
+    videoRef?.current?.pause();
+    videoRef.current.srcObject = null;
+    setCaptureVideo(false);
+  }
 
   return (
-    <MyApp>
-      <h1>Face Detection</h1>
-      <AppVideo>
-        <video crossOrigin="anonymous" ref={videoRef} autoPlay></video>
-      </AppVideo>
-      <AppCanvas ref={canvasRef} width={940} height={650} />
-      <div>
-        <h2>Emotions Data:</h2>
-        <PieChart width={400} height={400}>
-          <Pie
-            data={emotionsData}
-            cx={200}
-            cy={200}
-            outerRadius={80}
-            fill="#8884d8"
-            dataKey="value"
-            label
-          >
-            {emotionsData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={`#${(Math.random() * 0xffffff).toString(16)}`} />
-            ))}
-          </Pie>
-        </PieChart>
+    <VideoContainer>
+      <div style={{ textAlign: 'center', padding: '10px' }}>
+        {
+          captureVideo && modelsLoaded ?
+            <button onClick={closeWebcam} style={{ cursor: 'pointer', backgroundColor: 'tomato', color: 'white', padding: '15px', fontSize: '25px', border: 'none', borderRadius: '10px' }}>
+              Close Webcam
+            </button>
+            :
+            <button onClick={startVideo} style={{ cursor: 'pointer', backgroundColor: 'blue', color: 'white', padding: '15px', fontSize: '25px', border: 'none', borderRadius: '10px' }}>
+              Open Webcam
+            </button>
+        }
       </div>
-    </MyApp>
+      {
+        captureVideo ?
+          modelsLoaded ?
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'center', padding: '10px' }}>
+                <video ref={videoRef} width={640} height={480} onPlay={handleVideoOnPlay} style={{ borderRadius: '10px' }} muted={!captureVideo}/>
+                <canvas ref={canvasRef} style={{ position: 'absolute' }} />
+              </div>
+            </div>
+            :
+            <div>loading...</div>
+          :
+          <>
+          </>
+      }
+    </VideoContainer>
   );
 }
 
