@@ -251,7 +251,7 @@ export default function Navigation() {
             <MenuLink to="/feedback">고객의소리함</MenuLink>
           </ChannelButton>
           <ChannelButton>
-            <MenuLink to="/login">테스트</MenuLink>
+            <MenuLink to="/video">테스트</MenuLink>
           </ChannelButton>
           
           <UserDropDown onClick={handleDropDownToggle}>
