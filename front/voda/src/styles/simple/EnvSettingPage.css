@@ -1,0 +1,102 @@
+/* Rectangle 1 */
+.alarmContainer{
+position: absolute;
+width: 435px;
+height: 427px;
+left: 195px;
+top: 344px;
+
+z-index: 0;
+background: #FFC300;
+border-radius: 10px;
+}
+
+/* Rectangle 2 */
+
+.modeContainer{
+position: absolute;
+width: 435px;
+height: 427px;
+left: 824px;
+top: 344px;
+z-index: 0;
+background: #FFC300;
+opacity: 0.3;
+border-radius: 10px;
+}
+
+/* 음성 음성과 조언 */
+.chooseAlarm{
+position: absolute;
+width: 248px;
+height: 150px;
+left: 288px;
+top: 500px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 40px;
+line-height: 48px;
+text-align: center;
+z-index: 2;
+color: #001D3D;
+}
+
+
+/* 디테일 모드 심플 모드 */
+.chooseMode{
+position: absolute;
+width: 207px;
+height: 140px;
+left: 938px;
+top: 500px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 40px;
+line-height: 48px;
+text-align: center;
+z-index: 2;
+color: #001D3D;
+}
+
+
+/* 알림 설정 */
+.alarmTitle{
+position: absolute;
+width: 227px;
+height: 132px;
+left: 25%;
+top: 243px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 48px;
+line-height: 58px;
+text-align: center;
+
+color: #FFC300;
+}
+
+
+/* 모드 설정 */
+
+.modeTitle{
+position: absolute;
+width: 233px;
+height: 158px;
+left: 927px;
+top: 243px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 48px;
+line-height: 58px;
+text-align: center;
+
+color: #FFC300;
+}

@@ -14,6 +14,7 @@ import { RootState } from '../../store/store';
 import { UserInfoType, UserSettingType, userSliceLogout } from '../../store/userSlice';
 import { Link } from "react-router-dom";
 
+// import '../../styles/simple/EnvSettingPage.css'
 
 const StyledLink = styled(Link)`
 text-decoration: none;
@@ -78,7 +79,7 @@ const SimpleEnvSettingPage = () => {
       </StyledLink>
 
       <div>
-        <div>
+        {/* <div>
           <label>
             <input
               type='radio'
@@ -89,8 +90,10 @@ const SimpleEnvSettingPage = () => {
             />
             알림음
           </label>
-        </div>
-        <div>
+        </div> */}
+        <div className='alarmContainer'>
+          <div className='alarmTitle'>알림 설정</div>
+        <div className='chooseAlarm'>
           <label>
             <input
               type='radio'
@@ -115,8 +118,11 @@ const SimpleEnvSettingPage = () => {
           </label>
         </div>
       </div>
+      </div>
       
-      <div>
+      <div className='modeContainer'>
+        <div className='modeTitle'>모드 설정</div>
+      <div className='chooseMode'>
         <div>
           <label>
             <input
@@ -141,6 +147,7 @@ const SimpleEnvSettingPage = () => {
             심플 모드
           </label>
         </div>
+      </div>
       </div>
 
       <ButtonContainer>
