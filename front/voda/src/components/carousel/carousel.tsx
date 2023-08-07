@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./carousel.css";
-import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 interface Slide {
   src: string;
@@ -46,7 +46,7 @@ const CarouselComponent: React.FC<CarouselProps> = ({ slides }) => {
     <div className="carousel-container">
       <div className="carousel">
         <button className="prev-btn" onClick={handlePrev}>
-          <BsArrowLeft />
+          <FaArrowLeft />
         </button>
         <div className={`slide ${slideTransition}`}>
           <img
@@ -56,7 +56,7 @@ const CarouselComponent: React.FC<CarouselProps> = ({ slides }) => {
           />
         </div>
         <button className="next-btn" onClick={handleNext}>
-          <BsArrowRight />
+          <FaArrowRight />
         </button>
       </div>
       {slides[activeIndex].caption && (
