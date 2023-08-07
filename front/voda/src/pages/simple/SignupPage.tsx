@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { registServer } from '../../apis/user';
 
-import Title from '../../components/Title';
+import SimpleTitle from '../../components/SimpleTitle';
 import Input from '../../components/InputText';
 import RegisterButton from '../../components/RegisterButton';
 import CheckBox from '../../components/CheckBox';
@@ -126,8 +126,8 @@ const SimpleSignup = () => {
 
   return (
     <>
-      <StyledLink to='' aria-label='회원가입 페이지입니다.'>
-        <Title title='회원가입' aria-label='회원가입 페이지입니다.'/>
+      <StyledLink to='/home' aria-label='회원가입 페이지입니다.  홈 화면으로 이동하시려면 이 버튼을 누르세요.'>
+        <SimpleTitle imgSrc='SimpleLogo' aria-label='회원가입 페이지입니다.'/>
       </StyledLink>
       
     <div id='RegisterContainer'>

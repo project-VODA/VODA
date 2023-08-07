@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import Title from '../../components/Title';
+import SimpleTitle from '../../components/SimpleTitle';
 import HandleButton from '../../components/HandleBtn';
 import UserSearchList from "../../components/UserSearchList";
 import RecentCalls from "../../components/RecentCall";
@@ -49,8 +49,8 @@ const SimpleRoom = () => {
 
   return (
     <>
-      <StyledLink to='' aria-label="영상통화를 걸 친구를 찾는 페이지입니다.">
-        <Title title="Friend" />
+      <StyledLink to='/home' aria-label="영상통화를 걸 친구를 찾는 페이지입니다.">
+        <SimpleTitle imgSrc="SimpleLogo" />
       </StyledLink>
       <ButtonContainer>
         <HandleButton text='친구검색' onClick={handleFriendModalOpen} />
