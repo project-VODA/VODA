@@ -52,9 +52,10 @@ export const cancelUser = async () => {
   return res.data;
 }
 
-// SSE 연결 요청
-export const getSseConnection = async () => {
-  
+// 새로운 accessToken 발급
+export const updateAccessToken = async () => {
+  const res = await axiosServer().get<any>('/users/token');
+  return res.data;
 }
 
 /* -----------------------------------------------------------------------------------*/
