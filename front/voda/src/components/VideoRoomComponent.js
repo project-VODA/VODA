@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser';
 import React, { Component } from 'react';
-import ChatComponent from './chat/ChatComponent';
 import DialogExtensionComponent from './dialog-extension/DialogExtension';
 import StreamComponent from './stream/StreamComponent';
 import './VideoRoomComponent.css';
@@ -9,7 +8,7 @@ import '../styles/simple/video.css'
 
 import SettingButton from '../components/SettingButton';
 import OpenViduLayout from '../layout/openvidu-layout';
-import UserModel from '../models/user-model';
+import UserModel from '../constants/user-model';
 import ToolbarComponent from './toolbar/ToolbarComponent';
 
 import { offCalling } from "../apis/calling";
@@ -636,16 +635,6 @@ class VideoRoomComponent extends Component {
               <StreamComponent user={sub} streamId={sub.streamManager.stream.streamId} />
             </div>
           ))}
-          {localUser !== undefined && localUser.getStreamManager() !== undefined && (
-            <div className="OT_root OT_publisher custom-class" style={chatDisplay}>
-              <ChatComponent
-                user={localUser}
-                chatDisplay={this.state.chatDisplay}
-                close={this.toggleChat}
-                messageReceived={this.checkNotification}
-              />
-            </div>
-          )}
           {localUser !== undefined && localUser.getStreamManager() !== undefined && (
             <div className="OT_root OT_publisher custom-class" id="localUser">
               <span>
