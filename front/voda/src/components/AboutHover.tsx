@@ -1,9 +1,14 @@
 // AboutHover.tsx
 import React, { useState } from "react";
-import "../styles/detail/AboutHover.css";
+import "../styles/detail/DetailAbout.css";
 import Smile from '../assets/images/Smile.jpg';
 
-const Hovering = () => {
+interface HoveringProps {
+  className?: string;
+  'aria-label'?: string;
+}
+
+const Hovering = ({ className, 'aria-label':ariaLabel }: HoveringProps) => {
   const [isHovering, setIsHovering] = useState(false);
 
   const handleMouseEnter = () => {
@@ -15,18 +20,18 @@ const Hovering = () => {
   };
 
   return (
-      <div className="hover-container">
+      <span className="hover-container">
         <div className="content-container">
           <div className="text-container">
             {isHovering ? (
               <>
-                <h2>이제 잘 보이시나요?</h2>
-                <p>사진에 호버링한 상태입니다.</p>
+                <h2>이제 잘 보이시죠?</h2>
+                <p style={{ paddingTop: '15px'}}>잠시나마 공감하셨나요?</p>
               </>
             ) : (
               <>
                 <h2>저시력자가 보는 모습입니다.</h2>
-                <p>사진이 궁금하시다면 마우스를 올려보세요.</p>
+                <p style={{ paddingTop: '15px'}}>사진이 궁금하시다면 마우스를 올려보세요.</p>
               </>
             )}
           </div>
@@ -40,7 +45,7 @@ const Hovering = () => {
             />
           </div>
         </div>
-      </div>
+      </span>
   );
 };
 
