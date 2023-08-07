@@ -24,26 +24,63 @@ const DetailPage = () => {
     {
       src: "https://img.freepik.com/free-photo/vivid-blurred-colorful-background_58702-2545.jpg",
       alt: "Image 1",
-      caption: <Button 
-                text="바로가기"
-                onClick={redirectAbout}
-                />,
+      caption: (
+        <>
+          <p className='caption-title'>
+            서비스 소개 <br/>
+          </p>
+          <p className="caption-one-line-text">
+            VODA는 시각 장애인에게 비언어적 소통을 지원하기 위해 탄생했습니다.<br/>
+            서비스에 대한 소개와 사용방법 등 저희 서비스에 대해서 자세히 알아보세요.
+          </p>
+          <Button 
+            className='caption-button'
+            text="바로가기"
+            onClick={redirectAbout}
+          />
+        </>     
+      ),
     },
     {
       src: "https://img.freepik.com/premium-vector/abstract-pastel-color-background-with-pink-purple-gradient-effect-graphic-design-decoration_120819-463.jpg",
       alt: "Image 2",
-      caption: <Button 
-                text="바로가기"
-                onClick={redirectVideo}
-                />,
+      caption: (
+        <>
+          <p className='caption-title'>
+            영상통화 중 <br/>
+            표정 알림 서비스
+          </p>
+          <p className="caption-two-line-text">
+            VODA는 웹 브라우저에서 시각 장애인에게 비언어적 소통을 지원합니다.<br/>
+            지인과 가족을 친구로 등록하여 손쉽게 영상 통화를 시작해보세요.
+          </p>
+          <Button 
+            className='caption-button'
+            text="바로가기"
+            onClick={redirectVideo}
+          />
+        </>
+      )
     },
     {
-      src: "https://media.architecturaldigest.com/photos/6080a73d795a7b010f3dd2e0/2:1/w_2700,h_1350,c_limit/GettyImages-1213929929.jpg",
+      src: "https://img.freepik.com/free-vector/coloured-blurred-background_1112-511.jpg?w=740&t=st=1691379411~exp=1691380011~hmac=50f2c93b217feaae65ff72b5fcbca32f3725b3e62171843fb96a1a2d15f1441d",
       alt: "Image 2",
-      caption: <Button 
-                text="바로가기"
-                onClick={redirectFeedback}
-                />,
+      caption: (
+        <>
+          <p className='caption-title'>
+            고객의 소리함
+          </p>
+          <p className="caption-one-line-text">
+            VODA를 이용하면서 불편했던 부분에 대해서 의견을 남겨주세요.<br/>
+            귀담아 듣겠습니다.
+          </p>
+          <Button 
+            className='caption-button'  
+            text="바로가기"
+            onClick={redirectFeedback}
+          />
+        </>
+      )
     },
   ];
   return (
