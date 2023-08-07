@@ -12,9 +12,8 @@ import RedButton from "./DeleteButton"
 import Input from "./InputText";
 import { deleteFriend, registFriend, searchUser } from "../apis/friend";
 
-import { updateSendResponse } from "../store/callSlice";
-
 import '../styles/simple/SimpleWaitingPage.css'
+import { updateCall } from "../store/callSlice";
 
 const inputColor = {
   backgroundColor: 'white',
@@ -65,7 +64,7 @@ const UserSearchList = () => {
 
     sendCalling(callSendRequest)
       .then((res) => {
-        dispatch(updateSendResponse({
+        dispatch(updateCall({
           sessionToken : res.data.sessionToken,
           sessionId : res.data.sessiondId,
           callNo : res.data.callNo
