@@ -58,6 +58,10 @@ const SimpleLogin = () => {
   
   const naviagte = useNavigate();
 
+  const handleRegist = () => {
+    naviagte('/signup')
+  }
+
   const RedirectHomePage = () => {
     naviagte('/home');
   }
@@ -91,6 +95,8 @@ const SimpleLogin = () => {
       <Link text='비밀번호를 잊으셨나요?' onClick={RedirectTemporaryPass}/> 
 
       <LoginButton text='로그인' onClick={handleLogin} />
+
+      <LoginButton text='회원가입' onClick={handleRegist} aria-label="회원가입 페이지로 이동하는 버튼입니다."/>
     </>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
-import Title from '../../components/Title';
+import SimpleTitle from '../../components/SimpleTitle';
 import Input from '../../components/InputText';
 import SettingButton from '../../components/SettingButton';
 import DeleteButton from '../../components/DeleteButton';
@@ -187,8 +187,8 @@ const SimpleMyPage = () => {
 
   return (
     <>
-      <StyledLink to='' aria-label='마이페이지입니다.'>
-        <Title title='마이페이지' aria-label='마이 페이지 입니다.'/>
+      <StyledLink to='/home' aria-label='마이페이지입니다. 홈 화면으로 이동하시려면 이 버튼을 누르세요'>
+        <SimpleTitle imgSrc='SimpleLogo' aria-live='assertive' aria-label='마이 페이지 입니다. 홈 화면으로 이동하시려면 이 버튼을 누르세요'/>
       </StyledLink>
       <Input 
         type="password"

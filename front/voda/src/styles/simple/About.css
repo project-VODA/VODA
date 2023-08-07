@@ -25,7 +25,7 @@ text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
 
 
-/* VODA는 웹 브라우저에서 시각 장애인에게 비언어적 소통을 지원합니다. 지인과 가족을 친구로 등록하여 손쉽게 영상 통화를 시작해보세요. */
+/* VODA는 웹 브라우저에서 시각 장애인에게 비언어적 소통을 지원합니다.지인과 가족을 친구로 등록하여 손쉽게 영상 통화를 시작해보세요. */
 .aboutContent{
 max-width: 100%;
 max-height: 100%;
@@ -35,7 +35,7 @@ width: 100%;
 min-width: 800px;
 height: 0px;
 justify-content: center;
-top: 270px;
+top: 330px;
 
 font-family: 'KoddiUD OnGothic';
 font-style: normal;
@@ -59,8 +59,8 @@ max-height: 100%;
 position: absolute;
 width: 320px;
 height: 154px;
-left: 200px;
-top: 320px;
+left: 272px;
+top: 360px;
 
 font-family: 'Secular One';
 font-style: normal;
@@ -110,7 +110,7 @@ position: absolute;
 width: 62%;
 min-width: 800px;
 height: 154px;
-left: 500px;
+left: 550px;
 top: 450px;
 
 font-family: 'KoddiUD OnGothic';

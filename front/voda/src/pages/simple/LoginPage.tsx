@@ -6,7 +6,7 @@ import { userSliceLogin } from "../../store/userSlice";
 
 import { loginServer } from "../../apis/user";
 import { Link as TitleLink } from "react-router-dom" ;
-import Title from '../../components/Title';
+import SimpleTitle from '../../components/SimpleTitle';
 import Input from '../../components/SubmitInputText';
 import LoginButton from '../../components/RegisterButton';
 import Link from "../../components/TextLink";
@@ -30,7 +30,7 @@ const SimpleLogin = () => {
     userPass: password,
   };
   const dispatch = useDispatch();
-  const HandleLogin = () => {
+  const handleLogin = () => {
     
     if (email === '') {
       alert("이메일을 입력해주세요");
@@ -71,20 +71,24 @@ const SimpleLogin = () => {
   
   const naviagte = useNavigate();
 
+  const handleRegist = () => {
+    naviagte('/signup')
+  }
+
   const RedirectHomePage = () => {
     naviagte('/home');
   }
 
   const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      HandleLogin();
+      handleLogin();
     }
   };
 
   return (
     <>
-      <StyledLink to='' aria-label="로그인 페이지입니다.">
-        <Title title='로그인' />
+      <StyledLink to='/home' aria-label="로그인 페이지입니다. 홈 화면으로 이동하시려면 이 버튼을 누르세요" >
+        <SimpleTitle imgSrc="SimpleLogo" aria-label="" aria-live="assertive"/>
       </StyledLink>
       <div id='RegisterContainer'>
       <Input
@@ -109,7 +113,9 @@ const SimpleLogin = () => {
 
       <LoginButton text='비밀번호를 잊으셨나요?' onClick={RedirectTemporaryPass} aria-label="비밀번호 찾기 버튼입니다. 비밀번호 찾기 페이지로 이동합니다."/> 
 
-      <LoginButton text='로그인' onClick={HandleLogin} aria-label="로그인 버튼입니다."/>
+      <LoginButton text='로그인' onClick={handleLogin} aria-label="로그인 버튼입니다."/>
+
+      <LoginButton text='회원가입' onClick={handleRegist} aria-label="회원가입 페이지로 이동하는 버튼입니다."/>
       </div>
     </>
   );
