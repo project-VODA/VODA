@@ -38,6 +38,7 @@ export interface ButtonProps {
   alt?: string;
   'aria-label'?: string;
   class?: string;
+  tabIndex?: number;
 }
 
 export default function Button({ onClick, text, alt, 'aria-label':ariaLabel }: ButtonProps ) {
