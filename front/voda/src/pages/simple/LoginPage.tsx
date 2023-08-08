@@ -15,6 +15,7 @@ import { access } from "fs";
 import '../../styles/simple/RegisterContainer.css'
 import styled from "styled-components";
 import store from "../../store/store";
+import { HttpStatusCode } from "axios";
 
 const StyledLink = styled(TitleLink)`
 text-decoration: none;
