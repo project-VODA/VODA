@@ -44,14 +44,17 @@ export interface ButtonProps {
   text: string;
   onClick: (event: any) => void;
   'aria-label'?: string;
+  className?: string;
+  style?: React.CSSProperties;
+  tabIndex?: number;
 }
 
-export default function Register({ text, onClick, "aria-label":ariaLabel }: ButtonProps ) {
+export default function Register({ text, onClick, "aria-label":ariaLabel, style }: ButtonProps ) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <ButtonContainer>
-      <RegisterButton theme={theme} onClick={onClick} aria-label={ariaLabel}>{text}</RegisterButton>
+      <RegisterButton style={style} theme={theme} onClick={onClick} aria-label={ariaLabel}>{text}</RegisterButton>
     </ButtonContainer>
   );
 }

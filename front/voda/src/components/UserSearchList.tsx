@@ -123,6 +123,7 @@ const UserSearchList = () => {
         value={keyword}
         onChange={(e) => setKeyword(e.target.value)}
         style = {inputColor}
+        tabIndex={0}
       />
       <table>
         {/* <colgroup>
@@ -130,7 +131,7 @@ const UserSearchList = () => {
           <col width="30%" />
           <col width="40%" />
         </colgroup> */}
-        <tbody id="FriendContainer">
+        <tbody id="FriendContainer" tabIndex={2}>
           {userList.length === 0 ? (
             <tr>
               <td colSpan={3}>검색 결과가 없습니다.</td>
