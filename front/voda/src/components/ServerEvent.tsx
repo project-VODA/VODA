@@ -47,6 +47,8 @@ export default function SseComponent(){
             console.log("SSE 연결 완료", event);
         });
         eventSource.addEventListener("call", (event) => {
+          //카메라가 로드되는 것을 고려해서 4초 지연 후 알림
+          setTimeout(() => {
             setisCallModalOpen(true);
             const response = JSON.parse(event.data);
             dispatch(updateCall({
@@ -56,10 +58,12 @@ export default function SseComponent(){
             }));
             setContent(response.content);
             setCallNo(response.callNo);
+          }, 4000); 
         });
         eventSource.addEventListener("reject", (event) => {
             setisCallModalOpen(true);
             // 통화 거절 추가 로직
+            
         })
     }, [userEmail]);
 
