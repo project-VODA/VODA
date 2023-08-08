@@ -36,6 +36,7 @@ export interface ButtonProps {
   onClick: (event: any) => void;
   'aria-label'?: string
   id? : string;
+  tabIndex?: number
 }
 
 export default function Setting({ text, onClick, "aria-label":ariaLabel, id }: ButtonProps ) {

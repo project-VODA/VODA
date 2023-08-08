@@ -94,21 +94,21 @@ const SimpleHomePage = () => {
   return (
     <>
     <StyledLink to='/home' aria-label='홈페이지입니다.'>
-      <SimpleTitle imgSrc='SimpleLogo' aria-live='assertive' aria-label='홈페이지입니다.'/>
+      <SimpleTitle tabIndex={0} imgSrc='SimpleLogo' aria-live='assertive' aria-label='홈페이지입니다.'/>
     </StyledLink>
       <ButtonContainer>
-        <HandleButton text='서비스 소개' onClick={redirectAbout} />
-        <HandleButton text='영상통화' onClick={redirectVideo} />
-        <HandleButton text="고객의 소리함" onClick={redirectFeedback} />
-        <HandleButton text='마이 페이지' onClick={redirectMyPage} />
+        <HandleButton tabIndex={1} text='서비스 소개' onClick={redirectAbout} />
+        <HandleButton tabIndex={2} text='영상통화' onClick={redirectVideo} />
+        <HandleButton tabIndex={3} text="고객의 소리함" onClick={redirectFeedback} />
+        <HandleButton tabIndex={4}text='마이 페이지' onClick={redirectMyPage} />
         {/* <HandleButton text='redirect' onClick={RedirectSocialLogin} /> */}
         {/* <HandleButton text='카카오 로그인' onClick={handleSocialLogin} /> */}
         <HandleButton text="환경 설정" onClick={redirectEnvPage} />
         {/* 로그인 유저 존재 여부에 따라 버튼 렌더링 */}
         {isLogin ? (
-          <HandleButton text="로그아웃" onClick={handleLogout} />
+          <HandleButton tabIndex={5} text="로그아웃" onClick={handleLogout} />
           ) : (
-          <HandleButton text="로그인" onClick={redirectLogin} />
+          <HandleButton tabIndex={5} text="로그인" onClick={redirectLogin} />
         )}
       </ButtonContainer>
     </>

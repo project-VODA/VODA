@@ -18,5 +18,11 @@ EXPOSE 8080
 # docker run 시 실행할 필수 명령어
 ENTRYPOINT ["java", "-jar", "/app.jar"]
 
+# 시간 설정
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=Asia/Seoul
+
+RUN apt-get install -y tzdata
+
 # 경우에 따라 java 옵션 사용.
 # ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=docker", "/app.jar"]

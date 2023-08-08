@@ -36,6 +36,8 @@ const HeaderField = styled.div<ThemeProps>`
 
 const LeftSpanField = styled.span`
     text-align: left;
+    
+    margin-bottom: 10px;
 `;
 
 const RightSpanField = styled.span`
@@ -53,8 +55,9 @@ export default function ArticleHeader( {articleNo, articleRegDate  } : HeaderPro
 
     return(
         <HeaderField>
-            <LeftSpanField>No.{articleNo}</LeftSpanField>
-            <RightSpanField>작성일시:{articleRegDate}</RightSpanField>
+            <LeftSpanField>글번호 - {articleNo}</LeftSpanField>
+            <br/>
+            <RightSpanField>작성일자 - {articleRegDate}</RightSpanField>
         </HeaderField>
     )
 }

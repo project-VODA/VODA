@@ -1,0 +1,97 @@
+.allContainer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  /* flex-wrap: wrap; */
+  margin-top: 5%;
+}
+
+/* Rectangle 1 */
+.alarmContainer,
+.modeContainer {
+  flex: 0 0 calc(40% - 10vw); /* 두 상자의 너비가 같고, 간격을 위해 5vw를 뺀 값으로 설정 */
+  border: 10px solid #FFC300;
+  border-radius: 10%;
+  height: 45vh;
+  padding: 15px;
+  display: inline-block;
+  /* margin: 10%; */
+}
+
+/* 음성 음성과 조언 */
+.chooseAlarm{
+left: 20vw;
+top: 50vh;
+font-family: 'Koddi';
+font-size: 30px;
+/* text-align: center; */
+color: #FFC300;
+margin-left: 40%;
+margin-top: 10%;
+margin-bottom: 20%;
+overflow: hidden;
+}
+
+
+/* 디테일 모드 심플 모드 */
+.chooseMode{
+  left: 20vw;
+  top: 50vh;
+  font-family: 'Koddi';
+  font-size: 30px;
+  /* text-align: center; */
+  color: #FFC300;
+  margin-left: 40%;
+  margin-top: 10%;
+  margin-bottom: 20%;
+  overflow: hidden;
+}
+
+
+/* 알림 설정 */
+.alarmTitle{
+position: absolute;
+width: auto;
+height: auto;
+left: 19vw;
+top: 42vh;
+
+font-family: 'Koddi';
+font-style: normal;
+font-weight: 400;
+font-size: 48px;
+line-height: 58px;
+text-align: center;
+
+color: #FFC300;
+}
+
+
+/* 모드 설정 */
+
+.modeTitle{
+position: absolute;
+width: auto;
+height: auto;
+left: 69vw;
+top: 42vh;
+
+font-family: 'Koddi';
+font-style: normal;
+font-weight: 400;
+font-size: 48px;
+line-height: 58px;
+text-align: center;
+
+color: #FFC300;
+}
+
+
+.modifyButton {
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  left: 48vw;
+  height: 10vh;
+  width: 20vw;
+}

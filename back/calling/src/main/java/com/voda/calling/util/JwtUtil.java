@@ -105,6 +105,18 @@ public class JwtUtil {
     }
 
     /**
+     * 토큰 만료시간인지 체크
+     */
+    public boolean isExpired(String accessToken){
+        try{
+            getAllClaims(accessToken);
+            return false;
+        }catch(Exception e){
+            return true;
+        }
+    }
+
+    /**
      * 토큰의 Claim 디코딩
      */
     private Claims getAllClaims(String token) {

@@ -10,7 +10,7 @@ interface ToggleProps {
 
 const ToggleButton = styled('button')<ToggleProps>`
   position: fixed;
-  width: 115px;
+  width: 125px;
   height: 45px;
   right: 1.5rem;
   bottom: 1.5rem;
@@ -57,7 +57,7 @@ export default function ModeToggle(): ReactElement {
       {theme !== SimpleTheme ? (
         <>
           <Emoji>
-            <span role="img" aria-label="현재 일반 모드입니다. 심플 모드로의 전환을 원한다면 버튼을 눌러주세요   ">
+            <span role="img" aria-label="현재 디테일 모드입니다. 심플 모드로의 전환을 원한다면 버튼을 눌러주세요   ">
               👨‍🦯
             </span>
           </Emoji>
@@ -66,11 +66,11 @@ export default function ModeToggle(): ReactElement {
       ) : (
         <>
           <Emoji>
-            <span role="img" aria-label="현재 심플 모드입니다. 일반 모드로의 전환을 원한다면 버튼을 눌러주세요   ">
+            <span role="img" aria-label="현재 심플 모드입니다. 디테일 모드로의 전환을 원한다면 버튼을 눌러주세요   ">
               🚶‍♂
             </span>
           </Emoji>
-          <ModeContent>일반 모드</ModeContent>
+          <ModeContent>디테일 모드</ModeContent>
         </>
       )}
     </ToggleButton>

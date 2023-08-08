@@ -49,12 +49,12 @@ const SimpleRoom = () => {
 
   return (
     <>
-      <StyledLink to='/home' aria-label="영상통화를 걸 친구를 찾는 페이지입니다.">
-        <SimpleTitle imgSrc="SimpleLogo" />
+      <StyledLink to='/home' aria-label="영상통화를 걸 친구를 찾는 페이지입니다. 친구 목록과 최근 통화 목록으로 구성되어 있습니다. 홈 페이지로 이동하시려면 이 버튼을, 통화하시려면 맞는 항목을 고르세요.">
+        <SimpleTitle tabIndex={0} imgSrc="SimpleLogo" />
       </StyledLink>
       <ButtonContainer>
-        <HandleButton text='친구검색' onClick={handleFriendModalOpen} />
-        <HandleButton text='최근통화' onClick={handleRecentCallModalOpen} />
+        <HandleButton tabIndex={1} text='친구검색' onClick={handleFriendModalOpen} />
+        <HandleButton tabIndex={2} text='최근통화' onClick={handleRecentCallModalOpen} />
       </ButtonContainer>
       <div id="customModalContainer">
       <Modal id="customModal"

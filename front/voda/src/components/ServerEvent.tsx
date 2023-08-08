@@ -4,11 +4,28 @@ import { RootState } from '../store/store';
 import { API_URL } from '../constants/url';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
+import HandleButton from './HandleBtn';
 
 import { receiveCalling, rejectCalling } from '../apis/calling';
 
 import { Session } from 'openvidu-browser';
 import { callInfoType, updateCall } from '../store/callSlice';
+import { mod } from '@tensorflow/tfjs-core';
+import { styled } from 'styled-components';
+
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
+const modalColor = {
+  content: {
+    backgroundColor: '#001d3d',
+  },
+}
 
 export default function SseComponent(){
 		const navigate = useNavigate();
@@ -30,19 +47,24 @@ export default function SseComponent(){
             console.log("SSE 연결 완료", event);
         });
         eventSource.addEventListener("call", (event) => {
+          //카메라가 로드되는 것을 고려해서 4초 지연 후 알림
+          setTimeout(() => {
             setisCallModalOpen(true);
             const response = JSON.parse(event.data);
             dispatch(updateCall({
-              accessToken : response.token,
+              sessionToken : response.token,
               sessionId : response.sessionId,
               callNo : response.callNo,
             }));
             setContent(response.content);
             setCallNo(response.callNo);
+          }, 4000); 
         });
         eventSource.addEventListener("reject", (event) => {
             setisCallModalOpen(true);
             // 통화 거절 추가 로직
+            const response = JSON.parse(event.data);
+            setCallNo(response.callNo);
         })
     }, [userEmail]);
 
@@ -64,6 +86,7 @@ export default function SseComponent(){
     function rejectCall() {
       rejectCalling(callNo)
       .then((res) => {
+        setisCallModalOpen(false);
         console.log(res);
       })
       .catch((err) => {
@@ -77,12 +100,22 @@ export default function SseComponent(){
           isOpen={isCallModalOpen} 
           onRequestClose={(e) => setisCallModalOpen(false)}
           ariaHideApp={false}
+          style={modalColor}
         >
-				<p>{content}</p>
-				<button onClick={acceptCall}>통화 받기</button>
-        <br />
-        <button onClick={rejectCall}>통화 거절</button>
-        
+        <br/>
+        <br/>
+        <br/>
+				<p style={{textAlign: 'center', fontSize: 'xx-large'}}>{content}</p>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <ButtonContainer>
+          <HandleButton text='통화 받기' onClick={acceptCall} />
+          <HandleButton text='통화 거절' onClick={rejectCall} />
+        </ButtonContainer>
       </Modal>
     </>
 		)

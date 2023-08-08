@@ -54,6 +54,7 @@ import ModeToggle from './components/ModeToggle';
 import DetailWriteArticle from './pages/detail/board/WriteArticle';
 import { styled } from 'styled-components';
 import simpleLogo from "./assets/images/logo_yellow.png";
+import ErrorPage from './pages/ErrorPage';
 
 // 1) 다수의 props 발생 시 interface 설정
 interface ContextProps {
@@ -140,6 +141,7 @@ const App: React.FC = () => {
     { path: '/feedback', element: theme === SimpleTheme ? <SimpleFeedBack/> : <DetailFeedBack/> },
     { path: '/write', element: theme === SimpleTheme ? <SimpleWriteArticle/> : <DetailWriteArticle/> },
     { path: '/view/:articleNo', element: theme === SimpleTheme ? <SimpleDetailArticle/> : <SimpleDetailArticle/> },
+    { path: '/error', element: <ErrorPage />},
     { path: '*', element: <Navigate replace to="/" /> },
     
     // { path: '/', element: screenMode === 'simple' ? <SimpleHomePage /> : <DetailHomePage /> },
