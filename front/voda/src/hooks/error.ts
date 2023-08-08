@@ -10,7 +10,7 @@ const useErrorHandlers = () => {
   const navigate = useNavigate();
   const userEmail = useSelector((state:RootState) => {
     return state.user.userInfo.userEmail;
-  })
+  });
 
   const errorHandlers = (statusCode: number, callback: any, param?: any) => {
     switch(statusCode) {
