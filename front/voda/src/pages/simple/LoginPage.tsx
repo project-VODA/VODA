@@ -14,8 +14,7 @@ import { access } from "fs";
 
 import '../../styles/simple/RegisterContainer.css'
 import styled from "styled-components";
-import store from "../../store/store";
-import { HttpStatusCode } from "axios";
+import useErrorHandlers from "../../hooks/error";
 
 const StyledLink = styled(TitleLink)`
 text-decoration: none;
@@ -31,8 +30,9 @@ const SimpleLogin = () => {
     userPass: password,
   };
   const dispatch = useDispatch();
+  const errorHandlers = useErrorHandlers();
+
   const handleLogin = () => {
-    
     if (email === '') {
       alert("이메일을 입력해주세요");
     } else if (password === '') {
@@ -40,29 +40,17 @@ const SimpleLogin = () => {
     } else {
       loginServer(userData)
         .then((res) => {
-          console.log(res);
           alert("로그인 성공");
           // userSlice에 저장
           dispatch(userSliceLogin ({
             accessToken: res.accessToken,
             refreshToken: res.refreshToken
-          })); 
-          
+          }));
           // 메인페이지로 리다이렉트
           RedirectHomePage();
         })
         .catch((err) => {
-          console.log(err);
-          console.log(err.response.status);
-          if (err.response.status === 401 || err.response.status === 404) {
-            alert("가입되지 않은 이메일이거나 비밀번호가 틀렸습니다.");
-            setEmail('');
-            setPassword('');
-          } else if (err.response.status === 500) {
-            alert("로그인 실패 (서버 에러)");
-            setEmail('');
-            setPassword('');
-          }
+          errorHandlers(err.request.status, handleLogin, userData);
         });
     }
   };
