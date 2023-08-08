@@ -63,7 +63,8 @@ export default function SseComponent(){
         eventSource.addEventListener("reject", (event) => {
             setisCallModalOpen(true);
             // 통화 거절 추가 로직
-            
+            const response = JSON.parse(event.data);
+            setCallNo(response.callNo);
         })
     }, [userEmail]);
 
@@ -85,6 +86,7 @@ export default function SseComponent(){
     function rejectCall() {
       rejectCalling(callNo)
       .then((res) => {
+        setisCallModalOpen(false);
         console.log(res);
       })
       .catch((err) => {
