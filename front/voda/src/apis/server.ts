@@ -14,10 +14,15 @@ export const axiosServer = () => {
   })
 };
 
-/*export const axiosServer = axios.create({
-  baseURL: `${API_URL}`,
-  headers: {
-    "Content-Type": 'application/json',
-    "Authorization": `Bearer: ${accessToken}`,
-  }
-});*/
+// refreshToken을 authorization으로 하는 axios 요청
+export const axiosServerWithRefresh = () => {
+  let refreshToken = store.getState().user.refreshToken;
+
+  return axios.create({
+    baseURL: `${API_URL}`,
+    headers: {
+      "Content-Type": 'application/json',
+      "Authorization": `Bearer ${refreshToken}`,
+    }
+  });
+}
