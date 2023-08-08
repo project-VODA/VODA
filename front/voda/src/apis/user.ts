@@ -23,8 +23,8 @@ export const loginServer = async (userData: object) => {
 };
 
 // 로그아웃
-export const logout = async () => {
-  const res = await axiosServer().post<any>(`/users/logout`);
+export const logout = async (userEmail: string) => {
+  const res = await axiosServer().post<any>(`/users/logout`, userEmail);
   return res.data;
 };
 

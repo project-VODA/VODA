@@ -101,7 +101,7 @@ const DetailEnvSettingPage = () => {
         alert("회원 탈퇴 성공");
         // 로그아웃 처리
         if(accessToken !== null && accessToken !== ''){
-          logout()
+          logout(userInfo.userEmail)
           .then((res) => {
             userSliceLogout();
             RedirectHomePage();
@@ -150,7 +150,7 @@ const DetailEnvSettingPage = () => {
           
           // 로그아웃 처리
           if(accessToken !== null && accessToken !== ''){
-            logout()
+            logout(userInfo.userEmail)
             .then((res) => {
               console.log("hi logout");
               userSliceLogout();
