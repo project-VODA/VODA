@@ -14,6 +14,8 @@ import { RootState } from '../../store/store';
 import { UserInfoType, UserSettingType, userSliceLogout } from '../../store/userSlice';
 import { Link } from "react-router-dom";
 
+import DivideContainer from '../../components/DivideHorizontalContainer';
+
 // import '../../styles/simple/EnvSettingPage.css'
 
 const StyledLink = styled(Link)`
@@ -78,7 +80,8 @@ const SimpleEnvSettingPage = () => {
         <SimpleTitle imgSrc="SimpleLogo" aria-label='환경 설정 페이지입니다. 홈 화면으로 이동하시려면 이 버튼을 누르세요.' />
       </StyledLink>
 
-      <div>
+      <DivideContainer
+        leftChild={
         <div className='alarmContainer'>
           <p className='alarmTitle' aria-label='알림을 선택하세요. 남자, 여자 목소리, 조언을 선택 가능합니다. 탭을 누르신 후 선택됨 음성이 나오면 위 아래 방향키로 선택하세요' tabIndex={0}>알림 설정</p>
         <div>
@@ -124,8 +127,7 @@ const SimpleEnvSettingPage = () => {
           </label>
         </div>
       </div>
-      </div>
-      
+        }        rightChild={
       <div className='modeContainer'>
         <div className='modeTitle' aria-label='모드를 설정할 수 있습니다. 탭 키를 누른 후 선택됨 음성이 나오면 위 아래 방향키로 선택하세요.' tabIndex={0}>모드 설정</div>
       <div className='chooseMode'>
@@ -158,7 +160,8 @@ const SimpleEnvSettingPage = () => {
           </label>
         </div>
       </div>
-      </div>
+      </div>}
+      />
 
       <ButtonContainer>
         <SettingButton
