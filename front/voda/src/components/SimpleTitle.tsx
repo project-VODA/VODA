@@ -40,6 +40,7 @@ interface TitleProps {
   'aria-label'?: string;
   imgSrc: string;
   onClick?: string;
+  tabIndex?: number;
 }
 
 
