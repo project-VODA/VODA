@@ -36,14 +36,16 @@ export interface ButtonProps {
   'aria-label'?: string
   id? : string;
   className?: string;
+  style?: string;
+  tabIndex?: number;
 }
 
-export default function Setting({ text, onClick, "aria-label":ariaLabel, id, className }: ButtonProps ) {
+export default function Setting({ text, onClick, "aria-label":ariaLabel, id, className, tabIndex }: ButtonProps ) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <>
-      <SettingButton theme={theme} onClick={onClick} aria-label={ariaLabel} id={id} className={className}>{text}</SettingButton>
+      <SettingButton tabIndex={tabIndex} theme={theme} onClick={onClick} aria-label={ariaLabel} id={id} className={className}>{text}</SettingButton>
     </>
   );
 }
