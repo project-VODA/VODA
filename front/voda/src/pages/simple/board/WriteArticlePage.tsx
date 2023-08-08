@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 import { registArticle } from '../../../apis/board';
 
 import Title from '../../../components/Title';
 import Input from '../../../components/InputText';
-import InputTextArea from '../../../components/InputTextArea';
 import RegistButton from '../../../components/RegisterButton';
 import { UserInfoType } from '../../../store/userSlice';
 import { useSelector } from 'react-redux';
@@ -17,6 +18,23 @@ const StyledLink = styled(Link)`
 text-decoration: none;
 color: inherit;
 `;
+
+const QuillContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`
+
+const StyledQuill = styled(ReactQuill)`
+  .ql-toolbar.ql-snow {
+    border: none;
+  }
+  .ql-container.ql-snow {
+    border: none;
+  }
+  .ql-editor {
+    justify-content: center;
+  }
+`
 
 
 const SimpleWriteArticle = () => {
@@ -69,12 +87,32 @@ const SimpleWriteArticle = () => {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
-
-      <InputTextArea
-        placeholder="건의하고 싶은 내용을 자세히 입력해주세요"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-      />
+      <QuillContainer>
+        <StyledQuill
+          value={content}
+          onChange={setContent}
+          placeholder="건의하고 싶은 내용을 자세히 입력해주세요"
+          modules={{
+            toolbar: [
+              [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+              [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+              ['bold', 'italic', 'underline'],
+              [{ 'color': [] }, { 'background': [] }],
+              ['link'],
+              ['clean'],
+            ],
+          }}
+          style={{
+            width: '58%',
+            maxWidth: '600px',
+            marginBottom: '2%',
+            color: '#001d3d',
+            background: 'white',
+            borderRadius: '20px',
+          }}
+          theme="snow"
+        />
+      </QuillContainer>
 
       <RegistButton text="등록" onClick={handleRegist}></RegistButton>
       

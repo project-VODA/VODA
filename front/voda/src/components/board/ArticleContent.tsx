@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 
 import styled from 'styled-components';
 import { ThemeContext } from '../../App';
 import { SimpleTheme, Theme } from '../../styles/theme';
-
+import DOMPurify from "dompurify";
 
 interface ThemeProps {
   theme: Theme;
@@ -25,23 +25,50 @@ const ContentField = styled.div<ThemeProps>`
   border: 1px solid ${({ theme }) => theme.text};
   color: ${({ theme }) => theme.text};
   background-color: ${({ theme }) => theme.body};
-
-  text-align: center;
+  text-align: left;
 
   &::placeholder {
     text-align: center;
   }
+
+  h1 {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 0.7em;
+    margin-top: 0.7em;
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  ul, ol {
+    margin-left: 1.5em; 
+  }
+
+  li {
+    margin-bottom: 0.5em;
+  }
+
 `;
 
+
 interface ContentProps {
-    articleContent: String;
+    articleContent: string;
     'aria-label'?: string;
 }
 
 export default function ArticleContent( {articleContent, 'aria-label':ariaLabel} : ContentProps ) {
-    const { theme } = useContext(ThemeContext);
+    const sanitizedContent = DOMPurify.sanitize(articleContent);
 
     return(
-        <ContentField aria-label={ariaLabel}>{articleContent}</ContentField>
+      <>
+        <ContentField aria-label={ariaLabel} dangerouslySetInnerHTML={{
+          __html: sanitizedContent}}/>
+      </>
     )
 }
