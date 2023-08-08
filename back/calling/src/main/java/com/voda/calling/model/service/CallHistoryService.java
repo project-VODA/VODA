@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,14 +82,20 @@ public class CallHistoryService {
     }
 
     public void updateCallTime(CallHistory currentcallHistory, String msg){
-        Timestamp nowTime = new Timestamp(System.currentTimeMillis());
-        SimpleDateFormat sdf = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
-        nowTime = Timestamp.valueOf(sdf.format(nowTime));
+//        Timestamp nowTime = new Timestamp(System.currentTimeMillis());
+//        SimpleDateFormat sdf = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
+//        nowTime = Timestamp.valueOf(sdf.format(nowTime));
+//        log.info(nowTime.toString());
+
+        LocalDateTime nowTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        Timestamp formattedNowTime = Timestamp.valueOf(nowTime.format(formatter));
+        log.info(String.valueOf(formattedNowTime));
 
         if(msg.equals("start")){
-            currentcallHistory.setCallStarttime(nowTime);
+            currentcallHistory.setCallStarttime(formattedNowTime);
         }else if(msg.equals("end")){
-            currentcallHistory.setCallEndtime(nowTime);
+            currentcallHistory.setCallEndtime(formattedNowTime);
         }
         callHistoryRepository.save(currentcallHistory);
     }
