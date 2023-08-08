@@ -53,7 +53,7 @@ export const cancelUser = async () => {
 }
 
 // 새로운 accessToken 발급
-export const updateAccessToken = async () => {
+export const getAccessToken = async () => {
   const res = await axiosServer().get<any>('/users/token');
   return res.data;
 }

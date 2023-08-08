@@ -67,11 +67,14 @@ const userSlice = createSlice({
             };
             state.isLogin = false;
         },
+        updateAccessToken:(state, action) => {
+            state.accessToken = action.payload.accessToken;
+        }
     }
 });
 
 export default userSlice;
-export const {userSliceLogin, userSliceAllocate, userSliceLogout} = userSlice.actions;
+export const {userSliceLogin, userSliceAllocate, userSliceLogout, updateAccessToken} = userSlice.actions;
 
 export interface UserInfoType{
     userEmail: string,
