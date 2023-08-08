@@ -46,7 +46,6 @@ public class NotificationService {
         sseEmitter.onError((e) -> sseRepository.deleteById(id));
 
         // 에러 방지 위해 더미 데이터 보내기
-
         sendToClient("connection", sseEmitter, id, CallNotification.builder().senderEmail("me").content("call to you").build());
 
         // 본인에게 미수신된 이벤트 수신
@@ -78,6 +77,7 @@ public class NotificationService {
         String receiverId = getIdWithTime(receiverEmail);
         // eventcache에 저장
         sseRepository.saveEventCache(receiverId, callNotification);
+
         // 각각의 sseEmitter에게 메시지 전달
         sseEmitters.forEach((key, emitter) -> {
             sendToClient(eventName, emitter, receiverId, callNotification);
