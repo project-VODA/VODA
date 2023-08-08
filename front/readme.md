@@ -165,3 +165,6 @@
   - 표정 듣기 / 표정 보내기 버튼을 userHandicap api 연결
   - 표정 듣기는 작동 안됨 / 표정 너무 자주 보낼 시 RuntimeError: memory access out of bounds 에러 발견
   - 환경 설정(심플) 페이지 우선 divideHorizon
+  - 심플
+    - 홈페이지, 영상통화 대기 페이지, 영상통화 페이지, 환경설정 페이지 tab index 설정
+  - 환경설정 페이지 UI개선
