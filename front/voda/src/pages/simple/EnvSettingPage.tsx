@@ -79,40 +79,46 @@ const SimpleEnvSettingPage = () => {
       </StyledLink>
 
       <div>
-        {/* <div>
-          <label>
+        <div className='alarmContainer'>
+          <p className='alarmTitle' aria-label='알림을 선택하세요. 남자, 여자 목소리, 조언을 선택 가능합니다. 탭을 누르신 후 선택됨 음성이 나오면 위 아래 방향키로 선택하세요' tabIndex={0}>알림 설정</p>
+        <div>
+          <label >
             <input
               type='radio'
               name='typeNo'
               value='0'
               checked={notificationType === 0}
               onChange={() => setNotificationType(0)}
+              aria-label='남자 목소리'
+              tabIndex={0}
             />
-            알림음
+            남자 목소리
           </label>
-        </div> */}
-        <div className='alarmContainer'>
-          <div className='alarmTitle'>알림 설정</div>
+        </div>
         <div className='chooseAlarm'>
-          <label>
+          <label >
             <input
               type='radio'
               name='typeNo'
               value='1'
               checked={notificationType === 1}
               onChange={() => setNotificationType(1)}
+              aria-label='여자 목소리'
+              tabIndex={0}
             />
-            음성
+            여자 목소리
           </label>
         </div>
         <div>
-          <label>
+          <label >
             <input
               type='radio'
               name='typeNo'
               value='2'
               checked={notificationType === 2}
               onChange={() => setNotificationType(2)}
+              aria-label='음성과 상황에 맞는 조언'
+              tabIndex={0}
             />
             음성 & 조언
           </label>
@@ -121,28 +127,32 @@ const SimpleEnvSettingPage = () => {
       </div>
       
       <div className='modeContainer'>
-        <div className='modeTitle'>모드 설정</div>
+        <div className='modeTitle' aria-label='모드를 설정할 수 있습니다. 탭 키를 누른 후 선택됨 음성이 나오면 위 아래 방향키로 선택하세요.' tabIndex={0}>모드 설정</div>
       <div className='chooseMode'>
         <div>
-          <label>
+          <label  >
             <input
               type='radio'
               name='screenMode'
               value='detail'
               checked={screenMode === 0}
               onChange={() => setScreenMode(0)}
+              aria-label='디테일 모드'
+              tabIndex={0}
             />
             디테일 모드
           </label>
         </div>
         <div>
-          <label>
+          <label >
             <input
+              aria-label='심플 모드'
               type='radio'
               name='screenMode'
               value='simple'
               checked={screenMode === 1}
               onChange={() => setScreenMode(1)}
+              tabIndex={0}
             />
             심플 모드
           </label>
