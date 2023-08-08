@@ -85,7 +85,7 @@ const SimpleMyPage = () => {
             alert("회원 정보 수정 완료");
             // 로그아웃 처리
             if(accessToken !== null && accessToken !== ''){
-              logout()
+              logout(userInfo.userEmail)
               .then((res) => {
                 dispatch(userSliceLogout());
                 RedirectHomePage();
@@ -112,7 +112,7 @@ const SimpleMyPage = () => {
         alert("회원 탈퇴 성공");
         // 로그아웃 처리
         if(accessToken !== null && accessToken !== ''){
-          logout()
+          logout(userInfo.userEmail)
           .then((res) => {
             dispatch(userSliceLogout());
             RedirectHomePage();
@@ -161,7 +161,7 @@ const SimpleMyPage = () => {
           
           // 로그아웃 처리
           if(accessToken !== null && accessToken !== ''){
-            logout()
+            logout(userInfo.userEmail)
             .then((res) => {
               console.log("hi logout");
               dispatch(userSliceLogout());

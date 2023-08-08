@@ -1,5 +1,6 @@
 package com.voda.calling.controller;
 
+import com.voda.calling.exception.AlreadyLoginedException;
 import com.voda.calling.exception.NotRegisteredException;
 import com.voda.calling.exception.PasswordWrongException;
 import com.voda.calling.model.dto.User;
@@ -63,7 +64,7 @@ public class UserController {
         try{
             return ResponseEntity.ok()
                     .body(userService.login(user.getUserEmail(), user.getUserPass()));
-        }catch (PasswordWrongException e){
+        }catch (PasswordWrongException | AlreadyLoginedException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }catch (NotRegisteredException e){
             return ResponseEntity.notFound().build();
@@ -96,11 +97,12 @@ public class UserController {
             @ApiResponse(code=500, message="로그아웃 실패 - 서버(DB)오류")
     })
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(@ApiParam(hidden = true) @RequestHeader(value = AUTH) String auth){
+    public ResponseEntity<String> logout(@RequestBody String userEmail){
         log.info("로그아웃 시도");
-        String userEmail = jwtUtil.getUserEmailFromToken(auth);
-        //1. 토큰으로 유저 정보 가져오기
+        //1. 유저이메일로 유저 정보 가져오기
+        userEmail = userEmail.replace("\"", "");
         User logoutUser = userService.getUser(userEmail);
+
         //2. 해당 유저 로그아웃
         userService.logout(logoutUser);
         if(logoutUser.getUserToken()==null){

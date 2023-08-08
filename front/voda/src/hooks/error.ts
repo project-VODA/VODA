@@ -1,17 +1,20 @@
 import { HttpStatusCode } from "axios"
 import { getAccessToken, logout } from "../apis/user"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { updateAccessToken, userSliceLogout } from "../store/userSlice";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../store/store";
 
 const useErrorHandlers = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const userEmail = useSelector((state:RootState) => {
+    return state.user.userInfo.userEmail;
+  })
 
   const errorHandlers = (statusCode: number, callback: any, param?: any) => {
     switch(statusCode) {
       case HttpStatusCode.Unauthorized:
-        console.log("handle 401");
         handle401Error(callback, param);
         break;
       case HttpStatusCode.NotFound:
@@ -20,7 +23,6 @@ const useErrorHandlers = () => {
       case HttpStatusCode.ServiceUnavailable:
       case HttpStatusCode.GatewayTimeout:
       default:
-        console.log("go to error page");
         redirectErrorPage();
     }
   };
@@ -34,7 +36,7 @@ const useErrorHandlers = () => {
     .catch((err) => {
       console.log(err);
       alert("다시 로그인해주세요");
-      logout();
+      logout(userEmail);
       dispatch(userSliceLogout());
       navigate('/login');
     })

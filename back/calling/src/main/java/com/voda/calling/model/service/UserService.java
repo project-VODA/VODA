@@ -97,6 +97,7 @@ public class UserService {
 
     public User getUser(String userEmail) {
         User user = userRepository.findUserByUserEmailAndUserCancel(userEmail, IS_NOT_CANCELED); //usercancel을 고려하는 쿼리로 함수 변경
+        log.info(user.getUserEmail());
         return user;
     }
 
@@ -106,6 +107,7 @@ public class UserService {
     }
 
     public User logout(User user){
+        log.info(user.getUserEmail());
         user.setUserToken(null);
         return userRepository.save(user);
     }

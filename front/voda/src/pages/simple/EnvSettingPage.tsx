@@ -59,7 +59,7 @@ const SimpleEnvSettingPage = () => {
         console.log(res);
         // 로그아웃 처리
         if(accessToken !== null && accessToken !== ''){
-          logout()
+          logout(userInfo.userEmail)
           .then((res) => {
             dispatch(userSliceLogout());
             RedirectHomePage();

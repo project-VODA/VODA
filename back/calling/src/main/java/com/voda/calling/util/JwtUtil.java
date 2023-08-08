@@ -19,7 +19,7 @@ public class JwtUtil {
 
     @Value("${jwt.secret}")
     private String secretKey;
-    private Long expiredMs = 1000 * 60 * 60L;// 토큰 유효기간: 1시간
+    private Long expiredMs = 1000 * 60L;// 토큰 유효기간: 1시간
 
     /**
      * user정보를 담고있는 accessToken 발행하기
@@ -107,11 +107,13 @@ public class JwtUtil {
     /**
      * 토큰 만료시간인지 체크
      */
-    public boolean isExpired(String accessToken){
+    public boolean isInvalidateToken(String bearer){
         try{
-            getAllClaims(accessToken);
+            getAllClaims(extractTokenFromHeader(bearer));
             return false;
-        }catch(Exception e){
+        } catch (ExpiredJwtException e){
+            return false;
+        } catch (Exception e){
             return true;
         }
     }

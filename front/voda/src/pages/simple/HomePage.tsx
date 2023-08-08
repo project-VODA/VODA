@@ -27,8 +27,8 @@ const SimpleHomePage = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [accessTokenRedux, isLoginRedux] = useSelector((state:RootState) => {
-    return [state.user.accessToken, state.user.isLogin];
+  const [accessTokenRedux, isLoginRedux, userEmail]: [string, boolean, string] = useSelector((state:RootState) => {
+    return [state.user.accessToken, state.user.isLogin, state.user.userInfo.userEmail];
   })
 
   const [accessToken, setAccessToken] = useState(accessTokenRedux);
@@ -70,7 +70,7 @@ const SimpleHomePage = () => {
 
   const handleLogout = () => {
     if(accessToken !== null && accessToken !== ''){
-      logout()
+      logout(userEmail)
       .then((res) => {
         console.log("hi logout");
         dispatch(userSliceLogout());

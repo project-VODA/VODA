@@ -25,6 +25,7 @@ const userSlice = createSlice({
             state.refreshToken = action.payload.refreshToken;
             // accessToken 복호화 및 유저 정보 저장
             let jwtPayload = JSON.parse(atob(action.payload.accessToken.split('.')[1]));
+            console.log(jwtPayload.userEmail);
             state.userInfo = {
                 userEmail: jwtPayload.userEmail,
                 userName: decodeURI(escape(jwtPayload.userName)),
