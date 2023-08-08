@@ -100,8 +100,8 @@ public class UserController {
     public ResponseEntity<String> logout(@RequestBody String userEmail){
         log.info("로그아웃 시도");
         //1. 유저이메일로 유저 정보 가져오기
-        userEmail = userEmail.replace("\"", "");
-        User logoutUser = userService.getUser(userEmail);
+        String replacedEmail = userEmail.replace("\"", "");
+        User logoutUser = userService.getUser(replacedEmail);
 
         //2. 해당 유저 로그아웃
         userService.logout(logoutUser);
