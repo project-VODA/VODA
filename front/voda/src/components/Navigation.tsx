@@ -195,20 +195,6 @@ const MyFiSettings = styled(FiSettings)`
   width: 24px;
   height: 24px;
 `
-// const RegisterButton = styled('button')<ThemeProps>`
-//   width: 90px;
-//   height: 40px;
-//   border-radius: 30px;
-//   font-size: 14px;
-//   border: 1px solid #fcfcfc;
-//   color: ${({ theme }) => theme.text};
-//   &:hover {
-//     background: #fcfcfc;
-//     color: ${({ theme }) =>
-//       theme === SimpleTheme ? theme.mainColor : theme.body};
-//     transition: all 0.1s ease-in-out;
-//   }
-// `;
 
 const LoginBtn = styled.a`
   padding: 1em 0.5em 25px;
@@ -295,15 +281,6 @@ export default function Navigation() {
               <MenuLink to="/login">로그인</MenuLink> 
             }
           </UserDropDown>
-          {/* {isLogin ? (
-            <NavLi>
-              <ChannelButton theme={theme} >마이페이지</ChannelButton>
-            </NavLi>
-          ) : (
-            <NavLi>
-              <ChannelButton theme={theme} >로그인</ChannelButton>
-            </NavLi>
-          )} */}
         </InfoContainer>
       </NavContentContainer>
       {/* {loginModalOpen && <LoginModal setLoginModalOpen={setLoginModalOpen} />} */}

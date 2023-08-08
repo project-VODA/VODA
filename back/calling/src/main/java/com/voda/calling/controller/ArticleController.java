@@ -48,7 +48,7 @@ public class ArticleController {
                 LocalDateTime d = LocalDateTime.parse(article.getArticleRegTime(),
                         DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                 if (d.getYear()==now.getYear() && d.getMonth()==now.getMonth() && d.getDayOfMonth()==now.getDayOfMonth()) {
-                    article.setArticleRegTime(d.format(DateTimeFormatter.ofPattern("HH:MM")));
+                    article.setArticleRegTime(d.format(DateTimeFormatter.ofPattern("HH시 mm분")));
                 }else {
                     article.setArticleRegTime(d.format(DateTimeFormatter.ofPattern("YY.MM.dd")));
                 }
@@ -78,7 +78,7 @@ public class ArticleController {
             LocalDateTime d = LocalDateTime.parse(article.get().getArticleRegTime(),
                     DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             if (d.getYear()==now.getYear() && d.getMonth()==now.getMonth() && d.getDayOfMonth()==now.getDayOfMonth()) {
-                article.get().setArticleRegTime(d.format(DateTimeFormatter.ofPattern("HH:MM")));
+                article.get().setArticleRegTime(d.format(DateTimeFormatter.ofPattern("HH시 mm분")));
             }else {
                 article.get().setArticleRegTime(d.format(DateTimeFormatter.ofPattern("YY.MM.dd")));
             }
