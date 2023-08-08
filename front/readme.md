@@ -160,3 +160,8 @@
 - 23.08.07 KSH
   - Detail About 페이지 초안
   - Figma 따라서 구성 / 추가로 적을 문구 필요, 너무 허전해보이는 느낌
+
+- 23.08.08 KSH
+  - 표정 듣기 / 표정 보내기 버튼을 userHandicap api 연결
+  - 표정 듣기는 작동 안됨 / 표정 너무 자주 보낼 시 RuntimeError: memory access out of bounds 에러 발견
+  - 환경 설정(심플) 페이지 우선 divideHorizon
