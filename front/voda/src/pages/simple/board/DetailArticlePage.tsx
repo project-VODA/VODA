@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams  } from 'react-router-dom';
+import { useNavigate, useParams, Link  } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { getArticleDetail, updateArticle } from '../../../apis/board';
@@ -8,7 +8,6 @@ import Title from '../../../components/Title';
 import Button from '../../../components/RegisterButton';
 import ArticleHeader from '../../../components/board/ArticleHeader';
 import ArticleContent from '../../../components/board/ArticleContent';
-import { Link } from "react-router-dom";
 
 const StyledLink = styled(Link)`
 text-decoration: none;
@@ -64,19 +63,14 @@ const SimpleDetailArticle = () => {
 
                 {/* 게시글 content */}
                 {/* <StyledLink to='' aria-label={`게시글 내용, ${detailBoardData.articleTitle}`}> */}
-                  <ArticleContent articleContent={detailBoardData.articleTitle} aria-label={`게시글 내용, ${detailBoardData.articleTitle}`}/>
+                  <ArticleContent articleContent={detailBoardData.articleContent} aria-label={`게시글 내용, ${detailBoardData.articleContent}`}/>
                 {/* </StyledLink> */}
             </ItemContainer>
 
             {/* <Button text='수정' onClick={ModifyOneArticle} /> */}
             <Button text='목록' onClick={RedirectListPage} />
-
         </>
-
     )
-
-
-
 };
 
 export default SimpleDetailArticle;

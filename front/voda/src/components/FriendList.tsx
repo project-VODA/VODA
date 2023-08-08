@@ -143,13 +143,14 @@ const FriendList = () => {
           <col width = "10%" />
         </colgroup>
         <thead>
-          <tr>
+          <tr style={{ borderCollapse: 'separate', borderSpacing: '0px 20px',  }}>
             <th>이름</th>
             <th>이메일</th>
+            <th id='DetailCallContainer'></th>
           </tr>
         </thead>
         <tbody>
-          {friendList.length === 0 ? <tr><td colSpan={3}>친구가 존재하지 않습니다.</td></tr> :
+          {friendList.length === 0 ? <tr><td colSpan={3} style={{ textAlign: 'center' }}>친구가 존재하지 않습니다.</td></tr> :
             friendList.map((friend: Friend) => (
               <tr key={friend.friendNo} style={{ textAlign: 'center' }}>
                 <td>{friend.userName}</td>

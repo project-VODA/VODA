@@ -12,6 +12,7 @@ import detailLogo from "../assets/images/logo_black.png";
 import { FiSettings } from "react-icons/fi";
 import { HiUser, HiOutlineLogout } from "react-icons/hi";
 import { GrUserSettings } from "react-icons/gr";
+import { FaBars } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { UserInfoType } from "../store/userSlice";
@@ -37,6 +38,14 @@ const NavContainer = styled("nav")`
   border-bottom: 0.5px solid rgba(0, 0, 0, 0.07);
   transition: all 0.5s ease-in-out;
   z-index: 999999;
+
+  position: absolute;
+  opacity: 0.8;
+
+  display: block; 
+  @media (max-width: 768px) {
+    display: none; 
+  }
 `;
 
 const NavContentContainer = styled.div`
@@ -195,23 +204,19 @@ const MyFiSettings = styled(FiSettings)`
   width: 24px;
   height: 24px;
 `
-// const RegisterButton = styled('button')<ThemeProps>`
-//   width: 90px;
-//   height: 40px;
-//   border-radius: 30px;
-//   font-size: 14px;
-//   border: 1px solid #fcfcfc;
-//   color: ${({ theme }) => theme.text};
-//   &:hover {
-//     background: #fcfcfc;
-//     color: ${({ theme }) =>
-//       theme === SimpleTheme ? theme.mainColor : theme.body};
-//     transition: all 0.1s ease-in-out;
-//   }
-// `;
 
-const LoginBtn = styled.a`
-  padding: 1em 0.5em 25px;
+const HamburgerButton = styled.button`
+  position: absolute;
+  top: 7%;
+  right: 10%;
+  z-index: 99999;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: none; /* 처음에는 큰 화면에서 숨깁니다. */
+  @media (max-width: 768px) {
+    display: block; /* 작은 화면에서 보이도록 합니다. */
+  }
 `;
 
 export default function Navigation() {
@@ -220,93 +225,94 @@ export default function Navigation() {
   })
 
   const [isDropDownVisible, setDropDownVisible] = useState(false);
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleDropDownToggle = () => {
-    setDropDownVisible((prevVisible) => !prevVisible);
+    setDropDownVisible((current) => !current);
   };
 
+  const handleMobileMenuToggle = () => {
+    setMobileMenuOpen((current) => !current);
+  }
+
   return (
-    <NavContainer>
-      <NavContentContainer>
-        <LogoContainer>
-          <Link to="/home">
-            <LogoImage
-              src={detailLogo}
-              alt="voda_logo"
-              aria-label="홈으로 이동, VODA 로고"
-            />
-          </Link>
-        </LogoContainer>
-        {/* <TitleContainer color={theme.mainColor}>제목</TitleContainer> */}
-        <InfoContainer>
-          {/* <ChannelButton theme={theme}>test</ChannelButton> */}
-          {/* <ChannelButton theme={theme}><Link to="/about">ABOUT</Link></ChannelButton> */}
-          <ChannelButton>
-            <MenuLink to="/about">서비스소개</MenuLink>
-          </ChannelButton>
-          <ChannelButton>
-            <MenuLink to="/waiting">영상통화</MenuLink>
-          </ChannelButton>
-          <ChannelButton>
-            <MenuLink to="/feedback">고객의소리함</MenuLink>
-          </ChannelButton>
-          <ChannelButton>
-            <MenuLink to="/video">테스트</MenuLink>
-          </ChannelButton>
-          
-          <UserDropDown onClick={handleDropDownToggle}>
-            { 
-              isLoginRedux ? 
-              <>
-                <UserInfoText>
-                  <IconWrapper>
-                    <HiUserIcon />
-                  </IconWrapper>
-                  {userInfo.userName}님 환영합니다
-                </UserInfoText>
-                <DropDownMenu visible={isDropDownVisible}>
-                  {/* 드롭다운 메뉴 내용 */}
-                  <MenuLink to="/mypage">
-                    <MenuLinkContainer>
-                      <IconWrapper>
-                        <GrUserSettings/>
-                      </IconWrapper>
-                      마이페이지
-                    </MenuLinkContainer>
-                  </MenuLink>
-                  <MenuLink to="/settings">
-                    <MenuLinkContainer>
-                      <IconWrapper>
-                        <MyFiSettings/>
-                      </IconWrapper>
-                      환경설정
-                    </MenuLinkContainer>
-                  </MenuLink>
-                  <MenuLink to="/logout">
-                    <MenuLinkContainer>
-                      <IconWrapper>
-                        <HiOutlineLogout/>
-                      </IconWrapper>
-                      로그아웃
-                    </MenuLinkContainer>
-                  </MenuLink>
-                </DropDownMenu>
-              </> :
-              <MenuLink to="/login">로그인</MenuLink> 
-            }
-          </UserDropDown>
-          {/* {isLogin ? (
-            <NavLi>
-              <ChannelButton theme={theme} >마이페이지</ChannelButton>
-            </NavLi>
-          ) : (
-            <NavLi>
-              <ChannelButton theme={theme} >로그인</ChannelButton>
-            </NavLi>
-          )} */}
-        </InfoContainer>
-      </NavContentContainer>
-      {/* {loginModalOpen && <LoginModal setLoginModalOpen={setLoginModalOpen} />} */}
-    </NavContainer>
+    <>
+      <NavContainer>
+        <NavContentContainer>
+          <LogoContainer>
+            <Link to="/home">
+              <LogoImage
+                src={detailLogo}
+                alt="voda_logo"
+                aria-label="홈으로 이동, VODA 로고"
+              />
+            </Link>
+          </LogoContainer>
+          {/* <TitleContainer color={theme.mainColor}>제목</TitleContainer> */}
+          <InfoContainer>
+            {/* <ChannelButton theme={theme}>test</ChannelButton> */}
+            {/* <ChannelButton theme={theme}><Link to="/about">ABOUT</Link></ChannelButton> */}
+            <ChannelButton>
+              <MenuLink to="/about">서비스소개</MenuLink>
+            </ChannelButton>
+            <ChannelButton>
+              <MenuLink to="/waiting">영상통화</MenuLink>
+            </ChannelButton>
+            <ChannelButton>
+              <MenuLink to="/feedback">고객의소리함</MenuLink>
+            </ChannelButton>
+            <ChannelButton>
+              <MenuLink to="/video">테스트</MenuLink>
+            </ChannelButton>
+            
+            <UserDropDown onClick={handleDropDownToggle}>
+              { 
+                isLoginRedux ? 
+                <>
+                  <UserInfoText>
+                    <IconWrapper>
+                      <HiUserIcon />
+                    </IconWrapper>
+                    {userInfo.userName}님 환영합니다
+                  </UserInfoText>
+                  <DropDownMenu visible={isDropDownVisible}>
+                    {/* 드롭다운 메뉴 내용 */}
+                    <MenuLink to="/mypage">
+                      <MenuLinkContainer>
+                        <IconWrapper>
+                          <GrUserSettings/>
+                        </IconWrapper>
+                        마이페이지
+                      </MenuLinkContainer>
+                    </MenuLink>
+                    <MenuLink to="/settings">
+                      <MenuLinkContainer>
+                        <IconWrapper>
+                          <MyFiSettings/>
+                        </IconWrapper>
+                        환경설정
+                      </MenuLinkContainer>
+                    </MenuLink>
+                    <MenuLink to="/logout">
+                      <MenuLinkContainer>
+                        <IconWrapper>
+                          <HiOutlineLogout/>
+                        </IconWrapper>
+                        로그아웃
+                      </MenuLinkContainer>
+                    </MenuLink>
+                  </DropDownMenu>
+                </> :
+                <MenuLink to="/login">로그인</MenuLink> 
+              }
+            </UserDropDown>
+          </InfoContainer>
+        </NavContentContainer>
+        {/* {loginModalOpen && <LoginModal setLoginModalOpen={setLoginModalOpen} />} */}
+      </NavContainer>
+      <HamburgerButton onClick={handleMobileMenuToggle}>
+        <FaBars size={48} />
+      </HamburgerButton>
+    </>
   );
 }

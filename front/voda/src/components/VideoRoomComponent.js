@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { axiosServer } from '../apis/server';
 import { OpenVidu } from 'openvidu-browser';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
@@ -13,6 +13,10 @@ import ToolbarComponent from './toolbar/ToolbarComponent';
 
 import { offCalling } from "../apis/calling";
 
+export const getUserHandicap = async () => {
+  const res = await axiosServer().get(`/users/mypage`);
+  return res.data.useHandicap;
+}
 
 var localUser = new UserModel();
 const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8080/voda/';
@@ -541,8 +545,8 @@ class VideoRoomComponent extends Component {
           {localUser !== undefined && localUser.getStreamManager() !== undefined && (
             <div className="OT_root OT_publisher custom-class" id="localUser">
               <span>
-                {userHandicap ? (<SettingButton id='hearExpression' text='표정 듣기' onClick={this.hearExpression} aria-label='표정 듣기 버튼입니다.' />
-                ) : (<SettingButton id='sendExpression' text='표정 보내기' onClick={this.sendExpression} aria-label='표정 보내기 버튼입니다.' />
+                {getUserHandicap ? (<SettingButton tabIndex={0} id='hearExpression' text='표정 듣기' onClick={this.hearExpression} aria-label='표정 듣기 버튼입니다.'  />
+                ) : (<SettingButton tabIndex={0} id='sendExpression' text='표정 보내기' onClick={this.sendExpression} aria-label='표정 보내기 버튼입니다.' />
                 )}
                 {/* <SettingButton id='hearExpression' text='표정 듣기' onClick={this.hearExpression} aria-label='표정 듣기 버튼입니다.' />
                               <SettingButton id='sendExpression' text='표정 보내기' onClick={this.sendExpression} aria-label='표정 보내기 버튼입니다.' /> */}
