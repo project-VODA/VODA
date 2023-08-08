@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,10 +42,18 @@ public class ArticleController {
         log.info("게시글 목록 불러오기");
         try {
             List<Article> list = articleService.getArticleList();
-//            if (list == null || list.size() == 0) {
-//                log.info("게시글 목록 불러오기 실패 - 게시글 없음");
-//                return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-//            }
+
+            LocalDateTime now = LocalDateTime.now();
+            for (Article article : list) {
+                LocalDateTime d = LocalDateTime.parse(article.getArticleRegTime(),
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                if (d.getYear()==now.getYear() && d.getMonth()==now.getMonth() && d.getDayOfMonth()==now.getDayOfMonth()) {
+                    article.setArticleRegTime(d.format(DateTimeFormatter.ofPattern("HH:MM")));
+                }else {
+                    article.setArticleRegTime(d.format(DateTimeFormatter.ofPattern("YY.MM.dd")));
+                }
+            }
+
             log.info("게시글 목록 불러오기 성공");
             return new ResponseEntity<List<Article>>(list, HttpStatus.OK);
         } catch (Exception e) {
@@ -64,6 +74,14 @@ public class ArticleController {
         log.info("게시글 상세 가져오기");
         try {
             Optional<Article> article = articleService.getArticleDetail(articleNo);
+            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime d = LocalDateTime.parse(article.get().getArticleRegTime(),
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            if (d.getYear()==now.getYear() && d.getMonth()==now.getMonth() && d.getDayOfMonth()==now.getDayOfMonth()) {
+                article.get().setArticleRegTime(d.format(DateTimeFormatter.ofPattern("HH:MM")));
+            }else {
+                article.get().setArticleRegTime(d.format(DateTimeFormatter.ofPattern("YY.MM.dd")));
+            }
             log.info("게시글 상세 가져오기 성공");
             return new ResponseEntity<Article>(article.get(), HttpStatus.OK);
         } catch (NoContentException e) {
