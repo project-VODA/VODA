@@ -45,10 +45,11 @@ interface InputProps {
   readonly?: boolean;
   checked?: boolean;
   style?: React.CSSProperties;
+  tabIndex?: number;
 }
 
 
-export default function Input({ type, placeholder, value, onChange, 'aria-label':ariaLabel, readonly, checked, style}: InputProps) {
+export default function Input({ type, placeholder, value, onChange, 'aria-label':ariaLabel, readonly, checked, style, tabIndex}: InputProps) {
 
   const { theme } = useContext(ThemeContext);
 
@@ -64,6 +65,7 @@ export default function Input({ type, placeholder, value, onChange, 'aria-label'
         readOnly={readonly}
         checked={checked}
         style={style}
+        tabIndex={tabIndex}
       />
     </TextContainer>
   )
