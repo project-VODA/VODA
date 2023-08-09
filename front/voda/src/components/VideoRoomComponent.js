@@ -9,9 +9,9 @@ import '../styles/simple/video.css'
 import SettingButton from '../components/SettingButton';
 import OpenViduLayout from '../layout/openvidu-layout';
 import UserModel from '../constants/user-model';
-import ToolbarComponent from './toolbar/ToolbarComponent';
 
 import { offCalling } from "../apis/calling";
+import ToolbarComponentClass from './toolbar/ToolbarComponentClass';
 
 export const getUserHandicap = async () => {
   const res = await axiosServer().get(`/users/mypage`);
@@ -213,31 +213,26 @@ class VideoRoomComponent extends Component {
     //back server 통화 종료
     offCalling(this.props.callNo)
       .then((res) => {
-        alert(res);
-        console.log(res);
+        if (mySession) {
+          mySession.disconnect();
+        }
+    
+        // Empty all properties...
+        this.OV = null;
+        this.setState({
+          session: undefined,
+          subscribers: [],
+          mySessionId: 'SessionA',
+          myUserName: 'OpenVidu_User' + Math.floor(Math.random() * 100),
+          localUser: undefined,
+        });
+        /*if (this.props.leaveSession) {
+          this.props.leaveSession();
+        }*/
       })
       .catch((err) => {
         console.log(err);
       });
-
-    if (mySession) {
-      mySession.disconnect();
-    }
-
-    // Empty all properties...
-    this.OV = null;
-    this.setState({
-      session: undefined,
-      subscribers: [],
-      mySessionId: 'SessionA',
-      myUserName: 'OpenVidu_User' + Math.floor(Math.random() * 100),
-      localUser: undefined,
-    });
-    if (this.props.leaveSession) {
-      this.props.leaveSession();
-    }
-
-
 
   }
   camStatusChanged() {
@@ -529,7 +524,7 @@ class VideoRoomComponent extends Component {
 
     return (
       <div className="container" id="container">
-        <ToolbarComponent tabIndex = {2}
+        <ToolbarComponentClass tabIndex = {2}
           sessionId={mySessionId}
           user={localUser}
           camStatusChanged={this.camStatusChanged}
