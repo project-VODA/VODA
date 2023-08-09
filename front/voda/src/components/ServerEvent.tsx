@@ -10,7 +10,6 @@ import { receiveCalling, rejectCalling } from '../apis/calling';
 
 import { Session } from 'openvidu-browser';
 import { callInfoType, updateCall } from '../store/callSlice';
-import { mod } from '@tensorflow/tfjs-core';
 import { styled } from 'styled-components';
 
 const ButtonContainer = styled.div`
