@@ -235,6 +235,9 @@ export default function Navigation() {
     setMobileMenuOpen((current) => !current);
   }
 
+  if ( !isLoginRedux ) { 
+    return null
+  }
   return (
     <>
       <NavContainer>

@@ -528,7 +528,7 @@ class VideoRoomComponent extends Component {
 
     return (
       <div className="container" id="container">
-        <ToolbarComponent
+        <ToolbarComponent tabIndex = {2}
           sessionId={mySessionId}
           user={localUser}
           camStatusChanged={this.camStatusChanged}
@@ -547,8 +547,8 @@ class VideoRoomComponent extends Component {
           {localUser !== undefined && localUser.getStreamManager() !== undefined && (
             <div className="OT_root OT_publisher custom-class" id="localUser">
               <span>
-                {getUserHandicap ? (<SettingButton tabIndex={0} id='hearExpression' text='표정 듣기' onClick={this.hearExpression} aria-label='표정 듣기 버튼입니다.'  />
-                ) : (<SettingButton tabIndex={0} id='sendExpression' text='표정 보내기' onClick={this.sendExpression} aria-label='표정 보내기 버튼입니다.' />
+                {getUserHandicap ? (<SettingButton tabIndex={1} id='hearExpression' text='표정 듣기' onClick={this.hearExpression} aria-label='표정 듣기 버튼입니다.'  />
+                ) : (<SettingButton tabIndex={1} id='sendExpression' text='표정 보내기' onClick={this.sendExpression} aria-label='표정 보내기 버튼입니다.' />
                 )}
                 {/* <SettingButton id='hearExpression' text='표정 듣기' onClick={this.hearExpression} aria-label='표정 듣기 버튼입니다.' />
                               <SettingButton id='sendExpression' text='표정 보내기' onClick={this.sendExpression} aria-label='표정 보내기 버튼입니다.' /> */}

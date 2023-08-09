@@ -76,6 +76,7 @@ const SimpleLogin = () => {
     <>
       <Title title='로그인' />
 
+      <div id='RegisterContainer'>
       <Input
         type="email"
         placeholder="이메일을 입력하세요"
@@ -97,6 +98,7 @@ const SimpleLogin = () => {
       <LoginButton text='로그인' onClick={handleLogin} />
 
       <LoginButton text='회원가입' onClick={handleRegist} aria-label="회원가입 페이지로 이동하는 버튼입니다."/>
+      </div>
     </>
   );
 };
