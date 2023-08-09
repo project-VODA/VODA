@@ -5,6 +5,8 @@ import styled from "styled-components";
 import Title from '../../components/Title';
 
 import '../../styles/simple/About.css'
+import SimpleLogo from '../../assets/images/logo_yellow.png'
+import SimpleLogoSqr from '../../assets/images/logo_yellow_sqr.png'
 import SimpleTitle from "../../components/SimpleTitle";
 
 const StyledLink = styled(Link)`
@@ -19,16 +21,23 @@ const SimpleAbout = () => {
       <SimpleTitle tabIndex={0} imgSrc="SimpleLogo" />
     </StyledLink>
       <p className="aboutTitle" aria-label="영상통화중 표정 알림 서비스" tabIndex={1}>영상통화중 표정 알림 서비스</p>
-      <p className="aboutContent" aria-label="VODA는 웹 브라우저에서 시각 장애인에게 비언어적 소통을 지원합니다. 사랑하는 지인 및 가족과 손쉽게 영상 통화를 시작해보세요." tabIndex={2}>
-        VODA는 웹 브라우저에서 시각 장애인에게 비언어적 소통을 지원합니다.<br/>사랑하는 지인 및 가족과 손쉽게 영상 통화를 시작해보세요.
+      <div>
+        <p className="aboutContent" aria-label="VODA는 웹 브라우저에서 시각 장애인에게 비언어적 소통을 지원합니다. 사랑하는 지인 및 가족과 손쉽게 영상 통화를 시작해보세요." tabIndex={2}>
+        VODA는 웹 브라우저에서 시각 장애인에게 비언어적 소통을 지원합니다.<br/>사랑하는 지인 및 가족과 손쉽게 영상 통화를 시작해보세요.</p>
+          <p className="aboutVODA" aria-label="보다" tabIndex={3}>VODA<br/></p>
+            <p className="aboutMean" aria-label="Voice Over Diverse Assistance" tabIndex={4}>
+            Voice <br/>
+            Over <br/>
+            Diverse <br/>
+            Assistance <br/>
+              <div className="aboutSlogan" aria-label="표정을 소리로 보다" tabIndex={5}><img className="SqrLogo" src={SimpleLogoSqr} alt="VODA 로고" aria-label="보다 로고"/>
+              "표정"을 "소리"로 보다.
+            {/* <img src={SimpleLogo} alt="VODA 로고" aria-label="보다 로고" /> */}
+            </div>
+          
         </p>
-    <div><p className="aboutVODA" aria-label="보다" tabIndex={3}>VODA <br/>
-      <p className="aboutMean" aria-label="Voice Over Diverse Assistance" tabIndex={4}>
-      Voice <br/>
-      Over <br/>
-      Diverse <br/>
-      Assistance <br/></p>
-    </p><p className="aboutSlogan" aria-label="표정을 소리로 보다" tabIndex={5}>"표정"을 "소리"로 보다</p></div>
+        
+      </div>
     {/* <p role="text" aria-label="표정을 소리로 보다" tabIndex={0}>"표정"을 "소리"로 보디</p> */}
     </>
   );
