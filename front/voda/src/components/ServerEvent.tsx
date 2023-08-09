@@ -68,6 +68,7 @@ export default function SseComponent(){
       setisCallModalOpen(true);
       // 통화 거절 추가 로직
       const response = JSON.parse(event.data);
+      setContent(response.content);
       setCallNo(response.callNo);
     });
   }, [userEmail]);
