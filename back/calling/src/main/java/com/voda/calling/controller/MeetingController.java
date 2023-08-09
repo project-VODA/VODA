@@ -156,8 +156,9 @@ public class MeetingController {
         callHistoryService.updateCallTime(currnentCallHistory, "end");
 
         notificationService.send("reject",
+                                    currnentCallHistory.getCallReceiver(),
                                     currnentCallHistory.getCallSender(),
-                currnentCallHistory.getCallReceiver(), null, null, callNo,
+                 null, null, callNo,
                 "통화가 거절되었습니다.");
 
         return new ResponseEntity<>(REJECT, HttpStatus.OK);
