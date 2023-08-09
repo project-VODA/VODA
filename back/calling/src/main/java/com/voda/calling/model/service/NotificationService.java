@@ -33,9 +33,10 @@ public class NotificationService {
         String id = getIdWithTime(userEmail);
 
         // 할당된 sseEmitter가 있을 경우 모두 삭제
-        if(sseRepository.findAllEmitterStartWithByEmail(userEmail) != null){
-            sseRepository.deleteAllEmitterStartWithEmail(userEmail);
-        }
+        Map<String, SseEmitter> map = sseRepository.findAllEmitterStartWithByEmail(userEmail);
+        log.info("sse emitter find: {}, {}", userEmail, map.size());
+
+        sseRepository.deleteAllEmitterStartWithEmail(userEmail);
 
         // sseEmitter 생성 및 저장
         SseEmitter sseEmitter = sseRepository.save(id, new SseEmitter(DEFAULT_TIMEOUT));
@@ -84,6 +85,14 @@ public class NotificationService {
         });
         
         log.info("sse 전달성공ㅇ");
+    }
+
+    public void deleteSseEmitter(String userEmail){
+        // 할당된 sseEmitter가 있을 경우 모두 삭제
+        Map<String, SseEmitter> map = sseRepository.findAllEmitterStartWithByEmail(userEmail);
+        log.info("sse emitter find: {}, {}", userEmail, map.size());
+
+        sseRepository.deleteAllEmitterStartWithEmail(userEmail);
     }
 
     /**
