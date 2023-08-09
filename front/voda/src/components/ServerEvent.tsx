@@ -16,7 +16,9 @@ import { styled } from 'styled-components';
 const ButtonContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
+  margin-right: 15%;
+  margin-left: 15%;
   align-items: center;
   text-align: center;
 `;
@@ -117,17 +119,9 @@ export default function SseComponent(){
       onRequestClose={(e) => setisCallModalOpen(false)}
       ariaHideApp={false}
       style={modalColor}
+      shouldCloseOnOverlayClick={false}
     >
-      <br/>
-      <br/>
-      <br/>
-      <p style={{textAlign: 'center', fontSize: 'xx-large'}}>{content}</p>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
+      <p style={{textAlign: 'center', fontSize: 'xx-large', margin: '5%'}}>{content}</p>
       <ButtonContainer>
         <HandleButton text='통화 받기' onClick={acceptCall} />
         <HandleButton text='통화 거절' onClick={rejectCall} />
