@@ -289,7 +289,7 @@ export default function Navigation() {
                         마이페이지
                       </MenuLinkContainer>
                     </MenuLink>
-                    <MenuLink to="/settings">
+                    <MenuLink to="/setting">
                       <MenuLinkContainer>
                         <IconWrapper>
                           <MyFiSettings/>

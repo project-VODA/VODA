@@ -55,6 +55,9 @@ import DetailWriteArticle from './pages/detail/board/WriteArticle';
 import { styled } from 'styled-components';
 import simpleLogo from "./assets/images/logo_yellow.png";
 import ErrorPage from './pages/ErrorPage';
+import { UserInfoType, UserSettingType } from './store/userSlice';
+import { useSelector } from 'react-redux';
+import { RootState } from './store/store';
 
 // 1) 다수의 props 발생 시 interface 설정
 interface ContextProps {
@@ -128,7 +131,6 @@ const App: React.FC = () => {
       return Promise.reject(error);
     }
   );*/
-
 
   const { theme, toggleTheme } = useMode();
 
