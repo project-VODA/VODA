@@ -1,10 +1,12 @@
 package com.voda.calling.controller;
 
+import com.querydsl.core.Tuple;
 import com.voda.calling.model.dto.*;
 import com.voda.calling.model.service.CallHistoryService;
 import com.voda.calling.model.service.NotificationService;
 import com.voda.calling.model.service.UserCallHistoryService;
 import com.voda.calling.model.service.UserService;
+import com.voda.calling.repository.CallHistoryRepository;
 import com.voda.calling.util.JwtUtil;
 import io.openvidu.java.client.*;
 import io.swagger.annotations.Api;
@@ -15,7 +17,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -143,10 +149,23 @@ public class MeetingController {
     @PostMapping("/recentcall")
     public ResponseEntity<Object> searchRecentCall(@ApiParam(hidden = true) @RequestHeader(value = AUTH) String auth){
         String userEmail =jwtUtil.getUserEmailFromToken(auth);
+        List<RecentCall> mapList = callHistoryService.getRecentCallList(userEmail);
+        log.info("{}",mapList.size());
 
-        List<RecentCall> list = callHistoryService.getRecentCallList(userEmail);
+        LocalDateTime now = LocalDateTime.now();
+        for (RecentCall recent : mapList) {
+            if(recent.getStartTime()!=null){
+                LocalDateTime d = LocalDateTime.parse(recent.getStartTime(),
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                if (d.getYear()==now.getYear() && d.getMonth()==now.getMonth() && d.getDayOfMonth()==now.getDayOfMonth()) {
+                    recent.setStartTime(d.format(DateTimeFormatter.ofPattern("HH시 mm분")));
+                }else {
+                    recent.setStartTime(d.format(DateTimeFormatter.ofPattern("YY.MM.dd")));
+                }
+            }
+        }
 
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        return new ResponseEntity<>(mapList, HttpStatus.OK);
     }
 
     @GetMapping("/reject/{callNo}")
