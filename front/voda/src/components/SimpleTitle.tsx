@@ -6,6 +6,9 @@ import styled from 'styled-components';
 import { ThemeContext } from '../App';
 import SimpleLogo from '../assets/images/logo_yellow.png'
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+
+import LandingPage from '../pages/LandingPage';
 
 interface ColorProps {
   color: string;
@@ -38,13 +41,18 @@ interface TitleProps {
   className?: string;
   'aria-live'?: string;
   'aria-label'?: string;
-  imgSrc: string;
+  imgSrc?: string;
   onClick?: string;
   tabIndex?: number;
+  // to?: string;
 }
 
 
 export default function SimpleTitle({ 'aria-live':ariaLive, 'aria-label':ariaLabel, className, imgSrc, onClick }: TitleProps) {
+  const location = useLocation()
+
+  const isLandingPage = location.pathname === '/';
+  
   const navigate = useNavigate();
   
     const handleImageClick = () => {
@@ -58,6 +66,6 @@ export default function SimpleTitle({ 'aria-live':ariaLive, 'aria-label':ariaLab
             aria-label={ariaLabel}
             color={theme.text} 
             onClick={handleImageClick}>
-            <Image src={SimpleLogo} alt="VODA" onClick={() => handleImageClick() }/>
+            <Image src={SimpleLogo} alt="VODA" onClick={ isLandingPage ? handleImageClick : () => {} }/>
           </TitleContainer>);
 }
