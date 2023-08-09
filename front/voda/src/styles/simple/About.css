@@ -5,16 +5,17 @@
 max-width: 100%;
 max-height: 100%;
 margin-top: 20px;
-position: absolute;
+position: relative;
 width: 97%;
 min-width: 800px;
 height: 14%;
-justify-content: center;
+left: 19%;
+/* justify-content: center; */
 
 color: #FFC300;
 font-style: normal;
 font-weight: 700;
-font-size: 80px;
+font-size: 4.7vw;
 line-height: 122px;
 display: flex;
 align-items: center;
@@ -30,17 +31,19 @@ text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 max-width: 100%;
 max-height: 100%;
 margin: 0px;
-position: absolute;
+position: relative;
 width: 98%;
 min-width: 800px;
-height: 0px;
-justify-content: center;
-top: 330px;
+/* height: 0px; */
+/* justify-content: right; */
+left: 19%;
+top: 85%;
+display: inline-block;
 
 font-family: 'KoddiUD OnGothic';
 font-style: normal;
 font-weight: 700;
-font-size: 32px;
+font-size: 2vw;
 line-height: 51px;
 display: flex;
 align-items: center;
@@ -54,19 +57,20 @@ text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
 /* VODA */
 .aboutVODA{
-  max-width: 100%;
+max-width: 100%;
 max-height: 100%;
-position: absolute;
-width: 317px;
-height: 154px;
-left: 260px;
-top: 360px;
+position: relative;
+width: 3vw;
+/* height: 10%; */
+left: 20%;
+margin-top: 1%;
+display: inline-block;
 
 font-family: 'Secular One';
 font-style: normal;
 font-weight: 400;
-font-size: 80px;
-line-height: 146px;
+font-size: 4vw;
+/* line-height: 146px; */
 display: flex;
 align-items: center;
 text-align: center;
@@ -81,17 +85,17 @@ text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 .aboutMean{
 max-width: 100%;
 max-height: 100%;
-position: absolute;
+position: relative;
 width: 96%;
 min-width: 800px;
-height: 85%;
-left: 15px;
-top: 130px;
+margin-top: 2%;
+left: 20%;
+/* top: 60%; */
 
 /* font-family: 'Secular One'; */
 font-style: normal;
 font-weight: 400;
-font-size: 50px;
+font-size: 2vw;
 line-height: 60px;
 display: flex;
 text-align: left;
@@ -104,26 +108,37 @@ color: #F0F0F0;
 
 /* “ 표정을 소리로 보다 ” */
 .aboutSlogan{
-max-width: 100%;
-max-height: 100%;
-position: absolute;
-width: 62%;
-min-width: 800px;
-height: 154px;
-left: 550px;
-top: 450px;
+/* max-width: 100%; */
+/* max-height: 100%; */
+margin-top: -3.9vw;
+display: flex, inline-block;
+flex-direction: column;
+align-items: end;
+/* text-align: center; */
+position: relative;
+/* width: 0vw; */
+/* min-width: 800px; */
+left: 10%;
+
 
 font-family: 'KoddiUD OnGothic';
 font-style: normal;
 font-weight: 700;
-font-size: 80px;
+font-size: 4vw;
 line-height: 110px;
 display: flex;
-align-items: center;
+/* align-items: center; */
 text-align: center;
 
 /* Dark-Yellow */
 color: #FFC300;
 
 text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.SqrLogo {
+  display: flex;
+  /* right: 20vw; */
+  width: 14vw;
+  height: 14vw;
 }
