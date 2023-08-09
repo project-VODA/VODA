@@ -205,6 +205,7 @@
   - 비디오 페이지 탭 인덱스 수정
   - detail mypage 생성
   - 파비콘 및 프로젝트 이름 변경
+  - header margin에 의한 SimpleAbout Page css 수정
 
 - 23.08.09 Choi
   - 서버이벤트 모달 영역 밖 클릭 시 반응 없게 수정
