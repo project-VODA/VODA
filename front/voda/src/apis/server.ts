@@ -32,6 +32,6 @@ export const axiosFlask = axios.create({
   baseURL: `${FLASK_URL}`,
   withCredentials: false,
   headers: {
-    "Content-type": "application/json",
+    "Content-type": "multipart/form-data",
   },
 });
