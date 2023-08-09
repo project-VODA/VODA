@@ -86,6 +86,7 @@ public class UserService {
         Map<String, Object> tokens = new HashMap<>();
         // accessToken
         tokens.put("accessToken", jwtUtil.createAccessToken(user, userSetting.get()));
+        tokens.put("userSetting", userSetting.get());
         // refreshToken
         String refreshToken = jwtUtil.createRefreshToken();
         tokens.put("refreshToken", refreshToken);

@@ -1,8 +1,8 @@
 import React, { useState, KeyboardEvent } from "react";
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { userSliceLogin } from "../../store/userSlice";
+import { UserSettingType, userSliceLogin } from "../../store/userSlice";
 
 import { loginServer } from "../../apis/user";
 import { Link as TitleLink } from "react-router-dom" ;
@@ -15,6 +15,8 @@ import { access } from "fs";
 import '../../styles/simple/RegisterContainer.css'
 import styled from "styled-components";
 import useErrorHandlers from "../../hooks/error";
+import { useMode } from "../../hooks/useMode";
+import { RootState } from "../../store/store";
 
 const StyledLink = styled(TitleLink)`
 text-decoration: none;
@@ -24,6 +26,10 @@ color: inherit;
 const SimpleLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  // 리덕스에서 세팅 정보 불러오기
+  const [userSetting] : [UserSettingType] = useSelector((state:RootState) => {
+    return [state.user.userSetting];
+  })
 
   const userData = {
     userEmail: email,
@@ -46,11 +52,13 @@ const SimpleLogin = () => {
             accessToken: res.accessToken,
             refreshToken: res.refreshToken
           }));
+          localStorage.setItem('theme', res.userSetting.screenType === 0 ? "detail" : "simple");
+          console.log("스크린타입: " + res.userSetting.screenType);
           // 메인페이지로 리다이렉트
           RedirectHomePage();
         })
         .catch((err) => {
-          errorHandlers(err.request.status, handleLogin, userData);
+          errorHandlers(err.status, handleLogin, userData);
         });
     }
   };

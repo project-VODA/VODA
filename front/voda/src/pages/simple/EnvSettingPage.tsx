@@ -50,7 +50,7 @@ const SimpleEnvSettingPage = () => {
   const dispatch = useDispatch();
 
   const RedirectHomePage = () => {
-    naviagte('/home');
+    naviagte('/');
   }
 
   const handleModify = () => {
