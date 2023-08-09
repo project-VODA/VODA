@@ -2,11 +2,10 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 # color classify package
-import cv2
-from .color.color_recognition_api import color_histogram_feature_extraction
-from .color.color_recognition_api import knn_classifier
 import os
-
+import cv2
+from color.color_recognition_api import color_histogram_feature_extraction
+from color.color_recognition_api import knn_classifier
 
 app = Flask(__name__)
 CORS(app)
