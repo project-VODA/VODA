@@ -8,19 +8,20 @@ import { getHello, colorRecognition } from "../../apis/color";
 const TestPage = () => {
   const [capturedImage, setCapturedImage] = useState(null);//캡쳐된 이미지 확인용
 
-  // const connectFlask = () => {
-  //   getHello()
-  //     .then((res) => { console.log(res)} )
-  //     .catch((err)=>{ console.log(err)} )
-  // }
-
-  const getColor = (capturedImage:any) => {
-    const formData = new FormData()
-    formData.append('files',capturedImage)
-
-    colorRecognition(formData)
-      .then((res)=>{console.log(res)})
+  const returnHello = () => {
+    getHello()
+      .then((res) => { console.log(res)} )
       .catch((err)=>{ console.log(err)} )
+  }
+
+  const getColor = (formData:any) => {
+    colorRecognition(formData)
+      .then((res) => {
+        console.log('검출된 색: ', res.color)}
+      )
+      .catch((err) => {
+        console.log(err)}
+      )
   }
 
   const videoRef = useRef(null);
@@ -52,12 +53,19 @@ const TestPage = () => {
       const ctx = canvas.getContext('2d');
       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-      // 이미지 데이터 추출
-      const capturedImage = canvas.toDataURL('image/png'); // PNG 형식으로 추출
-      // 캡처된 이미지 표시
+      const capturedImage = canvas.toBlob((blob: Blob | null) => {
+        if (blob) {
+          const formData = new FormData();
+          formData.append('image', blob);
+  
+          getColor(formData);
+        }
+      });
+
+      // // 캡처된 이미지 표시
       setCapturedImage(capturedImage);
-      // axios 요청보내기
-      getColor(capturedImage);
+      // // axios 요청보내기
+      // getColor(capturedImage);
     }
   }
 
@@ -66,6 +74,7 @@ const TestPage = () => {
       <Title title="테스트 페이지" />
       <video ref={videoRef} autoPlay style={{ maxWidth: '50%', height: 'auto' }}></video>
       <button onClick={captureScreen}>화면 캡처</button>
+      <button onClick={returnHello}>헬로우</button>
       <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
 
       {capturedImage && (
