@@ -5,6 +5,7 @@ import com.voda.calling.exception.NotRegisteredException;
 import com.voda.calling.exception.PasswordWrongException;
 import com.voda.calling.model.dto.User;
 import com.voda.calling.model.dto.UserChangePasswordRequest;
+import com.voda.calling.model.service.NotificationService;
 import com.voda.calling.model.service.UserService;
 import com.voda.calling.util.JwtUtil;
 import io.swagger.annotations.*;
@@ -29,6 +30,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    NotificationService notificationService;
 
     @Autowired
     JwtUtil jwtUtil;
@@ -102,6 +106,7 @@ public class UserController {
         //1. 유저이메일로 유저 정보 가져오기
         String replacedEmail = userEmail.replace("\"", "");
         User logoutUser = userService.getUser(replacedEmail);
+        notificationService.deleteSseEmitter(userEmail);
 
         //2. 해당 유저 로그아웃
         userService.logout(logoutUser);

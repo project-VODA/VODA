@@ -211,6 +211,7 @@ class VideoRoomComponent extends Component {
     //back server 통화 종료
     offCalling(this.props.callNo)
       .then((res) => {
+        alert(res);
         console.log(res);
       })
       .catch((err) => {
