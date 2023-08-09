@@ -134,8 +134,8 @@ public class MeetingController {
         // 3. callhistory 및 user 연결 테이블에 기록
         UserCallHistory senderUserCallHistory = new UserCallHistory(callNo,currnentCallHistory.getCallSender());
         UserCallHistory receiverUserCallHistory = new UserCallHistory(callNo, currnentCallHistory.getCallReceiver());
-        userCallHistoryService.createUserCallhistory(senderUserCallHistory);
-        userCallHistoryService.createUserCallhistory(receiverUserCallHistory);
+//        userCallHistoryService.createUserCallhistory(senderUserCallHistory);
+//        userCallHistoryService.createUserCallhistory(receiverUserCallHistory);
 
         return new ResponseEntity<>(SUCCESS, HttpStatus.OK); //http 500
 }
