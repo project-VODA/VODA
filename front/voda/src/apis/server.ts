@@ -30,7 +30,7 @@ export const axiosServerWithRefresh = () => {
 // 
 export const axiosFlask = axios.create({
   baseURL: `${FLASK_URL}`,
-  withCredentials: false,
+  // withCredentials: false,
   headers: {
     "Content-type": "multipart/form-data",
   },
