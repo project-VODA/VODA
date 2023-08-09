@@ -111,6 +111,7 @@ export default class ToolbarComponent extends Component {
               <DeleteButton
                 text="통화 종료"
                 aria-label="통화 종료 버튼입니다."
+                
               />
             </span>
           </div>
