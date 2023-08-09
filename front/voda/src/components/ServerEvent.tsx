@@ -12,6 +12,7 @@ import { Session } from 'openvidu-browser';
 import { callInfoType, updateCall } from '../store/callSlice';
 import { styled } from 'styled-components';
 import AlarmAudio from './AlarmAudio';
+import { userSliceLogout } from '../store/userSlice';
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -73,6 +74,16 @@ export default function SseComponent(){
       setContent(response.content);
       setCallNo(response.callNo);
     });
+    eventSource.addEventListener("logout", (event) => {
+      dispatch(userSliceLogout());
+      navigate('/');
+    });
+
+    return () => {
+      if(userEmail == null || userEmail == ''){
+        eventSource.close();
+      }
+    }
   }, [userEmail]);
 
 	function redirectVideo(){
