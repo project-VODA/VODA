@@ -34,7 +34,7 @@ import SimpleWriteArticle from './pages/simple/board/WriteArticlePage';
 import SimpleDetailArticle from './pages/simple/board/DetailArticlePage';
 
 import DetailHomePage from './pages/detail/HomePage';
-import DetailAbout from './pages/detail/About';
+import DetailAbout from './pages/detail/AboutPage';
 import DetailLogin from './pages/detail/LoginPage';
 import DetailPass from './pages/detail/TemporaryPassPage';
 import DetailSignup from './pages/detail/SignupPage';
@@ -42,7 +42,7 @@ import DetailMyPage from './pages/detail/MyPage';
 import DetailEnvSettingPage from './pages/detail/EnvSettingPage';
 import DetailVideo from './pages/detail/faceExpressions';
 import DetailRoom from './pages/detail/WaitingRoomPage';
-import DetailFeedBack from './pages/detail/FeedBack';
+import DetailFeedBack from './pages/detail/FeedBackPage';
 
 
 // 스타일 & 모드(mode)
@@ -51,7 +51,7 @@ import { SimpleTheme, DetailTheme, Theme } from './styles/theme';
 import { useMode } from './hooks/useMode';
 
 import ModeToggle from './components/ModeToggle';
-import DetailWriteArticle from './pages/detail/board/WriteArticle';
+import DetailWriteArticle from './pages/detail/board/WriteArticlePage';
 import { styled } from 'styled-components';
 import simpleLogo from "./assets/images/logo_yellow.png";
 import ErrorPage from './pages/ErrorPage';
