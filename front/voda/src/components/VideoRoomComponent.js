@@ -95,6 +95,8 @@ class VideoRoomComponent extends Component {
   joinSession() {
     this.OV = new OpenVidu();
 
+    console.log(this.props.callNo);
+
     this.setState(
       {
         session: this.OV.initSession(),
