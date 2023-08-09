@@ -14,7 +14,7 @@ public interface CallingHistoryRepositoryCustom {
 
     CallHistory findCallHistoryByCallNo(int callNo); //callNo으로 특정 callhostory 찾기
 
-    List<RecentCall> findAllByUserEmail(String userEmail); //요청한 사용자의 최근 통화목록 가져오기
+//    List<RecentCall> findAllByUserEmail(String userEmail); //요청한 사용자의 최근 통화목록 가져오기
 
 
 }
