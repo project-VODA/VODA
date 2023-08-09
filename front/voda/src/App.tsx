@@ -76,6 +76,13 @@ const LogoImage = styled.img`
   height: auto;
 `;
 
+// 화면 사이즈 조정
+const AppContainer = styled.div`
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+`;
+
 const App: React.FC = () => {
   /*const accessToken = useAppSelector((state) => state.auth.accessToken);
   // 헤더 디폴트 추가
@@ -152,25 +159,26 @@ const App: React.FC = () => {
     // { path: '*', element: <Navigate replace to="/" /> },
   ];
 
+
+
   // screenMode에 따라서 SimplePage 또는 DetailPage를 렌더링합니다.
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <>
+      <AppContainer>
         <GlobalStyle theme={theme === SimpleTheme ? SimpleTheme : DetailTheme} />
         <Router>
           <ServerEvent />
           {theme === SimpleTheme ? 
-          <></>
-          : 
+          <></> : 
           <Navigation />}
           <ModeToggle />
           <Routes>
             {commonRoutes.map((route) => (
-              <Route key={route.path} path={route.path} element={route.element} />
+              <Route key={route.path} path={route.path} element={<div style={{ marginTop: route.path === "/home" ? "0" : "63px", }}>{route.element}</div>} />
             ))}
           </Routes>
         </Router>
-      </>
+      </AppContainer>
     </ThemeContext.Provider>
   );
 };
