@@ -66,7 +66,7 @@ const SimpleRoom = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', padding: '10px' }}>
           <span style={{ marginLeft: 'auto', marginRight: 'auto', fontSize:'30px', fontWeight: 'bolder' }}>친구 찾기</span>
           <span style={{display: 'flex', justifyContent: 'flex-end'}}>
-            <SmallRedButton onClick={(e) => setFriendModalOpen(false)} text="X" aria-label="창 닫기 버튼" />
+            <SmallRedButton tabIndex={3} onClick={(e) => setFriendModalOpen(false)} text="X" aria-label="창 닫기 버튼" />
           </span></div>
         <UserSearchList/>
       </Modal>
