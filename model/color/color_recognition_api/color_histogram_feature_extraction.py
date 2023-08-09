@@ -10,9 +10,9 @@
 import os
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 # from scipy.stats import itemfreq
-from color_recognition_api import knn_classifier as knn_classifier
+# from color_recognition_api import knn_classifier as knn_classifier
 
 
 def color_histogram_of_test_image(test_src_image):
@@ -110,29 +110,29 @@ def color_histogram_of_training_image(img_name):
 def training():
 
     # red color training images
-    for f in os.listdir('./training_dataset/red'):
-        color_histogram_of_training_image('./training_dataset/red/' + f)
+    for f in os.listdir('../training_dataset/red'):
+        color_histogram_of_training_image('../training_dataset/red/' + f)
 
     # yellow color training images
-    for f in os.listdir('./training_dataset/yellow'):
-        color_histogram_of_training_image('./training_dataset/yellow/' + f)
+    for f in os.listdir('../training_dataset/yellow'):
+        color_histogram_of_training_image('../training_dataset/yellow/' + f)
 
     # green color training images
-    for f in os.listdir('./training_dataset/green'):
-        color_histogram_of_training_image('./training_dataset/green/' + f)
+    for f in os.listdir('../training_dataset/green'):
+        color_histogram_of_training_image('../training_dataset/green/' + f)
 
     # orange color training images
-    for f in os.listdir('./training_dataset/orange'):
-        color_histogram_of_training_image('./training_dataset/orange/' + f)
+    for f in os.listdir('../training_dataset/orange'):
+        color_histogram_of_training_image('../training_dataset/orange/' + f)
 
     # white color training images
-    for f in os.listdir('./training_dataset/white'):
-        color_histogram_of_training_image('./training_dataset/white/' + f)
+    for f in os.listdir('../training_dataset/white'):
+        color_histogram_of_training_image('../training_dataset/white/' + f)
 
     # black color training images
-    for f in os.listdir('./training_dataset/black'):
-        color_histogram_of_training_image('./training_dataset/black/' + f)
+    for f in os.listdir('../training_dataset/black'):
+        color_histogram_of_training_image('../training_dataset/black/' + f)
 
     # blue color training images
-    for f in os.listdir('./training_dataset/blue'):
-        color_histogram_of_training_image('./training_dataset/blue/' + f)		
+    for f in os.listdir('../training_dataset/blue'):
+        color_histogram_of_training_image('../training_dataset/blue/' + f)		
