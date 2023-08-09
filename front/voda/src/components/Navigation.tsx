@@ -30,6 +30,7 @@ interface DropDownMenuProps {
 const NavContainer = styled("nav")`
   width: 100%;
   height: 63px;
+  top: 0;
   display: flex;
   justify-content: center;
   box-shadow: 0px 1px 0px 1px gray;
@@ -39,8 +40,8 @@ const NavContainer = styled("nav")`
   transition: all 0.5s ease-in-out;
   z-index: 999999;
 
-  position: absolute;
-  opacity: 0.8;
+  position: fixed;
+  /* opacity: 0.8; */
 
   display: block; 
   @media (max-width: 768px) {
