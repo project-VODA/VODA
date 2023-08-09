@@ -12,6 +12,7 @@ import { Session } from 'openvidu-browser';
 import { callInfoType, updateCall } from '../store/callSlice';
 import { mod } from '@tensorflow/tfjs-core';
 import { styled } from 'styled-components';
+import AlarmAudio from './AlarmAudio';
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -112,6 +113,7 @@ export default function SseComponent(){
 
   return (
   <>
+    <AlarmAudio playing={isCallModalOpen}/>
     <Modal id="callModal"
       isOpen={isCallModalOpen} 
       onRequestClose={(e) => setisCallModalOpen(false)}
