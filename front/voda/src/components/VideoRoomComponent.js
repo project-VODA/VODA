@@ -12,6 +12,7 @@ import UserModel from '../constants/user-model';
 
 import { offCalling } from "../apis/calling";
 import ToolbarComponentClass from './toolbar/ToolbarComponentClass';
+import ToolbarComponent from './toolbar/ToolbarComponent';
 
 export const getUserHandicap = async () => {
   const res = await axiosServer().get(`/users/mypage`);
@@ -524,7 +525,7 @@ class VideoRoomComponent extends Component {
 
     return (
       <div className="container" id="container">
-        <ToolbarComponentClass tabIndex = {2}
+        <ToolbarComponent tabIndex = {2}
           sessionId={mySessionId}
           user={localUser}
           camStatusChanged={this.camStatusChanged}

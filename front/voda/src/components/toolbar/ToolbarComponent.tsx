@@ -5,6 +5,7 @@ export default function ToolbarComponent(props:any){
   const navigate = useNavigate();
 
   return <ToolbarComponentClass
+  navigate={navigate}
   tabIndex = {props.tabIndex}
   sessionId={props.sessionId}
   user={props.user}
@@ -13,5 +14,5 @@ export default function ToolbarComponent(props:any){
   toggleFullscreen={props.toggleFullscreen}
   switchCamera={props.switchCamera}
   leaveSession={props.leaveSession}  
-  navigate={navigate}/>
+  />
 }

@@ -6,7 +6,7 @@ import Title from '../../components/Title';
 // import OpenVidu from "../../components/OpenVidu";
 import VideoRoomComponent from '../../components/VideoRoomComponent';
 import '../../styles/simple/video.css'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
@@ -20,6 +20,7 @@ color: inherit;
 
 const SimpleVideo = () => {
   const [localStream, setLocalStream] = useState<MediaStream>();
+  const navigate = useNavigate();
 
   // const location = useLocation();
   const [sessionToken, callNo] : [string, number] = useSelector((state: RootState) => {
@@ -52,7 +53,7 @@ const SimpleVideo = () => {
       {/* <StyledLink to='' aria-label="영상통화 페이지입니다.">
         <Title title="Video" />
       </StyledLink> */}
-      <VideoRoomComponent token={sessionToken} callNo={callNo} />
+      <VideoRoomComponent token={sessionToken} callNo={callNo}/>
     </>
   );
 };
