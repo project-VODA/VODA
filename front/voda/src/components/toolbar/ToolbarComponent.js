@@ -61,7 +61,7 @@ export default class ToolbarComponent extends Component {
           </div>
 
           <div className="buttonsContent">
-            <span id="navMicButton" onClick={this.micStatusChanged} tabIndex={1}>
+            <span id="navMicButton" onClick={this.micStatusChanged} >
               {localUser !== undefined && localUser.isAudioActive() ? (
                 <SettingButton
                   text="마이크 끄기"
@@ -75,7 +75,7 @@ export default class ToolbarComponent extends Component {
               )}
             </span>
 
-            <span id="navCamButton" onClick={this.camStatusChanged} tabIndex={2}>
+            <span id="navCamButton" onClick={this.camStatusChanged} >
               {localUser !== undefined && localUser.isVideoActive() ? (
                 <SettingButton
                   text="비디오 끄기"
@@ -88,13 +88,13 @@ export default class ToolbarComponent extends Component {
                 />
               )}
             </span>
-            <span id="navSwitchCamButton" onClick={this.switchCamera}>
+            {/* <span id="navSwitchCamButton" onClick={this.switchCamera}>
               <SettingButton
                 text="카메라 전환"
                 aria-label="전면 또는 후면 카메라 전환 버튼입니다."
               />
-            </span>
-            <span id="fullScreenButton" onClick={this.toggleFullscreen} tabIndex={3}>
+            </span> */}
+            <span id="fullScreenButton" onClick={this.toggleFullscreen} >
               {localUser !== undefined && this.state.fullscreen ? (
                 <SettingButton
                   text="일반 화면"
@@ -107,7 +107,7 @@ export default class ToolbarComponent extends Component {
                 />
               )}
             </span>
-            <span id="navLeaveButton" onClick={this.leaveSession} tabIndex={4}>
+            <span id="navLeaveButton" onClick={this.leaveSession} >
               <DeleteButton
                 text="통화 종료"
                 aria-label="통화 종료 버튼입니다."

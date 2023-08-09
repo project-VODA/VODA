@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { ThemeContext } from '../App';
 import { SimpleTheme, Theme } from '../styles/theme';
 
+import { useLocation } from 'react-router-dom';
+
 interface ToggleProps {
   theme: Theme;
   'aria-label'?: string
@@ -52,6 +54,12 @@ const ModeContent = styled.p`
 export default function ModeToggle(): ReactElement {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
+  // const location = useLocation()
+  // const isLandingPage = location.pathname === '/';
+
+  // if ( isLandingPage ) {
+  //   return null
+  // }
   return (
     <ToggleButton onClick={toggleTheme} theme={theme}>
       {theme !== SimpleTheme ? (
