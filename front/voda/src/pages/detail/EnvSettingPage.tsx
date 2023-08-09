@@ -2,18 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
-import Title from '../../components/Title';
+import SimpleTitle from '../../components/SimpleTitle';
 import Input from '../../components/InputText';
-import SettingButton from '../../components/SettingButton';
+import ModifyButton from '../../components/RegisterButton';
 import DeleteButton from '../../components/DeleteButton';
 import CheckBox from '../../components/CheckBox';
-import { cancelUser, changePassword, getUserInfo, logout, updateUserInfo } from '../../apis/user';
+import { cancelUser, changePassword, getUserInfo, logout, updateUserInfo, updateUserSetting } from '../../apis/user';
 import Info from '../../components/InfoText';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import { UserInfoType, userSliceLogout } from '../../store/userSlice';
+import { UserInfoType, UserSettingType, userSliceLogout } from '../../store/userSlice';
 import { Link } from "react-router-dom";
 
+import DivideContainer from '../../components/DivideHorizontalContainer';
+
+import '../../styles/simple/EnvSettingPage.css'
 
 const StyledLink = styled(Link)`
 text-decoration: none;
@@ -29,211 +32,156 @@ const ButtonContainer = styled.div`
 `;
 
 
-const DetailEnvSettingPage = () => {
+const SimpleEnvSettingPage = () => {
   // redux에서 저장된 정보 가져오기
-  const [accessToken, userInfo]: [string, UserInfoType] = useSelector((state:RootState) => {
-    return [state.user.accessToken, state.user.userInfo];
+  const [accessToken, userInfo, userSetting]: [string, UserInfoType, UserSettingType] = useSelector((state:RootState) => {
+    return [state.user.accessToken, state.user.userInfo, state.user.userSetting];
   })
-  // 컴포넌트 지역 변수에 연결
-  const [email, setEmail] = useState(userInfo.userEmail);
-  const [name, setName] = useState(userInfo.userName);
-  const [handicap, setHandicap] = useState(userInfo.userHandicap == "1" ? true : false);
+  const [notificationType, setNotificationType] = useState(userSetting.typeNo);
+  const [screenMode, setScreenMode] = useState(userSetting.screenType);
 
-  const [originPassword, setOriginPassword] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordCheck, setPasswordCheck] = useState('');
-  const [pwFlag, setPwFlag] = useState(false);
-
-  
-
-  const userData = {
-    userEmail: email,
-    userName: name,
-    userPass: password,
-    userHandicap: handicap ? 1 : 0,
-  };
-
-  const changePasswordData = {
-    userEmail: email,
-    originalPass: originPassword,
-    newPass: password,
+  const userSettingRequest = {
+    userEmail: userInfo.userEmail,
+    usersettingTypeNo: notificationType,
+    usersettingScreenType: screenMode,
   };
 
   const naviagte = useNavigate();
+  const dispatch = useDispatch();
 
   const RedirectHomePage = () => {
     naviagte('/');
   }
 
   const handleModify = () => {
-    let err = false;
-    let msg = '';
-    
-    if(!err && !name) {
-      msg = '이름을 입력해주세요';
-      err = true;
-    }
-
-    if (err) {
-      alert(msg);
-    } else {
-      updateUserInfo(userData)
-        .then((res) => {
-          if(res.userEmail === userData.userEmail) {
-            alert("회원 정보 수정 완료");
-            // 홈 화면으로 리다이렉트
-            RedirectHomePage();
-          }else{
-            console.log("회원 정보 수정 실패");
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-        });
-    }
-  }
-
-  const handleWithdrawal = () => {
-    var confirmWithdrawal = window.confirm("정말 탈퇴하시겠습니까?");
-    if(confirmWithdrawal) {
-      cancelUser()
+    updateUserSetting(userSettingRequest)
       .then((res) => {
-        alert("회원 탈퇴 성공");
+        console.log(res);
         // 로그아웃 처리
         if(accessToken !== null && accessToken !== ''){
           logout(userInfo.userEmail)
           .then((res) => {
-            userSliceLogout();
+            dispatch(userSliceLogout());
             RedirectHomePage();
           })
           .catch((err) => {
             console.log(err);
           })
         }
-        // 홈 화면으로 리다이렉트
-        RedirectHomePage(); 
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       })
-    }
   }
-
-  const handleChangePassword = () => {
-    let err = false;
-    let msg = '';
-    // 비밀번호 정규표현식 - 8~15자 영문 숫자 특수문자
-    let pwReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/
-
-    // 비밀번호 유효성 검사
-    if(!err && password.length === 0){
-      msg = '비밀번호를 입력해주세요';
-      err = true;
-    }else if(!err && passwordCheck.length === 0){
-      msg = '비밀번호 확인을 입력해주세요';
-      err = true;
-    }else if(!err && !password.match(pwReg)) {
-      msg = '비밀번호는 8자 이상 15자 이하 영문/특수문자/숫자 조합이어야 합니다'
-      err = true;
-    }else if(!err && !pwFlag) {
-      msg = '비밀번호가 일치하지 않습니다'
-      err = true;
-    }
-
-    if(err) {
-      alert(msg);
-    }else{
-      console.log(changePasswordData);
-      changePassword(changePasswordData)
-        .then((res) => {
-          alert("비밀번호 변경 성공")
-          
-          // 로그아웃 처리
-          if(accessToken !== null && accessToken !== ''){
-            logout(userInfo.userEmail)
-            .then((res) => {
-              console.log("hi logout");
-              userSliceLogout();
-              RedirectHomePage();
-            })
-            .catch((err) => {
-              console.log(err);
-            })
-          }
-          // 홈 화면으로 리다이렉트
-          RedirectHomePage();
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-    }
-  }
-
-  const handlePasswordCheckChange = (e: any) => {
-    setPasswordCheck(e.target.value);
-    setPwFlag(e.target.value === password);
-  };
 
   return (
     <>
-      <StyledLink to='' aria-label='마이페이지입니다.'>
-        <Title title='마이페이지' aria-label='마이 페이지 입니다.'/>
+      <StyledLink to='/home' aria-label='환경 설정 페이지입니다. 홈 화면으로 이동하시려면 이 버튼을 누르세요.'>
+        <SimpleTitle tabIndex={0} imgSrc="SimpleLogo" aria-label='환경 설정 페이지입니다. 홈 화면으로 이동하시려면 이 버튼을 누르세요.' />
       </StyledLink>
-      <Input 
-        type="password"
-        placeholder="기존 비밀번호"
-        value={originPassword}
-        onChange={(e) => setOriginPassword(e.target.value)}
-        aria-label='비밀번호 변경을 위해 기존의 비밀번호를 입력해주세요.'
-      />
-      <Input 
-        type="password"
-        placeholder="새 비밀번호" 
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        aria-label=' 8자 이상, 15자 이하, 그리고 영문, 특수문자, 숫자 조합의 새로운 비밀번호를 입력해주세요.'
-      />
-      <Input 
-        type="password"
-        placeholder="새 비밀번호 확인" 
-        value={passwordCheck}
-        onChange={handlePasswordCheckChange}
-        aria-label='비밀번호 확인 칸입니다. 작성하신 비밀번호를 한번 더 입력해주세요.'
-      />
-      {pwFlag === false && passwordCheck.length !== 0 && <Info text='비밀번호가 일치하지 않습니다.'/>}
-      <ButtonContainer>
-        <SettingButton text='비밀번호 변경' onClick={handleChangePassword} aria-label='비밀번호 변경 버튼입니다.'/>
-      </ButtonContainer>
-      
-      <br/>
-      <br/>
-      <br/>
-      <Input 
-        type="email"
-        placeholder="이메일" 
-        value={email} 
-        onChange={(e) => setEmail(e.target.value)}
-        readonly={true}
-      />
-      <Input 
-        type="text"
-        placeholder="이름" 
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <CheckBox
-        label="시각 장애 여부" // 체크박스 옆에 표시될 텍스트
-        checked={handicap} // 체크 여부를 state로 전달
-        onChange={(e) => setHandicap(e.target.checked)} // 체크 상태가 변경될 때 state 업데이트
-        aria-label='시각장애 여부를 변경하시려면 체크해주세요'
-      />
 
-      <ButtonContainer>
-        <SettingButton text='정보 수정' onClick={handleModify}/>
-        <DeleteButton text='회원 탈퇴' onClick={handleWithdrawal}/>
+
+        <div className='allContainer'>
+          <div className='alarmContainer'>
+            <p className='alarmTitle' aria-label='알림을 선택하세요. 남자, 여자 목소리, 조언을 선택 가능합니다.' tabIndex={1}>알림 설정</p>
+            <div className='chooseAlarm'>
+            <div style={{ marginTop:'100px' }}>
+              <label tabIndex={2}>
+                <input
+                  type='radio'
+                  name='typeNo'
+                  value='0'
+                  checked={notificationType === 0}
+                  onChange={() => setNotificationType(0)}
+                  aria-label='남자 목소리'
+                  style={{ width: '20px', height: '20px' }}
+                />
+                남자 목소리
+              </label>
+            </div>
+            <div style={{ marginTop:'20px' }}>
+              <label tabIndex={3}>
+                <input
+                  type='radio'
+                  name='typeNo'
+                  value='1'
+                  checked={notificationType === 1}
+                  onChange={() => setNotificationType(1)}
+                  aria-label='여자 목소리'
+                  style={{ width: '20px', height: '20px' }}
+                />
+                여자 목소리
+              </label>
+            </div>
+            <div style={{ marginTop:'20px' }}>
+              <label tabIndex={4}>
+                <input
+                  type='radio'
+                  name='typeNo'
+                  value='2'
+                  checked={notificationType === 2}
+                  onChange={() => setNotificationType(2)}
+                  aria-label='음성과 상황에 맞는 조언'
+                  style={{ width: '20px', height: '20px' }}
+                />
+                음성 & 조언
+              </label>
+            </div>
+          </div>
+        </div>
+      
+
+
+      <div className='modeContainer'>
+        <div className='modeTitle' aria-label='모드를 설정할 수 있습니다.' tabIndex={5}>모드 설정</div>
+      <div className='chooseMode'>
+        <div style={{ marginTop:'100px' }}>
+          <label  tabIndex={6}>
+            <input
+              type='radio'
+              name='screenMode'
+              value='detail'
+              checked={screenMode === 0}
+              onChange={() => setScreenMode(0)}
+              aria-label='디테일 모드'
+              style={{ width: '20px', height: '20px' }}
+            />
+            디테일 모드
+          </label>
+        </div>
+        <div style={{ marginTop:'20px' }}>
+          <label tabIndex={7} >
+            <input
+              aria-label='심플 모드'
+              type='radio'
+              name='screenMode'
+              value='simple'
+              checked={screenMode === 1}
+              onChange={() => setScreenMode(1)}
+              style={{ width: '20px', height: '20px' }}
+            />
+            심플 모드
+          </label>
+        </div>
+      </div>
+      </div>
+      </div>
+
+      <ButtonContainer style={{ margin:'50px 0 0 0', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 'auto' }}>
+        <ModifyButton 
+          className='modifyButton'
+          text='설정 변경'
+          onClick={handleModify}
+          aria-label='설정 변경 버튼입니다.'
+          style={{ width: '250px', height: '56px'}}
+          tabIndex={8}
+        />
       </ButtonContainer>
     </>
   );
 };
 
-export default DetailEnvSettingPage;
+export default SimpleEnvSettingPage;
+
+
+

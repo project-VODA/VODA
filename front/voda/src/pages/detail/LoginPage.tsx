@@ -1,25 +1,42 @@
 import React, { useState, KeyboardEvent } from "react";
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+
+import { UserSettingType, userSliceLogin } from "../../store/userSlice";
 
 import { loginServer } from "../../apis/user";
-
-import Title from '../../components/Title';
+import { Link as TitleLink } from "react-router-dom" ;
+import SimpleTitle from '../../components/SimpleTitle';
 import Input from '../../components/SubmitInputText';
 import LoginButton from '../../components/RegisterButton';
 import Link from "../../components/TextLink";
-import { useDispatch } from "react-redux";
-import { userSliceLogin } from "../../store/userSlice";
+import { access } from "fs";
+
+import '../../styles/simple/RegisterContainer.css'
+import styled from "styled-components";
+import useErrorHandlers from "../../hooks/error";
+import { useMode } from "../../hooks/useMode";
+import { RootState } from "../../store/store";
+
+const StyledLink = styled(TitleLink)`
+text-decoration: none;
+color: inherit;
+`;
 
 const SimpleLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const dispatch = useDispatch();
+  // 리덕스에서 세팅 정보 불러오기
+  const [userSetting] : [UserSettingType] = useSelector((state:RootState) => {
+    return [state.user.userSetting];
+  })
 
   const userData = {
     userEmail: email,
     userPass: password,
   };
+  const dispatch = useDispatch();
+  const errorHandlers = useErrorHandlers();
 
   const handleLogin = () => {
     if (email === '') {
@@ -31,24 +48,17 @@ const SimpleLogin = () => {
         .then((res) => {
           alert("로그인 성공");
           // userSlice에 저장
-          dispatch(userSliceLogin({
+          dispatch(userSliceLogin ({
             accessToken: res.accessToken,
-            refreshToken: res.refreshToken,
+            refreshToken: res.refreshToken
           }));
+          localStorage.setItem('theme', res.userSetting.screenType === 0 ? "detail" : "simple");
+          console.log("스크린타입: " + res.userSetting.screenType);
           // 메인페이지로 리다이렉트
           RedirectHomePage();
         })
         .catch((err) => {
-          console.log(err.response.status);
-          if (err.response.status === 401 || err.response.status === 404) {
-            alert("가입되지 않은 이메일이거나 비밀번호가 틀렸습니다.");
-            setEmail('');
-            setPassword('');
-          } else if (err.response.status === 500) {
-            alert("로그인 실패 (서버 에러)");
-            setEmail('');
-            setPassword('');
-          }
+          errorHandlers(err.status, handleLogin, userData);
         });
     }
   };
@@ -74,28 +84,33 @@ const SimpleLogin = () => {
 
   return (
     <>
-      <Title title='로그인' />
-
+      <StyledLink to='/home' aria-label="로그인 페이지입니다. 홈 화면으로 이동하시려면 이 버튼을 누르세요" >
+        <SimpleTitle imgSrc="SimpleLogo" aria-label="" aria-live="assertive"/>
+      </StyledLink>
       <div id='RegisterContainer'>
       <Input
         type="email"
+        alt="Input Email"
         placeholder="이메일을 입력하세요"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         onKeyPress={handleKeyPress}
+        aria-label="이메일을 입력하세요"
       />
 
       <Input
+      alt="password"
         type="password"
         placeholder="비밀번호"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         onKeyPress={handleKeyPress}
+        aria-label="비밀번호를 입력하세요"
       />
 
-      <Link text='비밀번호를 잊으셨나요?' onClick={RedirectTemporaryPass}/> 
+      <LoginButton text='비밀번호를 잊으셨나요?' onClick={RedirectTemporaryPass} aria-label="비밀번호 찾기 버튼입니다. 비밀번호 찾기 페이지로 이동합니다."/> 
 
-      <LoginButton text='로그인' onClick={handleLogin} />
+      <LoginButton text='로그인' onClick={handleLogin} aria-label="로그인 버튼입니다."/>
 
       <LoginButton text='회원가입' onClick={handleRegist} aria-label="회원가입 페이지로 이동하는 버튼입니다."/>
       </div>
