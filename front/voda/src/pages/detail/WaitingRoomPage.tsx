@@ -23,7 +23,7 @@ text-decoration: none;
 color: inherit;
 `;
 
-const SimpleRoom = () => {
+const DetailRoom = () => {
   // const [isModalOpen, setModalOpen] = useState(false);
 
   // 모달 닫힐 때 친구 목록 갱신 필요, 리덕스 이용해야 함.. 
@@ -52,4 +52,4 @@ const SimpleRoom = () => {
   );
 };
 
-export default SimpleRoom;
+export default DetailRoom;

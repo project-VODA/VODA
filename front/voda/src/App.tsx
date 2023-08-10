@@ -147,7 +147,7 @@ const App: React.FC = () => {
     { path: '/mypage', element: theme === SimpleTheme ? <SimpleMyPage /> : <DetailMyPage /> },
     { path: '/setting', element: theme === SimpleTheme ? <SimpleEnvSettingPage /> : <DetailEnvSettingPage /> },
     { path: '/waiting', element: theme === SimpleTheme ? <SimpleRoom /> : <DetailRoom/> },
-    { path: '/face', element: <FaceVideo /> },
+    { path: '/', element: <FaceVideo /> },
     { path: '/video', element: theme === SimpleTheme ? <SimpleVideo /> : <DetailVideo /> },
     { path: '/test', element: <TestPage /> },
     { path: '/feedback', element: theme === SimpleTheme ? <SimpleFeedBack/> : <DetailFeedBack/> },
@@ -177,7 +177,12 @@ const App: React.FC = () => {
           <ModeToggle />
           <Routes>
             {commonRoutes.map((route) => (
-              <Route key={route.path} path={route.path} element={<div style={{ marginTop: route.path === "/home" ? "0" : "63px", }}>{route.element}</div>} />
+              <Route key={route.path} path={route.path} element={<div style={{ marginTop:
+                route.path === "/home" ||
+                (localStorage.getItem('theme') === 'simple' && route.path === '/color') ||
+                (localStorage.getItem('theme') === 'simple' && route.path === '/about') 
+                ? "0" 
+                : "63px", }}>{route.element}</div>} />
             ))}
           </Routes>
         </Router>
