@@ -1,7 +1,6 @@
 // App.tsx
 
 import React, { createContext } from 'react';
-// import { useSelector } from 'react-redux';
 // import { RootState } from './store/reducers'; // 가정: RootState는 redux store의 전체 상태 타입입니다.
 import { BrowserRouter as Router, Route, Routes, Navigate, Link } from "react-router-dom";
 
@@ -161,13 +160,11 @@ const App: React.FC = () => {
     // { path: '*', element: <Navigate replace to="/" /> },
   ];
 
-
-
   // screenMode에 따라서 SimplePage 또는 DetailPage를 렌더링합니다.
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <AppContainer>
-        <GlobalStyle theme={theme === SimpleTheme ? SimpleTheme : DetailTheme} />
+        <GlobalStyle theme={theme} />
         <Router>
           <ServerEvent />
           {theme === SimpleTheme ? 

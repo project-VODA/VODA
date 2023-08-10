@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react';
 import { SimpleTheme, DetailTheme, Theme } from '../styles/theme';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
 export const useMode = () => {
   const [theme, setTheme] = useState<Theme>(SimpleTheme);
+  const userSetting = useSelector((state: RootState) => state.user.userSetting);
+  const userTheme = userSetting.screenType === 0 ? DetailTheme : SimpleTheme;
 
   const setMode = (mode: Theme) => {
     mode === SimpleTheme
@@ -12,18 +16,15 @@ export const useMode = () => {
   };
 
   const toggleTheme = () => {
-    theme === SimpleTheme ? setMode(DetailTheme) : setMode(SimpleTheme);
+    if (theme === SimpleTheme) {
+      setMode(DetailTheme);
+    } else {
+      setMode(SimpleTheme);
+    }
   };
 
   useEffect(() => {
-    const localTheme = window.localStorage.getItem('theme');
-    if (localTheme !== null) {
-      if (localTheme === 'simple') {
-        setTheme(SimpleTheme);
-      } else {
-        setTheme(DetailTheme);
-      }
-    }
+    setMode(userTheme);
   }, []);
 
   return { theme, toggleTheme };
