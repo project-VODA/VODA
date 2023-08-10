@@ -57,15 +57,10 @@ const TestPage = () => {
         if (blob) {
           const formData = new FormData();
           formData.append('image', blob);
-  
+          setCapturedImage(URL.createObjectURL(blob));
           getColor(formData);
         }
       });
-
-      // // 캡처된 이미지 표시
-      setCapturedImage(capturedImage);
-      // // axios 요청보내기
-      // getColor(capturedImage);
     }
   }
 
