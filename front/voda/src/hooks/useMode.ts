@@ -25,7 +25,7 @@ export const useMode = () => {
 
   useEffect(() => {
     setMode(userTheme);
-  }, []);
+  }, [userSetting.screenType]);
 
   return { theme, toggleTheme };
 };
