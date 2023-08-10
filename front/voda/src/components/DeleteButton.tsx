@@ -13,10 +13,10 @@ interface ThemeProps {
 }
 
 const DeleteButton = styled('button')<ThemeProps>`
-  width: 130px;
+  width: 8vw;
   height: 40px;
   border-radius: 15px;
-  font-size: 18px;
+  font-size: 1.3vw;
   padding: 8px;
   margin: 8px;
   background: #ff0000;

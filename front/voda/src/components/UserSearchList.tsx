@@ -17,6 +17,7 @@ import { updateCall } from "../store/callSlice";
 
 const inputColor = {
   backgroundColor: 'white',
+  marginTop: '28px',
 };
 
 type User = {
@@ -125,7 +126,7 @@ const UserSearchList = () => {
         style={inputColor}
         tabIndex={0}
       />
-      <table>
+      <table id="tbodyContainer" style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '28px'}}>
         {/* <colgroup>
           <col width="30%" />
           <col width="30%" />
@@ -147,7 +148,7 @@ const UserSearchList = () => {
                     {user.friend ? (
                       <RedButton className="delButton" onClick={() => handleDeleteFriend(user)} text="삭제" aria-label={`${user.userName} 님을 친구목록에서 삭제하시려면 버튼을 누르세요.`} />
                     ) : (
-                      <Button className="addButton" onClick={() => handleRegistFriend(user)} text="친구추가" aria-label={`${user.userName} 님을 친구목록에 추가 하시려면 버튼을 누르세요.`} />
+                      <Button className="addButton" onClick={() => handleRegistFriend(user)} text="추가" aria-label={`${user.userName} 님을 친구목록에 추가 하시려면 버튼을 누르세요.`} />
                     )}
                   </div>
                 </td>

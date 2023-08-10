@@ -180,7 +180,8 @@ const App: React.FC = () => {
               <Route key={route.path} path={route.path} element={<div style={{ marginTop:
                 route.path === "/home" ||
                 (localStorage.getItem('theme') === 'simple' && route.path === '/color') ||
-                (localStorage.getItem('theme') === 'simple' && route.path === '/about') 
+                (localStorage.getItem('theme') === 'simple' && route.path === '/about') ||
+                (localStorage.getItem('theme') === 'simple' && route.path === '/mypage') 
                 ? "0" 
                 : "63px", }}>{route.element}</div>} />
             ))}

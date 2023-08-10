@@ -12,10 +12,10 @@ interface ThemeProps {
 }
 
 const SmallRedButton = styled('button')<ThemeProps>`
-  width: 60px;
+  width: 3vw;
   height: 40px;
   border-radius: 15px;
-  font-size: 18px;
+  font-size: 1vw;
   padding: 8px;
   margin: 8px;
   border: 1px solid ${({ theme }) => theme.text};
