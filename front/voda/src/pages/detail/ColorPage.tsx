@@ -1,68 +1,57 @@
 import React, { useRef, useEffect, useState } from "react";
+import styled from 'styled-components';
 
-import Title from '../../components/Title';
-
-import { getHello, colorRecognition } from "../../apis/color";
-import Button from '../../components/board/WriteButton';
+import { colorRecognition } from "../../apis/color";
 import { CgColorPicker } from "react-icons/cg";
 
-const TestPage = () => {
-  const [capturedImage, setCapturedImage] = useState(null);//캡쳐된 이미지 확인용
-  const [color, setColor] = useState(null);
+const StyledContainer = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  min-height: calc(100vh - 100px);
+`;
 
-  const containerStyle: React.CSSProperties = {
-    position: 'relative',
-    display: 'flex',
-    flexDirection: 'row', // 가로로 정렬
-    // alignItems: 'center', // 세로 중앙 정렬
-    justifyContent: 'center',
-    minHeight: '100vh',
-    marginTop: '5%',
-  };
+const VideoContainer = styled.div`
+  flex: 2;
+  max-width: 50%;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-right: 16px;
+  margin-top: 60px;
+`;
 
-  const videoContainerStyle: React.CSSProperties = {
-    flex: 2, // 화면을 반으로 나누기 위해 추가
-    maxWidth: '50%',
-    borderRadius: '10px',
-    overflow: 'hidden',
-    marginRight: '16px', // 비디오 컨테이너와 버튼 사이의 간격
-    marginTop: '16px', // 위쪽 여백
-  };
+const ColorPage = () => {
+  //CSS Style 적용
 
-  const style: React.CSSProperties = {
+  const videoStyle: React.CSSProperties = {
     transform: 'rotateY(180deg)',
     WebkitTransform: 'rotateY(180deg)',
     width: '100%', 
     height: 'auto',
   };
 
-  const capturedImageStyle: React.CSSProperties = {
-    transform: 'rotateY(180deg)',
-    WebkitTransform: 'rotateY(180deg)',
-    width: '50%', 
-    height: 'auto',
-  };
-
   const colorStyle: React.CSSProperties = {
     margin: '16px',
-    fontSize: '18px', // 폰트 크기 설정
-    fontWeight: 'bold', // 굵은 글씨 설정
+    fontSize: '25px',
+    fontWeight: 'bold',
   };
 
   const buttonStyle: React.CSSProperties = {
-    alignSelf: 'flex-start',
-    // marginBottom: '16px',
-    // margin: '10px',
-    padding: '20px',
-    textAlign: 'center',
+    margin: '16px',
+    marginTop: '60px',
+    borderRadius: '500px',
     fontSize: '20px',
-    backgroundSize: '200% auto',
-    color: 'white',
-    border: 'none', // 검정 테두리 없애기
-    boxShadow: '0 0 20px #eee',
-    borderRadius: '40px',
-    backgroundImage: 'linear-gradient(to right, #fbc2eb 0%, #a6c1ee 51%, #fbc2eb 100%)',
+    fontWeight: 'bold',
+    backgroundColor: 'white',
+    padding: '10px 30px',
   };
+
+  // const capturedImageStyle: React.CSSProperties = {
+  //   transform: 'rotateY(180deg)',
+  //   WebkitTransform: 'rotateY(180deg)',
+  //   width: '300px',
+  // };
 
 
   const getColor = (formData:any) => {
@@ -75,6 +64,9 @@ const TestPage = () => {
         console.log(err)}
       )
   }
+
+  const [capturedImage, setCapturedImage] = useState(null);
+  const [color, setColor] = useState(null);
 
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -105,7 +97,6 @@ const TestPage = () => {
   };
 
 
-  // 화면 캡처
   function captureScreen() {
     const video = videoRef.current;
     const canvas = canvasRef.current;
@@ -130,27 +121,25 @@ const TestPage = () => {
 
   return (
     <>
-      <div style={containerStyle}>
-        <div style={videoContainerStyle}>
-          <video style={style} ref={videoRef} autoPlay></video>
-        </div>
+      <StyledContainer>
+        <VideoContainer>
+          <video style={videoStyle} ref={videoRef} autoPlay></video>
+        </VideoContainer>
         <div>
-          {/* <Button onClick={captureScreen} text={'색상 인식'} aria-label={'색상 인식 버튼'}/> */}
           <button onClick={captureScreen} style={buttonStyle}>Start <CgColorPicker size={20} /></button>
           <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
+          {color && (
+            <p style={colorStyle}>검출된 색상: {color}</p>
+          )}
           {/* {capturedImage && (
             <div>
-              <h2>캡처된 이미지</h2>
               <img style={capturedImageStyle} src={capturedImage} alt="Captured"/>
             </div>
           )} */}
-          {color && (
-          <p style={colorStyle}>검출된 색상: {color}</p>
-          )}
         </div>
-      </div>
+    </StyledContainer>
     </>
   );
 };
 
-export default TestPage;
+export default ColorPage;

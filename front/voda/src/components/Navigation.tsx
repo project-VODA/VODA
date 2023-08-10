@@ -298,7 +298,7 @@ export default function Navigation() {
               <MenuLink to="/video">비디오</MenuLink>
             </ChannelButton>
             <ChannelButton>
-              <MenuLink to="/test">테스트</MenuLink>
+              <MenuLink to="/color">색상인식</MenuLink>
             </ChannelButton>
             
             <UserDropDown onClick={handleDropDownToggle}>
