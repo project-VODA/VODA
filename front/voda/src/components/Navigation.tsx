@@ -308,7 +308,7 @@ export default function Navigation() {
               <MenuLink to="/feedback">고객의소리함</MenuLink>
             </ChannelButton>
             <ChannelButton>
-              <MenuLink to="/video">비디오</MenuLink>
+              <MenuLink to="/face">비디오</MenuLink>
             </ChannelButton>
             <ChannelButton>
               <MenuLink to="/test">테스트</MenuLink>
