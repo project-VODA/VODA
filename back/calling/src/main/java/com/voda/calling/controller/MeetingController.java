@@ -150,11 +150,12 @@ public class MeetingController {
     public ResponseEntity<Object> searchRecentCall(@ApiParam(hidden = true) @RequestHeader(value = AUTH) String auth){
         String userEmail =jwtUtil.getUserEmailFromToken(auth);
         List<RecentCall> mapList = callHistoryService.getRecentCallList(userEmail);
-        log.info("{}",mapList.size());
+        log.info("mapList 크기 : {}",mapList.size());
 
         LocalDateTime now = LocalDateTime.now();
         for (RecentCall recent : mapList) {
             if(recent.getStartTime()!=null){
+                log.info("recent.getStartTime() : {}", recent.getStartTime());
                 LocalDateTime d = LocalDateTime.parse(recent.getStartTime(),
                         DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                 if (d.getYear()==now.getYear() && d.getMonth()==now.getMonth() && d.getDayOfMonth()==now.getDayOfMonth()) {
