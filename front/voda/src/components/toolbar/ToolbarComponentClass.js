@@ -10,7 +10,7 @@ import DeleteButton from "../../components/DeleteButton";
 
 const logo = require("../../assets/images/logo_yellow.png");
 
-export default class ToolbarComponent extends Component {
+export default class ToolbarComponentClass extends Component {
   constructor(props) {
     super(props);
     this.state = { fullscreen: false };
@@ -41,7 +41,7 @@ export default class ToolbarComponent extends Component {
 
   leaveSession() {
     this.props.leaveSession();
-    window.location.href = "/home";
+    this.props.navigate('/home');
   }
 
   render() {

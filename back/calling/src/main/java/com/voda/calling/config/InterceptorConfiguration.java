@@ -21,9 +21,9 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
                 .addPathPatterns("/comments").addPathPatterns("/comments/*")
                 .addPathPatterns("/settings").addPathPatterns("/settings/*")
                 .excludePathPatterns("/users/logout")
+                .excludePathPatterns("/users/login")
                 .excludePathPatterns("/meetings/*")
                 .excludePathPatterns("/email/*")
-                .excludePathPatterns("/users/login")
                 .excludePathPatterns("/users/regist");
     }
 }

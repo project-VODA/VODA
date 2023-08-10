@@ -5,9 +5,11 @@ import Button from "./SettingButton";
 import { getRecentCallList, sendCalling } from '../apis/calling';
 import { userInfo } from 'os';
 import { UserInfoType } from '../store/userSlice';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store/store';
 import { useNavigate } from 'react-router-dom';
+
+import { updateCall } from "../store/callSlice";
 
 // react-icons
 import { FiPhoneCall } from "react-icons/fi"
@@ -44,6 +46,7 @@ const RecentCalls = () => {
   }, []);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleCalling = (email: string) => {
     const callSendRequest = {
@@ -51,15 +54,17 @@ const RecentCalls = () => {
       receiverEmail : email
     }
 
+    // console.log(callSendRequest.receiverEmail);
+
     sendCalling(callSendRequest)
       .then((res) => {
-        console.log(res.data.sessionToken);
-        navigate('/video',{
-          state: {
-            sessionToken : `${res.data.sessionToken}`,
-            callNo : `${res.data.callNo}`
-          }
-        });
+        console.log(res);
+        dispatch(updateCall({
+          sessionToken: res.data.sessionToken,
+          sessionId: res.data.sessiondId,
+          callNo: res.data.callNo
+        }));
+        navigate('/video');
       })
       .catch((err) => {
         console.error(err);
@@ -91,7 +96,10 @@ const RecentCalls = () => {
           callHistoryList.map((callHistory: CallHistory) => (
             <tr key={callHistory.startTime}  style={{ textAlign: 'center' }}>
               <td text-align='center'>{callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverName : callHistory.senderName}</td>
-              <td text-align='center'>{callHistory.startTime}</td>
+              {/* <td text-align='center'>{callHistory.startTime}</td> */}
+              <td text-align='center'>
+                {callHistory.startTime !== null ? callHistory.startTime : '시작 시간 없음'}
+              </td>
               <div id='DetailCallContainer'>
               <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '40%', fontSize:'25px', margin: '7% 55px 2%'}}>
               <span>
@@ -121,7 +129,9 @@ const RecentCalls = () => {
           callHistoryList.map((callHistory: CallHistory) => (
             <tr key={callHistory.startTime}  style={{ textAlign: 'center' }}>
               <td text-align='center'>{callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverName : callHistory.senderName}</td>
-              <td text-align='center'>{callHistory.startTime}</td>
+              <td text-align='center'>
+                {callHistory.startTime !== null ? callHistory.startTime : '시작 시간 없음'}
+              </td>
               <div id='DetailCallContainer'>
               <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '28px', fontSize:'25px'}}>
               <span>

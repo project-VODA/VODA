@@ -107,7 +107,7 @@ const SimpleWriteArticle = () => {
             maxWidth: '600px',
             marginBottom: '2%',
             color: '#001d3d',
-            background: 'white',
+            background: 'rgba(200, 200, 200, 0.5)',
             borderRadius: '20px',
           }}
           theme="snow"

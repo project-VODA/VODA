@@ -31,9 +31,10 @@ const SimpleFeedBack = () => {
 
     return (
         <>
-          <StyledLink to='/home' aria-label='고객의 소리함 페이지입니다. 홈 화면으로 이동하시려면 이 버튼을 누르세요.'>
+          {/* <StyledLink to='/home' aria-label='고객의 소리함 페이지입니다. 홈 화면으로 이동하시려면 이 버튼을 누르세요.'>
             <SimpleTitle imgSrc='SimpleLogo' aria-label='고객의 소리함 페이지입니다.'/>
-          </StyledLink>
+          </StyledLink> */}
+          <div style={{ padding: '67px'}} />
             <ListContainer>
                 <BoardList />
 
