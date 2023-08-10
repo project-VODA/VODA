@@ -14,6 +14,7 @@ import { UserInfoType, updateUserName, userSliceLogout } from '../../store/userS
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHook';
 import useErrorHandlers from '../../hooks/useError';
+import useLogOut from '../../hooks/useLogout';
 
 
 const StyledLink = styled(Link)`
@@ -49,6 +50,7 @@ const SimpleMyPage = () => {
   const naviagte = useNavigate();
   const dispatch = useAppDispatch();
   const errorHandlers = useErrorHandlers();
+  const logout = useLogOut();
 
   const userData = {
     userName: name,
@@ -107,25 +109,20 @@ const SimpleMyPage = () => {
   const handleWithdrawal = () => {
     var confirmWithdrawal = window.confirm("정말 탈퇴하시겠습니까?");
     if(confirmWithdrawal) {
-      cancelUser()
+      handleCancelUser();
+    }
+  }
+
+  const handleCancelUser = () => {
+    cancelUser()
       .then((res) => {
         alert("회원 탈퇴 성공");
         // 로그아웃 처리
-          logout(userInfo.userEmail)
-          .then((res) => {
-            dispatch(userSliceLogout());
-            RedirectHomePage();
-          })
-          .catch((err) => {
-            console.log(err);
-          })
-        // 홈 화면으로 리다이렉트
-        RedirectHomePage(); 
+        logout();
       })
       .catch((err) => {
-        console.log(err);
+        errorHandlers(err.response.status, handleCancelUser);
       })
-    }
   }
 
   const handleChangePassword = () => {
@@ -152,30 +149,20 @@ const SimpleMyPage = () => {
     if(err) {
       alert(msg);
     }else{
-      console.log(changePasswordData);
-      changePassword(changePasswordData)
-        .then((res) => {
-          alert("비밀번호 변경 성공")
-          
-          // 로그아웃 처리
-          if(accessToken !== null && accessToken !== ''){
-            logout(userInfo.userEmail)
-            .then((res) => {
-              console.log("hi logout");
-              dispatch(userSliceLogout());
-              RedirectHomePage();
-            })
-            .catch((err) => {
-              console.log(err);
-            })
-          }
-          // 홈 화면으로 리다이렉트
-          RedirectHomePage();
-        })
-        .catch((err) => {
-          console.log(err);
-        })
+      
     }
+  }
+
+  const handlePassword = () => {
+    changePassword(changePasswordData)
+      .then((res) => {
+        alert("비밀번호 변경 성공")
+        // 로그아웃 처리
+        logout();
+      })
+      .catch((err) => {
+        errorHandlers(err.response.status, handlePassword);
+      })
   }
 
   const handlePasswordCheckChange = (e: any) => {
