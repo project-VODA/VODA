@@ -145,8 +145,12 @@ const LandingPage = () => {
 
   return (
     <>
-      <StyledLink to='' tabIndex={0} aria-label="로그인하시고 저희 보다의 서비스를 이용해보세요." >
-        <SimpleTitle onClick="handleImageClick" imgSrc="SimpleLogo" aria-label="" aria-live="assertive"/>
+      <StyledLink to='' tabIndex={0} aria-label="보다에 오신걸 환영합니다. 로그인하시고 저희 서비스를 이용해보세요." >
+        <SimpleTitle
+          onClick="handleImageClick"
+          imgSrc= "SimpleLogo"
+          aria-label=""
+          aria-live="assertive"/>
       </StyledLink>
       <div id='RegisterContainer'>
       <Input
