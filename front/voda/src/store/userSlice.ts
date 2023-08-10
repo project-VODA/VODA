@@ -1,11 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { persistor } from "./store";
 
+interface UserState {
+    accessToken: string,
+    refreshToken: string,
+    userEmail: string,
+    userInfo: UserInfoType,
+    userSetting: UserSettingType,
+    isLogin: boolean,
+}
+
+const initialState: UserState = {
+    accessToken: '',
+}
+
 const userSlice = createSlice({
     name: 'userSlice',
     initialState: {
         accessToken: '',
         refreshToken: '',
+        userEmail: '',
         userInfo:{
             userEmail: '',
             userName: '',
@@ -25,7 +39,7 @@ const userSlice = createSlice({
             state.refreshToken = action.payload.refreshToken;
             // accessToken 복호화 및 유저 정보 저장
             let jwtPayload = JSON.parse(atob(action.payload.accessToken.split('.')[1]));
-            console.log(jwtPayload.userEmail);
+            state.userEmail = jwtPayload.userEmail;
             state.userInfo = {
                 userEmail: jwtPayload.userEmail,
                 userName: decodeURI(escape(jwtPayload.userName)),
@@ -42,6 +56,7 @@ const userSlice = createSlice({
             state.accessToken = action.payload.accessToken;
             // accessToken 복호화 및 유저 정보 저장
             let jwtPayload = JSON.parse(atob(action.payload.accessToken.split('.')[1]));
+            state.userEmail = jwtPayload.userEmail;
             state.userInfo = {
                 userEmail: jwtPayload.userEmail,
                 userName: decodeURI(escape(jwtPayload.userName)),
@@ -56,6 +71,7 @@ const userSlice = createSlice({
         userSliceLogout:(state) => {
             state.accessToken = '';
             state.refreshToken = '';
+            state.userEmail = '';
             state.userInfo = {
                 userEmail: '',
                 userName: '',

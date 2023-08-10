@@ -83,9 +83,10 @@ public class UserController {
             @ApiResponse(code=401, message="인증 실패"),
             @ApiResponse(code=500, message="조회 실패 - 서버(DB)오류")
     })
-    @GetMapping("/mypage/{userEmail}")
-    public ResponseEntity<?> getUserInfo(@PathVariable String userEmail){
+    @GetMapping("/mypage")
+    public ResponseEntity<?> getUserInfo(@ApiParam(hidden = true) @RequestHeader(value = AUTH) String auth){
         try{
+            String userEmail = jwtUtil.getUserEmailFromToken(auth);
             User user = userService.getUser(userEmail);
             return new ResponseEntity<User>(user, HttpStatus.OK);    
         }catch (Exception e) {
@@ -153,7 +154,7 @@ public class UserController {
             @ApiResponse(code=500, message="수정 실패 - 서버(DB)오류")
     })
     @PutMapping("/mypage")
-    public ResponseEntity<?> updateUserInfo(@RequestBody User user, @ApiParam(hidden = true) @RequestHeader(value = AUTH) String auth){
+    public ResponseEntity<?> updateUserInfo(@RequestBody User user){
         log.info("마이페이지 수정");
         User updateUser = userService.updateUser(user);
         if(updateUser!=null){
