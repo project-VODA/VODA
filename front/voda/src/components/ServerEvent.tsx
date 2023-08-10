@@ -13,6 +13,7 @@ import { callInfoType, updateCall } from '../store/callSlice';
 import { styled } from 'styled-components';
 import AlarmAudio from './AlarmAudio';
 import { userSliceLogout } from '../store/userSlice';
+import zIndex from '@material-ui/core/styles/zIndex';
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -24,11 +25,11 @@ const ButtonContainer = styled.div`
   text-align: center;
 `;
 
-const modalColor = {
-  content: {
-    backgroundColor: '#001d3d',
-  },
-}
+const AlarmModal = styled(Modal)`
+  background-color: '#001d3d';
+  z-index: 3;
+`
+
 
 export default function SseComponent(){
 	const navigate = useNavigate();
@@ -126,11 +127,10 @@ export default function SseComponent(){
   return (
   <>
     <AlarmAudio playing={isCallModalOpen}/>
-    <Modal id="callModal"
+    <AlarmModal id="callModal"
       isOpen={isCallModalOpen} 
       onRequestClose={(e) => setisCallModalOpen(false)}
       ariaHideApp={false}
-      style={modalColor}
       shouldCloseOnOverlayClick={false}
     >
       <p style={{textAlign: 'center', fontSize: 'xx-large', margin: '5%'}}>{content}</p>
@@ -138,7 +138,7 @@ export default function SseComponent(){
         <HandleButton text='통화 받기' onClick={acceptCall} />
         <HandleButton text='통화 거절' onClick={rejectCall} />
       </ButtonContainer>
-    </Modal>
+    </AlarmModal>
   </>
   )
 }
