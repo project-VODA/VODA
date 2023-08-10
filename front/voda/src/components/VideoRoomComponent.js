@@ -45,6 +45,7 @@ class VideoRoomComponent extends Component {
 
     this.audioPlayer = new Audio();
     this.typeNo = this.props.typeNo;
+    this.isIncall = this.props.isIncall;
 
     this.joinSession = this.joinSession.bind(this);
     this.leaveSession = this.leaveSession.bind(this);
@@ -596,7 +597,8 @@ class VideoRoomComponent extends Component {
 // 리덕스 스토어의 userSetting 값을 VideoRoomComponent 컴포넌트의 props로 매핑
 const mapStateToProps = state => {
   return {
-    typeNo: state.user.userSetting.typeNo
+    typeNo: state.user.userSetting.typeNo,
+    isIncall: state.call.isIncall
   };
 };
 
