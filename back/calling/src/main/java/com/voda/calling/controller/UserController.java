@@ -59,7 +59,6 @@ public class UserController {
     @ApiResponses({
             @ApiResponse(code=200, message="로그인 성공"),
             @ApiResponse(code=401, message="로그인 실패 - 비밀번호 오류"),
-            @ApiResponse(code=404, message="로그인 실패 - 등록 정보 없음"),
             @ApiResponse(code=500, message="로그인 실패 - 서버(DB)오류")
     })
     @PostMapping("/login")
@@ -68,11 +67,9 @@ public class UserController {
         try{
             return ResponseEntity.ok()
                     .body(userService.login(user.getUserEmail(), user.getUserPass()));
-        }catch (PasswordWrongException | AlreadyLoginedException e){
+        } catch (PasswordWrongException | AlreadyLoginedException | NotRegisteredException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }catch (NotRegisteredException e){
-            return ResponseEntity.notFound().build();
-        }catch (Exception e){
+        } catch (Exception e){
             return ResponseEntity.internalServerError().build();
         }
     }

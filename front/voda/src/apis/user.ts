@@ -2,7 +2,7 @@ import { resourceLimits } from "worker_threads";
 import { SERVER_URL } from "../constants/url";
 import { axiosInstance } from "./instance";
 
-import {axiosServer} from "./server";
+import {axiosServer, axiosServerWithRefresh} from "./server";
 
 // 환경 설정 변경
 export const updateUserSetting = async (userSetting: object) => {
@@ -54,7 +54,8 @@ export const cancelUser = async () => {
 
 // 새로운 accessToken 발급
 export const getAccessToken = async () => {
-  const res = await axiosServer().get<any>('/users/token');
+  const res = await axiosServerWithRefresh().get<any>('/users/token');
+  console.log(res.data);
   return res.data;
 }
 

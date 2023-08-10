@@ -14,6 +14,7 @@ import { deleteFriend, registFriend, searchUser } from "../apis/friend";
 
 import '../styles/simple/SimpleWaitingPage.css'
 import { updateCall } from "../store/callSlice";
+import useErrorHandlers from "../hooks/error";
 
 const inputColor = {
   backgroundColor: 'white',
@@ -43,14 +44,10 @@ const UserSearchList = () => {
     userEmail: userInfo.userEmail,
   };
 
+  const errorHandlers = useErrorHandlers();
+
   useEffect(() => {
-    searchUser(userSearchRequest)
-      .then((res) => {
-        setUserList(res);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    handleSearchUser();
   }, [keyword]);
 
   const navigate = useNavigate();
@@ -72,7 +69,8 @@ const UserSearchList = () => {
         navigate('/video');
       })
       .catch((err) => {
-        console.error(err);
+        console.log(err);
+        errorHandlers(err.status, sendCalling, callSendRequest);
       });
   };
 
@@ -112,6 +110,16 @@ const UserSearchList = () => {
       })
       .catch((err) => {
         console.log(err);
+      })
+  }
+
+  const handleSearchUser = () => {
+    searchUser(userSearchRequest)
+      .then((res) => {
+        setUserList(res);
+      })
+      .catch((err) => {
+        errorHandlers(err.response.status, handleSearchUser);
       })
   }
 
