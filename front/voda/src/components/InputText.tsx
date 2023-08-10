@@ -18,10 +18,10 @@ const TextContainer = styled.div`
 
 // 테마(모드) 별로 색상 고려해줘야됌!!
 const InputField = styled.input<ThemeProps>`
-  width: 58%;
-  height: 40px;
+  width: 26vw;
+  height: 6vh;
   border-radius: 20px;
-  font-size: 20px;
+  font-size: 1.25vw;
   padding: 8px;
   margin-bottom: 20px;
   border: 1px solid ${({ theme }) => theme.text};

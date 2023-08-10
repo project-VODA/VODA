@@ -54,8 +54,6 @@ const RecentCalls = () => {
       receiverEmail : email
     }
 
-    // console.log(callSendRequest.receiverEmail);
-
     sendCalling(callSendRequest)
       .then((res) => {
         console.log(res);
@@ -64,7 +62,11 @@ const RecentCalls = () => {
           sessionId: res.data.sessiondId,
           callNo: res.data.callNo
         }));
-        navigate('/video');
+        if(res.data === "oncalling"){
+          navigate('/waiting')
+        }else{
+          navigate('/video');
+        }
       })
       .catch((err) => {
         console.error(err);
@@ -73,9 +75,10 @@ const RecentCalls = () => {
 
   return (
     <>
-    <span> {localStorage.getItem('theme') === 'simple' ? (<div style={{ display: 'flex', justifyContent: 'center', margin: '6% 55px 2%' }}><span style={{ fontSize:'28px', fontWeight:'bolder' }}>최근 통화 목록</span></div>)
-    :(<div style={{  display: 'flex', justifyContent: 'center', margin: '6% 55px 2%'}}>
-        <span style={{ fontSize:'28px', fontWeight:'bolder' }}>최근 통화 목록</span>
+    <span> {localStorage.getItem('theme') === 'simple' ? (<div style={{ marginBottom: '60px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', padding: '10px' }}>
+      <span style={{ marginLeft: 'auto', marginRight: 'auto', fontSize:'1.9vw', fontWeight: 'bolder' }}>최근 통화 목록</span></div>)
+    :(<div style={{ marginTop:'5.6vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', padding: '10px' }}>
+        <span style={{ marginLeft: 'auto', marginRight: 'auto', fontSize:'1.9vw', fontWeight: 'bolder' }}>최근 통화 목록</span>
       </div>)} </span>
       <span> {localStorage.getItem('theme') === 'simple' ? 
       ( <table className = 'recentCallTable' style={{ margin: '10px auto', justifyContent: 'center', borderCollapse: 'separate', borderSpacing: '0px, 20px', maxWidth: '950px' }}>

@@ -58,7 +58,7 @@ const SimpleLogin = () => {
           RedirectHomePage();
         })
         .catch((err) => {
-          errorHandlers(err.status, handleLogin, userData);
+          errorHandlers(err.response.status, handleLogin);
         });
     }
   };

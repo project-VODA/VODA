@@ -14,6 +14,7 @@ import { searchUser } from "../../apis/friend";
 import { sendCalling } from "../../apis/calling";
 import SmallRedButton from '../../components/SmallRedBtn'
 
+import Styles from 'react-modal'
 import '../../styles/simple/SimpleWaitingPage.css'
 
 const StyledLink = styled(Link)`
@@ -29,15 +30,40 @@ const ButtonContainer = styled.div`
   text-align: center;
 `;
 
-const modalColor = {
-  content: {
-    backgroundColor: '#001d3d',
-  },
-}
+// const modalColor = {
+//   content: {
+    
+//   },
+// }
+
+// const modalStyle: Styles = {
+//   content: {
+//     backgroundColor: "#001d3d",
+//     width: "90%", // 원하는 너비로 조정
+//     maxWidth: "unset", // 최대 너비 제거
+//     margin: "0 auto", // 가운데 정렬
+//     border: "none", // 테두리 제거
+//     padding: "20px", // 내부 패딩
+//     overflowX: "hidden", // 가로 스크롤 숨김
+//     overflowY: "auto", // 세로 스크롤 유지
+//   },
+// };
 
 const SimpleRoom = () => {
   const [isFriendModalOpen, setFriendModalOpen] = useState(false);
   const [isRecentCallModalOpen, setRecentCallModalOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
 
   const handleFriendModalOpen = () => {
     setFriendModalOpen(true);
@@ -61,10 +87,23 @@ const SimpleRoom = () => {
           isOpen={isFriendModalOpen} 
           onRequestClose={(e) => setFriendModalOpen(false)}
           ariaHideApp={false}
-          style={ modalColor }
+          style={{     
+            content: {
+              backgroundColor: "#001d3d",
+              width: "80vw", // 원하는 너비로 조정
+              maxWidth: "unset", // 최대 너비 제거
+              margin: "0 auto", // 가운데 정렬
+              border: "none", // 테두리 제거
+              padding: "20px", // 내부 패딩
+              // overflowX: "hidden",
+              overflowX: isMobile ? "auto" : "hidden",
+              // 가로 스크롤 1500(전체화면 기준 내용이 가려지는 크기) 이하에는 스크롤 생기게
+              overflowY: "auto", // 세로 스크롤 유지
+            }
+          }}
         >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', padding: '10px' }}>
-          <span style={{ marginLeft: 'auto', marginRight: 'auto', fontSize:'30px', fontWeight: 'bolder' }}>친구 찾기</span>
+          <span style={{ marginLeft: 'auto', marginRight: 'auto', fontSize:'2.4vw', fontWeight: 'bolder' }}>친구 찾기</span>
           <span style={{display: 'flex', justifyContent: 'flex-end'}}>
             <SmallRedButton tabIndex={3} onClick={(e) => setFriendModalOpen(false)} text="X" aria-label="창 닫기 버튼" />
           </span></div>
@@ -74,10 +113,21 @@ const SimpleRoom = () => {
           isOpen={isRecentCallModalOpen} 
           onRequestClose={(e) => setRecentCallModalOpen(false)}
           ariaHideApp={false}
-          style={ modalColor }
+          style={{
+            content: {
+              backgroundColor: "#001d3d",
+              width: "80vw",
+              maxWidth: "unset",
+              margin: "0 auto",
+              border: "none",
+              padding: "20px",
+              overflowX: isMobile ? "auto" : "hidden",
+              overflowY: "auto",
+            }
+          }}
         >
-        <span style={{display: 'flex', justifyContent: 'flex-end'}}>
-          <SmallRedButton onClick={(e) => setRecentCallModalOpen(false)} text="X" aria-label="창 닫기 버튼"/>
+        <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <SmallRedButton id="exitButton" onClick={(e) => setRecentCallModalOpen(false)} text="X" aria-label="창 닫기 버튼"/>
         </span>
         <RecentCalls/>
       </Modal>
