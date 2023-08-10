@@ -5,10 +5,13 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { ThemeContext } from '../App';
 import SimpleLogo from '../assets/images/logo_yellow.png'
+import DetailLogo from '../assets/images/logo_black.png'
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
 import LandingPage from '../pages/LandingPage';
+
+const theme = localStorage.getItem('theme')
 
 interface ColorProps {
   color: string;
@@ -66,6 +69,10 @@ export default function SimpleTitle({ 'aria-live':ariaLive, 'aria-label':ariaLab
             aria-label={ariaLabel}
             color={theme.text} 
             onClick={handleImageClick}>
-            <Image src={SimpleLogo} alt="VODA" onClick={ isLandingPage ? handleImageClick : () => {} }/>
+            <Image 
+              src={localStorage.getItem('theme') === 'simple' ? SimpleLogo : DetailLogo} 
+              alt="VODA"
+              onClick={ isLandingPage ? handleImageClick : () => {} }
+            />
           </TitleContainer>);
 }

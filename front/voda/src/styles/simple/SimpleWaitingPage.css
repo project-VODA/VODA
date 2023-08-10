@@ -1,13 +1,13 @@
 #customModalContainer {
-  /* display: grid !important; */
-  /* place-items: center !important; */
-  /* height: 100vh !important; */
+  width: '150%';
+  height: '150%';
+  overflow: hidden;
 }
 
 #customModal {
   max-width: 1500px !important;
   /* position: fixed !important; */
-  min-width: 500px;
+  min-width: 20px;
   min-height: 550px;
   top: 50% !important;
   left: 50% !important;
@@ -16,8 +16,20 @@
 
 #FriendContainer td {
   padding: 0px 8px 3%; 
-  font-size: 23px;
+  font-size: 20px;
   /* position: absolute; */
   /* left: 50%; */
   /* transform: translateX(-50%); */
+}
+
+.callButton {
+  width: 50% !important;
+}
+
+.delButton {
+  width: 50% !important;
+}
+
+.addButton {
+  width: 60% !important;
 }
