@@ -10,8 +10,10 @@ import { cancelUser, changePassword, getUserInfo, logout, updateUserInfo } from 
 import Info from '../../components/InfoText';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import { UserInfoType, userSliceLogout } from '../../store/userSlice';
+import { UserInfoType, updateUserName, userSliceLogout } from '../../store/userSlice';
 import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHook';
+import useErrorHandlers from '../../hooks/useError';
 
 
 const StyledLink = styled(Link)`
@@ -32,39 +34,47 @@ const ButtonContainer = styled.div`
 
 const SimpleMyPage = () => {
   // redux에서 저장된 정보 가져오기
-  const [accessToken, userInfo]: [string, UserInfoType] = useSelector((state:RootState) => {
+  const [accessToken, userInfo] = useAppSelector((state) => {
     return [state.user.accessToken, state.user.userInfo];
   })
   // 컴포넌트 지역 변수에 연결
-  const [email, setEmail] = useState(userInfo.userEmail);
   const [name, setName] = useState(userInfo.userName);
-  const [handicap, setHandicap] = useState(userInfo.userHandicap === "1" ? true : false);
+  const [handicap, setHandicap] = useState(false);
 
   const [originPassword, setOriginPassword] = useState('');
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
   const [pwFlag, setPwFlag] = useState(false);
 
-  
+  const naviagte = useNavigate();
+  const dispatch = useAppDispatch();
+  const errorHandlers = useErrorHandlers();
 
   const userData = {
-    userEmail: email,
     userName: name,
     userPass: password,
     userHandicap: handicap ? 1 : 0,
   };
 
   const changePasswordData = {
-    userEmail: email,
     originalPass: originPassword,
     newPass: password,
   };
 
-  const naviagte = useNavigate();
-  const dispatch = useDispatch();
+  useEffect(handleGetUserInfo, []);
 
   const RedirectHomePage = () => {
     naviagte('/');
+  }
+
+  function handleGetUserInfo() {
+    getUserInfo()
+      .then((res) => {
+        setHandicap(res.userHandicap === 1 ? true : false);
+      })
+      .catch((err) => {
+        errorHandlers(err.response.status, handleGetUserInfo);
+      })
   }
 
   const handleModify = () => {
@@ -79,29 +89,19 @@ const SimpleMyPage = () => {
     if (err) {
       alert(msg);
     } else {
-      updateUserInfo(userData)
-        .then((res) => {
-          if(res.userEmail === userData.userEmail) {
-            alert("회원 정보 수정 완료");
-            // 로그아웃 처리
-            if(accessToken !== null && accessToken !== ''){
-              logout(userInfo.userEmail)
-              .then((res) => {
-                dispatch(userSliceLogout());
-                RedirectHomePage();
-              })
-              .catch((err) => {
-                console.log(err);
-              })
-            }
-          }else{
-            console.log("회원 정보 수정 실패");
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-        });
+      handleUpdateUserInfo();
     }
+  }
+  
+  const handleUpdateUserInfo = () => {
+    updateUserInfo(userData)
+      .then((res) => {
+        alert("회원 정보 수정 완료");
+        dispatch(updateUserName(res.userName));
+      })
+      .catch((err) => {
+        errorHandlers(err.response.status, handleUpdateUserInfo);
+      });
   }
 
   const handleWithdrawal = () => {
@@ -111,7 +111,6 @@ const SimpleMyPage = () => {
       .then((res) => {
         alert("회원 탈퇴 성공");
         // 로그아웃 처리
-        if(accessToken !== null && accessToken !== ''){
           logout(userInfo.userEmail)
           .then((res) => {
             dispatch(userSliceLogout());
@@ -120,7 +119,6 @@ const SimpleMyPage = () => {
           .catch((err) => {
             console.log(err);
           })
-        }
         // 홈 화면으로 리다이렉트
         RedirectHomePage(); 
       })
@@ -222,8 +220,7 @@ const SimpleMyPage = () => {
       <Input 
         type="email"
         placeholder="이메일" 
-        value={email} 
-        onChange={(e) => setEmail(e.target.value)}
+        value={userInfo.userEmail} 
         readonly={true}
       />
       <Input 

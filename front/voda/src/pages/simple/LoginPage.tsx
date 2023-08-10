@@ -14,10 +14,11 @@ import { access } from "fs";
 
 import '../../styles/simple/RegisterContainer.css'
 import styled from "styled-components";
-import useErrorHandlers from "../../hooks/error";
+import useErrorHandlers from "../../hooks/useError";
 import { useMode } from "../../hooks/useMode";
 import { RootState } from "../../store/store";
 import { useAppDispatch } from "../../hooks/reduxHook";
+import { HttpStatusCode } from "axios";
 
 const StyledLink = styled(TitleLink)`
 text-decoration: none;
@@ -32,7 +33,7 @@ const SimpleLogin = () => {
     userPass: password,
   };
   const dispatch = useAppDispatch();
-  const errorHandlers = useErrorHandlers();
+  const naviagte = useNavigate();
 
   const handleLogin = () => {
     if (email === '') {
@@ -52,15 +53,13 @@ const SimpleLogin = () => {
           RedirectHomePage();
         })
         .catch((err) => {
-          errorHandlers(err.status, loginServer, userData);
+          handleError(err.response.status);
         });
     }
   };
   const RedirectTemporaryPass = () => {
     naviagte('/pass')
   }
-  
-  const naviagte = useNavigate();
 
   const handleRegist = () => {
     naviagte('/signup')
@@ -75,6 +74,16 @@ const SimpleLogin = () => {
       handleLogin();
     }
   };
+
+  const handleError = (statusCode: HttpStatusCode) => {
+    switch(statusCode){
+      case HttpStatusCode.Unauthorized:
+        alert("이메일과 비밀번호를 확인해주세요");
+        break;
+      default:
+        naviagte('/error');
+    }
+  }
 
   return (
     <>
@@ -93,7 +102,7 @@ const SimpleLogin = () => {
       />
 
       <Input
-      alt="password"
+        alt="password"
         type="password"
         placeholder="비밀번호"
         value={password}

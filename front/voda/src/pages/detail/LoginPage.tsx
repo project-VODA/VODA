@@ -14,7 +14,7 @@ import { access } from "fs";
 
 import '../../styles/simple/RegisterContainer.css'
 import styled from "styled-components";
-import useErrorHandlers from "../../hooks/error";
+import useErrorHandlers from "../../hooks/useError";
 import { useMode } from "../../hooks/useMode";
 import { RootState } from "../../store/store";
 

@@ -83,7 +83,7 @@ import { access } from "fs";
 
 import '../styles/simple/RegisterContainer.css'
 import styled from "styled-components";
-import useErrorHandlers from "../hooks/error";
+import useErrorHandlers from "../hooks/useError";
 
 const StyledLink = styled(TitleLink)`
 text-decoration: none;
