@@ -88,8 +88,8 @@ public class UserService {
             Optional<UserSetting> userSetting = userSettingRepository.findById(userEmail);
         Map<String, Object> tokens = new HashMap<>();
         // accessToken
-        tokens.put("accessToken", jwtUtil.createAccessToken(userEmail));
-        tokens.put("userSetting", userSetting.get());
+        tokens.put("accessToken", jwtUtil.createAccessToken(user, userSetting.get()));
+        tokens.put("screenType", userSetting.get().getUsersettingScreenType());
         // refreshToken
         String refreshToken = jwtUtil.createRefreshToken();
         tokens.put("refreshToken", refreshToken);

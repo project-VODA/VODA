@@ -13,10 +13,11 @@ import { FiSettings } from "react-icons/fi";
 import { HiUser, HiOutlineLogout } from "react-icons/hi";
 import { GrUserSettings } from "react-icons/gr";
 import { FaBars } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { UserInfoType } from "../store/userSlice";
+import { UserInfoType, userSliceLogout } from "../store/userSlice";
 import { useState } from "react";
+import { logout } from "../apis/user";
 
 // KMJ 스타일 가이드에 대한 설명 - typescript styled-components
 // 1) 단일 props 사용 시, props 명 : 타입 지정
@@ -38,7 +39,7 @@ const NavContainer = styled("nav")`
   background-color: #f1f1f1;
   border-bottom: 0.5px solid rgba(0, 0, 0, 0.07);
   transition: all 0.5s ease-in-out;
-  z-index: 999999;
+  z-index: 2;
 
   position: fixed;
   /* opacity: 0.8; */
@@ -152,6 +153,13 @@ const MenuLink = styled(Link)`
   font-size: 1.2rem;
 `;
 
+const MenuButton = styled("button")`
+  text-decoration: none;
+  color: inherit;
+  font-weight: bolder;
+  font-size: 1.2rem;
+`
+
 const UserInfoText = styled("span")`
   display: flex;
   align-items: center;
@@ -210,7 +218,7 @@ const HamburgerButton = styled.button`
   position: absolute;
   top: 7%;
   right: 10%;
-  z-index: 99999;
+  z-index: 2;
   background: none;
   border: none;
   cursor: pointer;
@@ -221,12 +229,15 @@ const HamburgerButton = styled.button`
 `;
 
 export default function Navigation() {
-  const [userInfo, isLoginRedux] : [UserInfoType, boolean]= useSelector((state:RootState) => {
-    return [state.user.userInfo, state.user.isLogin];
+  const [accessToken, userInfo, isLoginRedux] : [string, UserInfoType, boolean]= useSelector((state:RootState) => {
+    return [state.user.accessToken, state.user.userInfo, state.user.isLogin];
   })
 
   const [isDropDownVisible, setDropDownVisible] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleDropDownToggle = () => {
     setDropDownVisible((current) => !current);
@@ -234,6 +245,24 @@ export default function Navigation() {
 
   const handleMobileMenuToggle = () => {
     setMobileMenuOpen((current) => !current);
+  }
+
+  const RedirectHomePage = () => {
+    navigate("/")
+  }
+
+  const handleLogout = () => {
+    if(accessToken !== null && accessToken !== ''){
+      logout(userInfo.userEmail)
+      .then((res) => {
+        console.log("hi logout");
+        dispatch(userSliceLogout());
+        RedirectHomePage();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    }
   }
 
   if ( !isLoginRedux ) { 
@@ -297,14 +326,14 @@ export default function Navigation() {
                         환경설정
                       </MenuLinkContainer>
                     </MenuLink>
-                    <MenuLink to="/logout">
+                    <MenuButton onClick={handleLogout}>
                       <MenuLinkContainer>
                         <IconWrapper>
                           <HiOutlineLogout/>
                         </IconWrapper>
                         로그아웃
                       </MenuLinkContainer>
-                    </MenuLink>
+                    </MenuButton>
                   </DropDownMenu>
                 </> :
                 <MenuLink to="/login">로그인</MenuLink> 
