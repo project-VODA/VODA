@@ -33,7 +33,7 @@ const SimpleLogin = () => {
     userPass: password,
   };
   const dispatch = useAppDispatch();
-  const naviagte = useNavigate();
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     if (email === '') {
@@ -58,15 +58,15 @@ const SimpleLogin = () => {
     }
   };
   const RedirectTemporaryPass = () => {
-    naviagte('/pass')
+    navigate('/pass')
   }
 
   const handleRegist = () => {
-    naviagte('/signup')
+    navigate('/signup')
   }
 
   const RedirectHomePage = () => {
-    naviagte('/home');
+    navigate('/home');
   }
 
   const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -81,7 +81,7 @@ const SimpleLogin = () => {
         alert("이메일과 비밀번호를 확인해주세요");
         break;
       default:
-        naviagte('/error');
+        navigate('/error');
     }
   }
 
