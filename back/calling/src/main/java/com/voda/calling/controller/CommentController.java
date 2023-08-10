@@ -1,6 +1,5 @@
 package com.voda.calling.controller;
 
-import com.voda.calling.model.dto.Article;
 import com.voda.calling.model.dto.Comment;
 import com.voda.calling.model.dto.CommentSearchResponse;
 import com.voda.calling.model.service.CommentService;
@@ -14,8 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -44,16 +41,17 @@ public class CommentController {
         try{
             List<CommentSearchResponse> comments = commentService.searchAll(articleNo);
 
-            LocalDateTime now = LocalDateTime.now();
-            for (CommentSearchResponse csr : comments) {
-                LocalDateTime d = LocalDateTime.parse(csr.getCommentRegTime(),
-                        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-                if (d.getYear()==now.getYear() && d.getMonth()==now.getMonth() && d.getDayOfMonth()==now.getDayOfMonth()) {
-                    csr.setCommentRegTime(d.format(DateTimeFormatter.ofPattern("HH시 mm분")));
-                }else {
-                    csr.setCommentRegTime(d.format(DateTimeFormatter.ofPattern("YY.MM.dd")));
-                }
-            }
+//            log.info("시간 변환 시도");
+//            LocalDateTime now = LocalDateTime.now();
+//            for (CommentSearchInterface csr : comments) {
+//                LocalDateTime d = LocalDateTime.parse(csr.getCommentRegTime(),
+//                        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+//                if (d.getYear()==now.getYear() && d.getMonth()==now.getMonth() && d.getDayOfMonth()==now.getDayOfMonth()) {
+//                    csr.setCommentRegTime(d.format(DateTimeFormatter.ofPattern("HH시 mm분")));
+//                }else {
+//                    csr.setCommentRegTime(d.format(DateTimeFormatter.ofPattern("YY.MM.dd")));
+//                }
+//            }
 
             log.info("댓글 목록 가져오기 성공");
             return new ResponseEntity<List<CommentSearchResponse>>(comments, HttpStatus.OK);
