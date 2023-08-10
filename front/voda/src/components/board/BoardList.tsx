@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
-import { getAricles } from '../../apis/board';
+import { getArticles } from '../../apis/board';
 import styled from 'styled-components';
 
 type Article = {
@@ -41,7 +41,7 @@ const BoardList: React.FC = () => {
   const [articles, setArticles] = useState<ArticleList>([]);
 
   useEffect(() => {
-    getAricles()
+    getArticles()
     .then((res: ArticleList) => {
       console.log(res);
       setArticles(res);
