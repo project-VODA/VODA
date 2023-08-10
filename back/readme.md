@@ -64,3 +64,10 @@
 
 - 23.08.08 Choi
   - 고객의 소리함 작성시간 구분 로직 추가
+
+- 23.08.10 YSH
+  - 최근통화목록 쿼리 수정 (MyBatis 반영)
+
+- 23.08.10 KSH
+  - 표정 버튼 이동 - KSH (VideoRoomComponent.js -> ToolbarComponentClass.js)
+  - 표정 데이터 받아오는거랑 보내기 듣기 함수도 같이 옮겨주세요
