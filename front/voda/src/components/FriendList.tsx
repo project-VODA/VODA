@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { deleteFriend, getFriendList } from '../apis/friend';
 
 import Button from "./SettingButton";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store/store';
 import { UserInfoType } from '../store/userSlice';
 import { sendCalling } from '../apis/calling';
@@ -19,6 +18,10 @@ import DeleteFriendButton from './SmallRedBtn'
 import { FiPhoneCall } from "react-icons/fi"
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { ImUserPlus } from 'react-icons/im'
+
+//API
+import { deleteFriend, getFriendList } from '../apis/friend';
+import { updateCall } from "../store/callSlice";
 
 import '../styles/detail/DetailWaitingPage.css'
 
@@ -65,6 +68,7 @@ const FriendList = () => {
   }, []);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleDeleteFriend = (friend: Friend) => {
 
@@ -94,22 +98,18 @@ const FriendList = () => {
     sendCalling(callSendRequest)
       .then((res) => {
         console.log(res);
+        dispatch(updateCall({
+          sessionToken: res.data.sessionToken,
+          sessionId: res.data.sessiondId,
+          callNo: res.data.callNo
+        }));
         if(res.data === "oncalling"){
           navigate('/waiting')
         }else{
-          navigate('/video',{
-            state: {
-              sessionToken : `${res.data.sessionToken}`,
-              callNo : `${res.data.callNo}`
-            }
-          });
+          navigate('/video');
         }
-        
       })
       .catch((err) => {
-        if(err===204){
-          alert("!!");
-        }
         console.error(err);
       });
   };

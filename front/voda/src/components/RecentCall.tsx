@@ -54,8 +54,6 @@ const RecentCalls = () => {
       receiverEmail : email
     }
 
-    // console.log(callSendRequest.receiverEmail);
-
     sendCalling(callSendRequest)
       .then((res) => {
         console.log(res);
@@ -64,7 +62,11 @@ const RecentCalls = () => {
           sessionId: res.data.sessiondId,
           callNo: res.data.callNo
         }));
-        navigate('/video');
+        if(res.data === "oncalling"){
+          navigate('/waiting')
+        }else{
+          navigate('/video');
+        }
       })
       .catch((err) => {
         console.error(err);
