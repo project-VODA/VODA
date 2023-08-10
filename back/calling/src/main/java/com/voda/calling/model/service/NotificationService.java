@@ -71,6 +71,7 @@ public class NotificationService {
         log.info("{} to {}", senderEmail, receiverEmail);
         // 전달할 내용 생성
         CallNotification callNotification = makeNotification(senderEmail, receiverEmail, sessionId, token, callNo, content);
+        log.info("senderEmail :{}, receiverEmail:{}",senderEmail, receiverEmail );
         // receiver에게 해당되어 있는 sseEmitter 가져오기
         Map<String, SseEmitter> sseEmitters = sseRepository.findAllEmitterStartWithByEmail(receiverEmail);
         log.info("{}", sseEmitters.size());

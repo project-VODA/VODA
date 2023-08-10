@@ -140,15 +140,17 @@ public class CallHistoryService {
 
             if(item.get("call_starttime")!=null){
                 startTime = item.get("call_starttime").toString();
-            }else{
-                startTime = item.get("call_endtime").toString();
             }
+//            else{
+//                startTime = item.get("call_endtime").toString();
+//            }
 
             if(item.get("call_endtime")!=null){
                 EndTime = item.get("call_endtime").toString();
-            }else{
-                EndTime = item.get("call_starttime").toString();
             }
+//            else{
+//                EndTime = item.get("call_starttime").toString();
+//            }
 
             log.info(item.get("senderEmail").toString());
 

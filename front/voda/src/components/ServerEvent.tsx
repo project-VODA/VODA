@@ -40,7 +40,7 @@ const DetailModal = {
 }
 
 
-export default function SseComponent(){
+export default function SseComponent() {
 	const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -48,6 +48,9 @@ export default function SseComponent(){
   const [callNo, setCallNo] = useState(0);
   const [isCallModalOpen, setisCallModalOpen] = useState(false);
   const [isReject, setIsReject] = useState(false); //통화거절
+
+  const [openViduSession, setOpenViduSession] = useState<Session | null>(null);
+
   const [userEmail, callInfo]:[string, callInfoType] = useSelector((state:RootState) => {
     return [state.user.userInfo.userEmail, state.call.callInfo];
   });
@@ -58,9 +61,11 @@ export default function SseComponent(){
       return;
     }
     const eventSource = new EventSource(`${API_URL}/subscribe/${userEmail}`);
+
     eventSource.addEventListener("connection", (event) => {
       console.log("SSE 연결 완료");
     });
+    
     eventSource.addEventListener("call", (event) => {
       //카메라가 로드되는 것을 고려해서 4초 지연 후 알림
       setTimeout(() => {
@@ -78,8 +83,11 @@ export default function SseComponent(){
         }
       }, 4000); 
     });
+    
     eventSource.addEventListener("reject", (event) => {
-      setisCallModalOpen(true);
+      setisCallModalOpen(false);
+      setIsReject(true);
+      console.log(event);
       // 통화 거절 추가 로직
       const response = JSON.parse(event.data);
       setContent(response.content);
@@ -116,7 +124,6 @@ export default function SseComponent(){
     rejectCalling(callNo)
     .then((res) => {
       setisCallModalOpen(false);
-      console.log(res);
     })
     .catch((err) => {
       console.log(err);
@@ -134,10 +141,32 @@ export default function SseComponent(){
     }
   }
 
+  function exitcall() {
+    if (openViduSession) {
+      openViduSession.disconnect(); // OpenVidu 세션에서 연결을 끊습니다.
+    }
+    setisCallModalOpen(false);
+
+  }
+
   return (
     <>
-      <AlarmAudio playing={isCallModalOpen}/>
-      <Modal id="callModal"
+      <AlarmAudio playing = {isCallModalOpen}/>
+      {isReject ? (
+        <Modal id="callModal"
+        isOpen={isReject} 
+        onRequestClose={(e) => setisCallModalOpen(false)}
+        ariaHideApp={false}
+        style={localStorage.getItem('theme') === 'detail' ? DetailModal : SimpleModal}
+        shouldCloseOnOverlayClick={false}
+      >
+        <p style={{textAlign: 'center', fontSize: 'xx-large', margin: '5%'}}>{content}</p>
+        <ButtonContainer>
+          <HandleButton text='나가기' onClick={exitcall} />
+        </ButtonContainer>
+      </Modal>
+      ) : (
+        <Modal id="callModal"
         isOpen={isCallModalOpen} 
         onRequestClose={(e) => setisCallModalOpen(false)}
         ariaHideApp={false}
@@ -150,6 +179,9 @@ export default function SseComponent(){
           <HandleButton text='통화 거절' onClick={rejectCall} />
         </ButtonContainer>
       </Modal>
+      )}
+      
+
     </>
     )
 }
