@@ -14,7 +14,7 @@ import { deleteFriend, registFriend, searchUser } from "../apis/friend";
 
 import '../styles/simple/SimpleWaitingPage.css'
 import { updateCall } from "../store/callSlice";
-import useErrorHandlers from "../hooks/error";
+import useErrorHandlers from "../hooks/useError";
 
 const inputColor = {
   backgroundColor: 'white',

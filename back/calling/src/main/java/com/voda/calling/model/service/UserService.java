@@ -1,6 +1,5 @@
 package com.voda.calling.model.service;
 
-import com.voda.calling.exception.AlreadyLoginedException;
 import com.voda.calling.exception.NotRegisteredException;
 import com.voda.calling.exception.PasswordWrongException;
 import com.voda.calling.model.dto.User;

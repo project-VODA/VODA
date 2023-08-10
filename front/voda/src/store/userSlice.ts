@@ -79,12 +79,18 @@ const userSlice = createSlice({
         },
         updateAccessToken:(state, action: PayloadAction<{accessToken: string}>) => {
             state.accessToken = action.payload.accessToken;
+        },
+        updateUserName: (state, action: PayloadAction<string>) => {
+            state.userInfo.userName = action.payload;
+        },
+        updateUserSetting: (state, action: PayloadAction<UserSettingType>) => {
+            state.userSetting = action.payload;
         }
     }
 });
 
 export default userSlice;
-export const {userSliceLogin, userSliceAllocate, userSliceLogout, updateAccessToken} = userSlice.actions;
+export const {userSliceLogin, userSliceAllocate, userSliceLogout, updateAccessToken, updateUserName, updateUserSetting} = userSlice.actions;
 
 export interface UserInfoType{
     userEmail: string,
