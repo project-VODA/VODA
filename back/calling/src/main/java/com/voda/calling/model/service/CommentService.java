@@ -20,7 +20,16 @@ public class CommentService {
 
     public List<CommentSearchResponse> searchAll(int articleNo) {
         log.info("Search All : 댓글 목록 출력");
-        return commentRepository.findAllIncludeUserNameByArticleNo(articleNo);
+
+
+        try {
+            return commentRepository.findAllIncludeUserNameByArticleNo(articleNo);
+        } catch (Exception e) {
+
+            log.info("서비스 단 오류 발생" + e);
+
+            throw e;
+        }
     }
 
     public Comment write(String userEmail, int articleNo, String commentContent){
