@@ -88,7 +88,7 @@ public class UserService {
             Optional<UserSetting> userSetting = userSettingRepository.findById(userEmail);
         Map<String, Object> tokens = new HashMap<>();
         // accessToken
-        tokens.put("accessToken", jwtUtil.createAccessToken(user, userSetting.get()));
+        tokens.put("accessToken", jwtUtil.createAccessToken(userEmail));
         tokens.put("userSetting", userSetting.get());
         // refreshToken
         String refreshToken = jwtUtil.createRefreshToken();
@@ -155,7 +155,7 @@ public class UserService {
         User user = userRepository.findUserByUserTokenAndUserCancel(refreshToken, IS_NOT_CANCELED);
         Optional<UserSetting> userSetting = userSettingRepository.findById(user.getUserEmail());
         if(user !=  null){
-            return jwtUtil.createAccessToken(user, userSetting.get());
+            return jwtUtil.createAccessToken(user.getUserEmail());
         }
 
         return null;

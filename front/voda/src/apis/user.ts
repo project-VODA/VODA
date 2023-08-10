@@ -35,8 +35,8 @@ export const changePassword = async (changePasswordData: object) => {
 }
 
 // 서버 DB 유저 회원정보 조회
-export const getUserInfo = async (userEmail: string) => {
-  const res = await axiosServer().get<any>(`/users/mypage/${userEmail}`);
+export const getUserInfo = async () => {
+  const res = await axiosServer().get<any>(`/users/mypage`);
   return res.data;
 }
 
