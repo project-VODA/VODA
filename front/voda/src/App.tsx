@@ -31,6 +31,7 @@ import SimpleRoom from './pages/simple/WaitingRoomPage';
 import SimpleFeedBack from './pages/simple/FeedBackPage';
 import SimpleWriteArticle from './pages/simple/board/WriteArticlePage';
 import SimpleDetailArticle from './pages/simple/board/DetailArticlePage';
+import SimpleColor from './pages/simple/ColorPage';
 
 import DetailHomePage from './pages/detail/HomePage';
 import DetailAbout from './pages/detail/AboutPage';
@@ -43,7 +44,7 @@ import DetailVideo from './pages/detail/VideoPage';
 import FaceVideo from './pages/detail/faceExpressions';
 import DetailRoom from './pages/detail/WaitingRoomPage';
 import DetailFeedBack from './pages/detail/FeedBackPage';
-import TestPage from './pages/detail/TestPage';
+import DetailColor from './pages/detail/ColorPage';
 
 
 // 스타일 & 모드(mode)
@@ -149,7 +150,7 @@ const App: React.FC = () => {
     { path: '/waiting', element: theme === SimpleTheme ? <SimpleRoom /> : <DetailRoom/> },
     { path: '/', element: <FaceVideo /> },
     { path: '/video', element: theme === SimpleTheme ? <SimpleVideo /> : <DetailVideo /> },
-    { path: '/test', element: <TestPage /> },
+    { path: '/color', element: theme === SimpleTheme ? <SimpleColor /> : <DetailColor /> },
     { path: '/feedback', element: theme === SimpleTheme ? <SimpleFeedBack/> : <DetailFeedBack/> },
     { path: '/write', element: theme === SimpleTheme ? <SimpleWriteArticle/> : <DetailWriteArticle/> },
     { path: '/view/:articleNo', element: theme === SimpleTheme ? <SimpleDetailArticle/> : <SimpleDetailArticle/> },
