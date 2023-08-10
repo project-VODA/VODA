@@ -42,6 +42,7 @@ import DetailEnvSettingPage from './pages/detail/EnvSettingPage';
 import DetailVideo from './pages/detail/faceExpressions';
 import DetailRoom from './pages/detail/WaitingRoomPage';
 import DetailFeedBack from './pages/detail/FeedBackPage';
+import TestPage from './pages/detail/TestPage';
 
 
 // 스타일 & 모드(mode)
@@ -146,6 +147,7 @@ const App: React.FC = () => {
     { path: '/setting', element: theme === SimpleTheme ? <SimpleEnvSettingPage /> : <DetailEnvSettingPage /> },
     { path: '/waiting', element: theme === SimpleTheme ? <SimpleRoom /> : <DetailRoom/> },
     { path: '/video', element: theme === SimpleTheme ? <SimpleVideo /> : <DetailVideo /> },
+    { path: '/test', element: <TestPage /> },
     { path: '/feedback', element: theme === SimpleTheme ? <SimpleFeedBack/> : <DetailFeedBack/> },
     { path: '/write', element: theme === SimpleTheme ? <SimpleWriteArticle/> : <DetailWriteArticle/> },
     { path: '/view/:articleNo', element: theme === SimpleTheme ? <SimpleDetailArticle/> : <SimpleDetailArticle/> },
