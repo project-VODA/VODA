@@ -39,7 +39,7 @@ const NavContainer = styled("nav")`
   background-color: #f1f1f1;
   border-bottom: 0.5px solid rgba(0, 0, 0, 0.07);
   transition: all 0.5s ease-in-out;
-  z-index: 2;
+  z-index: 1;
 
   position: fixed;
   /* opacity: 0.8; */
@@ -187,7 +187,7 @@ const DropDownMenu = styled.div<DropDownMenuProps>`
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: ${({ visible }) => (visible ? "block" : "none")};
-  z-index: 2;
+  z-index: 1;
   a {
     display: block;
     padding: 8px 16px;
@@ -231,7 +231,7 @@ const HamburgerButton = styled.button`
   position: absolute;
   top: 7%;
   right: 10%;
-  z-index: 2;
+  z-index: 1;
   background: none;
   border: none;
   cursor: pointer;

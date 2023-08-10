@@ -13,7 +13,6 @@ import { callInfoType, updateCall } from '../store/callSlice';
 import { styled } from 'styled-components';
 import AlarmAudio from './AlarmAudio';
 import { userSliceLogout } from '../store/userSlice';
-import zIndex from '@material-ui/core/styles/zIndex';
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -25,10 +24,20 @@ const ButtonContainer = styled.div`
   text-align: center;
 `;
 
-const AlarmModal = styled(Modal)`
-  background-color: '#001d3d';
-  z-index: 3;
-`
+const SimpleModal = {
+  content: {
+    backgroundColor: '#001d3d',
+  },
+}
+
+const DetailModal = {
+  overlay: {
+    zIndex: 1000,
+  },
+  content: {
+    backgroundColor: '#fff',
+  },
+}
 
 
 export default function SseComponent(){
@@ -125,20 +134,21 @@ export default function SseComponent(){
   }
 
   return (
-  <>
-    <AlarmAudio playing={isCallModalOpen}/>
-    <AlarmModal id="callModal"
-      isOpen={isCallModalOpen} 
-      onRequestClose={(e) => setisCallModalOpen(false)}
-      ariaHideApp={false}
-      shouldCloseOnOverlayClick={false}
-    >
-      <p style={{textAlign: 'center', fontSize: 'xx-large', margin: '5%'}}>{content}</p>
-      <ButtonContainer>
-        <HandleButton text='통화 받기' onClick={acceptCall} />
-        <HandleButton text='통화 거절' onClick={rejectCall} />
-      </ButtonContainer>
-    </AlarmModal>
-  </>
-  )
+    <>
+      <AlarmAudio playing={isCallModalOpen}/>
+      <Modal id="callModal"
+        isOpen={isCallModalOpen} 
+        onRequestClose={(e) => setisCallModalOpen(false)}
+        ariaHideApp={false}
+        style={localStorage.getItem('theme') === 'detail' ? DetailModal : SimpleModal}
+        shouldCloseOnOverlayClick={false}
+      >
+        <p style={{textAlign: 'center', fontSize: 'xx-large', margin: '5%'}}>{content}</p>
+        <ButtonContainer>
+          <HandleButton text='통화 받기' onClick={acceptCall} />
+          <HandleButton text='통화 거절' onClick={rejectCall} />
+        </ButtonContainer>
+      </Modal>
+    </>
+    )
 }
