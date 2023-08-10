@@ -27,16 +27,12 @@ const SimpleHomePage = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [accessTokenRedux, isLoginRedux, userEmail, screenType]: [string, boolean, string, number] = useSelector((state:RootState) => {
-    return [state.user.accessToken, state.user.isLogin, state.user.userInfo.userEmail, state.user.userSetting.screenType];
+  const [accessTokenRedux, isLoginRedux, userEmail]: [string, boolean, string] = useSelector((state:RootState) => {
+    return [state.user.accessToken, state.user.isLogin, state.user.userInfo.userEmail];
   })
 
   const [accessToken, setAccessToken] = useState(accessTokenRedux);
   const [isLogin, setIsLogin] = useState(isLoginRedux);
-
-  useEffect(() => {
-    localStorage.setItem('theme', screenType === 0 ? 'DetailTheme' : 'SimpleTheme');
-  }, [])
 
   const RedirectSocialLogin = () => {
     navigate('/social-login');

@@ -1,16 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Button from "../../components/SettingButton"
 import Carousel from "../../components/carousel/carousel";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 const DetailPage = () => {
   
   const navigate = useNavigate();
-  
-  const [accessTokenRedux, isLoginRedux, userEmail, screenType]: [string, boolean, string, number] = useSelector((state:RootState) => {
-    return [state.user.accessToken, state.user.isLogin, state.user.userInfo.userEmail, state.user.userSetting.screenType];
-  })
 
   const redirectAbout = () => {
     navigate('/about')
