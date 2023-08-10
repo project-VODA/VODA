@@ -17,6 +17,7 @@ import styled from "styled-components";
 import useErrorHandlers from "../../hooks/error";
 import { useMode } from "../../hooks/useMode";
 import { RootState } from "../../store/store";
+import { useAppDispatch } from "../../hooks/reduxHook";
 
 const StyledLink = styled(TitleLink)`
 text-decoration: none;
@@ -26,16 +27,11 @@ color: inherit;
 const SimpleLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // 리덕스에서 세팅 정보 불러오기
-  const [userSetting] : [UserSettingType] = useSelector((state:RootState) => {
-    return [state.user.userSetting];
-  })
-
   const userData = {
     userEmail: email,
     userPass: password,
   };
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const errorHandlers = useErrorHandlers();
 
   const handleLogin = () => {
@@ -52,13 +48,11 @@ const SimpleLogin = () => {
             accessToken: res.accessToken,
             refreshToken: res.refreshToken
           }));
-          localStorage.setItem('theme', res.userSetting.screenType === 0 ? "detail" : "simple");
-          console.log("스크린타입: " + res.userSetting.screenType);
           // 메인페이지로 리다이렉트
           RedirectHomePage();
         })
         .catch((err) => {
-          errorHandlers(err.status, handleLogin, userData);
+          errorHandlers(err.status, loginServer, userData);
         });
     }
   };
