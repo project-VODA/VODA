@@ -18,7 +18,7 @@ color: inherit;
 `;
 
 
-const SimpleVideo = () => {
+const DetailVideo = () => {
   const [localStream, setLocalStream] = useState<MediaStream>();
 
   // const location = useLocation();
@@ -57,4 +57,4 @@ const SimpleVideo = () => {
   );
 };
 
-export default SimpleVideo;
+export default DetailVideo;

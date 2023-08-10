@@ -39,7 +39,8 @@ import DetailPass from './pages/detail/TemporaryPassPage';
 import DetailSignup from './pages/detail/SignupPage';
 import DetailMyPage from './pages/detail/MyPage';
 import DetailEnvSettingPage from './pages/detail/EnvSettingPage';
-import DetailVideo from './pages/detail/faceExpressions';
+import DetailVideo from './pages/detail/VideoPage';
+import FaceVideo from './pages/detail/faceExpressions';
 import DetailRoom from './pages/detail/WaitingRoomPage';
 import DetailFeedBack from './pages/detail/FeedBackPage';
 import TestPage from './pages/detail/TestPage';
@@ -146,6 +147,7 @@ const App: React.FC = () => {
     { path: '/mypage', element: theme === SimpleTheme ? <SimpleMyPage /> : <DetailMyPage /> },
     { path: '/setting', element: theme === SimpleTheme ? <SimpleEnvSettingPage /> : <DetailEnvSettingPage /> },
     { path: '/waiting', element: theme === SimpleTheme ? <SimpleRoom /> : <DetailRoom/> },
+    { path: '/face', element: <FaceVideo /> },
     { path: '/video', element: theme === SimpleTheme ? <SimpleVideo /> : <DetailVideo /> },
     { path: '/test', element: <TestPage /> },
     { path: '/feedback', element: theme === SimpleTheme ? <SimpleFeedBack/> : <DetailFeedBack/> },
