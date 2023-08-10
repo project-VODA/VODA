@@ -10,10 +10,6 @@ interface UserState {
     isLogin: boolean,
 }
 
-const initialState: UserState = {
-    accessToken: '',
-}
-
 const userSlice = createSlice({
     name: 'userSlice',
     initialState: {
