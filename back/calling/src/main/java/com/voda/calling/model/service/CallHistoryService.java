@@ -1,5 +1,7 @@
 package com.voda.calling.model.service;
 
+import com.querydsl.core.Tuple;
+import com.voda.calling.mapper.CallHistoryMapper;
 import com.voda.calling.model.dto.CallHistory;
 import com.voda.calling.model.dto.RecentCall;
 import com.voda.calling.repository.CallHistoryRepository;
@@ -15,6 +17,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +36,9 @@ public class CallHistoryService {
 
     @Autowired
     CallHistoryRepository callHistoryRepository;
+
+    @Autowired
+    CallHistoryMapper callHistoryMapper;
 
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
@@ -125,8 +131,32 @@ public class CallHistoryService {
     }
 
     public List<RecentCall> getRecentCallList(String email) {
-        List<RecentCall> list = callHistoryRepository.findAllByUserEmail(email);
-        return list;
+        List<Map<String, Object>> list = callHistoryMapper.findRecentCall(email);
+        List<RecentCall> recentCallList = new ArrayList<>();
+        String startTime = "2023-07-24 08:10:30";
+        String EndTime = "2023-07-24 08:10:30";
+        for (Map<String, Object> item : list){
+            if(item.get("call_starttime")!=null){
+                startTime = item.get("call_starttime").toString();
+            }
+
+            if(item.get("call_endtime")!=null){
+                EndTime = item.get("call_endtime").toString();
+            }
+
+            log.info(item.get("senderEmail").toString());
+
+            RecentCall r = RecentCall.builder()
+                    .senderEmail(item.get("senderEmail").toString())
+                    .senderName(item.get("senderName").toString())
+                    .receiverEmail(item.get("receiverEmail").toString())
+                    .receiverName(item.get("receiverName").toString())
+                    .startTime(startTime)
+                    .endTime(EndTime)
+                    .build();
+            recentCallList.add(r);
+        }
+        return recentCallList;
     }
 
 

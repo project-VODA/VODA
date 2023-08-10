@@ -24,21 +24,13 @@ public class JwtUtil {
     /**
      * user정보를 담고있는 accessToken 발행하기
      *
-     * @param user
+     * @param userEmail
      * @return accessToken
      */
-    public String createAccessToken(User user, UserSetting userSetting){
+    public String createAccessToken(String userEmail){
         // payload 내용
         Claims claims = Jwts.claims();
-        claims.put("userEmail", user.getUserEmail());
-        claims.put("userName", user.getUserName());
-        claims.put("userHandicap", user.getUserHandicap());
-        claims.put("role", user.getRole());
-
-        if(userSetting != null){
-            claims.put("typeNo", userSetting.getUsersettingTypeNo());
-            claims.put("screenType", userSetting.getUsersettingScreenType());
-        }
+        claims.put("userEmail", userEmail);
 
         return Jwts.builder()
                 .setHeaderParam("typ", "JWT") // 헤더에 타입 명시
@@ -56,13 +48,11 @@ public class JwtUtil {
      */
     public String createRefreshToken(){
 
-        Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
-
         return Jwts.builder()
                 .setHeaderParam("typ", "JWT")
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiredMs * 24 * 7)) // 일주일
-                .signWith(key, SignatureAlgorithm.HS256)
+                .signWith(getKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 

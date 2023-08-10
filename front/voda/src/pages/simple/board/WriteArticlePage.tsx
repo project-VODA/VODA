@@ -6,7 +6,7 @@ import 'react-quill/dist/quill.snow.css';
 
 import { registArticle } from '../../../apis/board';
 
-import Title from '../../../components/Title';
+import SimpleTitle from '../../../components/SimpleTitle';
 import Input from '../../../components/InputText';
 import RegistButton from '../../../components/RegisterButton';
 import { UserInfoType } from '../../../store/userSlice';
@@ -78,14 +78,15 @@ const SimpleWriteArticle = () => {
 
   return (
     <>
-      <StyledLink to='' aria-label='새 문의글을 작성하는 페이지입니다.'>
-        <Title title='문의글 작성' />
+      <StyledLink to='/home' aria-label='새 게시물을 작성하는 페이지입니다. 홈 페이지로 이동하시려면 이 버튼을 누르세요.'>
+        <SimpleTitle imgSrc='SimpleLogo' aria-label='고객의 소리함 페이지입니다.'/>
       </StyledLink>
       <Input
         type="text"
         placeholder="제목"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+        aria-label="새 게시물의 제목을 입력하세요"
       />
       <QuillContainer>
         <StyledQuill
@@ -94,7 +95,9 @@ const SimpleWriteArticle = () => {
           placeholder="건의하고 싶은 내용을 자세히 입력해주세요"
           modules={{
             toolbar: [
-              [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+              [ { 'header': '1', 'aria-label': 'H1 글자 크기' },
+                { 'header': '2', 'aria-label': 'H2 글자 크기' },
+                { 'font': [], 'aria-label': '글씨체 설정' } ],
               [{ 'list': 'ordered' }, { 'list': 'bullet' }],
               ['bold', 'italic', 'underline'],
               [{ 'color': [] }, { 'background': [] }],

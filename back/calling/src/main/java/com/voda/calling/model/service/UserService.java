@@ -35,6 +35,9 @@ public class UserService {
     PasswordEncoder passwordEncoder;
 
     @Autowired
+    NotificationService notificationService;
+
+    @Autowired
     JwtUtil jwtUtil;
 
     private static final int IS_CANCELED = 1; // 탈퇴 유저
@@ -73,16 +76,16 @@ public class UserService {
         if (user == null) { // 등록이 안된 유저인 경우
             log.info("{}에 해당하는 유저 없음", userEmail);
             throw new NotRegisteredException();
-        } else if(user.getUserToken() != null) {
-            log.info("{} 이미 로그인 함", userEmail);
-            throw new AlreadyLoginedException();
-        }else if(!passwordEncoder.matches(userPass, user.getUserPass())) {// 비밀번호가 틀린 경우
+        } else if(!passwordEncoder.matches(userPass, user.getUserPass())) {// 비밀번호가 틀린 경우
             log.info("{}유저 로그인 실패: 비밀번호 오류", userEmail);
             throw new PasswordWrongException();
+        }else if(user.getUserToken() != null) { // 다중 로그인 또는 정상적 로그아웃이 이뤄지지 않은 경우
+            log.info("{} 이미 로그인 함", userEmail);
+            notificationService.send("logout", userEmail, userEmail, null, null, -1, null);
         }
 
 
-        Optional<UserSetting> userSetting = userSettingRepository.findById(userEmail);
+            Optional<UserSetting> userSetting = userSettingRepository.findById(userEmail);
         Map<String, Object> tokens = new HashMap<>();
         // accessToken
         tokens.put("accessToken", jwtUtil.createAccessToken(user, userSetting.get()));
@@ -152,7 +155,7 @@ public class UserService {
         User user = userRepository.findUserByUserTokenAndUserCancel(refreshToken, IS_NOT_CANCELED);
         Optional<UserSetting> userSetting = userSettingRepository.findById(user.getUserEmail());
         if(user !=  null){
-            return jwtUtil.createAccessToken(user, userSetting.get());
+            return jwtUtil.createAccessToken(user.getUserEmail());
         }
 
         return null;
