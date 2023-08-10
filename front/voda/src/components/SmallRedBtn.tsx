@@ -20,6 +20,7 @@ const SmallRedButton = styled('button')<ThemeProps>`
   margin: 8px;
   border: 1px solid ${({ theme }) => theme.text};
   background: #FF0000;
+  border: none;
   color: ${({ theme }) =>
     theme === SimpleTheme ? '#ffffff' : '#003566'};
 

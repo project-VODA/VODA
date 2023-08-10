@@ -143,11 +143,11 @@ const UserSearchList = () => {
                 <td>{user.userEmail}</td>
                 <td>
                   <div style={{ display: 'flex', gap: '10px' }}>
-                  <Button onClick={() => handleCalling(user)} text="통화" aria-label={`${user.userName} 님에게 통화하시려면 버튼을 누르세요.`}/>
+                  <Button className="callButton" onClick={() => handleCalling(user)} text="통화" aria-label={`${user.userName} 님에게 통화하시려면 버튼을 누르세요.`}/>
                     {user.friend ? (
-                      <RedButton onClick={() => handleDeleteFriend(user)} text="삭제" aria-label={`${user.userName} 님을 친구목록에서 삭제하시려면 버튼을 누르세요.`} />
+                      <RedButton className="delButton" onClick={() => handleDeleteFriend(user)} text="삭제" aria-label={`${user.userName} 님을 친구목록에서 삭제하시려면 버튼을 누르세요.`} />
                     ) : (
-                      <Button onClick={() => handleRegistFriend(user)} text="친구추가" aria-label={`${user.userName} 님을 친구목록에 추가 하시려면 버튼을 누르세요.`} />
+                      <Button className="addButton" onClick={() => handleRegistFriend(user)} text="친구추가" aria-label={`${user.userName} 님을 친구목록에 추가 하시려면 버튼을 누르세요.`} />
                     )}
                   </div>
                 </td>
