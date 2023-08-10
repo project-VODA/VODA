@@ -138,12 +138,13 @@ const UserDropDown = styled("button")`
 `;
 
 const MenuLinkContainer = styled("span")`
-display: flex;
-align-items: center;
-text-decoration: none;
-color: #282424; 
-font-size: 1rem;;
-white-space: nowrap;
+  display: flex;
+  align-items: center;
+
+  text-decoration: none;
+  color: #282424; 
+  font-size: 1rem;;
+  white-space: nowrap;
 `
 
 const MenuLink = styled(Link)`
@@ -154,10 +155,9 @@ const MenuLink = styled(Link)`
 `;
 
 const MenuButton = styled("button")`
-  text-decoration: none;
-  color: inherit;
+  border: none;
+  background-color: white;
   font-weight: bolder;
-  font-size: 1.2rem;
 `
 
 const UserInfoText = styled("span")`
@@ -197,6 +197,19 @@ const DropDownMenu = styled.div<DropDownMenuProps>`
   }
 
   a:hover {
+    background-color: #f1f1f1;
+  }
+
+  button {
+    width: 100%;
+    display: block;
+    padding: 8px 16px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.3s;
+  }
+
+  button:hover {
     background-color: #f1f1f1;
   }
 `;
@@ -295,10 +308,7 @@ export default function Navigation() {
               <MenuLink to="/feedback">고객의소리함</MenuLink>
             </ChannelButton>
             <ChannelButton>
-              <MenuLink to="/video">비디오</MenuLink>
-            </ChannelButton>
-            <ChannelButton>
-              <MenuLink to="/test">테스트</MenuLink>
+              <MenuLink to="/video">테스트</MenuLink>
             </ChannelButton>
             
             <UserDropDown onClick={handleDropDownToggle}>
