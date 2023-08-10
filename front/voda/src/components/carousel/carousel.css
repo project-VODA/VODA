@@ -28,7 +28,7 @@
   height: 100%;
   object-fit: cover;
   transition: opacity 0.5s ease;
-  opacity: 1;
+  opacity: 0.6;
 }
 
 .caption {
@@ -88,7 +88,8 @@
   color: #001d3d;
   font-size: 28px;
   cursor: pointer;
-  padding: 10px;
+  padding: 20px;
+  z-index: 1;
 }
 
 .prev-btn {
