@@ -14,10 +14,10 @@ import { offCalling } from "../apis/calling";
 import ToolbarComponentClass from './toolbar/ToolbarComponentClass';
 import ToolbarComponent from './toolbar/ToolbarComponent';
 
-export const getUserHandicap = async () => {
-  const res = await axiosServer().get(`/users/mypage`);
-  return res.data.useHandicap;
-}
+// export const getUserHandicap = async () => {
+//   const res = await axiosServer().get(`/users/mypage`);
+//   return res.data.useHandicap;
+// }
 
 var localUser = new UserModel();
 const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8080/voda/';
@@ -543,17 +543,17 @@ class VideoRoomComponent extends Component {
           ))}
           {localUser !== undefined && localUser.getStreamManager() !== undefined && (
             <div className="OT_root OT_publisher custom-class" id="localUser">
-              <span>
-                {getUserHandicap ? (<SettingButton tabIndex={1} id='hearExpression' text='표정 듣기' onClick={this.hearExpression} aria-label='표정 듣기 버튼입니다.'  />
-                ) : (<SettingButton tabIndex={1} id='sendExpression' text='표정 보내기' onClick={this.sendExpression} aria-label='표정 보내기 버튼입니다.' />
-                )}
-                {/* <SettingButton id='hearExpression' text='표정 듣기' onClick={this.hearExpression} aria-label='표정 듣기 버튼입니다.' />
-                              <SettingButton id='sendExpression' text='표정 보내기' onClick={this.sendExpression} aria-label='표정 보내기 버튼입니다.' /> */}
-              </span>
               <StreamComponent user={localUser} handleNickname={this.nicknameChanged} handleExpressionData={this.handleExpressionDataFromStream}/>
             </div>
           )}
-        </div>
+          </div>
+          {/* <div>
+            {getUserHandicap ? (<SettingButton tabIndex={1} id='hearExpression' text='표정 듣기' onClick={this.hearExpression} aria-label='표정 듣기 버튼입니다.'  />
+            ) : (<SettingButton tabIndex={1} id='sendExpression' text='표정 보내기' onClick={this.sendExpression} aria-label='표정 보내기 버튼입니다.' />
+            )}
+            <SettingButton id='hearExpression' text='표정 듣기' onClick={this.hearExpression} aria-label='표정 듣기 버튼입니다.' />
+                          <SettingButton id='sendExpression' text='표정 보내기' onClick={this.sendExpression} aria-label='표정 보내기 버튼입니다.' />
+        </div> */}
       </div>
     );
   }
