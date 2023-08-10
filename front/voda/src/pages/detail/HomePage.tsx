@@ -7,6 +7,10 @@ import Carousel from "../../components/carousel/carousel";
 const DetailPage = () => {
   
   const navigate = useNavigate();
+  
+  const [accessTokenRedux, isLoginRedux, userEmail, screenType]: [string, boolean, string, number] = useSelector((state:RootState) => {
+    return [state.user.accessToken, state.user.isLogin, state.user.userInfo.userEmail, state.user.userSetting.screenType];
+  })
 
   const redirectAbout = () => {
     navigate('/about')
@@ -19,6 +23,8 @@ const DetailPage = () => {
   const redirectFeedback = () => {
     navigate('/feedback')
   };
+
+
 
   const slides = [
     {
