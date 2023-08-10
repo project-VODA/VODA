@@ -1,12 +1,10 @@
 package com.voda.calling.controller;
 
-import com.querydsl.core.Tuple;
 import com.voda.calling.model.dto.*;
 import com.voda.calling.model.service.CallHistoryService;
 import com.voda.calling.model.service.NotificationService;
 import com.voda.calling.model.service.UserCallHistoryService;
 import com.voda.calling.model.service.UserService;
-import com.voda.calling.repository.CallHistoryRepository;
 import com.voda.calling.util.JwtUtil;
 import io.openvidu.java.client.*;
 import io.swagger.annotations.Api;
@@ -19,9 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -154,6 +150,7 @@ public class MeetingController {
 
         LocalDateTime now = LocalDateTime.now();
         for (RecentCall recent : mapList) {
+            log.info(recent.getStartTime() + "-" +recent.getEndTime());
             if(recent.getStartTime()!=null){
                 log.info("recent.getStartTime() : {}", recent.getStartTime());
                 LocalDateTime d = LocalDateTime.parse(recent.getStartTime(),
@@ -174,7 +171,7 @@ public class MeetingController {
         CallHistory currnentCallHistory = callHistoryService.getCallHistory(callNo);
         callHistoryService.updateCallStatus(currnentCallHistory,2);
         callHistoryService.updateCallTime(currnentCallHistory, "end");
-
+        log.info("수신자 : {}, 송신자: {}", currnentCallHistory.getCallReceiver(), currnentCallHistory.getCallSender());
         notificationService.send("reject",
                                     currnentCallHistory.getCallReceiver(),
                                     currnentCallHistory.getCallSender(),

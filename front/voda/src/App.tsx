@@ -31,6 +31,7 @@ import SimpleRoom from './pages/simple/WaitingRoomPage';
 import SimpleFeedBack from './pages/simple/FeedBackPage';
 import SimpleWriteArticle from './pages/simple/board/WriteArticlePage';
 import SimpleDetailArticle from './pages/simple/board/DetailArticlePage';
+import SimpleColor from './pages/simple/ColorPage';
 
 import DetailHomePage from './pages/detail/HomePage';
 import DetailAbout from './pages/detail/AboutPage';
@@ -39,10 +40,11 @@ import DetailPass from './pages/detail/TemporaryPassPage';
 import DetailSignup from './pages/detail/SignupPage';
 import DetailMyPage from './pages/detail/MyPage';
 import DetailEnvSettingPage from './pages/detail/EnvSettingPage';
-import DetailVideo from './pages/detail/faceExpressions';
+import DetailVideo from './pages/detail/VideoPage';
+import FaceVideo from './pages/detail/faceExpressions';
 import DetailRoom from './pages/detail/WaitingRoomPage';
 import DetailFeedBack from './pages/detail/FeedBackPage';
-import TestPage from './pages/detail/TestPage';
+import DetailColor from './pages/detail/ColorPage';
 
 
 // 스타일 & 모드(mode)
@@ -136,7 +138,13 @@ const App: React.FC = () => {
           <ModeToggle />
           <Routes>
             {commonRoutes.map((route) => (
-              <Route key={route.path} path={route.path} element={<div style={{ marginTop: route.path === "/home" ? "0" : "63px", }}>{route.element}</div>} />
+              <Route key={route.path} path={route.path} element={<div style={{ marginTop:
+                route.path === "/home" ||
+                (localStorage.getItem('theme') === 'simple' && route.path === '/color') ||
+                (localStorage.getItem('theme') === 'simple' && route.path === '/about') ||
+                (localStorage.getItem('theme') === 'simple' && route.path === '/mypage') 
+                ? "0" 
+                : "63px", }}>{route.element}</div>} />
             ))}
           </Routes>
         </Router>

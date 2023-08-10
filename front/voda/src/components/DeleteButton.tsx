@@ -13,13 +13,14 @@ interface ThemeProps {
 }
 
 const DeleteButton = styled('button')<ThemeProps>`
-  width: 130px;
+  width: 8vw;
   height: 40px;
   border-radius: 15px;
-  font-size: 18px;
+  font-size: 1.3vw;
   padding: 8px;
   margin: 8px;
   background: #ff0000;
+  border: none;
   color: ${({ theme }) =>
     theme === SimpleTheme ? '#ffffff' : '#003566'};
 
@@ -35,15 +36,16 @@ const DeleteButton = styled('button')<ThemeProps>`
 export interface ButtonProps {
   text: string;
   onClick: (event: any) => void;
-  'aria-label'?: string
+  'aria-label'?: string;
+  className? : string;
 }
 
-export default function Register({ text, onClick, "aria-label":ariaLabel }: ButtonProps ) {
+export default function Register({ text, onClick, "aria-label":ariaLabel, className }: ButtonProps ) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <>
-      <DeleteButton theme={theme} onClick={onClick} aria-label={ariaLabel}>{text}</DeleteButton>
+      <DeleteButton className='' theme={theme} onClick={onClick} aria-label={ariaLabel}>{text}</DeleteButton>
     </>
   );
 }

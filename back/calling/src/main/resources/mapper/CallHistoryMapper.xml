@@ -6,8 +6,8 @@
     <select id="findRecentCall" parameterType="String" resultType="Map">
         SELECT user1.user_email as senderEmail, user1.user_name as senderName, user2.user_email as receiverEmail, user2.user_name as receiverName,
                MAX(callhistory.call_no) AS recent_call_no,
-               DATE_FORMAT(MAX(callhistory.call_starttime), '%Y-%m-%d %H:%m:%s') AS call_starttime,
-               DATE_FORMAT(MAX(callhistory.call_endtime), '%Y-%m-%d %H:%m:%s') AS call_endtime
+               DATE_FORMAT(MAX(callhistory.call_starttime), '%Y-%m-%d %H:%i:%s') AS call_starttime,
+               DATE_FORMAT(MAX(callhistory.call_endtime), '%Y-%m-%d %H:%i:%s') AS call_endtime
         FROM
             callhistory
         JOIN

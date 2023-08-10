@@ -12,10 +12,10 @@ interface ThemeProps {
 }
 
 const SettingButton = styled('button')<ThemeProps>`
-  width: 130px;
+  width: 11vw;
   height: 40px;
   border-radius: 15px;
-  font-size: 18px;
+  font-size: 1.3vw;
   padding: 8px;
   margin: 8px;
   border: 1px solid ${({ theme }) => theme.text};
