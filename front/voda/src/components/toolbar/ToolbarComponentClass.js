@@ -3,12 +3,19 @@ import "./ToolbarComponent.css";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
+import { axiosServer } from "../../apis/server";
 
 import SettingButton from "../../components/SettingButton";
 import DeleteButton from "../../components/DeleteButton";
 
 
 const logo = require("../../assets/images/logo_yellow.png");
+
+/* 표정 버튼 이동 - KSH (VideoRoomComponent.js -> ToolbarComponentClass.js*/
+export const getUserHandicap = async () => {
+  const res = await axiosServer().get(`/users/mypage`);
+  return res.data.useHandicap;
+}
 
 export default class ToolbarComponentClass extends Component {
   constructor(props) {
@@ -55,12 +62,18 @@ export default class ToolbarComponentClass extends Component {
 
             {this.props.sessionId && (
               <div id="titleContent">
-                <span id="session-title">{mySessionId}</span>
+                <span id="session-title">{}</span>
               </div>
             )}
           </div>
 
           <div className="buttonsContent">
+            {/* 표정 버튼 이동 - KSH (VideoRoomComponent.js -> ToolbarComponentClass.js*/}
+            <span>
+              {getUserHandicap ? (<SettingButton tabIndex={1} id='hearExpression' text='표정 듣기' onClick={this.hearExpression} aria-label='표정 듣기 버튼입니다.'  />
+              ) : (<SettingButton tabIndex={1} id='sendExpression' text='표정 보내기' onClick={this.sendExpression} aria-label='표정 보내기 버튼입니다.' />
+              )}
+            </span>
             <span id="navMicButton" onClick={this.micStatusChanged} >
               {localUser !== undefined && localUser.isAudioActive() ? (
                 <SettingButton
