@@ -231,9 +231,8 @@ const HamburgerButton = styled.button`
 `;
 
 export default function Navigation() {
-  const [userInfo, isLogin] = useAppSelector((state) => {
-    return [state.user.userInfo, state.user.isLogin];
-  })
+  const userInfo = useAppSelector((state) => state.user.userInfo);
+  const isLogin = useAppSelector((state) => state.user.isLogin);
 
   const [isDropDownVisible, setDropDownVisible] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);

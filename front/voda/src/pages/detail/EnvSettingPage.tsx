@@ -37,9 +37,9 @@ const ButtonContainer = styled.div`
 
 const SimpleEnvSettingPage = () => {
   // redux에서 저장된 정보 가져오기
-  const [userInfo, userSetting] = useAppSelector((state) => {
-    return [state.user.userInfo, state.user.userSetting];
-  })
+  const userInfo = useAppSelector((state) => state.user.userInfo);
+  const userSetting = useAppSelector((state) => state.user.userSetting);
+
   const [notificationType, setNotificationType] = useState(userSetting.typeNo);
   const [screenMode, setScreenMode] = useState(userSetting.screenType);
 

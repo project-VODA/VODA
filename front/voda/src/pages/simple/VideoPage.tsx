@@ -24,9 +24,7 @@ const SimpleVideo = () => {
   const navigate = useNavigate();
 
   // const location = useLocation();
-  const [sessionToken, callNo] = useAppSelector((state) => {
-    return [state.call.callInfo.sessionToken, state.call.callInfo.callNo];
-  });
+  const {sessionToken, callNo} = useAppSelector((state) => state.call.callInfo);
 
   useEffect(() => {
     let isMounted = true;
