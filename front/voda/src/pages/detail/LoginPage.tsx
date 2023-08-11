@@ -46,10 +46,7 @@ const SimpleLogin = () => {
         .then((res) => {
           alert("로그인 성공");
           // userSlice에 저장
-          dispatch(userSliceLogin ({
-            accessToken: res.accessToken,
-            refreshToken: res.refreshToken
-          }));
+          dispatch(userSliceLogin (res));
           localStorage.setItem('theme', res.userSetting.screenType === 0 ? "detail" : "simple");
           console.log("스크린타입: " + res.userSetting.screenType);
           // 메인페이지로 리다이렉트
