@@ -40,8 +40,8 @@ const SimpleEnvSettingPage = () => {
   const userInfo = useAppSelector((state) => state.user.userInfo);
   const userSetting = useAppSelector((state) => state.user.userSetting);
 
-  const [notificationType, setNotificationType] = useState(userSetting.typeNo);
-  const [screenMode, setScreenMode] = useState(userSetting.screenType);
+  const [notificationType, setNotificationType] = useState(userSetting.usersettingTypeNo);
+  const [screenMode, setScreenMode] = useState(userSetting.usersettingScreenType);
 
   const userSettingRequest = {
     userEmail: userInfo.userEmail,
