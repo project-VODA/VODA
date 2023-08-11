@@ -41,12 +41,13 @@ class VideoRoomComponent extends Component {
       localUser: undefined,
       subscribers: [],
       currentVideoDevice: undefined,
-      currentExpressionData: undefined,
+      // currentExpressionData: undefined,
     };
 
     this.audioPlayer = new Audio();
     this.typeNo = this.props.typeNo;
     this.isIncall = this.props.isIncall;
+    this.expression = this.props.expression;
 
     this.joinSession = this.joinSession.bind(this);
     this.leaveSession = this.leaveSession.bind(this);
@@ -58,6 +59,8 @@ class VideoRoomComponent extends Component {
     this.toggleFullscreen = this.toggleFullscreen.bind(this);
     this.switchCamera = this.switchCamera.bind(this);
     this.checkSize = this.checkSize.bind(this);
+    this.hearExpression = this.hearExpression.bind(this);
+    this.sendExpression = this.sendExpression.bind(this);
   }
 
   componentDidMount() {
@@ -497,7 +500,7 @@ class VideoRoomComponent extends Component {
 		if (this.state.localUser && this.state.localUser.getStreamManager()) {
 		  // Send the text data as a broadcast message to all participants
 		  this.state.session.signal({
-			data: this.state.currentExpressionData.expression,
+			data: this.state.expression,
 			to: [], // Empty array means broadcast to everyone
 			type: 'send-expression', // Use the same type as the receiver is listening to
 		  })
@@ -511,27 +514,27 @@ class VideoRoomComponent extends Component {
 	}
 
   // voda -KMJ
-	handleExpressionDataFromStream = (expressionData) => {
-		if (expressionData && expressionData.length > 0) {
-			// console.log('하위에서 콜백 받은 데이터: ', expressionData);
-			let highestExpression = { expression: '', probability: 0 };
-			expressionData.forEach((data) => {
-				if (data) {     // data 일부 객체에 대해서 undefined 된 경우 무시,
-					// console.log('가장 높게 검출된 표정 데이터:', data);
-					for (const [expression, probability] of Object.entries(data)) {
-						// console.log(expression, probability);
-						// Object.entries 메서드로 순회하기 때문에 객체의 프로퍼티 중 하나라도 undefined이면 for 문에서 무시됩니다.
-						if (probability > highestExpression.probability) {
-							highestExpression = { expression, probability };
-						}
-					}
-				}
-			});
+	// handleExpressionDataFromStream = (expressionData) => {
+	// 	if (expressionData && expressionData.length > 0) {
+	// 		// console.log('하위에서 콜백 받은 데이터: ', expressionData);
+	// 		let highestExpression = { expression: '', probability: 0 };
+	// 		expressionData.forEach((data) => {
+	// 			if (data) {     // data 일부 객체에 대해서 undefined 된 경우 무시,
+	// 				// console.log('가장 높게 검출된 표정 데이터:', data);
+	// 				for (const [expression, probability] of Object.entries(data)) {
+	// 					// console.log(expression, probability);
+	// 					// Object.entries 메서드로 순회하기 때문에 객체의 프로퍼티 중 하나라도 undefined이면 for 문에서 무시됩니다.
+	// 					if (probability > highestExpression.probability) {
+	// 						highestExpression = { expression, probability };
+	// 					}
+	// 				}
+	// 			}
+	// 		});
 	
-			// console.log('가장 높게  검출된 표정:', highestExpression);
-			this.setState({ currentExpressionData: highestExpression });
-		}
-	}
+	// 		// console.log('가장 높게  검출된 표정:', highestExpression);
+	// 		this.setState({ currentExpressionData: highestExpression });
+	// 	}
+	// }
 
   // voda - KJW
 	hearExpression = () => {
@@ -565,6 +568,8 @@ class VideoRoomComponent extends Component {
           toggleFullscreen={this.toggleFullscreen}
           switchCamera={this.switchCamera}
           leaveSession={this.leaveSession}
+          hearExpression={this.hearExpression}
+          sendExpression={this.sendExpression}
         />
 
         <div id="layout" className="bounds">
@@ -575,7 +580,8 @@ class VideoRoomComponent extends Component {
           ))}
           {localUser !== undefined && localUser.getStreamManager() !== undefined && (
             <div className="OT_root OT_publisher custom-class" id="localUser">
-              <StreamComponent user={localUser} handleNickname={this.nicknameChanged} handleExpressionData={this.handleExpressionDataFromStream}/>
+              {/* <StreamComponent user={localUser} handleNickname={this.nicknameChanged} handleExpressionData={this.handleExpressionDataFromStream}/> */}
+              <StreamComponent user={localUser} handleNickname={this.nicknameChanged}/>
             </div>
           )}
           </div>
@@ -629,7 +635,8 @@ class VideoRoomComponent extends Component {
 const mapStateToProps = state => {
   return {
     typeNo: state.user.userSetting.typeNo,
-    isIncall: state.call.isIncall
+    isIncall: state.call.isIncall,
+    currentExpressionData : state.expression
   };
 };
 

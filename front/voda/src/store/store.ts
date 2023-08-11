@@ -34,6 +34,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import storageSession from 'redux-persist/lib/storage/session'
 import userSlice from "./userSlice";
 import callSlice from "./callSlice";
+import expressionSlice from "./expressionSlice";
 import persistStore from "redux-persist/es/persistStore";
 import persistReducer from "redux-persist/es/persistReducer";
 import thunk from "redux-thunk";
@@ -42,6 +43,7 @@ import thunk from "redux-thunk";
 const reducers = combineReducers({
   user: userSlice.reducer,
   call: callSlice.reducer,
+  expression : expressionSlice.reducer,
 });
 
 const persistConfig = {
