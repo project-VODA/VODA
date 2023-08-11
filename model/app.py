@@ -9,6 +9,7 @@ from color_recognition_api import knn_classifier
 
 app = Flask(__name__)
 CORS(app)
+context_path = '/flask'  # 원하는 컨텍스트 경로 설정
 
 PATH = 'training.data'
 
@@ -30,12 +31,12 @@ def classify_color(image_path):
     return prediction
 
 
-@app.route('/hello')
+@app.route(context_path + '/hello')
 def hello_world():  # put application's code here
     return 'Hello World!'
 
 
-@app.route('/color', methods=['POST'])
+@app.route(context_path + '/color', methods=['POST'])
 def index():  # put application's code here
     if request.method == 'POST':
         try:
