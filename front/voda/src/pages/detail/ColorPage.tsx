@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { colorRecognition } from "../../apis/color";
 import { tts } from "../../apis/tts"
 import { CgColorPicker } from "react-icons/cg";
+import * as faceapi from 'face-api.js';
 
 const StyledContainer = styled.div`
   position: relative;
@@ -48,11 +49,11 @@ const ColorPage = () => {
     padding: '10px 30px',
   };
 
-  // const capturedImageStyle: React.CSSProperties = {
-  //   transform: 'rotateY(180deg)',
-  //   WebkitTransform: 'rotateY(180deg)',
-  //   width: '300px',
-  // };
+  const capturedImageStyle: React.CSSProperties = {
+    transform: 'rotateY(180deg)',
+    WebkitTransform: 'rotateY(180deg)',
+    width: '300px',
+  };
 
   const [capturedImage, setCapturedImage] = useState(null);
   const [color, setColor] = useState(null);
@@ -135,7 +136,29 @@ const ColorPage = () => {
   };
 
 
-  function captureScreen() {
+  // function captureScreen() {
+  //   const video = videoRef.current;
+  //   const canvas = canvasRef.current;
+
+  //   if (video && canvas) {
+  //     canvas.width = video.videoWidth;
+  //     canvas.height = video.videoHeight;
+
+  //     const ctx = canvas.getContext('2d');
+  //     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+  //     canvas.toBlob((blob: Blob | null) => {
+  //       if (blob) {
+  //         const formData = new FormData();
+  //         formData.append('image', blob);
+  //         setCapturedImage(URL.createObjectURL(blob));
+  //         getColor(formData);
+  //       }
+  //     });
+  //   }
+  // }
+
+  const captureLeftEye = async () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
 
@@ -144,18 +167,115 @@ const ColorPage = () => {
       canvas.height = video.videoHeight;
 
       const ctx = canvas.getContext('2d');
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      ctx?.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-      canvas.toBlob((blob: Blob | null) => {
-        if (blob) {
-          const formData = new FormData();
-          formData.append('image', blob);
-          setCapturedImage(URL.createObjectURL(blob));
-          getColor(formData);
+      await Promise.all([
+        faceapi.nets.tinyFaceDetector.loadFromUri('/models'), // 모델 로드
+        faceapi.nets.faceLandmark68Net.loadFromUri('/models'), // 모델 로드
+      ]);
+
+      const detections = await faceapi.detectSingleFace(video, 
+        new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks();
+
+      if (detections) {
+        console.log(detections)
+        const faceBox = detections.detection.box;
+        const landmarks = detections.landmarks;
+
+        const startPoint1 = landmarks.positions[42];
+        const startPoint2 = landmarks.positions[43];
+        const endPoint1 = landmarks.positions[45];
+        const endPoint2 = landmarks.positions[46];
+
+        const startX = startPoint1.x;
+        const startY = startPoint2.y;
+        const width = endPoint1.x - startPoint1.x;
+        const height = endPoint2.y - startPoint2.y;
+        console.log('시작:', startX, startY);
+        console.log('끝:', endPoint1.x, endPoint2.y);
+        console.log('너비:', width);
+        console.log('높이:', height);
+
+        const faceCanvas = document.createElement('canvas');
+        const faceCtx = faceCanvas.getContext('2d');
+
+        if (faceBox) {
+          faceCanvas.width = width;
+          faceCanvas.height = height;
+
+          // faceCtx?.drawImage(canvas, faceBox.x, faceBox.y, faceBox.width, faceBox.height, 0, 0, faceBox.width, faceBox.height);
+          faceCtx?.drawImage(canvas, startX, startY, width, height, 0, 0, width, height);
+
+          faceCanvas.toBlob((blob: Blob | null) => {
+            if (blob) {
+              const formData = new FormData();
+              formData.append('image', blob);
+              setCapturedImage(URL.createObjectURL(blob));
+              getColor(formData);
+            }
+          });
         }
-      });
+      }
     }
   }
+
+  // const captureFaceCheek = async () => {
+  //   const video = videoRef.current;
+  //   const canvas = canvasRef.current;
+
+  //   if (video && canvas) {
+  //     canvas.width = video.videoWidth;
+  //     canvas.height = video.videoHeight;
+
+  //     const ctx = canvas.getContext('2d');
+  //     ctx?.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+  //     await Promise.all([
+  //       faceapi.nets.tinyFaceDetector.loadFromUri('/models'), // 모델 로드
+  //       faceapi.nets.faceLandmark68Net.loadFromUri('/models'), // 모델 로드
+  //     ]);
+
+  //     const detections = await faceapi.detectSingleFace(video, 
+  //       new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks();
+
+  //     if (detections) {
+  //       console.log(detections)
+  //       const faceBox = detections.detection.box;
+  //       const landmarks = detections.landmarks;
+
+  //       const startPoint = landmarks.positions[35];
+  //       const endPoint = landmarks.positions[5];
+
+  //       const startX = startPoint.x;
+  //       const startY = startPoint.y;
+  //       const width = startPoint.x - endPoint.x;
+  //       const height = endPoint.y - startPoint.y;
+  //       console.log('시작:', startX, startY);
+  //       console.log('끝:', endPoint.x, endPoint.y);
+  //       console.log('너비:', width);
+  //       console.log('높이:', height);
+
+  //       const faceCanvas = document.createElement('canvas');
+  //       const faceCtx = faceCanvas.getContext('2d');
+
+  //       if (faceBox) {
+  //         faceCanvas.width = width;
+  //         faceCanvas.height = height;
+
+  //         // faceCtx?.drawImage(canvas, faceBox.x, faceBox.y, faceBox.width, faceBox.height, 0, 0, faceBox.width, faceBox.height);
+  //         faceCtx?.drawImage(canvas, startX, startY, width, height, 0, 0, width, height);
+
+  //         faceCanvas.toBlob((blob: Blob | null) => {
+  //           if (blob) {
+  //             const formData = new FormData();
+  //             formData.append('image', blob);
+  //             getColor(formData);
+  //           }
+  //         });
+  //       }
+  //     }
+  //   }
+  // }
 
   return (
     <>
@@ -164,16 +284,16 @@ const ColorPage = () => {
           <video style={videoStyle} ref={videoRef} autoPlay></video>
         </VideoContainer>
         <div>
-          <button onClick={captureScreen} style={buttonStyle}>Start <CgColorPicker size={20} /></button>
+          <button onClick={captureLeftEye} style={buttonStyle}>Start <CgColorPicker size={20} /></button>
           <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
           {color && (
             <p style={colorStyle}>인식된 색상: {color}</p>
           )}
-          {/* {capturedImage && (
+          {capturedImage && (
             <div>
               <img style={capturedImageStyle} src={capturedImage} alt="Captured"/>
             </div>
-          )} */}
+          )}
         </div>
       </StyledContainer>
     </>

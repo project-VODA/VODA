@@ -14,5 +14,7 @@ export default function ToolbarComponent(props:any){
   toggleFullscreen={props.toggleFullscreen}
   switchCamera={props.switchCamera}
   leaveSession={props.leaveSession}  
+  hearExpression={props.hearExpression}
+  sendExpression={props.sendExpression}
   />
 }
