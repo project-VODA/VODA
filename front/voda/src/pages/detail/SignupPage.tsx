@@ -9,6 +9,7 @@ import RegisterButton from '../../components/RegisterButton';
 import CheckBox from '../../components/CheckBox';
 import Info from '../../components/InfoText';
 import { sendAuthenticationCode } from '../../apis/email';
+import useErrorHandlers from '../../hooks/useError';
 
 
 const SimpleSignup = () => {
@@ -29,6 +30,8 @@ const SimpleSignup = () => {
     userPass: password,
     userHandicap: handicap ? 1 : 0,
   };
+
+  const errorHandlers = useErrorHandlers();
 
   const handleSignup = async () => {
     let err = false;
@@ -67,34 +70,33 @@ const SimpleSignup = () => {
     if (err) {
       alert(msg);
     } else {
-      registServer(userData)
-        .then((res) => {
-          if(res.userEmail === userData.userEmail) {
-            alert("가입 완료");
-            // 로그인 화면으로 리다이렉트
-            RedirectLogin();
-          }else{
-            console.log("가입 실패");
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-        });
+      handleRegist();
     }
   };
 
-  const handleEmailSender = (e: any) => {
+  const handleRegist = () => {
+    registServer(userData)
+      .then((res) => {
+        alert("가입 완료");
+        RedirectLogin();
+      })
+      .catch((err) => {
+        errorHandlers(err.response.status, handleRegist);
+      })
+  }
+
+  const handleEmailSender = () => {
     sendAuthenticationCode(email)
       .then((res) => {
         setEmailSend(true);
         setAuthenticationCode(res);
       })
       .catch((err) => {
-        console.log(err);
+        errorHandlers(err.response.status, handleEmailSender);
       })
   }
 
-  const handleEmailAuthentication = (e: any) => {
+  const handleEmailAuthentication = () => {
     if (authenticationCode === userCode) {
       alert("인증 성공");
       setEmailAuthentication(true);
@@ -111,7 +113,7 @@ const SimpleSignup = () => {
   const naviagte = useNavigate();
 
   const RedirectLogin = () => {
-    naviagte('/login');
+    naviagte('/');
   }
   // const [isDisabled, setIsDisabled] = useState(false); // 장애 여부 체크 상태를 state로 관리
 

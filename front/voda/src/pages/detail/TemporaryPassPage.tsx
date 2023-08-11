@@ -6,6 +6,7 @@ import Input from '../../components/InputText';
 import SettingButton from '../../components/SettingButton';
 import { sendTemporaryPassword } from '../../apis/email';
 import { Link } from "react-router-dom";
+import useErrorHandlers from '../../hooks/useError';
 
 
 const StyledLink = styled(Link)`
@@ -24,6 +25,7 @@ const ButtonContainer = styled.div`
 
 const SimplePass = () => {
 	const [email, setEmail] = useState('');
+	const errorHandlers = useErrorHandlers();
 
 	const handleEmailSender = () => {
 		sendTemporaryPassword(email)
@@ -34,14 +36,14 @@ const SimplePass = () => {
 				RedirectLogin();
 			})
 			.catch((err) => {
-				console.log(err);
+				errorHandlers(err.response.status, handleEmailSender);
 			})
 	}
 
 	const naviagte = useNavigate();
 
   const RedirectLogin = () => {
-    naviagte('/login');
+    naviagte('/');
   }
 
 	return (

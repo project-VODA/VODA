@@ -29,8 +29,8 @@ const SimpleHomePage = () => {
 
   const navigate = useNavigate();
   const logout = useLogOut();
-  const [accessToken, isLogin, userEmail, screenType] = useAppSelector((state) => {
-    return [state.user.accessToken, state.user.isLogin, state.user.userInfo.userEmail, state.user.userSetting.screenType];
+  const [isLogin, screenType] = useAppSelector((state) => {
+    return [state.user.isLogin, state.user.userSetting.screenType];
   });
 
   useEffect(() => {
