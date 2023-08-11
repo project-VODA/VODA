@@ -110,7 +110,7 @@ const App: React.FC = () => {
     { path: isLogin ? '/setting' : '/', element: theme === SimpleTheme ? <SimpleEnvSettingPage /> : <DetailEnvSettingPage /> },
     { path: isLogin ? '/waiting' : '/', element: theme === SimpleTheme ? <SimpleRoom /> : <DetailRoom/> },
     { path: isLogin ? '/video' : '/', element: theme === SimpleTheme ? <SimpleVideo /> : <DetailVideo /> },
-    { path: '/test', element: <TestPage /> },
+    { path: isLogin ? '/color' : '/', element: theme === SimpleTheme ? <SimpleColor /> : <DetailColor /> },
     { path: isLogin ? '/feedback' : '/', element: theme === SimpleTheme ? <SimpleFeedBack/> : <DetailFeedBack/> },
     { path: isLogin ? '/write' : '/', element: theme === SimpleTheme ? <SimpleWriteArticle/> : <DetailWriteArticle/> },
     { path: isLogin ? '/view/:articleNo' : '/', element: theme === SimpleTheme ? <SimpleDetailArticle/> : <SimpleDetailArticle/> },
