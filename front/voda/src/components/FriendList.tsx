@@ -80,7 +80,7 @@ const FriendList = () => {
         setFriendList(res);
       })
       .catch((err) => {
-        errorhandlers(err.response.status, handleFriendList);
+        errorhandlers(err.response, handleFriendList);
       })
   }
   
@@ -93,7 +93,7 @@ const FriendList = () => {
         handleFriendList();
       })
       .catch((err) => {
-        errorhandlers(err.response.status, handleDeleteFriend, friend);
+        errorhandlers(err.response, handleDeleteFriend, friend);
       })
   }
 
@@ -119,7 +119,7 @@ const FriendList = () => {
         }
       })
       .catch((err) => {
-        errorhandlers(err.response.status, handleCalling);
+        errorhandlers(err.response, handleCalling);
       });
   };
 

@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import { SimpleTheme, DetailTheme, Theme } from '../styles/theme';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
+import { useAppSelector } from './reduxHook';
 
 export const useMode = () => {
   const [theme, setTheme] = useState<Theme>(SimpleTheme);
-  const userSetting = useSelector((state: RootState) => state.user.userSetting);
+  const userSetting = useAppSelector((state) => state.user.userSetting);
   const userTheme = userSetting.screenType === 0 ? DetailTheme : SimpleTheme;
 
   const setMode = (mode: Theme) => {

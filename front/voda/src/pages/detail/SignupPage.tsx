@@ -81,7 +81,7 @@ const SimpleSignup = () => {
         RedirectLogin();
       })
       .catch((err) => {
-        errorHandlers(err.response.status, handleRegist);
+        errorHandlers(err.response, handleRegist);
       })
   }
 
@@ -92,7 +92,7 @@ const SimpleSignup = () => {
         setAuthenticationCode(res);
       })
       .catch((err) => {
-        errorHandlers(err.response.status, handleEmailSender);
+        errorHandlers(err.response, handleEmailSender);
       })
   }
 

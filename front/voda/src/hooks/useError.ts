@@ -11,7 +11,12 @@ const useErrorHandlers = () => {
   const navigate = useNavigate();
   const userEmail = useAppSelector((state) => state.user.userInfo.userEmail);
 
-  const errorHandlers = (statusCode: number, callback: any, param?: any) => {
+  const errorHandlers = (response: any, callback: any, param?: any) => {
+    if(response === undefined){
+      navigate('/error');
+      return;
+    }
+    const statusCode = response.status;
     switch(statusCode) {
       case HttpStatusCode.Unauthorized:
         console.log("401 에러당");

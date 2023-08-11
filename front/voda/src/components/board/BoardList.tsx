@@ -50,7 +50,7 @@ const BoardList: React.FC = () => {
         setArticles(res);
       })
       .catch((err) => {
-        errorHandlers(err.response.status, handleGetArticles);
+        errorHandlers(err.response, handleGetArticles);
       })
   }
   

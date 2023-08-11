@@ -47,7 +47,7 @@ const RecentCalls = () => {
         setCallHistoryList(res);
       })
       .catch((err) => {
-        errorHandlers(err.response.status, handleRecentCall);
+        errorHandlers(err.response, handleRecentCall);
       })
   }
 
@@ -72,7 +72,7 @@ const RecentCalls = () => {
         }
       })
       .catch((err) => {
-        errorHandlers(err.response.status, handleCalling, email);
+        errorHandlers(err.response, handleCalling, email);
       });
   };
 

@@ -59,7 +59,7 @@ const SimpleEnvSettingPage = () => {
         logout();
       })
       .catch((err) => {
-        errorHandlers(err.response.status, handleModify);
+        errorHandlers(err.response, handleModify);
       })
   }
 

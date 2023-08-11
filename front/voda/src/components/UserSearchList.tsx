@@ -69,7 +69,7 @@ const UserSearchList = () => {
         navigate('/video');
       })
       .catch((err) => {
-        errorHandlers(err.response.status, handleCalling, user);
+        errorHandlers(err.response, handleCalling, user);
       });
   };
 
@@ -84,7 +84,7 @@ const UserSearchList = () => {
         handleSearchUser();
       })
       .catch((err) => {
-        errorHandlers(err.response.status, handleRegistFriend, user);
+        errorHandlers(err.response, handleRegistFriend, user);
       })
   };
 
@@ -96,7 +96,7 @@ const UserSearchList = () => {
         handleSearchUser();
       })
       .catch((err) => {
-        errorHandlers(err.response.status, handleDeleteFriend, user);
+        errorHandlers(err.response, handleDeleteFriend, user);
       })
   }
 
@@ -106,7 +106,7 @@ const UserSearchList = () => {
         setUserList(res);
       })
       .catch((err) => {
-        errorHandlers(err.response.status, handleSearchUser);
+        errorHandlers(err.response, handleSearchUser);
       })
   }
 
