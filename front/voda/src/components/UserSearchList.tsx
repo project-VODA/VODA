@@ -15,6 +15,7 @@ import { deleteFriend, registFriend, searchUser } from "../apis/friend";
 import '../styles/simple/SimpleWaitingPage.css'
 import { updateCall } from "../store/callSlice";
 import useErrorHandlers from "../hooks/useError";
+import { useAppDispatch, useAppSelector } from "../hooks/reduxHook";
 
 const inputColor = {
   backgroundColor: 'white',
@@ -31,9 +32,7 @@ type UserList = User[];
 
 const UserSearchList = () => {
   // redux에서 저장된 정보 가져오기
-  const [accessToken, userInfo]: [string, UserInfoType] = useSelector((state: RootState) => {
-    return [state.user.accessToken, state.user.userInfo];
-  })
+  const userInfo = useAppSelector((state) => state.user.userInfo);
 
   const [keyword, setKeyword] = useState('');
   const [userList, setUserList] = useState<UserList>([]);
@@ -51,7 +50,7 @@ const UserSearchList = () => {
   }, [keyword]);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleCalling = (user: User) => {
     const callSendRequest = {
@@ -69,8 +68,7 @@ const UserSearchList = () => {
         navigate('/video');
       })
       .catch((err) => {
-        console.log(err);
-        errorHandlers(err.status, sendCalling, callSendRequest);
+        errorHandlers(err.response.status, handleCalling, user);
       });
   };
 
@@ -82,16 +80,10 @@ const UserSearchList = () => {
     registFriend(friendRegistRequest)
       .then((res) => {
         alert("친구 추가 성공");
-        searchUser(userSearchRequest)
-          .then((res) => {
-            setUserList(res);
-          })
-          .catch((err) => {
-            console.error(err)
-          })
+        handleSearchUser();
       })
       .catch((err) => {
-        console.error(err);
+        errorHandlers(err.response.status, handleRegistFriend, user);
       })
   };
 
@@ -100,16 +92,10 @@ const UserSearchList = () => {
     deleteFriend(user.friendNo)
       .then((res) => {
         alert("친구 삭제 성공");
-        searchUser(userSearchRequest)
-          .then((res) => {
-            setUserList(res);
-          })
-          .catch((err) => {
-            console.error(err);
-          });
+        handleSearchUser();
       })
       .catch((err) => {
-        console.log(err);
+        errorHandlers(err.response.status, handleDeleteFriend, user);
       })
   }
 

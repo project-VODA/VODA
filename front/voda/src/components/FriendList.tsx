@@ -21,6 +21,8 @@ import { RiDeleteBin6Line } from 'react-icons/ri'
 import { ImUserPlus } from 'react-icons/im'
 
 import '../styles/detail/DetailWaitingPage.css'
+import { useAppSelector } from '../hooks/reduxHook';
+import useErrorHandlers from '../hooks/useError';
 
 type Friend = {
   friendNo: number;
@@ -48,39 +50,35 @@ const FriendList = () => {
   // }, [isModalOpen])
 
   // redux에서 저장된 정보 가져오기
-  const [accessToken, userInfo]: [string, UserInfoType] = useSelector((state:RootState) => {
-    return [state.user.accessToken, state.user.userInfo];
-  })
+  const userInfo = useAppSelector((state) => state.user.userInfo);
   
   const [friendList, setFriendList] = useState<FriendsList>([]);
 
-  useEffect(() => {
+  const navigate = useNavigate();
+  const errorhandlers = useErrorHandlers();
+
+  useEffect(handleFriendList, []);
+
+  function handleFriendList() {
     getFriendList(userInfo.userEmail)
       .then((res: FriendsList) => {
         setFriendList(res);
       })
       .catch((err) => {
-        console.log(err);
+        errorhandlers(err.response.status, handleFriendList);
       })
-  }, []);
-
-  const navigate = useNavigate();
+  }
+  
 
   const handleDeleteFriend = (friend: Friend) => {
 
     deleteFriend(friend.friendNo)
       .then((res) => {
         alert("친구 삭제 성공");
-        getFriendList(userInfo.userEmail)
-          .then((res: FriendsList) => {
-            setFriendList(res);
-          })
-          .catch((err) => {
-            console.error(err);
-          })
+        handleFriendList();
       })
       .catch((err) => {
-        console.error(err);
+        errorhandlers(err.response.status, handleDeleteFriend, friend);
       })
   }
 
@@ -107,10 +105,7 @@ const FriendList = () => {
         
       })
       .catch((err) => {
-        if(err===204){
-          alert("!!");
-        }
-        console.error(err);
+        errorhandlers(err.response.status, handleCalling);
       });
   };
 

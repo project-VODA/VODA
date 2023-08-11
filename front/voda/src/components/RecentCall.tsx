@@ -14,6 +14,8 @@ import { updateCall } from "../store/callSlice";
 // react-icons
 import { FiPhoneCall } from "react-icons/fi"
 import '../styles/detail/DetailWaitingPage.css'
+import { useAppDispatch, useAppSelector } from '../hooks/reduxHook';
+import useErrorHandlers from '../hooks/useError';
 
 
 type CallHistory = {
@@ -30,23 +32,24 @@ type CallHistoryList = CallHistory[];
 
 const RecentCalls = () => {
   // redux에서 저장된 정보 가져오기
-  const [accessToken, userInfo]: [string, UserInfoType] = useSelector((state:RootState) => {
-    return [state.user.accessToken, state.user.userInfo];
-  })
+  const userInfo = useAppSelector((state) => state.user.userInfo);
   const [callHistoryList, setCallHistoryList] = useState<CallHistoryList>([]);
 
-  useEffect(() => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const errorHandlers = useErrorHandlers();
+
+  useEffect(handleRecentCall, []);
+
+  function handleRecentCall() {
     getRecentCallList()
       .then((res: CallHistoryList) => {
         setCallHistoryList(res);
       })
       .catch((err) => {
-        console.error(err);
+        errorHandlers(err.response.status, handleRecentCall);
       })
-  }, []);
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  }
 
   const handleCalling = (email: string) => {
     const callSendRequest = {
@@ -67,7 +70,7 @@ const RecentCalls = () => {
         navigate('/video');
       })
       .catch((err) => {
-        console.error(err);
+        errorHandlers(err.response.status, handleCalling, email);
       });
   };
 
