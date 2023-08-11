@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -41,25 +43,12 @@ public class CommentController {
         try{
             List<CommentSearchResponse> comments = commentService.searchAll(articleNo);
 
-//            log.info("시간 변환 시도");
-//            LocalDateTime now = LocalDateTime.now();
-//            for (CommentSearchInterface csr : comments) {
-//                LocalDateTime d = LocalDateTime.parse(csr.getCommentRegTime(),
-//                        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-//                if (d.getYear()==now.getYear() && d.getMonth()==now.getMonth() && d.getDayOfMonth()==now.getDayOfMonth()) {
-//                    csr.setCommentRegTime(d.format(DateTimeFormatter.ofPattern("HH시 mm분")));
-//                }else {
-//                    csr.setCommentRegTime(d.format(DateTimeFormatter.ofPattern("YY.MM.dd")));
-//                }
-//            }
-
             log.info("댓글 목록 가져오기 성공");
             return new ResponseEntity<List<CommentSearchResponse>>(comments, HttpStatus.OK);
         }catch (Exception e) {
             log.info("댓글 목록 가져오기 실패 - 서버(DB) 오류");
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 
     @ApiOperation( value = "댓글 작성", notes = "Comment 객체를 이용해 댓글을 작성하는 api")
@@ -68,7 +57,7 @@ public class CommentController {
             @ApiResponse(code=500, message="댓글 작성 실패 - 서버(DB) 오류")
     })
     @PostMapping()
-    public ResponseEntity<?> writeComment(Comment comment) {
+    public ResponseEntity<?> writeComment(@RequestBody Comment comment) {
         log.info("CommentController - writeComment : 댓글 작성");
         try{
             commentService.write(comment.getUserEmail(), comment.getArticleNo(), comment.getCommentContent());
@@ -78,7 +67,6 @@ public class CommentController {
             log.info("댓글 작성 실패 - 서버(DB) 오류");
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 
     @ApiOperation( value = "댓글 수정", notes = "Comment 객체를 이용해 댓글을 수정하는 api")
@@ -87,7 +75,7 @@ public class CommentController {
             @ApiResponse(code=500, message="댓글 수정 실패 - 서버(DB) 오류")
     })
     @PutMapping()
-    public ResponseEntity<?> modifyComment(Comment comment) {
+    public ResponseEntity<?> modifyComment(@RequestBody Comment comment) {
         log.info("CommentController - modifyComment : 댓글 수정");
         try{
             commentService.modify(comment.getCommentNo(), comment.getUserEmail(), comment.getArticleNo(), comment.getCommentContent());

@@ -35,15 +35,18 @@ export const getComments = async (articleNo: number) => {
 
 // 댓글 작성
 export const registComment = async (comment: Object) => {
-  const res = await axiosServer().post<any>(`/comments`);
+  const res = await axiosServer().post<any>(`/comments`, comment);
+  return res.data;
 }
 
 // 댓글 수정
 export const updateComment = async (comment: Object) => {
-  const res = await axiosServer().put<any>(`/comments`);
+  const res = await axiosServer().put<any>(`/comments`, comment);
+  return res.data;
 }
 
 // 댓글 삭제
 export const deleteComment = async (commentNo: number) => {
   const res = await axiosServer().delete<any>(`/comments/${commentNo}`);
+  return res.data;
 }
