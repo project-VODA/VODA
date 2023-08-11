@@ -24,6 +24,17 @@ color: inherit;
 `;
 
 const DetailRoom = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener( "resize", handleResize );
+  }, []);
   // const [isModalOpen, setModalOpen] = useState(false);
 
   // 모달 닫힐 때 친구 목록 갱신 필요, 리덕스 이용해야 함.. 
@@ -39,6 +50,17 @@ const DetailRoom = () => {
   //         })
   // }, [isModalOpen])
 
+  if (isMobile) {
+    return (
+      <>
+      <StyledLink to='' aria-label="영상통화를 걸 친구를 찾는 페이지입니다.">
+        <Title title="Friend" />
+      </StyledLink>
+      <FriendList/>
+      <RecentCalls/>
+      </>
+    )
+  }
   return (
     <>
       <StyledLink to='' aria-label="영상통화를 걸 친구를 찾는 페이지입니다.">

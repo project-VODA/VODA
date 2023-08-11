@@ -13,6 +13,7 @@ import { UserInfoType } from '../../../store/userSlice';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 import { Link } from "react-router-dom";
+import useErrorHandlers from '../../../hooks/useError';
 
 const StyledLink = styled(Link)`
 text-decoration: none;
@@ -38,25 +39,15 @@ const StyledQuill = styled(ReactQuill)`
 
 
 const SimpleWriteArticle = () => {
-  // redux에서 저장된 정보 가져오기
-  const [accessToken, userInfo]: [string, UserInfoType] = useSelector((state:RootState) => {
-    return [state.user.accessToken, state.user.userInfo];
-  })
-  const [email, setEmail] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
+  const errorHandlers = useErrorHandlers();
+
   const articleData = {
-    // --------------------- 추후 redux 활용 --------------------------
-    userEmail: email,
     articleTitle: title,
     articleContent: content,
   }
-
-  // 현재 로그인 중인 유저 이메일을 작성자 이메일로 화면 마운트 시 적용
-  useEffect(() => {
-    setEmail(userInfo.userEmail);
-  }, []);
 
   const handleRegist = () => {
     registArticle(articleData)
@@ -64,15 +55,13 @@ const SimpleWriteArticle = () => {
         RedirectListPage();
       })
       .catch((err) => {
-        // --------------------추후 에러 페이지 연결-----------------
-        console.log(err);
+        errorHandlers(err.response.status, handleRegist);
       })
   }
 
   const navigate = useNavigate();
 
   const RedirectListPage = () => {
-    // ----------------- 추후 리스트 페이지 연결---------------------
     navigate('/feedback');
   }
 

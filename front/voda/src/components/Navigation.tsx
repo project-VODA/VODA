@@ -18,6 +18,8 @@ import { RootState } from "../store/store";
 import { UserInfoType, userSliceLogout } from "../store/userSlice";
 import { useState } from "react";
 import { logout } from "../apis/user";
+import { useAppDispatch, useAppSelector } from "../hooks/reduxHook";
+import useLogOut from "../hooks/useLogout";
 
 // KMJ 스타일 가이드에 대한 설명 - typescript styled-components
 // 1) 단일 props 사용 시, props 명 : 타입 지정
@@ -242,15 +244,15 @@ const HamburgerButton = styled.button`
 `;
 
 export default function Navigation() {
-  const [accessToken, userInfo, isLoginRedux] : [string, UserInfoType, boolean]= useSelector((state:RootState) => {
-    return [state.user.accessToken, state.user.userInfo, state.user.isLogin];
-  })
+  const userInfo = useAppSelector((state) => state.user.userInfo);
+  const isLogin = useAppSelector((state) => state.user.isLogin);
 
   const [isDropDownVisible, setDropDownVisible] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const logout = useLogOut();
 
   const handleDropDownToggle = () => {
     setDropDownVisible((current) => !current);
@@ -264,21 +266,7 @@ export default function Navigation() {
     navigate("/")
   }
 
-  const handleLogout = () => {
-    if(accessToken !== null && accessToken !== ''){
-      logout(userInfo.userEmail)
-      .then((res) => {
-        console.log("hi logout");
-        dispatch(userSliceLogout());
-        RedirectHomePage();
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-    }
-  }
-
-  if ( !isLoginRedux ) { 
+  if ( !isLogin ) { 
     return null
   }
   return (
@@ -317,7 +305,7 @@ export default function Navigation() {
             
             <UserDropDown onClick={handleDropDownToggle}>
               { 
-                isLoginRedux ? 
+                isLogin ? 
                 <>
                   <UserInfoText>
                     <IconWrapper>
@@ -343,7 +331,7 @@ export default function Navigation() {
                         환경설정
                       </MenuLinkContainer>
                     </MenuLink>
-                    <MenuButton onClick={handleLogout}>
+                    <MenuButton onClick={logout}>
                       <MenuLinkContainer>
                         <IconWrapper>
                           <HiOutlineLogout/>

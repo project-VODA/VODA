@@ -14,6 +14,8 @@ import { updateCall } from "../store/callSlice";
 // react-icons
 import { FiPhoneCall } from "react-icons/fi"
 import '../styles/detail/DetailWaitingPage.css'
+import { useAppDispatch, useAppSelector } from '../hooks/reduxHook';
+import useErrorHandlers from '../hooks/useError';
 
 
 type CallHistory = {
@@ -30,23 +32,24 @@ type CallHistoryList = CallHistory[];
 
 const RecentCalls = () => {
   // redux에서 저장된 정보 가져오기
-  const [accessToken, userInfo]: [string, UserInfoType] = useSelector((state:RootState) => {
-    return [state.user.accessToken, state.user.userInfo];
-  })
+  const userInfo = useAppSelector((state) => state.user.userInfo);
   const [callHistoryList, setCallHistoryList] = useState<CallHistoryList>([]);
 
-  useEffect(() => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const errorHandlers = useErrorHandlers();
+
+  useEffect(handleRecentCall, []);
+
+  function handleRecentCall() {
     getRecentCallList()
       .then((res: CallHistoryList) => {
         setCallHistoryList(res);
       })
       .catch((err) => {
-        console.error(err);
+        errorHandlers(err.response.status, handleRecentCall);
       })
-  }, []);
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  }
 
   const handleCalling = (email: string) => {
     const callSendRequest = {
@@ -69,15 +72,16 @@ const RecentCalls = () => {
         }
       })
       .catch((err) => {
-        console.error(err);
+        errorHandlers(err.response.status, handleCalling, email);
       });
   };
 
   return (
     <>
-    <span> {localStorage.getItem('theme') === 'simple' ? (<div style={{ display: 'flex', justifyContent: 'center', margin: '6% 55px 2%' }}><span style={{ fontSize:'28px', fontWeight:'bolder' }}>최근 통화 목록</span></div>)
-    :(<div style={{  display: 'flex', justifyContent: 'center', margin: '6% 55px 2%'}}>
-        <span style={{ fontSize:'28px', fontWeight:'bolder' }}>최근 통화 목록</span>
+    <span> {localStorage.getItem('theme') === 'simple' ? (<div style={{ marginBottom: '60px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', padding: '10px' }}>
+      <span style={{ marginLeft: 'auto', marginRight: 'auto', fontSize:'1.9vw', fontWeight: 'bolder' }}>최근 통화 목록</span></div>)
+    :(<div style={{ marginTop:'5.6vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', padding: '10px' }}>
+        <span style={{ marginLeft: 'auto', marginRight: 'auto', fontSize:'1.9vw', fontWeight: 'bolder' }}>최근 통화 목록</span>
       </div>)} </span>
       <span> {localStorage.getItem('theme') === 'simple' ? 
       ( <table className = 'recentCallTable' style={{ margin: '10px auto', justifyContent: 'center', borderCollapse: 'separate', borderSpacing: '0px, 20px', maxWidth: '950px' }}>

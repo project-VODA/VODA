@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 import Button from "../../components/SettingButton"
 import Carousel from "../../components/carousel/carousel";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
+import useLogOut from "../../hooks/useLogout";
+import { useAppSelector } from "../../hooks/reduxHook";
 
 const DetailPage = () => {
   
