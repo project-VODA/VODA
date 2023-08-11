@@ -13,6 +13,9 @@ import { callInfoType, updateCall } from '../store/callSlice';
 import { styled } from 'styled-components';
 import AlarmAudio from './AlarmAudio';
 import { userSliceLogout } from '../store/userSlice';
+import { useAppDispatch, useAppSelector } from '../hooks/reduxHook';
+import useErrorHandlers from '../hooks/useError';
+import { error } from 'console';
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -32,14 +35,13 @@ const modalColor = {
 
 export default function SseComponent(){
 	const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const errorHandlers = useErrorHandlers();
 
   const [content, setContent] = useState('');
   const [callNo, setCallNo] = useState(0);
   const [isCallModalOpen, setisCallModalOpen] = useState(false);
-  const [userEmail, callInfo]:[string, callInfoType] = useSelector((state:RootState) => {
-    return [state.user.userInfo.userEmail, state.call.callInfo];
-  });
+  const userEmail = useAppSelector((state) => state.user.userInfo.userEmail);
   const [alarm, setAlarm] = useState(getNotificaationPermission());
 
   useEffect(() => {
@@ -97,7 +99,7 @@ export default function SseComponent(){
       redirectVideo();
     })
     .catch((err)=> {
-      console.log(err);        
+      errorHandlers(err.response.status, acceptCall);
     });
 	}
 
@@ -108,7 +110,7 @@ export default function SseComponent(){
       console.log(res);
     })
     .catch((err) => {
-      console.log(err);
+      errorHandlers(err.response.status, rejectCall);
     })
   }
 
