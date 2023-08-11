@@ -15,6 +15,11 @@ type Article = {
 
 type ArticleList = Article[];
 
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+`;
+
 const TableContainer = styled.div`
   justify-content: center;
   font-size: 30px;
@@ -38,6 +43,7 @@ const TableContainer = styled.div`
     text-decoration: none;
   }
 `;
+
 
 const BoardList: React.FC = () => {
   
@@ -106,20 +112,30 @@ return (
           </colgroup>
           <thead className='DetailBoardthead'>
             <tr>
-              <th>No.</th>
+              <th>No. </th>
               <th>제목</th>
               <th>작성자</th>
               <th className='writtenDate'>작성일자</th>
             </tr>
           </thead>
+        </table>
+          {/* <hr className='tableHr' /> */}
+          <hr/>
+        <table className='DetailBoardTable'>
+        <colgroup>
+            <col width="10%" />
+            <col width="40%" />
+            <col width="20%" />
+            <col width="30%" />
+          </colgroup>
           <tbody>
             {articles.map((article: Article) => (
               <tr key={article.articleNo}>
                 <td>{article.articleNo}</td>
                 <td>
-                  <Link to={`/view/${article.articleNo}`}>
+                  <StyledLink to={`/view/${article.articleNo}`}>
                     {article.articleTitle}
-                  </Link>
+                  </StyledLink>
                 </td>
                 <td>{article.userEmail}</td>
                 <td className='writtenDate'>{article.articleRegTime}</td>
