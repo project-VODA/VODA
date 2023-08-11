@@ -73,7 +73,7 @@ const SimpleMyPage = () => {
         setHandicap(res.userHandicap === 1 ? true : false);
       })
       .catch((err) => {
-        errorHandlers(err.response.status, handleGetUserInfo);
+        errorHandlers(err.response, handleGetUserInfo);
       })
   }
 
@@ -119,7 +119,7 @@ const SimpleMyPage = () => {
         logout();
       })
       .catch((err) => {
-        errorHandlers(err.response.status, handleCancelUser);
+        errorHandlers(err.response, handleCancelUser);
       })
   }
 
@@ -159,7 +159,7 @@ const SimpleMyPage = () => {
         logout();
       })
       .catch((err) => {
-        errorHandlers(err.response.status, handlePassword);
+        errorHandlers(err.response, handlePassword);
       })
   }
 

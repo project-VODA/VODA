@@ -48,7 +48,7 @@ const SimpleDetailArticle = () => {
           setDetailBoardData(res);
         })
         .catch((err) => {
-          errorHandlers(err.response.status, handleArticlDetail);
+          errorHandlers(err.response, handleArticlDetail);
         })
     }
 

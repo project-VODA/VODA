@@ -56,7 +56,7 @@ const SimpleWriteArticle = () => {
         RedirectListPage();
       })
       .catch((err) => {
-        errorHandlers(err.response.status, handleRegist);
+        errorHandlers(err.response, handleRegist);
       })
   }
 

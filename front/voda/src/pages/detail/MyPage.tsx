@@ -75,7 +75,7 @@ const DetailMyPage = () => {
         setHandicap(res.userHandicap === 1 ? true : false);
       })
       .catch((err) => {
-        errorHandlers(err.response.status, handleGetUserInfo);
+        errorHandlers(err.response, handleGetUserInfo);
       })
   }
 
@@ -102,7 +102,7 @@ const DetailMyPage = () => {
         dispatch(updateUserName(res.userName));
       })
       .catch((err) => {
-        errorHandlers(err.response.status, handleUpdateUserInfo);
+        errorHandlers(err.response, handleUpdateUserInfo);
       })
   }
 
@@ -120,7 +120,7 @@ const DetailMyPage = () => {
         logout();
       })
       .catch((err) => {
-        errorHandlers(err.response.status, handleCancelUser);
+        errorHandlers(err.response, handleCancelUser);
       })
   }
 
@@ -159,7 +159,7 @@ const DetailMyPage = () => {
         logout();
       })
       .catch((err) => {
-        errorHandlers(err.response.status, handlePassword);
+        errorHandlers(err.response, handlePassword);
       })
   }
 

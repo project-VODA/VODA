@@ -60,6 +60,7 @@ import ErrorPage from './pages/ErrorPage';
 import { UserInfoType, UserSettingType } from './store/userSlice';
 import { useSelector } from 'react-redux';
 import { RootState } from './store/store';
+import { useAppSelector } from './hooks/reduxHook';
 
 // 1) 다수의 props 발생 시 interface 설정
 interface ContextProps {
@@ -90,10 +91,7 @@ const AppContainer = styled.div`
 
 
 const App: React.FC = () => {
-
-  const [isLogin, role]: [boolean, string] = useSelector((state:RootState) => {
-    return [state.user.isLogin, state.user.userInfo.role];
-  })
+  const isLogin = useAppSelector((state) => state.user.isLogin);
 
   const { theme, toggleTheme } = useMode();
 
