@@ -7,6 +7,8 @@ import BoardList from '../../components/board/BoardList';
 import WriteButton from '../../components/board/WriteButton';
 import { Link } from "react-router-dom";
 
+import { MdAssignmentAdd } from 'react-icons/md'
+import FroClientImg from "../../assets/images/ForClient.jpg"
 
 const StyledLink = styled(Link)`
 text-decoration: none;
@@ -31,14 +33,17 @@ const SimpleFeedBack = () => {
 
     return (
         <>
-          {/* <StyledLink to='/home' aria-label='고객의 소리함 페이지입니다. 홈 화면으로 이동하시려면 이 버튼을 누르세요.'>
-            <SimpleTitle imgSrc='SimpleLogo' aria-label='고객의 소리함 페이지입니다.'/>
-          </StyledLink> */}
-          <div style={{ padding: '67px'}} />
             <ListContainer>
-                <BoardList />
-
-                <WriteButton text='글 작성' onClick={handleWriteArticle} aria-label='새 글 작성하기'/>
+              <img src={ FroClientImg } alt="" />
+              <div>
+                <div style={{ fontSize: '1.4vw', display:'flex', justifyContent:'flex-end', marginTop: '40px', cursor:'pointer' }}>
+                  <MdAssignmentAdd onClick={handleWriteArticle} aria-label='새 글 작성하기' />
+                  &nbsp;&nbsp;새 글 작성하기
+                  </div>
+                <div style={{ padding: '67px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                  <BoardList />
+                </div>
+              </div>
             </ListContainer>
 
 

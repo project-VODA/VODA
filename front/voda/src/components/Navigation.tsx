@@ -264,6 +264,30 @@ export default function Navigation() {
     navigate("/")
   }
 
+  const toAbout = () => {
+    navigate("/about")
+  }
+
+  const toWaiting = () => {
+    navigate("/waiting")
+  }
+
+  const toFeedback = () => {
+    navigate("/feedback")
+  }
+
+  const toFace = () => {
+    navigate("/face")
+  }
+
+  const toHome = () => {
+    navigate("/home")
+  }
+  
+  const toColor = () => {
+    navigate("/color")
+  }
+  
   const handleLogout = () => {
     if(accessToken !== null && accessToken !== ''){
       logout(userInfo.userEmail)
@@ -285,7 +309,7 @@ export default function Navigation() {
     <>
       <NavContainer>
         <NavContentContainer>
-          <LogoContainer>
+          <LogoContainer onClick={toHome}>
             <Link to="/home">
               <LogoImage
                 src={detailLogo}
@@ -298,19 +322,19 @@ export default function Navigation() {
           <InfoContainer>
             {/* <ChannelButton theme={theme}>test</ChannelButton> */}
             {/* <ChannelButton theme={theme}><Link to="/about">ABOUT</Link></ChannelButton> */}
-            <ChannelButton>
+            <ChannelButton onClick={toAbout}>
               <MenuLink to="/about">서비스소개</MenuLink>
             </ChannelButton>
-            <ChannelButton>
+            <ChannelButton onClick={toWaiting}>
               <MenuLink to="/waiting">영상통화</MenuLink>
             </ChannelButton>
-            <ChannelButton>
+            <ChannelButton onClick={toFeedback}>
               <MenuLink to="/feedback">고객의소리함</MenuLink>
             </ChannelButton>
-            <ChannelButton>
+            <ChannelButton onClick={toFace}>
               <MenuLink to="/face">비디오</MenuLink>
             </ChannelButton>
-            <ChannelButton>
+            <ChannelButton onClick={toColor}>
               <MenuLink to="/color">색상인식</MenuLink>
             </ChannelButton>
             
