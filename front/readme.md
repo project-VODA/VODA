@@ -227,3 +227,5 @@
 
 - 23.08.11 KSH
   - color 페이지 url 수정
+  - Detail Feedback UI 수정(진행중) / Simple과 분리 
+  - 네비게이션 호버링 영역 링크 추가
