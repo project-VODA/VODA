@@ -46,7 +46,7 @@ const ColorPage = () => {
   };
 
   const [color, setColor] = useState(null);
-  const typeNo = useSelector((state: RootState) => state.user.userSetting.typeNo);
+  const typeNo = useSelector((state: RootState) => state.user.userSetting.usersettingTypeNo);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const audioPlayer = new Audio();
