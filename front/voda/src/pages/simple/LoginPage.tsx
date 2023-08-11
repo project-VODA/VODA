@@ -45,10 +45,7 @@ const SimpleLogin = () => {
         .then((res) => {
           alert("로그인 성공");
           // userSlice에 저장
-          dispatch(userSliceLogin ({
-            accessToken: res.accessToken,
-            refreshToken: res.refreshToken
-          }));
+          dispatch(userSliceLogin (res));
           // 메인페이지로 리다이렉트
           RedirectHomePage();
         })

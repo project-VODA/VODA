@@ -1,17 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { persistor } from "./store";
 
-interface UserState {
+interface LoginResponse {
     accessToken: string,
     refreshToken: string,
     userInfo: UserInfoType,
     userSetting: UserSettingType,
-    isLogin: boolean,
 }
 
-interface TokenType {
-    accessToken: string,
-    refreshToken: string,
+interface UserState extends LoginResponse{
+    isLogin: boolean,
 }
 
 const initialState: UserState = {
@@ -33,49 +30,15 @@ const userSlice = createSlice({
     name: 'userSlice',
     initialState,
     reducers: {
-        userSliceLogin:(state, action: PayloadAction<TokenType>) =>{
+        userSliceLogin:(state, action: PayloadAction<LoginResponse>) =>{
             state.accessToken = action.payload.accessToken;
             state.refreshToken = action.payload.refreshToken;
-            // accessToken 복호화 및 유저 정보 저장
-            let jwtPayload = JSON.parse(atob(action.payload.accessToken.split('.')[1]));
-            state.userInfo = {
-                userEmail: jwtPayload.userEmail,
-                userName: decodeURI(escape(jwtPayload.userName)),
-                role: jwtPayload.role,
-            };
-            state.userSetting = {
-                typeNo: jwtPayload.typeNo,
-                screenType: jwtPayload.screenType,
-            }
+            state.userInfo = action.payload.userInfo;
+            state.userSetting = action.payload.userSetting;
             state.isLogin = true;
         },
-        userSliceAllocate: (state, action: PayloadAction<TokenType>) => {
-            state.accessToken = action.payload.accessToken;
-            // accessToken 복호화 및 유저 정보 저장
-            let jwtPayload = JSON.parse(atob(action.payload.accessToken.split('.')[1]));
-            state.userInfo = {
-                userEmail: jwtPayload.userEmail,
-                userName: decodeURI(escape(jwtPayload.userName)),
-                role: jwtPayload.role,
-            };
-            state.userSetting = {
-                typeNo: jwtPayload.typeNo,
-                screenType: jwtPayload.screenType,
-            };
-        },
         userSliceLogout:(state) => {
-            state.accessToken = '';
-            state.refreshToken = '';
-            state.userInfo = {
-                userEmail: '',
-                userName: '',
-                role: '',
-            };
-            state.userSetting = {
-                typeNo: 0,
-                screenType: 0,
-            };
-            state.isLogin = false;
+            state = initialState;
         },
         updateAccessToken:(state, action: PayloadAction<{accessToken: string}>) => {
             state.accessToken = action.payload.accessToken;
@@ -90,7 +53,7 @@ const userSlice = createSlice({
 });
 
 export default userSlice;
-export const {userSliceLogin, userSliceAllocate, userSliceLogout, updateAccessToken, updateUserName, updateUserSetting} = userSlice.actions;
+export const {userSliceLogin, userSliceLogout, updateAccessToken, updateUserName, updateUserSetting} = userSlice.actions;
 
 export interface UserInfoType{
     userEmail: string,
