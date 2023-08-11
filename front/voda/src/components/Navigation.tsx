@@ -279,7 +279,7 @@ export default function Navigation() {
   }
 
   const toFace = () => {
-    navigate("/face")
+    navigate("/face-test")
   }
 
   const toHome = () => {
@@ -320,7 +320,7 @@ export default function Navigation() {
               <MenuLink to="/feedback">고객의소리함</MenuLink>
             </ChannelButton>
             <ChannelButton onClick={toFace}>
-              <MenuLink to="/face">비디오</MenuLink>
+              <MenuLink to="/face-test">비디오</MenuLink>
             </ChannelButton>
             <ChannelButton onClick={toColor}>
               <MenuLink to="/color">색상인식</MenuLink>
