@@ -51,4 +51,4 @@ def index():  # put application's code here
         return jsonify({'error': '올바르지 않은 요청입니다.'})
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port=5000, host="0.0.0.0")
