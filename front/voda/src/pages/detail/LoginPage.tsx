@@ -53,6 +53,10 @@ const SimpleLogin = () => {
           RedirectHomePage();
         })
         .catch((err) => {
+          if(err.response === undefined){
+            navigate('/error');
+            return;
+          }
           handleError(err.response.status);
         });
     }
@@ -75,7 +79,7 @@ const SimpleLogin = () => {
     }
   };
 
-  const handleError = (statusCode: HttpStatusCode) => {
+  const handleError = (statusCode: HttpStatusCode | undefined) => {
     switch(statusCode){
       case HttpStatusCode.Unauthorized:
         alert("이메일과 비밀번호를 확인해주세요");

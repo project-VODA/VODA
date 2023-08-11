@@ -4,6 +4,8 @@ import { getArticles } from '../../apis/board';
 import styled from 'styled-components';
 import useErrorHandlers from '../../hooks/useError';
 
+import '../../styles/detail/DetailBoardList.css'
+
 type Article = {
   articleNo: number;
   articleTitle: string;
@@ -50,10 +52,11 @@ const BoardList: React.FC = () => {
         setArticles(res);
       })
       .catch((err) => {
-        errorHandlers(err.response.status, handleGetArticles);
+        errorHandlers(err.response, handleGetArticles);
       })
   }
   
+  if (localStorage.getItem('theme' ) === 'simple') {
   return (
     <TableContainer>
       <div className='boardList'>
@@ -90,6 +93,43 @@ const BoardList: React.FC = () => {
       </div>
     </TableContainer>
   );
+}
+return (
+  <>
+      <div className='DetailBoardList'>
+        <table className='DetailBoardTable'>
+          <colgroup>
+            <col width="10%" />
+            <col width="40%" />
+            <col width="20%" />
+            <col width="30%" />
+          </colgroup>
+          <thead className='DetailBoardthead'>
+            <tr>
+              <th>No.</th>
+              <th>제목</th>
+              <th>작성자</th>
+              <th className='writtenDate'>작성일자</th>
+            </tr>
+          </thead>
+          <tbody>
+            {articles.map((article: Article) => (
+              <tr key={article.articleNo}>
+                <td>{article.articleNo}</td>
+                <td>
+                  <Link to={`/view/${article.articleNo}`}>
+                    {article.articleTitle}
+                  </Link>
+                </td>
+                <td>{article.userEmail}</td>
+                <td className='writtenDate'>{article.articleRegTime}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+  </>
+)
 }
   
 export default BoardList;

@@ -117,7 +117,7 @@ export default function SseComponent() {
       redirectVideo();
     })
     .catch((err)=> {
-      errorHandlers(err.response.status, acceptCall);
+      errorHandlers(err.response, acceptCall);
     });
 	}
 
@@ -127,7 +127,7 @@ export default function SseComponent() {
       setisCallModalOpen(false);
     })
     .catch((err) => {
-      errorHandlers(err.response.status, rejectCall);
+      errorHandlers(err.response, rejectCall);
     })
   }
 

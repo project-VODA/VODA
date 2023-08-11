@@ -1,7 +1,9 @@
 import React, { useRef, useEffect, useState } from "react";
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 import styled from 'styled-components';
 import { colorRecognition } from "../../apis/color";
-import { colortts } from "../../apis/tts"
+import { tts } from "../../apis/tts"
 import { CgColorPicker } from "react-icons/cg";
 
 const StyledContainer = styled.div`
@@ -22,8 +24,7 @@ const VideoContainer = styled.div`
 `;
 
 const ColorPage = () => {
-  //CSS Style 적용
-
+  //CSS Style
   const videoStyle: React.CSSProperties = {
     transform: 'rotateY(180deg)',
     WebkitTransform: 'rotateY(180deg)',
@@ -55,7 +56,7 @@ const ColorPage = () => {
 
   const [capturedImage, setCapturedImage] = useState(null);
   const [color, setColor] = useState(null);
-
+  const typeNo = useSelector((state: RootState) => state.user.userSetting.typeNo);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const audioPlayer = new Audio();
@@ -70,9 +71,10 @@ const ColorPage = () => {
   const getColor = (formData: any) => {
     colorRecognition(formData)
       .then((res) => {
-        setColor(res.color)
-        getTTS(res.color);
-        console.log('검출된 색: ', res.color)
+        setColor(res.color);
+        colorTTS(res.color);
+        console.log('typeNo: ', typeNo)
+        console.log('인식된 색: ', res.color);
       }
       )
       .catch((err) => {
@@ -81,7 +83,7 @@ const ColorPage = () => {
       )
   }
 
-  const getTTS = (color: string) => {
+  const colorTTS = (color: string) => {
     const text = `인식된 색상은 ${color}입니다.`; // 음성으로 변환할 텍스트
 
     const requestData = {
@@ -90,14 +92,14 @@ const ColorPage = () => {
       },
       voice: {
         languageCode: 'ko-KR', // 원하는 언어 코드
-        ssmlGender: 'FEMALE', // 음성의 성별
+        name: typeNo === 0 ? 'ko-KR-Neural2-C' : 'ko-KR-Neural2-A',
       },
       audioConfig: {
         audioEncoding: 'MP3', // MP3 포맷으로 설정
       },
     };
 
-    colortts(requestData)
+    tts(requestData)
       .then((res) => {
         const audioData = res.audioContent;
         const audioArrayBuffer = Uint8Array.from(atob(audioData), c => c.charCodeAt(0)).buffer;
@@ -165,7 +167,7 @@ const ColorPage = () => {
           <button onClick={captureScreen} style={buttonStyle}>Start <CgColorPicker size={20} /></button>
           <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
           {color && (
-            <p style={colorStyle}>검출된 색상: {color}</p>
+            <p style={colorStyle}>인식된 색상: {color}</p>
           )}
           {/* {capturedImage && (
             <div>
