@@ -9,10 +9,6 @@ import { useAppSelector } from "../../hooks/reduxHook";
 const DetailPage = () => {
   
   const navigate = useNavigate();
-  const logout = useLogOut();
-  const [isLogin, screenType] = useAppSelector((state) => {
-    return [state.user.isLogin, state.user.userSetting.screenType];
-  })
 
   const redirectAbout = () => {
     navigate('/about')

@@ -9,9 +9,7 @@ import { useAppDispatch, useAppSelector } from "./reduxHook";
 const useErrorHandlers = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const userEmail = useAppSelector((state) => {
-    return state.user.userInfo.userEmail;
-  });
+  const userEmail = useAppSelector((state) => state.user.userInfo.userEmail);
 
   const errorHandlers = (statusCode: number, callback: any, param?: any) => {
     switch(statusCode) {

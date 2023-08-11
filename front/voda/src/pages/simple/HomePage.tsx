@@ -29,9 +29,8 @@ const SimpleHomePage = () => {
 
   const navigate = useNavigate();
   const logout = useLogOut();
-  const [isLogin, screenType] = useAppSelector((state) => {
-    return [state.user.isLogin, state.user.userSetting.screenType];
-  });
+  const isLogin = useAppSelector((state) => state.user.isLogin);
+  const screenType = useAppSelector((state) => state.user.userSetting.screenType);
 
   useEffect(() => {
     localStorage.setItem('theme', screenType === 0 ? 'DetailTheme' : 'SimpleTheme');
