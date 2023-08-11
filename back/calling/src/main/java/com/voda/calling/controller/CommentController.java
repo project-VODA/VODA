@@ -1,6 +1,7 @@
 package com.voda.calling.controller;
 
 import com.voda.calling.model.dto.Comment;
+import com.voda.calling.model.dto.CommentSearchResponse;
 import com.voda.calling.model.service.CommentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/comments")
 @Api(tags = "Comment")
+@CrossOrigin("*")
 @Slf4j
 public class CommentController {
 
@@ -37,10 +39,22 @@ public class CommentController {
         log.info("CommentController - searchAllComment : 댓글 목록");
 
         try{
-            List<Comment> comments = commentService.searchAll(articleNo);
+            List<CommentSearchResponse> comments = commentService.searchAll(articleNo);
+
+//            log.info("시간 변환 시도");
+//            LocalDateTime now = LocalDateTime.now();
+//            for (CommentSearchInterface csr : comments) {
+//                LocalDateTime d = LocalDateTime.parse(csr.getCommentRegTime(),
+//                        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+//                if (d.getYear()==now.getYear() && d.getMonth()==now.getMonth() && d.getDayOfMonth()==now.getDayOfMonth()) {
+//                    csr.setCommentRegTime(d.format(DateTimeFormatter.ofPattern("HH시 mm분")));
+//                }else {
+//                    csr.setCommentRegTime(d.format(DateTimeFormatter.ofPattern("YY.MM.dd")));
+//                }
+//            }
 
             log.info("댓글 목록 가져오기 성공");
-            return new ResponseEntity<List<Comment>>(comments, HttpStatus.OK);
+            return new ResponseEntity<List<CommentSearchResponse>>(comments, HttpStatus.OK);
         }catch (Exception e) {
             log.info("댓글 목록 가져오기 실패 - 서버(DB) 오류");
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);

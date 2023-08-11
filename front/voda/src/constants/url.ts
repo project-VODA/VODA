@@ -3,6 +3,9 @@ export const SERVER_URL = "http://localhost:3000";
 // export const FLASK_URL = "http://localhost:5000";
 export const FLASK_URL = "https://i9a707.p.ssafy.io:5000";
 
+const apiKey = 'AIzaSyC5prZmvmHmlj2gh_jqjOcFTLh1CLhOzxM';
+export const GOOGLE_API_URL = "https://texttospeech.googleapis.com/v1/text:synthesize";
+
 //배포 서버용
 export const API_URL = "https://i9a707.p.ssafy.io:8080/voda";
 

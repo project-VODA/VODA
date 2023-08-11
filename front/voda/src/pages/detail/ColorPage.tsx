@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import styled from 'styled-components';
-
 import { colorRecognition } from "../../apis/color";
+import { colortts } from "../../apis/tts"
 import { CgColorPicker } from "react-icons/cg";
 
 const StyledContainer = styled.div`
@@ -27,7 +27,7 @@ const ColorPage = () => {
   const videoStyle: React.CSSProperties = {
     transform: 'rotateY(180deg)',
     WebkitTransform: 'rotateY(180deg)',
-    width: '100%', 
+    width: '100%',
     height: 'auto',
   };
 
@@ -53,31 +53,67 @@ const ColorPage = () => {
   //   width: '300px',
   // };
 
-
-  const getColor = (formData:any) => {
-    colorRecognition(formData)
-      .then((res) => {
-        setColor(res.color)
-        console.log('검출된 색: ', res.color)}
-      )
-      .catch((err) => {
-        console.log(err)}
-      )
-  }
-
   const [capturedImage, setCapturedImage] = useState(null);
   const [color, setColor] = useState(null);
 
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
+  const audioPlayer = new Audio();
 
   useEffect(() => {
     startWebcam();
-
     return () => {
       stopWebcam(); // 컴포넌트가 언마운트될 때 웹캠을 종료
     };
   }, []);
+
+  const getColor = (formData: any) => {
+    colorRecognition(formData)
+      .then((res) => {
+        setColor(res.color)
+        getTTS(res.color);
+        console.log('검출된 색: ', res.color)
+      }
+      )
+      .catch((err) => {
+        console.log(err)
+      }
+      )
+  }
+
+  const getTTS = (color: string) => {
+    const text = `인식된 색상은 ${color}입니다.`; // 음성으로 변환할 텍스트
+
+    const requestData = {
+      input: {
+        text: text,
+      },
+      voice: {
+        languageCode: 'ko-KR', // 원하는 언어 코드
+        ssmlGender: 'FEMALE', // 음성의 성별
+      },
+      audioConfig: {
+        audioEncoding: 'MP3', // MP3 포맷으로 설정
+      },
+    };
+
+    colortts(requestData)
+      .then((res) => {
+        const audioData = res.audioContent;
+        const audioArrayBuffer = Uint8Array.from(atob(audioData), c => c.charCodeAt(0)).buffer;
+        const audioBlob = new Blob([audioArrayBuffer], { type: 'audio/mpeg' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+
+        audioPlayer.src = audioUrl;
+        audioPlayer.play();
+
+      }
+      )
+      .catch(error => {
+        console.error('TTS API 요청 중 오류:', error);
+      });
+  }
+
 
   const stopWebcam = () => {
     const stream = videoRef.current?.srcObject as MediaStream;
@@ -137,7 +173,7 @@ const ColorPage = () => {
             </div>
           )} */}
         </div>
-    </StyledContainer>
+      </StyledContainer>
     </>
   );
 };

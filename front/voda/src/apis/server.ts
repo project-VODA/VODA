@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { API_URL, FLASK_URL } from "../constants/url";
+import { API_URL, FLASK_URL, GOOGLE_API_URL } from "../constants/url";
 import store from '../store/store';
 
 export const axiosServer = () => {
@@ -27,11 +27,14 @@ export const axiosServerWithRefresh = () => {
   });
 }
 
-// 
 export const axiosFlask = axios.create({
   baseURL: `${FLASK_URL}`,
   // withCredentials: false,
   headers: {
     "Content-type": "multipart/form-data",
   },
+});
+
+export const axiosGoogle = axios.create({
+  baseURL: `${GOOGLE_API_URL}`,
 });

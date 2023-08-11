@@ -88,72 +88,32 @@ const AppContainer = styled.div`
   overflow-x: hidden;
 `;
 
+
 const App: React.FC = () => {
-  /*const accessToken = useAppSelector((state) => state.auth.accessToken);
-  // 헤더 디폴트 추가
-  if (accessToken) {
-    axiosInstance.defaults.headers.common[
-      "Authorization"
-    ] = `Bearer ${accessToken}`;
-  }
 
-  const dispatch = useAppDispatch();
-
-  // 토큰 갱신
-  axiosInstance.interceptors.response.use(
-    (response) => {
-      return response;
-    },
-    async (error) => {
-      const {
-        config,
-        response: { status, data },
-      } = error;
-      const originalRequest = config;
-      if (status === 401 && data.error === "TokenExpiredException") {
-        try {
-          // 갱신 요청
-          const res = await axiosInstance.post<any>(`/user/login/token`);
-          const newAccessToken = res.data.data.accessToken;
-          dispatch(updateAccessToken(newAccessToken));
-          // 실패했던 요청 새로운 accessToken으로 헤더 변경하고 재요청
-          axiosInstance.defaults.headers.common[
-            "Authorization"
-          ] = `Bearer ${newAccessToken}`;
-          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-          return axiosInstance(originalRequest);
-        } catch (err) {
-          // 갱신 실패시 임의 로그아웃 처리
-          console.log("갱신실패", err);
-          dispatch(updateLoginStatus(false));
-          dispatch(updateAccessToken(""));
-          <Navigate replace to="/home" />;
-        }
-      }
-      return Promise.reject(error);
-    }
-  );*/
+  const [isLogin, role]: [boolean, string] = useSelector((state:RootState) => {
+    return [state.user.isLogin, state.user.userInfo.role];
+  })
 
   const { theme, toggleTheme } = useMode();
 
   const commonRoutes = [
     { path: '/', element: theme === SimpleTheme ? <LandingPage /> : <LandingPage /> },
-    { path: '/home', element: theme === SimpleTheme ? <SimpleHomePage /> : <DetailHomePage /> },
-    { path: '/about', element: theme === SimpleTheme ? <SimpleAbout /> : <DetailAbout /> },
+    { path: isLogin ? '/home' : '/', element: theme === SimpleTheme ? <SimpleHomePage /> : <DetailHomePage /> },
+    { path: isLogin ? '/about' : '/', element: theme === SimpleTheme ? <SimpleAbout /> : <DetailAbout /> },
     { path: '/login', element: theme === SimpleTheme ? <SimpleLogin /> : <DetailLogin /> },
     // KMJ
     { path: '/pass', element: theme === SimpleTheme ? <SimplePass /> : <DetailPass />},
     { path: '/login/oauth2/kakao/*', element: <SocialLogin /> },
     { path: '/signup', element: theme === SimpleTheme ? <SimpleSignup /> : <DetailSignup /> },
-    { path: '/mypage', element: theme === SimpleTheme ? <SimpleMyPage /> : <DetailMyPage /> },
-    { path: '/setting', element: theme === SimpleTheme ? <SimpleEnvSettingPage /> : <DetailEnvSettingPage /> },
-    { path: '/waiting', element: theme === SimpleTheme ? <SimpleRoom /> : <DetailRoom/> },
-    { path: '/', element: <FaceVideo /> },
-    { path: '/video', element: theme === SimpleTheme ? <SimpleVideo /> : <DetailVideo /> },
-    { path: '/color', element: theme === SimpleTheme ? <SimpleColor /> : <DetailColor /> },
-    { path: '/feedback', element: theme === SimpleTheme ? <SimpleFeedBack/> : <DetailFeedBack/> },
-    { path: '/write', element: theme === SimpleTheme ? <SimpleWriteArticle/> : <DetailWriteArticle/> },
-    { path: '/view/:articleNo', element: theme === SimpleTheme ? <SimpleDetailArticle/> : <SimpleDetailArticle/> },
+    { path: isLogin ? '/mypage' : '/', element: theme === SimpleTheme ? <SimpleMyPage /> : <DetailMyPage /> },
+    { path: isLogin ? '/setting' : '/', element: theme === SimpleTheme ? <SimpleEnvSettingPage /> : <DetailEnvSettingPage /> },
+    { path: isLogin ? '/waiting' : '/', element: theme === SimpleTheme ? <SimpleRoom /> : <DetailRoom/> },
+    { path: isLogin ? '/video' : '/', element: theme === SimpleTheme ? <SimpleVideo /> : <DetailVideo /> },
+    { path: isLogin ? '/color' : '/', element: theme === SimpleTheme ? <SimpleColor /> : <DetailColor /> },
+    { path: isLogin ? '/feedback' : '/', element: theme === SimpleTheme ? <SimpleFeedBack/> : <DetailFeedBack/> },
+    { path: isLogin ? '/write' : '/', element: theme === SimpleTheme ? <SimpleWriteArticle/> : <DetailWriteArticle/> },
+    { path: isLogin ? '/view/:articleNo' : '/', element: theme === SimpleTheme ? <SimpleDetailArticle/> : <SimpleDetailArticle/> },
     { path: '/error', element: <ErrorPage />},
     { path: '*', element: <Navigate replace to="/" /> },
     
@@ -181,7 +141,8 @@ const App: React.FC = () => {
               <Route key={route.path} path={route.path} element={<div style={{ marginTop:
                 route.path === "/home" ||
                 (localStorage.getItem('theme') === 'simple' && route.path === '/color') ||
-                (localStorage.getItem('theme') === 'simple' && route.path === '/about') 
+                (localStorage.getItem('theme') === 'simple' && route.path === '/about') ||
+                (localStorage.getItem('theme') === 'simple' && route.path === '/mypage') 
                 ? "0" 
                 : "63px", }}>{route.element}</div>} />
             ))}

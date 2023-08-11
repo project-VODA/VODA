@@ -14,9 +14,11 @@ import { access } from "fs";
 
 import '../../styles/simple/RegisterContainer.css'
 import styled from "styled-components";
-import useErrorHandlers from "../../hooks/error";
+import useErrorHandlers from "../../hooks/useError";
 import { useMode } from "../../hooks/useMode";
 import { RootState } from "../../store/store";
+import { useAppDispatch } from "../../hooks/reduxHook";
+import { HttpStatusCode } from "axios";
 
 const StyledLink = styled(TitleLink)`
 text-decoration: none;
@@ -26,17 +28,13 @@ color: inherit;
 const SimpleLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // 리덕스에서 세팅 정보 불러오기
-  const [userSetting] : [UserSettingType] = useSelector((state:RootState) => {
-    return [state.user.userSetting];
-  })
 
   const userData = {
     userEmail: email,
     userPass: password,
   };
-  const dispatch = useDispatch();
-  const errorHandlers = useErrorHandlers();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     if (email === '') {
@@ -48,32 +46,27 @@ const SimpleLogin = () => {
         .then((res) => {
           alert("로그인 성공");
           // userSlice에 저장
-          dispatch(userSliceLogin ({
-            accessToken: res.accessToken,
-            refreshToken: res.refreshToken
-          }));
+          dispatch(userSliceLogin (res));
           localStorage.setItem('theme', res.userSetting.screenType === 0 ? "detail" : "simple");
           console.log("스크린타입: " + res.userSetting.screenType);
           // 메인페이지로 리다이렉트
           RedirectHomePage();
         })
         .catch((err) => {
-          errorHandlers(err.response.status, handleLogin);
+          handleError(err.response.status);
         });
     }
   };
   const RedirectTemporaryPass = () => {
-    naviagte('/pass')
+    navigate('/pass')
   }
   
-  const naviagte = useNavigate();
-
   const handleRegist = () => {
-    naviagte('/signup')
+    navigate('/signup')
   }
 
   const RedirectHomePage = () => {
-    naviagte('/home');
+    navigate('/home');
   }
 
   const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -81,6 +74,16 @@ const SimpleLogin = () => {
       handleLogin();
     }
   };
+
+  const handleError = (statusCode: HttpStatusCode) => {
+    switch(statusCode){
+      case HttpStatusCode.Unauthorized:
+        alert("이메일과 비밀번호를 확인해주세요");
+        break;
+      default:
+        navigate('/error');
+    }
+  }
 
   return (
     <>

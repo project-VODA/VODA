@@ -8,6 +8,7 @@ import Title from '../../../components/Title';
 import Button from '../../../components/RegisterButton';
 import ArticleHeader from '../../../components/board/ArticleHeader';
 import ArticleContent from '../../../components/board/ArticleContent';
+import useErrorHandlers from '../../../hooks/useError';
 
 const StyledLink = styled(Link)`
 text-decoration: none;
@@ -29,24 +30,26 @@ const SimpleDetailArticle = () => {
     const params = useParams();
     const articleNo = Number(params.articleNo);
 
+    const navigate = useNavigate();
+    const errorHandlers = useErrorHandlers();
+
     // state
     const [detailBoardData, setDetailBoardData] = useState<any>([]);
 
-    useEffect(() => {
-        getArticleDetail(articleNo)
-        .then((res) => {
-          console.log(res);
-          setDetailBoardData(res);
-        })
-        .catch((err: Error) => {
-          console.log(err);
-        })
-      }, [])
-
-    const navigate = useNavigate();
+    useEffect(handleArticlDetail, [])
 
     const RedirectListPage = () => {
         navigate('/feedback');
+    }
+
+    function handleArticlDetail() {
+      getArticleDetail(articleNo)
+        .then((res) => {
+          setDetailBoardData(res);
+        })
+        .catch((err) => {
+          errorHandlers(err.response.status, handleArticlDetail);
+        })
     }
 
     return (

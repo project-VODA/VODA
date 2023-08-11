@@ -24,6 +24,8 @@ import { deleteFriend, getFriendList } from '../apis/friend';
 import { updateCall } from "../store/callSlice";
 
 import '../styles/detail/DetailWaitingPage.css'
+import { useAppDispatch, useAppSelector } from '../hooks/reduxHook';
+import useErrorHandlers from '../hooks/useError';
 
 type Friend = {
   friendNo: number;
@@ -36,6 +38,17 @@ type FriendsList = Friend[];
 
 const FriendList = () => {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // 모달 닫힐 때 친구 목록 갱신 필요, 리덕스 이용해야 함.. 
   // isModalOpen을 FriendList 컴포넌트로 넘기는 식이 이상적일듯
@@ -51,40 +64,36 @@ const FriendList = () => {
   // }, [isModalOpen])
 
   // redux에서 저장된 정보 가져오기
-  const [accessToken, userInfo]: [string, UserInfoType] = useSelector((state:RootState) => {
-    return [state.user.accessToken, state.user.userInfo];
-  })
+  const userInfo = useAppSelector((state) => state.user.userInfo);
   
   const [friendList, setFriendList] = useState<FriendsList>([]);
 
-  useEffect(() => {
+  const navigate = useNavigate();
+  const errorhandlers = useErrorHandlers();
+  const dispatch = useAppDispatch();
+
+  useEffect(handleFriendList, []);
+
+  function handleFriendList() {
     getFriendList(userInfo.userEmail)
       .then((res: FriendsList) => {
         setFriendList(res);
       })
       .catch((err) => {
-        console.log(err);
+        errorhandlers(err.response.status, handleFriendList);
       })
-  }, []);
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  }
+  
 
   const handleDeleteFriend = (friend: Friend) => {
 
     deleteFriend(friend.friendNo)
       .then((res) => {
         alert("친구 삭제 성공");
-        getFriendList(userInfo.userEmail)
-          .then((res: FriendsList) => {
-            setFriendList(res);
-          })
-          .catch((err) => {
-            console.error(err);
-          })
+        handleFriendList();
       })
       .catch((err) => {
-        console.error(err);
+        errorhandlers(err.response.status, handleDeleteFriend, friend);
       })
   }
 
@@ -110,24 +119,38 @@ const FriendList = () => {
         }
       })
       .catch((err) => {
-        console.error(err);
+        errorhandlers(err.response.status, handleCalling);
       });
   };
 
   return (
     <><>
     <div style={{  display: 'flex', justifyContent: 'flex-end', gap: '40%', margin: '7% 55px 2%'}}>
-      <span style={{ fontSize:'28px', fontWeight:'bolder' }}>연락처</span>
+      <span style={{ fontSize:'1.9vw', fontWeight:'bolder' }}>연락처</span>
       <ImUserPlus onClick={(e) => setModalOpen(true)} style={{ fontSize: '30px', cursor: 'pointer' }} />
     </div>
     <Modal id='customModal'
       isOpen={isModalOpen} 
       onRequestClose={(e) => setModalOpen(false)}
       ariaHideApp={false}
+      style={{     
+        content: {
+          backgroundColor: "#f0f0f0",
+          width: "80vw", // 원하는 너비로 조정
+          maxWidth: "unset", // 최대 너비 제거
+          margin: "0 auto", // 가운데 정렬
+          border: "none", // 테두리 제거
+          padding: "20px", // 내부 패딩
+          // overflowX: "hidden",
+          overflowX: isMobile ? "auto" : "hidden",
+          // 가로 스크롤 1500(전체화면 기준 내용이 가려지는 크기) 이하에는 스크롤 생기게
+          overflowY: "auto", // 세로 스크롤 유지
+        }
+      }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', padding: '10px' }}>
-        <span style={{ marginLeft: 'auto', marginRight: 'auto', fontSize:'30px', fontWeight: 'bolder' }}>친구 찾기</span>
-        <span>
+        <span style={{ marginLeft: 'auto', marginRight: 'auto', fontSize:'2.2vw', fontWeight: 'bolder' }}>친구 찾기</span>
+        <span style={{ display: 'flex', justifyContent: 'flex-end'}}>
           <SmallRedButton onClick={(e) => setModalOpen(false)} text="X" />
         </span>
       </div>
