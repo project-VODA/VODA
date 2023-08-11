@@ -38,8 +38,8 @@ const ButtonContainer = styled.div`
 
 const SimpleEnvSettingPage = () => {
   // redux에서 저장된 정보 가져오기
-  const [accessToken, userInfo, userSetting] = useAppSelector((state) => {
-    return [state.user.accessToken, state.user.userInfo, state.user.userSetting];
+  const [userInfo, userSetting] = useAppSelector((state) => {
+    return [state.user.userInfo, state.user.userSetting];
   })
   const [notificationType, setNotificationType] = useState(userSetting.typeNo);
   const [screenMode, setScreenMode] = useState(userSetting.screenType);
@@ -51,13 +51,8 @@ const SimpleEnvSettingPage = () => {
   };
 
   const naviagte = useNavigate();
-  const dispatch = useDispatch();
   const logout = useLogOut();
   const errorHandlers = useErrorHandlers();
-
-  const RedirectHomePage = () => {
-    naviagte('/');
-  }
 
   const handleModify = () => {
     updateUserSetting(userSettingRequest)

@@ -17,6 +17,9 @@ import { Link } from "react-router-dom";
 import DivideContainer from '../../components/DivideHorizontalContainer';
 
 import '../../styles/simple/EnvSettingPage.css'
+import { useAppSelector } from '../../hooks/reduxHook';
+import useLogOut from '../../hooks/useLogout';
+import useErrorHandlers from '../../hooks/useError';
 
 const StyledLink = styled(Link)`
 text-decoration: none;
@@ -34,8 +37,8 @@ const ButtonContainer = styled.div`
 
 const SimpleEnvSettingPage = () => {
   // redux에서 저장된 정보 가져오기
-  const [accessToken, userInfo, userSetting]: [string, UserInfoType, UserSettingType] = useSelector((state:RootState) => {
-    return [state.user.accessToken, state.user.userInfo, state.user.userSetting];
+  const [userInfo, userSetting] = useAppSelector((state) => {
+    return [state.user.userInfo, state.user.userSetting];
   })
   const [notificationType, setNotificationType] = useState(userSetting.typeNo);
   const [screenMode, setScreenMode] = useState(userSetting.screenType);
@@ -47,30 +50,16 @@ const SimpleEnvSettingPage = () => {
   };
 
   const naviagte = useNavigate();
-  const dispatch = useDispatch();
-
-  const RedirectHomePage = () => {
-    naviagte('/');
-  }
+  const logout = useLogOut();
+  const errorHandlers = useErrorHandlers();
 
   const handleModify = () => {
     updateUserSetting(userSettingRequest)
       .then((res) => {
-        console.log(res);
-        // 로그아웃 처리
-        if(accessToken !== null && accessToken !== ''){
-          logout(userInfo.userEmail)
-          .then((res) => {
-            dispatch(userSliceLogout());
-            RedirectHomePage();
-          })
-          .catch((err) => {
-            console.log(err);
-          })
-        }
+        logout();
       })
       .catch((err) => {
-        console.error(err);
+        errorHandlers(err.response.status, handleModify);
       })
   }
 

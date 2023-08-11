@@ -52,8 +52,6 @@ const SimpleDetailArticle = () => {
         })
     }
 
-    useEffect(handleArticlDetail, []);
-
     return (
 
         <>

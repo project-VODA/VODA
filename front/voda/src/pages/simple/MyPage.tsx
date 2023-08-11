@@ -35,9 +35,7 @@ const ButtonContainer = styled.div`
 
 const SimpleMyPage = () => {
   // redux에서 저장된 정보 가져오기
-  const [accessToken, userInfo] = useAppSelector((state) => {
-    return [state.user.accessToken, state.user.userInfo];
-  })
+  const userInfo = useAppSelector((state) => state.user.userInfo);
   // 컴포넌트 지역 변수에 연결
   const [name, setName] = useState(userInfo.userName);
   const [handicap, setHandicap] = useState(false);
@@ -47,7 +45,7 @@ const SimpleMyPage = () => {
   const [passwordCheck, setPasswordCheck] = useState('');
   const [pwFlag, setPwFlag] = useState(false);
 
-  const naviagte = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const errorHandlers = useErrorHandlers();
   const logout = useLogOut();
@@ -66,7 +64,7 @@ const SimpleMyPage = () => {
   useEffect(handleGetUserInfo, []);
 
   const RedirectHomePage = () => {
-    naviagte('/');
+    navigate('/');
   }
 
   function handleGetUserInfo() {
@@ -149,7 +147,7 @@ const SimpleMyPage = () => {
     if(err) {
       alert(msg);
     }else{
-      
+      handlePassword();
     }
   }
 
