@@ -47,7 +47,6 @@ class VideoRoomComponent extends Component {
     this.audioPlayer = new Audio();
     this.typeNo = this.props.typeNo;
     this.isIncall = this.props.isIncall;
-    this.expression = this.props.expression;
 
     this.joinSession = this.joinSession.bind(this);
     this.leaveSession = this.leaveSession.bind(this);
@@ -310,7 +309,7 @@ class VideoRoomComponent extends Component {
   // voda - KJW
   playAudio = (expression) => {
 
-    let text = '표정이 감지되지 않았습니다.';
+    let text = '';
     switch(expression){
       case 'angry': 
         text = '화난 표정';
@@ -330,8 +329,11 @@ class VideoRoomComponent extends Component {
       case 'scared': 
         text = '무서운 표정';
         break;
-      default:
+      case 'surprised': 
         text = '놀란 표정';
+        break;
+      default:
+        text = '표정이 감지되지 않았습니다.';
     }
 
      console.log('typeNo:', this.typeNo);
@@ -496,11 +498,12 @@ class VideoRoomComponent extends Component {
 
   // voda - KJW
 	sendExpression = () => {
-		// Check if the localUser is connected and has a stream manager
+    // Check if the localUser is connected and has a stream manager
 		if (this.state.localUser && this.state.localUser.getStreamManager()) {
+      console.log('표정: ',this.props.expression);
 		  // Send the text data as a broadcast message to all participants
 		  this.state.session.signal({
-			data: this.state.expression,
+			data: this.props.expression,
 			to: [], // Empty array means broadcast to everyone
 			type: 'send-expression', // Use the same type as the receiver is listening to
 		  })
@@ -634,9 +637,9 @@ class VideoRoomComponent extends Component {
 // 리덕스 스토어의 userSetting 값을 VideoRoomComponent 컴포넌트의 props로 매핑
 const mapStateToProps = state => {
   return {
-    typeNo: state.user.userSetting.typeNo,
+    typeNo: state.user.userSetting.userSettingTypeNo,
     isIncall: state.call.isIncall,
-    currentExpressionData : state.expression
+    expression : state.expression.expression,
   };
 };
 

@@ -6,11 +6,11 @@ const expressionSlice = createSlice({
       expression: '',
     },
     reducers: {
-        expressionSliceUpdate: (state, action) => {
-          state.expression = action.payload.expressionData;
+        updateExpressionData: (state, action) => {
+          state.expression = action.payload;
         }
     }
 });
 
 export default expressionSlice;
-export const {expressionSliceUpdate} = expressionSlice.actions;
+export const {updateExpressionData} = expressionSlice.actions;

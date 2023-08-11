@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import './StreamComponent.css';
 import * as faceapi from 'face-api.js';
 import { useDispatch } from "react-redux";
-import { expressionSliceUpdate } from '../../store/expressionSlice';
+import { updateExpressionData } from '../../store/expressionSlice';
 
 
 export default function OvVideoComponent(props) {
@@ -78,9 +78,8 @@ export default function OvVideoComponent(props) {
           }
         }
       });
-      dispatch(expressionSliceUpdate({
-        expression: highestExpression.expression,
-      }));
+      
+      dispatch(updateExpressionData(highestExpression.expression))
     }
   }
 
