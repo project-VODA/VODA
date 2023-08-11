@@ -7,7 +7,7 @@ import { useAppSelector } from './reduxHook';
 export const useMode = () => {
   const [theme, setTheme] = useState<Theme>(SimpleTheme);
   const userSetting = useAppSelector((state) => state.user.userSetting);
-  const userTheme = userSetting.screenType === 0 ? DetailTheme : SimpleTheme;
+  const userTheme = userSetting.usersettingScreenType === 0 ? DetailTheme : SimpleTheme;
 
   const setMode = (mode: Theme) => {
     mode === SimpleTheme
@@ -26,7 +26,7 @@ export const useMode = () => {
 
   useEffect(() => {
     setMode(userTheme);
-  }, [userSetting.screenType]);
+  }, [userSetting.usersettingScreenType]);
 
   return { theme, toggleTheme };
 };
