@@ -118,6 +118,10 @@ const LandingPage = () => {
           RedirectHomePage();
         })
         .catch((err) => {
+          if(err.response === undefined){
+            navigate('/error');
+            return;
+          }
           handleError(err.response.status);
         });
     }

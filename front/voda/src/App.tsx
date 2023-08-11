@@ -41,10 +41,12 @@ import DetailSignup from './pages/detail/SignupPage';
 import DetailMyPage from './pages/detail/MyPage';
 import DetailEnvSettingPage from './pages/detail/EnvSettingPage';
 import DetailVideo from './pages/detail/VideoPage';
-import FaceVideo from './pages/detail/faceExpressions';
 import DetailRoom from './pages/detail/WaitingRoomPage';
 import DetailFeedBack from './pages/detail/FeedBackPage';
 import DetailColor from './pages/detail/ColorPage';
+
+import FaceApiPage from './pages/detail/faceExpressions';
+import FaceTest from './pages/detail/FaceTest';
 
 
 // 스타일 & 모드(mode)
@@ -60,6 +62,7 @@ import ErrorPage from './pages/ErrorPage';
 import { UserInfoType, UserSettingType } from './store/userSlice';
 import { useSelector } from 'react-redux';
 import { RootState } from './store/store';
+import { useAppSelector } from './hooks/reduxHook';
 
 // 1) 다수의 props 발생 시 interface 설정
 interface ContextProps {
@@ -90,10 +93,7 @@ const AppContainer = styled.div`
 
 
 const App: React.FC = () => {
-
-  const [isLogin, role]: [boolean, string] = useSelector((state:RootState) => {
-    return [state.user.isLogin, state.user.userInfo.role];
-  })
+  const isLogin = useAppSelector((state) => state.user.isLogin);
 
   const { theme, toggleTheme } = useMode();
 
@@ -110,6 +110,7 @@ const App: React.FC = () => {
     { path: isLogin ? '/setting' : '/', element: theme === SimpleTheme ? <SimpleEnvSettingPage /> : <DetailEnvSettingPage /> },
     { path: isLogin ? '/waiting' : '/', element: theme === SimpleTheme ? <SimpleRoom /> : <DetailRoom/> },
     { path: isLogin ? '/video' : '/', element: theme === SimpleTheme ? <SimpleVideo /> : <DetailVideo /> },
+    { path: '/face-test', element: theme === SimpleTheme ? <FaceTest /> : <FaceApiPage />},
     { path: isLogin ? '/color' : '/', element: theme === SimpleTheme ? <SimpleColor /> : <DetailColor /> },
     { path: isLogin ? '/feedback' : '/', element: theme === SimpleTheme ? <SimpleFeedBack/> : <DetailFeedBack/> },
     { path: isLogin ? '/write' : '/', element: theme === SimpleTheme ? <SimpleWriteArticle/> : <DetailWriteArticle/> },

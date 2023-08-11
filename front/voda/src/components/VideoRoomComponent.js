@@ -1,4 +1,5 @@
 import { axiosServer } from '../apis/server';
+import { tts } from "../apis/tts"
 import { OpenVidu } from 'openvidu-browser';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
@@ -305,29 +306,59 @@ class VideoRoomComponent extends Component {
 
   // voda - KJW
   playAudio = (expression) => {
-    if (expression === undefined || expression === "") {
-      return;
+
+    let text = '표정이 감지되지 않았습니다.';
+    switch(expression){
+      case 'angry': 
+        text = '화난 표정';
+        break;
+      case 'disgust': 
+        text = '화난 표정';
+        break;
+      case 'happy': 
+        text = '행복한 표정';
+        break;
+      case 'neutral': 
+        text = '무표정';
+        break;
+      case 'sad': 
+        text = '슬픈 표정';
+        break;
+      case 'scared': 
+        text = '무서운 표정';
+        break;
+      default:
+        text = '놀란 표정';
     }
 
      console.log('typeNo:', this.typeNo);
-    // 음성 파일의 URL을 설정 (public 폴더에 음성 파일 저장)
-    // typeNo와 expression에 따라 url 바꿔줌
-    let typeName = '';
-    switch(this.typeNo){
-      case 0: 
-        typeName = 'man';
-        break;
-      case 1:
-        typeName = 'woman';
-        break;
-      default:
-        break;
-    }
-    const audioUrl = `/audio/${typeName}/${expression}.wav`;
+    const requestData = {
+      input: {
+        text: text,
+      },
+      voice: {
+        languageCode: 'ko-KR',
+        name: this.typeNo === 0 ? 'ko-KR-Neural2-C' : 'ko-KR-Neural2-A',
+      },
+      audioConfig: {
+        audioEncoding: 'MP3',
+      },
+    };
 
-    // Audio 객체의 소스를 설정하고 재생
-    this.audioPlayer.src = audioUrl;
-    this.audioPlayer.play();
+    tts(requestData)
+      .then((res) => {
+        const audioData = res.audioContent;
+        const audioArrayBuffer = Uint8Array.from(atob(audioData), c => c.charCodeAt(0)).buffer;
+        const audioBlob = new Blob([audioArrayBuffer], { type: 'audio/mpeg' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+
+        this.audioPlayer.src = audioUrl;
+        this.audioPlayer.play();
+      }
+      )
+      .catch(error => {
+        console.error('TTS API 요청 중 오류:', error);
+      });
   };
 
   subscribeToUserChanged() {
