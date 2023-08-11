@@ -63,10 +63,9 @@ export const getAccessToken = async () => {
 
 // 카카오 로그인 리다이렉트
 export const redirectKakao = () => {
-  const CLIENT_ID = "573c93c75e5690082f119bc3a6f8215d";
   // const REDIRECT_URI = "http://localhost:3000/login/oauth2/kakao";
   const REDIRECT_URI = `${SERVER_URL}/login/oauth2/kakao`;
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   window.location.href = KAKAO_AUTH_URL;
 };
 
