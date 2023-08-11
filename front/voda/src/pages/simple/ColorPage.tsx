@@ -1,10 +1,13 @@
 import React, { useRef, useEffect, useState } from "react";
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import SimpleTitle from '../../components/SimpleTitle';
 import Button from '../../components/board/WriteButton';
 
 import { colorRecognition } from "../../apis/color";
+import { tts } from "../../apis/tts"
 
 const StyledLink = styled(Link)`
 text-decoration: none;
@@ -28,12 +31,11 @@ const VideoContainer = styled.div`
 `;
 
 const ColorPage = () => {
-  //CSS Style 적용
-
+  //CSS Style
   const videoStyle: React.CSSProperties = {
     transform: 'rotateY(180deg)',
     WebkitTransform: 'rotateY(180deg)',
-    width: '100%', 
+    width: '100%',
     height: 'auto',
   };
 
@@ -43,22 +45,11 @@ const ColorPage = () => {
     fontWeight: 'bold',
   };
 
-
-  const getColor = (formData:any) => {
-    colorRecognition(formData)
-      .then((res) => {
-        setColor(res.color)
-        console.log('검출된 색: ', res.color)}
-      )
-      .catch((err) => {
-        console.log(err)}
-      )
-  }
-
   const [color, setColor] = useState(null);
-
+  const typeNo = useSelector((state: RootState) => state.user.userSetting.typeNo);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
+  const audioPlayer = new Audio();
 
   useEffect(() => {
     startWebcam();
@@ -67,6 +58,53 @@ const ColorPage = () => {
       stopWebcam(); // 컴포넌트가 언마운트될 때 웹캠을 종료
     };
   }, []);
+
+  const getColor = (formData: any) => {
+    colorRecognition(formData)
+      .then((res) => {
+        setColor(res.color);
+        colorTTS(res.color);
+        console.log('인식된 색: ', res.color);
+      }
+      )
+      .catch((err) => {
+        console.log(err)
+      }
+      )
+  }
+
+  const colorTTS = (color: string) => {
+    const text = `인식된 색상은 ${color}입니다.`; // 음성으로 변환할 텍스트
+
+    const requestData = {
+      input: {
+        text: text,
+      },
+      voice: {
+        languageCode: 'ko-KR', // 원하는 언어 코드
+        name: typeNo === 0 ? 'ko-KR-Neural2-C' : 'ko-KR-Neural2-A',
+      },
+      audioConfig: {
+        audioEncoding: 'MP3', // MP3 포맷으로 설정
+      },
+    };
+
+    tts(requestData)
+      .then((res) => {
+        const audioData = res.audioContent;
+        const audioArrayBuffer = Uint8Array.from(atob(audioData), c => c.charCodeAt(0)).buffer;
+        const audioBlob = new Blob([audioArrayBuffer], { type: 'audio/mpeg' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+
+        audioPlayer.src = audioUrl;
+        audioPlayer.play();
+
+      }
+      )
+      .catch(error => {
+        console.error('TTS API 요청 중 오류:', error);
+      });
+  }
 
   const stopWebcam = () => {
     const stream = videoRef.current?.srcObject as MediaStream;
@@ -110,17 +148,17 @@ const ColorPage = () => {
   return (
     <>
       <StyledLink to='/home' aria-label='색상 인식 페이지입니다. 홈 화면으로 이동하시려면 이 버튼을 누르세요'>
-        <SimpleTitle imgSrc='SimpleLogo' aria-live='assertive' aria-label='색상 인식 페이지입니다. 홈 화면으로 이동하시려면 이 버튼을 누르세요'/>
+        <SimpleTitle imgSrc='SimpleLogo' aria-live='assertive' aria-label='색상 인식 페이지입니다. 홈 화면으로 이동하시려면 이 버튼을 누르세요' />
       </StyledLink>
       <StyledContainer>
         <VideoContainer>
           <video style={videoStyle} ref={videoRef} autoPlay></video>
         </VideoContainer>
         <div>
-          <Button onClick={captureScreen} text="Start" aria-label="색상 인식 버튼"/>
+          <Button onClick={captureScreen} text="Start" aria-label="색상 인식 버튼" />
           <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
           {color && (
-            <p style={colorStyle}>검출된 색상: {color}</p>
+            <p style={colorStyle}>인식된 색상: {color}</p>
           )}
         </div>
       </StyledContainer>
