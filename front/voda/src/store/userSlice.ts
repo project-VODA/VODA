@@ -1,98 +1,63 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { persistor } from "./store";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-interface UserState {
+interface LoginResponse {
     accessToken: string,
     refreshToken: string,
-    userEmail: string,
     userInfo: UserInfoType,
     userSetting: UserSettingType,
+}
+
+interface UserState extends LoginResponse{
     isLogin: boolean,
+}
+
+const initialState: UserState = {
+    accessToken: '',
+    refreshToken: '',
+    userInfo:{
+        userEmail: '',
+        userName: '',
+        role: '',
+    },
+    userSetting:{
+        typeNo: 0,
+        screenType: 0,
+    },
+    isLogin: false,
 }
 
 const userSlice = createSlice({
     name: 'userSlice',
-    initialState: {
-        accessToken: '',
-        refreshToken: '',
-        userEmail: '',
-        userInfo:{
-            userEmail: '',
-            userName: '',
-            userHandicap: '',
-            role: '',
-        },
-        userSetting:{
-            typeNo: 0,
-            screenType: 0,
-        },
-        isLogin: false,
-    
-    },
+    initialState,
     reducers: {
-        userSliceLogin:(state, action) =>{
+        userSliceLogin:(state, action: PayloadAction<LoginResponse>) =>{
             state.accessToken = action.payload.accessToken;
             state.refreshToken = action.payload.refreshToken;
-            // accessToken 복호화 및 유저 정보 저장
-            let jwtPayload = JSON.parse(atob(action.payload.accessToken.split('.')[1]));
-            state.userEmail = jwtPayload.userEmail;
-            state.userInfo = {
-                userEmail: jwtPayload.userEmail,
-                userName: decodeURI(escape(jwtPayload.userName)),
-                userHandicap: jwtPayload.userHandicap,
-                role: jwtPayload.role,
-            };
-            state.userSetting = {
-                typeNo: jwtPayload.typeNo,
-                screenType: jwtPayload.screenType,
-            }
+            state.userInfo = action.payload.userInfo;
+            state.userSetting = action.payload.userSetting;
             state.isLogin = true;
         },
-        userSliceAllocate: (state, action) => {
-            state.accessToken = action.payload.accessToken;
-            // accessToken 복호화 및 유저 정보 저장
-            let jwtPayload = JSON.parse(atob(action.payload.accessToken.split('.')[1]));
-            state.userEmail = jwtPayload.userEmail;
-            state.userInfo = {
-                userEmail: jwtPayload.userEmail,
-                userName: decodeURI(escape(jwtPayload.userName)),
-                userHandicap: jwtPayload.userHandicap,
-                role: jwtPayload.role,
-            };
-            state.userSetting = {
-                typeNo: jwtPayload.typeNo,
-                screenType: jwtPayload.screenType,
-            };
-        },
         userSliceLogout:(state) => {
-            state.accessToken = '';
-            state.refreshToken = '';
-            state.userEmail = '';
-            state.userInfo = {
-                userEmail: '',
-                userName: '',
-                userHandicap: '',
-                role: '',
-            };
-            state.userSetting = {
-                typeNo: 0,
-                screenType: 0,
-            };
-            state.isLogin = false;
+            state = initialState;
         },
-        updateAccessToken:(state, action) => {
+        updateAccessToken:(state, action: PayloadAction<{accessToken: string}>) => {
             state.accessToken = action.payload.accessToken;
+        },
+        updateUserName: (state, action: PayloadAction<string>) => {
+            state.userInfo.userName = action.payload;
+        },
+        updateUserSetting: (state, action: PayloadAction<UserSettingType>) => {
+            state.userSetting = action.payload;
         }
     }
 });
 
 export default userSlice;
-export const {userSliceLogin, userSliceAllocate, userSliceLogout, updateAccessToken} = userSlice.actions;
+export const {userSliceLogin, userSliceLogout, updateAccessToken, updateUserName, updateUserSetting} = userSlice.actions;
 
 export interface UserInfoType{
     userEmail: string,
     userName: string,
-    userHandicap: string,
     role: string,
 };
 

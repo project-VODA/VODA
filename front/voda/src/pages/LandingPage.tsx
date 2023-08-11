@@ -83,7 +83,9 @@ import { access } from "fs";
 
 import '../styles/simple/RegisterContainer.css'
 import styled from "styled-components";
-import useErrorHandlers from "../hooks/error";
+import useErrorHandlers from "../hooks/useError";
+import { useAppDispatch } from "../hooks/reduxHook";
+import { HttpStatusCode } from "axios";
 
 const StyledLink = styled(TitleLink)`
 text-decoration: none;
@@ -98,8 +100,8 @@ const LandingPage = () => {
     userEmail: email,
     userPass: password,
   };
-  const dispatch = useDispatch();
-  const errorHandlers = useErrorHandlers();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     if (email === '') {
@@ -111,30 +113,26 @@ const LandingPage = () => {
         .then((res) => {
           alert("로그인 성공");
           // userSlice에 저장
-          dispatch(userSliceLogin ({
-            accessToken: res.accessToken,
-            refreshToken: res.refreshToken
-          }));
+          dispatch(userSliceLogin (res));
           // 메인페이지로 리다이렉트
           RedirectHomePage();
         })
         .catch((err) => {
-          errorHandlers(err.request.status, handleLogin, userData);
+          handleError(err.response.status);
         });
     }
   };
   const RedirectTemporaryPass = () => {
-    naviagte('/pass')
+    navigate('/pass')
   }
   
-  const naviagte = useNavigate();
 
   const handleRegist = () => {
-    naviagte('/signup')
+    navigate('/signup')
   }
 
   const RedirectHomePage = () => {
-    naviagte('/home');
+    navigate('/home');
   }
 
   const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -142,6 +140,16 @@ const LandingPage = () => {
       handleLogin();
     }
   };
+
+  const handleError = (statusCode: HttpStatusCode) => {
+    switch(statusCode){
+      case HttpStatusCode.Unauthorized:
+        alert("이메일과 비밀번호를 확인해주세요");
+        break;
+      default:
+        navigate('/error');
+    }
+  }
 
   return (
     <>

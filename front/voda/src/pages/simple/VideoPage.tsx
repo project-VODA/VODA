@@ -10,6 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import { useAppSelector } from "../../hooks/reduxHook";
 
 
 const StyledLink = styled(Link)`
@@ -23,9 +24,7 @@ const SimpleVideo = () => {
   const navigate = useNavigate();
 
   // const location = useLocation();
-  const [sessionToken, callNo] : [string, number] = useSelector((state: RootState) => {
-    return [state.call.callInfo.sessionToken, state.call.callInfo.callNo];
-  });
+  const {sessionToken, callNo} = useAppSelector((state) => state.call.callInfo);
 
   useEffect(() => {
     let isMounted = true;

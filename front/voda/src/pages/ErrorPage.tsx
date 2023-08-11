@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import errorImage from '../assets/images/errorImage.png';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from "../hooks/reduxHook";
 
 const Container = styled.div`
 	display: flex;
@@ -24,10 +25,11 @@ const SubText = styled.div`
 `;
 
 const ErrorPage = () => {
-	const navigate = useNavigate(); // useHistory 훅을 사용하여 history 객체 생성
+	const navigate = useNavigate();
+	const isLogin = useAppSelector((state) => state.user.isLogin);
 
   const redirectHomePage = () => {
-    navigate('/home');
+    navigate(isLogin ? '/home' : '/');
   };
 
   return (

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { getArticles } from '../../apis/board';
 import styled from 'styled-components';
+import useErrorHandlers from '../../hooks/useError';
 
 type Article = {
   articleNo: number;
@@ -39,17 +40,19 @@ const TableContainer = styled.div`
 const BoardList: React.FC = () => {
   
   const [articles, setArticles] = useState<ArticleList>([]);
+  const errorHandlers = useErrorHandlers();
 
-  useEffect(() => {
+  useEffect(handleGetArticles, [])
+
+  function handleGetArticles() {
     getArticles()
-    .then((res: ArticleList) => {
-      console.log(res);
-      setArticles(res);
-    })
-    .catch((err: Error) => {
-      console.log(err);
-    })
-  }, [])
+      .then((res: ArticleList) => {
+        setArticles(res);
+      })
+      .catch((err) => {
+        errorHandlers(err.response.status, handleGetArticles);
+      })
+  }
   
   return (
     <TableContainer>
