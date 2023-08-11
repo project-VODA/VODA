@@ -19,14 +19,14 @@ const SmallRedButton = styled('button')<ThemeProps>`
   padding: 8px;
   margin: 8px;
   border: 1px solid ${({ theme }) => theme.text};
-  background: #FF0000;
+  background: #f11818;
   border: none;
   color: ${({ theme }) =>
-    theme === SimpleTheme ? '#ffffff' : '#003566'};
+    theme === SimpleTheme ? '#ffffff' : '#ffffff'};
 
   &:hover {
     background: ${({ theme }) =>
-      theme === SimpleTheme ? '#FFD60A' : '#003566'};
+      theme === SimpleTheme ? '#fe4242' : '#fe4242'};
     transition: all 0.1s ease-in-out;
   }
 `;

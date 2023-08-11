@@ -71,3 +71,6 @@
 - 23.08.10 KSH
   - 표정 버튼 이동 - KSH (VideoRoomComponent.js -> ToolbarComponentClass.js)
   - 표정 데이터 받아오는거랑 보내기 듣기 함수도 같이 옮겨주세요
+
+- 23.08.11 Choi
+  - 댓글 리스트 출력 쿼리 변경
