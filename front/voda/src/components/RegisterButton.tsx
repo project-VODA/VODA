@@ -14,6 +14,7 @@ interface ThemeProps {
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
 `;
 
 // 테마(모드) 별로 색상 고려해줘야됌!!
@@ -28,6 +29,9 @@ const RegisterButton = styled('button')<ThemeProps>`
   background: ${({ theme }) => theme.text};
   color: ${({ theme }) => theme.body};
   max-width: 467px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     background: ${({ theme }) =>
