@@ -26,6 +26,8 @@ export default class ToolbarComponentClass extends Component {
     this.toggleFullscreen = this.toggleFullscreen.bind(this);
     this.switchCamera = this.switchCamera.bind(this);
     this.leaveSession = this.leaveSession.bind(this);
+    this.hearExpression = this.hearExpression.bind(this);
+    this.sendExpression = this.sendExpression.bind(this);
   }
 
   micStatusChanged() {
@@ -49,6 +51,14 @@ export default class ToolbarComponentClass extends Component {
   leaveSession() {
     this.props.leaveSession();
     this.props.navigate('/home');
+  }
+
+  hearExpression() {
+    this.props.hearExpression();
+  }
+
+  sendExpression() {
+    this.props.sendExpression();
   }
 
   render() {
