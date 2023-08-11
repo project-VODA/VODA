@@ -1,6 +1,5 @@
 package com.voda.calling.controller;
 
-import com.voda.calling.exception.AlreadyLoginedException;
 import com.voda.calling.exception.NotRegisteredException;
 import com.voda.calling.exception.PasswordWrongException;
 import com.voda.calling.model.dto.User;
@@ -8,6 +7,7 @@ import com.voda.calling.model.dto.UserChangePasswordRequest;
 import com.voda.calling.model.service.NotificationService;
 import com.voda.calling.model.service.UserService;
 import com.voda.calling.util.JwtUtil;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +59,6 @@ public class UserController {
     @ApiResponses({
             @ApiResponse(code=200, message="로그인 성공"),
             @ApiResponse(code=401, message="로그인 실패 - 비밀번호 오류"),
-            @ApiResponse(code=404, message="로그인 실패 - 등록 정보 없음"),
             @ApiResponse(code=500, message="로그인 실패 - 서버(DB)오류")
     })
     @PostMapping("/login")
@@ -68,11 +67,9 @@ public class UserController {
         try{
             return ResponseEntity.ok()
                     .body(userService.login(user.getUserEmail(), user.getUserPass()));
-        }catch (PasswordWrongException | AlreadyLoginedException e){
+        } catch (PasswordWrongException | NotRegisteredException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }catch (NotRegisteredException e){
-            return ResponseEntity.notFound().build();
-        }catch (Exception e){
+        } catch (Exception e){
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -88,7 +85,14 @@ public class UserController {
         try{
             String userEmail = jwtUtil.getUserEmailFromToken(auth);
             User user = userService.getUser(userEmail);
-            return new ResponseEntity<User>(user, HttpStatus.OK);    
+            User returned = User.builder()
+                    .userEmail(user.getUserEmail())
+                    .userName(user.getUserName())
+                    .userHandicap(user.getUserHandicap())
+                    .build();
+            return new ResponseEntity<User>(returned, HttpStatus.OK);
+        }catch (ExpiredJwtException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }catch (Exception e) {
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -98,7 +102,6 @@ public class UserController {
     @ApiOperation( value = "로그아웃", notes = "userToken을 null로 바꾸고 로그아웃하는 API")
     @ApiResponses({
             @ApiResponse(code=200, message="로그아웃 성공"),
-            @ApiResponse(code=401, message="인증 실패"),
             @ApiResponse(code=500, message="로그아웃 실패 - 서버(DB)오류")
     })
     @PostMapping("/logout")
@@ -106,16 +109,16 @@ public class UserController {
         log.info("로그아웃 시도");
         //1. 유저이메일로 유저 정보 가져오기
         String replacedEmail = userEmail.replace("\"", "");
-        User logoutUser = userService.getUser(replacedEmail);
-        notificationService.deleteSseEmitter(userEmail);
-
-        //2. 해당 유저 로그아웃
-        userService.logout(logoutUser);
-        if(logoutUser.getUserToken()==null){
+        try{
+            User logoutUser = userService.getUser(replacedEmail);
+            if(logoutUser == null) return ResponseEntity.internalServerError().build();
+            notificationService.deleteSseEmitter(userEmail);
+            //2. 해당 유저로 로그아웃
+            userService.logout(logoutUser);
             log.info("로그아웃 성공");
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-        }else{
-            log.info("로그아웃 실패");
+        } catch (Exception e){
+            log.info("로그아웃 실패: {}", e.getStackTrace());
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -127,12 +130,11 @@ public class UserController {
             @ApiResponse(code=500, message="비밀번호 재설정 실패 - 서버(DB)오류")
     })
     @PostMapping("/pass")
-    public ResponseEntity<String> changePassword(@RequestBody UserChangePasswordRequest userChangePassword) {
+    public ResponseEntity<String> changePassword(@ApiParam(hidden = true) @RequestHeader(value = AUTH) String auth, @RequestBody UserChangePasswordRequest userChangePassword) {
         log.info("비밀번호 재설정");
-        log.info(userChangePassword.getUserEmail() + userChangePassword.getOriginalPass() + userChangePassword.getNewPass());
         try{
             //1. 현재 비밀번호 일치하는지 확인
-            User user = userService.checkOriginalPass(userChangePassword.getUserEmail(), userChangePassword.getOriginalPass());
+            User user = userService.checkOriginalPass(jwtUtil.getUserEmailFromToken(auth), userChangePassword.getOriginalPass());
             //2. 현재 비밀번호 일치하면 비밀번호 재설정
             userService.updatePassword(user, userChangePassword.getNewPass());
             log.info("비밀번호 재설정 성공");
@@ -154,15 +156,23 @@ public class UserController {
             @ApiResponse(code=500, message="수정 실패 - 서버(DB)오류")
     })
     @PutMapping("/mypage")
-    public ResponseEntity<?> updateUserInfo(@RequestBody User user){
+    public ResponseEntity<?> updateUserInfo(@ApiParam(hidden = true) @RequestHeader(value = AUTH) String auth, @RequestBody User user){
         log.info("마이페이지 수정");
-        User updateUser = userService.updateUser(user);
-        if(updateUser!=null){
+        try{
+            user.setUserEmail(jwtUtil.getUserEmailFromToken(auth));
+            User updateUser = userService.updateUser(user);
             log.info("마이페이지 수정 성공");
-            return new ResponseEntity<User>(updateUser, HttpStatus.OK);
-        }else{
-            log.info("마이페이지 수정 실패 - 사용자 정보 인증 실패");
-            return new ResponseEntity<String>(FAIL, HttpStatus.UNAUTHORIZED );
+            User returned = User.builder()
+                    .userName(updateUser.getUserName())
+                    .userHandicap(updateUser.getUserHandicap())
+                    .build();
+            return new ResponseEntity<User>(returned, HttpStatus.OK);
+        }catch (ExpiredJwtException e) {
+            log.info("마이페이지 수정 실패 - 비 인증 토큰");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        } catch (Exception e) {
+            log.info("마이페이지 수정 실패");
+            return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR );
         }
     }
 
@@ -178,6 +188,9 @@ public class UserController {
             userService.canceledUser(jwtUtil.getUserEmailFromToken(auth));
             log.info("회원탈퇴 성공");
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);    
+        }catch (ExpiredJwtException e) {
+            log.info("회원탈퇴 실패 - 비 인증 토큰");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }catch (Exception e) {
             log.info("회원탈퇴 실패 - 서버(DB) 오류");
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);

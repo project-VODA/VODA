@@ -3,10 +3,8 @@ package com.voda.calling.controller;
 import com.voda.calling.exception.NoContentException;
 import com.voda.calling.model.dto.Article;
 import com.voda.calling.model.service.ArticleService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import com.voda.calling.util.JwtUtil;
+import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,9 +25,13 @@ public class ArticleController {
 
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
+    private static final String AUTH = "Authorization";
 
     @Autowired
     ArticleService articleService;
+
+    @Autowired
+    JwtUtil jwtUtil;
 
     @ApiOperation(value = "게시글 목록", notes = "삭제되지 않은 게시글 목록을 articleNo 기준 내림차순으로 가져오는 API")
     @ApiResponses({
@@ -100,10 +102,11 @@ public class ArticleController {
             @ApiResponse(code = 500, message = "게시글 등록 실패 - 서버(DB)오류")
     })
     @PostMapping()
-    public ResponseEntity<?> registArticle(@RequestBody Article article) {
+    public ResponseEntity<?> registArticle(@ApiParam(hidden = true) @RequestHeader(value = AUTH) String auth, @RequestBody Article article) {
         log.info("작성 게시글 정보: " + article);
         log.info("게시글 작성");
         try {
+            article.setUserEmail(jwtUtil.getUserEmailFromToken(auth));
             Article newArticle = articleService.registArticle(article);
             log.info("게시글 등록 성공");
             return new ResponseEntity<>(newArticle, HttpStatus.OK);
@@ -119,9 +122,10 @@ public class ArticleController {
             @ApiResponse(code = 500, message = "게시글 수정 실패 - 서버(DB)오류")
     })
     @PutMapping()
-    public ResponseEntity<?> updateArticle(@RequestBody Article article) {
+    public ResponseEntity<?> updateArticle(@ApiParam(hidden = true) @RequestHeader(value = AUTH) String auth, @RequestBody Article article) {
         log.info("게시글 수정");
         try {
+            article.setUserEmail(jwtUtil.getUserEmailFromToken(auth));
             Article updatedArticle = articleService.updateArticle(article);
             log.info("게시글 수정 성공");
             return new ResponseEntity<Article>(updatedArticle, HttpStatus.OK);

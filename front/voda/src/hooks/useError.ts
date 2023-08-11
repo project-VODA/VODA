@@ -4,17 +4,17 @@ import { useDispatch, useSelector } from "react-redux"
 import { updateAccessToken, userSliceLogout } from "../store/userSlice";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../store/store";
+import { useAppDispatch, useAppSelector } from "./reduxHook";
 
 const useErrorHandlers = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const userEmail = useSelector((state:RootState) => {
-    return state.user.userInfo.userEmail;
-  });
+  const userEmail = useAppSelector((state) => state.user.userInfo.userEmail);
 
   const errorHandlers = (statusCode: number, callback: any, param?: any) => {
     switch(statusCode) {
       case HttpStatusCode.Unauthorized:
+        console.log("401 에러당");
         handle401Error(callback, param);
         break;
       case HttpStatusCode.NotFound:
@@ -23,6 +23,7 @@ const useErrorHandlers = () => {
       case HttpStatusCode.ServiceUnavailable:
       case HttpStatusCode.GatewayTimeout:
       default:
+        console.log("넌 나가라");
         redirectErrorPage();
     }
   };
@@ -31,6 +32,7 @@ const useErrorHandlers = () => {
     getAccessToken()
     .then((res) => {
       dispatch(updateAccessToken({accessToken: res.accessToken}));
+      console.log("새로운 토큰 받아옴");
       callback(param);
     })
     .catch((err) => {
@@ -38,7 +40,7 @@ const useErrorHandlers = () => {
       alert("다시 로그인해주세요");
       logout(userEmail);
       dispatch(userSliceLogout());
-      navigate('/login');
+      navigate('/');
     })
   }
 

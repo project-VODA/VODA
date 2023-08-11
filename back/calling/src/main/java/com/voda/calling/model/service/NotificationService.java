@@ -107,7 +107,6 @@ public class NotificationService {
             emitter.send(SseEmitter.event().id(id).name(eventName).data(data, MediaType.APPLICATION_JSON));
         }catch (IOException e){
             sseRepository.deleteById(id);
-//            throw new AlarmFailedException();
         }
     }
 

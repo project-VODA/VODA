@@ -9,6 +9,8 @@ import { redirectKakao, logout } from '../../apis/user';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { userSliceLogout } from '../../store/userSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHook';
+import useLogOut from '../../hooks/useLogout';
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -27,12 +29,8 @@ const SimpleHomePage = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [accessTokenRedux, isLoginRedux, userEmail]: [string, boolean, string] = useSelector((state:RootState) => {
-    return [state.user.accessToken, state.user.isLogin, state.user.userInfo.userEmail];
-  })
-
-  const [accessToken, setAccessToken] = useState(accessTokenRedux);
-  const [isLogin, setIsLogin] = useState(isLoginRedux);
+  const logout = useLogOut();
+  const isLogin = useAppSelector((state) => state.user.isLogin);
 
   const RedirectSocialLogin = () => {
     navigate('/social-login');
@@ -65,27 +63,11 @@ const SimpleHomePage = () => {
   };
 
   const redirectEnvPage = () => {
-    naviagte('/setting')
+    navigate('/setting')
   };
-
-  const handleLogout = () => {
-    if(accessToken !== null && accessToken !== ''){
-      logout(userEmail)
-      .then((res) => {
-        console.log("hi logout");
-        dispatch(userSliceLogout());
-        RedirectHomePage();
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-    }
-  };
-
-  const naviagte = useNavigate();
 
   const RedirectHomePage = () => {
-    naviagte('/');
+    navigate('/');
   };
   
   //로그인 여부 확인
@@ -106,7 +88,7 @@ const SimpleHomePage = () => {
         <HandleButton text="환경 설정" onClick={redirectEnvPage} />
         {/* 로그인 유저 존재 여부에 따라 버튼 렌더링 */}
         {isLogin ? (
-          <HandleButton tabIndex={5} text="로그아웃" onClick={handleLogout} />
+          <HandleButton tabIndex={5} text="로그아웃" onClick={logout} />
           ) : (
           <HandleButton tabIndex={5} text="로그인" onClick={redirectLogin} />
         )}

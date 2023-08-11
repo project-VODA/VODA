@@ -1,6 +1,5 @@
 package com.voda.calling.model.service;
 
-import com.voda.calling.exception.AlreadyLoginedException;
 import com.voda.calling.exception.NotRegisteredException;
 import com.voda.calling.exception.PasswordWrongException;
 import com.voda.calling.model.dto.User;
@@ -72,6 +71,7 @@ public class UserService {
     }
 
     public Map<String, Object> login(String userEmail, String userPass) {
+        log.info("로그인 시작");
         User user = userRepository.findUserByUserEmailAndUserCancel(userEmail, IS_NOT_CANCELED);
         if (user == null) { // 등록이 안된 유저인 경우
             log.info("{}에 해당하는 유저 없음", userEmail);
@@ -84,13 +84,13 @@ public class UserService {
             notificationService.send("logout", userEmail, userEmail, null, null, -1, null);
         }
 
-
-            Optional<UserSetting> userSetting = userSettingRepository.findById(userEmail);
+        log.info("토큰 전달");
+        Optional<UserSetting> userSetting = userSettingRepository.findById(userEmail);
         Map<String, Object> tokens = new HashMap<>();
-        // accessToken
+
         tokens.put("accessToken", jwtUtil.createAccessToken(user.getUserEmail()));
-        tokens.put("screenType", userSetting.get().getUsersettingScreenType());
-        // refreshToken
+        tokens.put("userInfo", User.builder().userEmail(user.getUserEmail()).userName(user.getUserName()).role(user.getRole()).build());
+        tokens.put("userSetting", userSetting.get());
         String refreshToken = jwtUtil.createRefreshToken();
         tokens.put("refreshToken", refreshToken);
         user.setUserToken(refreshToken);
