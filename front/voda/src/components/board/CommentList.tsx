@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams } from "react-router-dom";
 import styled from 'styled-components';
-import { getComments } from '../../apis/board';
+import { deleteComment, getComments, registComment, updateComment } from '../../apis/board';
 import Button from '../RegisterButton';
 import { useAppSelector } from '../../hooks/reduxHook';
 import SmallRedButton from '../SmallRedBtn';
@@ -60,8 +60,16 @@ const CommentWriteButton = styled(Button)`
 
 const CommentList: React.FC<{ articleNo: number }> = ({ articleNo }) => {
   const userInfo = useAppSelector((state) => state.user.userInfo);
-  const params = useParams();
   const [comments, setComments] = useState<CommentList>([]);
+  const [content, setContent] = useState('');
+  const [modifiedContent, setModifiedContent] = useState('');
+  const [isClickModify, setIsClickModify] = useState(-1);
+
+  const commentRequest = {
+    userEmail: userInfo.userEmail,
+    articleNo: articleNo,
+    commentContent: content,
+  };
 
   useEffect(() => {
     getComments(articleNo)
@@ -75,15 +83,75 @@ const CommentList: React.FC<{ articleNo: number }> = ({ articleNo }) => {
   }, [])
   
   const handleWriteComment = () => {
-
+    registComment(commentRequest)
+      .then((res) => {
+        getComments(articleNo)
+        .then((res: CommentList) => {
+          console.log(res);
+          setComments(res);
+          setContent('');
+        })
+        .catch((err: Error) => {
+          console.log(err);
+        })
+      })
+      .catch((err) => {
+        console.error(err);
+      })
   }
 
-  const handleModifyComment = () => {
-
+  const handleModifyComment = (commentNo: number, initialContent: string) => {
+    setModifiedContent(initialContent);
+    setIsClickModify(commentNo);
   }
 
-  const handleDeleteComment = () => {
+  const handleCancelModify = () => {
+    setModifiedContent('');
+    setIsClickModify(-1);
+  }
 
+  const handleModifyConfirm = (commentNo: number) => {
+    const modifyCommentRequest = {
+      commentNo: commentNo,
+      articleNo: articleNo,
+      commentContent: modifiedContent,
+      userEmail: userInfo.userEmail,
+    }
+
+    updateComment(modifyCommentRequest)
+      .then((res) => {
+        getComments(articleNo)
+          .then((res: CommentList) => {
+            console.log(res);
+            setComments(res);
+            setContent('');
+            setIsClickModify(-1);
+          })
+          .catch((err: Error) => {
+            console.log(err);
+          })
+      })
+      .catch((err) => {
+        console.error(err);
+      }) 
+  }
+
+  const handleDeleteComment = (commentNo: number) => {
+    deleteComment(commentNo)
+      .then((res) => {
+        getComments(articleNo)
+          .then((res: CommentList) => {
+            console.log(res);
+            setComments(res);
+            setContent('');
+          })
+          .catch((err: Error) => {
+            console.log(err);
+          })
+      })
+      .catch((err) => {
+        console.error(err);
+      })
   }
 
   return (
@@ -100,10 +168,12 @@ const CommentList: React.FC<{ articleNo: number }> = ({ articleNo }) => {
               {comments.map((comment: Comment) => (
                 <tr key={comment.commentNo}>
                   <td>{comment.userName}</td>
-                  <td>{comment.commentContent}</td>
+                  <td>{ isClickModify === comment.commentNo ? <input type='text' value={modifiedContent} onChange={(e) => setModifiedContent(e.target.value)} /> : <span>{comment.commentContent}</span>}</td>
                   <td>{comment.commentRegTime}</td>
-                  { userInfo.role == "1" ? <td><SmallYellowButton onClick={handleModifyComment} text="수정" aria-label="댓글 수정" /></td> : null}
-                  { userInfo.role == "1" ? <td><SmallRedButton onClick={handleDeleteComment} text="삭제" aria-label="댓글 삭제" /></td> : null}
+                  { userInfo.role == "1" && isClickModify !== comment.commentNo ? <td><SmallYellowButton onClick={(e) => handleModifyComment(comment.commentNo, comment.commentContent)} text="수정" aria-label="댓글 수정" /></td> : null}
+                  { userInfo.role == "1" && isClickModify === comment.commentNo ? <td><SmallYellowButton onClick={(e) => handleModifyConfirm(comment.commentNo)} text="확인" aria-label="댓글 수정 확인" /></td> : null}
+                  { userInfo.role == "1" && isClickModify !== comment.commentNo ? <td><SmallRedButton onClick={(e) => handleDeleteComment(comment.commentNo)} text="삭제" aria-label="댓글 삭제" /></td> : null}
+                  { userInfo.role == "1" && isClickModify === comment.commentNo ? <td><SmallRedButton onClick={handleCancelModify} text="취소" aria-label="댓글 수정 취소" /></td> : null}
                 </tr>
               ))}
             </tbody>
@@ -111,7 +181,7 @@ const CommentList: React.FC<{ articleNo: number }> = ({ articleNo }) => {
         </div>
         { userInfo.role == "1" ? 
           <CommentInputContainer>
-            <CommentInput/>
+            <CommentInput placeholder='댓글 내용을 입력해주세요.' value={content} onChange={(e) => setContent(e.target.value)}/>
             <SmallYellowButton onClick={handleWriteComment} aria-label='댓글을 등록하는 버튼입니다.' text="등록" />
           </CommentInputContainer> :
           null
