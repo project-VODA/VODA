@@ -20,8 +20,8 @@ const initialState: UserState = {
         role: '',
     },
     userSetting:{
-        typeNo: 0,
-        screenType: 0,
+        usersettingTypeNo: 0,
+        usersettingScreenType: 0,
     },
     isLogin: false,
 }
@@ -33,12 +33,15 @@ const userSlice = createSlice({
         userSliceLogin:(state, action: PayloadAction<LoginResponse>) =>{
             state.accessToken = action.payload.accessToken;
             state.refreshToken = action.payload.refreshToken;
-            state.userInfo = action.payload.userInfo;
-            state.userSetting = action.payload.userSetting;
+            state.userInfo.userEmail = action.payload.userInfo.userEmail;
+            state.userInfo.userName = action.payload.userInfo.userName;
+            state.userInfo.role = action.payload.userInfo.role;
+            state.userSetting.usersettingTypeNo = action.payload.userSetting.usersettingTypeNo;
+            state.userSetting.usersettingScreenType = action.payload.userSetting.usersettingScreenType;
             state.isLogin = true;
         },
         userSliceLogout:(state) => {
-            state = initialState;
+            state = initialState
         },
         updateAccessToken:(state, action: PayloadAction<{accessToken: string}>) => {
             state.accessToken = action.payload.accessToken;
@@ -62,6 +65,6 @@ export interface UserInfoType{
 };
 
 export interface UserSettingType{
-    typeNo: number,
-    screenType: number,
+    usersettingTypeNo: number,
+    usersettingScreenType: number,
 };
