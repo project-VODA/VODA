@@ -17,6 +17,11 @@ import { updateCall } from "../store/callSlice";
 import useErrorHandlers from "../hooks/useError";
 import { useAppDispatch, useAppSelector } from "../hooks/reduxHook";
 
+// react-icons
+import { FiPhoneCall } from "react-icons/fi";
+import { RiDeleteBin6Line } from 'react-icons/ri'
+import { MdPersonAddAlt } from 'react-icons/md'
+
 const inputColor = {
   backgroundColor: 'white',
   marginTop: '28px',
@@ -133,18 +138,28 @@ const UserSearchList = () => {
             </tr>
           ) : (
             userList.map((user: User) => (
-              <tr key={user.userEmail}>
+              <tr key={user.userEmail} style={{ paddingLeft: '10vw', paddingRight: '10vw', gap: '6vw'}}>
                 <td>{user.userName}</td>
                 <td>{user.userEmail}</td>
                 <td>
+                  {localStorage.getItem('theme') === 'simple' ? (
                   <div style={{ display: 'flex', gap: '10px' }}>
-                  <Button className="callButton" onClick={() => handleCalling(user)} text="통화" aria-label={`${user.userName} 님에게 통화하시려면 버튼을 누르세요.`}/>
+                  <Button className="callButton" onClick={() => handleCalling(user)} text="통화" aria-label={`${user.userName} 님과 통화하시려면 버튼을 누르세요.`}/>
                     {user.friend ? (
                       <RedButton className="delButton" onClick={() => handleDeleteFriend(user)} text="삭제" aria-label={`${user.userName} 님을 친구목록에서 삭제하시려면 버튼을 누르세요.`} />
                     ) : (
                       <Button className="addButton" onClick={() => handleRegistFriend(user)} text="추가" aria-label={`${user.userName} 님을 친구목록에 추가 하시려면 버튼을 누르세요.`} />
                     )}
+                  </div>) : (
+                  <div style={{ display: 'flex', gap: '6vw' }}>
+                    <FiPhoneCall style={{ cursor: 'pointer' }} onClick={() => handleCalling(user)} aria-label={`${user.userName} 님과 통화하시려면 버튼을 누르세요.`} />
+                      {user.friend ? (
+                        <RiDeleteBin6Line style={{ cursor: 'pointer' }} onClick={() => handleDeleteFriend(user)} aria-label={`${user.userName} 님을 친구목록에서 삭제하시려면 버튼을 누르세요.`} />
+                      ) : (
+                        <MdPersonAddAlt style={{ cursor: 'pointer' }} onClick={() => handleRegistFriend(user)} aria-label={`${user.userName} 님을 친구목록에 추가 하시려면 버튼을 누르세요.`} />
+                      )}
                   </div>
+                  )}
                 </td>
 
               </tr>

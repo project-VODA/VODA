@@ -129,7 +129,9 @@ const SimpleRoom = () => {
         <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <SmallRedButton id="exitButton" onClick={(e) => setRecentCallModalOpen(false)} text="X" aria-label="창 닫기 버튼"/>
         </span>
-        <RecentCalls/>
+        <div style={{justifyContent: 'center'}}>
+          <RecentCalls/>
+        </div>
       </Modal>
       </div>
     </>

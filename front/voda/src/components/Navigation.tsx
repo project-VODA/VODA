@@ -311,19 +311,19 @@ export default function Navigation() {
             {/* <ChannelButton theme={theme}>test</ChannelButton> */}
             {/* <ChannelButton theme={theme}><Link to="/about">ABOUT</Link></ChannelButton> */}
             <ChannelButton onClick={toAbout}>
-              <MenuLink to="/about">서비스소개</MenuLink>
+              <MenuLink to="/about">서비스 소개</MenuLink>
             </ChannelButton>
             <ChannelButton onClick={toWaiting}>
-              <MenuLink to="/waiting">영상통화</MenuLink>
+              <MenuLink to="/waiting">영상 통화</MenuLink>
             </ChannelButton>
             <ChannelButton onClick={toFeedback}>
-              <MenuLink to="/feedback">고객의소리함</MenuLink>
+              <MenuLink to="/feedback">고객의 소리함</MenuLink>
             </ChannelButton>
             <ChannelButton onClick={toFace}>
               <MenuLink to="/face-test">비디오</MenuLink>
             </ChannelButton>
             <ChannelButton onClick={toColor}>
-              <MenuLink to="/color">색상인식</MenuLink>
+              <MenuLink to="/color">색상 인식</MenuLink>
             </ChannelButton>
             
             

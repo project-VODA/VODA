@@ -64,7 +64,7 @@ const DetailRoom = () => {
   return (
     <>
       <StyledLink to='' aria-label="영상통화를 걸 친구를 찾는 페이지입니다.">
-        <Title title="Friend" />
+        <Title title="영상통화" />
       </StyledLink>
       <DivideContainer
         leftChild={<FriendList></FriendList>}

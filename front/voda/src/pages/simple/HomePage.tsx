@@ -66,6 +66,10 @@ const SimpleHomePage = () => {
     navigate('/setting')
   };
 
+  const redirectColor = () => {
+    navigate('/color')
+  }
+
   const RedirectHomePage = () => {
     navigate('/');
   };
@@ -85,7 +89,7 @@ const SimpleHomePage = () => {
         <HandleButton tabIndex={4}text='마이 페이지' onClick={redirectMyPage} />
         {/* <HandleButton text='redirect' onClick={RedirectSocialLogin} /> */}
         {/* <HandleButton text='카카오 로그인' onClick={handleSocialLogin} /> */}
-        <HandleButton text="환경 설정" onClick={redirectEnvPage} />
+        <HandleButton text="색상 인식" onClick={redirectColor} />
         {/* 로그인 유저 존재 여부에 따라 버튼 렌더링 */}
         {isLogin ? (
           <HandleButton tabIndex={5} text="로그아웃" onClick={logout} />
