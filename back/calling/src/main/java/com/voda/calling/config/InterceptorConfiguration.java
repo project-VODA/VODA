@@ -20,10 +20,14 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
                 .addPathPatterns("/articles").addPathPatterns("/articles/*")
                 .addPathPatterns("/comments").addPathPatterns("/comments/*")
                 .addPathPatterns("/settings").addPathPatterns("/settings/*")
+                .addPathPatterns("/meetings/recentcall")
                 .excludePathPatterns("/users/logout")
                 .excludePathPatterns("/users/login")
-                .excludePathPatterns("/meetings/*")
                 .excludePathPatterns("/email/*")
-                .excludePathPatterns("/users/regist");
+                .excludePathPatterns("/users/regist")
+                .excludePathPatterns("/meetings/reject/*")
+                .excludePathPatterns("/meetings/quit/*")
+                .excludePathPatterns("/meetings/receive/*")
+                .excludePathPatterns("/meetings/send");
     }
 }

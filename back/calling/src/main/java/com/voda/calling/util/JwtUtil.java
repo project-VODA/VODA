@@ -19,7 +19,7 @@ public class JwtUtil {
 
     @Value("${jwt.secret}")
     private String secretKey;
-    private Long expiredMs = 1000 * 60L;// 토큰 유효기간: 1시간
+    private Long expiredMs = 500 * 60L;// 토큰 유효기간: 1시간
 
     /**
      * user정보를 담고있는 accessToken 발행하기
