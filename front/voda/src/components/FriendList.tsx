@@ -67,6 +67,8 @@ const FriendList = () => {
   const userInfo = useAppSelector((state) => state.user.userInfo);
   
   const [friendList, setFriendList] = useState<FriendsList>([]);
+  const [isMsgOpen, setIsMsgOpen] = useState(false);
+  const [msg, setMsg] = useState('');
 
   const navigate = useNavigate();
   const errorhandlers = useErrorHandlers();
@@ -107,14 +109,20 @@ const FriendList = () => {
     sendCalling(callSendRequest)
       .then((res) => {
         console.log(res);
-        dispatch(updateCall({
-          sessionToken: res.data.sessionToken,
-          sessionId: res.data.sessiondId,
-          callNo: res.data.callNo
-        }));
-        if(res.data === "oncalling"){
-          navigate('/waiting')
-        }else{
+        const msg = res.data;
+
+        if(msg=="senderOn"){
+          setMsg("자신에게 걸려온 통화가 있는지 확인하세요");
+          setIsMsgOpen(true);
+        } else if( msg=="receiverOn"){
+          setMsg("상대방이 통화중입니다.");
+          setIsMsgOpen(true);
+        }else {
+          dispatch(updateCall({
+            sessionToken: res.data.sessionToken,
+            sessionId: res.data.sessiondId,
+            callNo: res.data.callNo
+          }));
           navigate('/video');
         }
       })
@@ -187,6 +195,32 @@ const FriendList = () => {
           ))}
         </tbody>
       </table>
+
+      <Modal id="messageModel"
+        isOpen={isMsgOpen} 
+        onRequestClose={(e) => setIsMsgOpen(false)}
+        ariaHideApp={false}
+        style={{
+          content: {
+            backgroundColor: localStorage.getItem('theme') === 'detail' ? 'white' : '#001d3d',
+            width: '400px', // Adjust the width as needed
+            height: '300px', // Adjust the height as needed
+            margin: 'auto', // Center the modal
+            display: 'flex', // Flex container
+            flexDirection: 'column', // Stack content vertically
+            justifyContent: 'center', // Center horizontally
+            alignItems: 'center', // Center vertically
+          }
+        }}
+        shouldCloseOnOverlayClick={false}
+      >
+        <p style={{textAlign: 'center', fontSize: 'xx-large', margin: '5%'}}>{msg}</p>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
+          <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <SmallRedButton id="exitButton" onClick={(e) => setIsMsgOpen(false)} text="닫기" aria-label="창 닫기 버튼"/>
+          </span>
+        </div>
+      </Modal>
     </>
   );
 };
