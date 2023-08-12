@@ -1,15 +1,14 @@
 import { HttpStatusCode } from "axios"
-import { getAccessToken, logout } from "../apis/user"
-import { useDispatch, useSelector } from "react-redux"
-import { updateAccessToken, userSliceLogout } from "../store/userSlice";
+import { getAccessToken } from "../apis/user"
+import { updateAccessToken } from "../store/userSlice";
 import { useNavigate } from "react-router-dom";
-import { RootState } from "../store/store";
-import { useAppDispatch, useAppSelector } from "./reduxHook";
+import { useAppDispatch } from "./reduxHook";
+import useLogOut from "./useLogout";
 
 const useErrorHandlers = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const userEmail = useAppSelector((state) => state.user.userInfo.userEmail);
+  const logout = useLogOut();
 
   const errorHandlers = (response: any, callback: any, param?: any) => {
     if(response === undefined){
@@ -43,9 +42,7 @@ const useErrorHandlers = () => {
     .catch((err) => {
       console.log(err);
       alert("다시 로그인해주세요");
-      logout(userEmail);
-      dispatch(userSliceLogout());
-      navigate('/');
+      logout();
     })
   }
 

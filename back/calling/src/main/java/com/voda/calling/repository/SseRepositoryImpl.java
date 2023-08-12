@@ -85,6 +85,10 @@ public class SseRepositoryImpl implements SseRepository{
 
     @Override
     public void deleteAllEventCacheStartWithId(String userEmail) {
-        return;
+        eventCache.forEach((key, event) -> {
+            if(key.startsWith(userEmail)){
+                eventCache.remove(key);
+            }
+        });
     }
 }
