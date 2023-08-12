@@ -57,11 +57,17 @@ export default function SseComponent() {
   const userEmail = useAppSelector((state) => state.user.userInfo.userEmail);
   const [alarm, setAlarm] = useState(getNotificaationPermission());
 
+  let eventSource: EventSource = null;
+
   useEffect(() => {
     if(userEmail == null || userEmail == ''){
+      if(eventSource &&  eventSource.readyState !== eventSource.CLOSED){
+        console.log("sse 연결 끊김");
+        eventSource.close();
+      }
       return;
     }
-    const eventSource = new EventSource(`${API_URL}/subscribe/${userEmail}`);
+    eventSource = new EventSource(`${API_URL}/subscribe/${userEmail}`);
 
     eventSource.addEventListener("connection", (event) => {
       console.log("SSE 연결 완료");
@@ -100,7 +106,8 @@ export default function SseComponent() {
     });
 
     return () => {
-      if(userEmail == null || userEmail == ''){
+      if(eventSource){
+        console.log("연결 끊김");
         eventSource.close();
       }
     }
