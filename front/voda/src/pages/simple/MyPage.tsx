@@ -67,6 +67,10 @@ const SimpleMyPage = () => {
     navigate('/');
   }
 
+  const handleEnvSetting = () => {
+    navigate('/setting');
+  }
+
   function handleGetUserInfo() {
     getUserInfo()
       .then((res) => {
@@ -197,6 +201,7 @@ const SimpleMyPage = () => {
       {pwFlag === false && passwordCheck.length !== 0 && <Info text='비밀번호가 일치하지 않습니다.'/>}
       <ButtonContainer>
         <SettingButton text='비밀번호 변경' onClick={handleChangePassword} aria-label='비밀번호 변경 버튼입니다.'/>
+        <SettingButton text='환경 설정' onClick={handleEnvSetting} aria-label='환경 설정 페이지로 이동하는 버튼입니다. 버튼을 누르시면 환경 설정 페이지로 이동합니다.'/>
       </ButtonContainer>
       
       <br/>

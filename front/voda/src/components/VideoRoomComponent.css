@@ -44,7 +44,7 @@
 }
 
 
-.bounds {
+.simplebounds {
   background-color: #001d3d;
   overflow: hidden;
   position: absolute;
@@ -58,6 +58,19 @@
   margin-top: 80px;
 }
 
+.detailbounds {
+  background-color: #ffffff;
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 40px;
+  bottom: 0;
+  height: 65%;
+  min-width: 400px !important;
+  width: 100%;
+  margin-top: 80px;
+}
 
 /*!
  * Copyright (c) 2017 TokBox, Inc.

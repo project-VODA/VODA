@@ -166,7 +166,7 @@ const FriendList = () => {
           <col width = "10%" />
         </colgroup>
         <thead>
-          <tr style={{ borderCollapse: 'separate', borderSpacing: '0px 20px',  }}>
+          <tr style={{ borderCollapse: 'separate', borderSpacing: '0px 20px', fontWeight: 'bold' }}>
             <th>이름</th>
             <th>이메일</th>
             <th id='DetailCallContainer'></th>
@@ -175,9 +175,9 @@ const FriendList = () => {
         <tbody>
           {friendList.length === 0 ? <tr><td colSpan={3} style={{ textAlign: 'center' }}>친구가 존재하지 않습니다.</td></tr> :
             friendList.map((friend: Friend) => (
-              <tr key={friend.friendNo} style={{ textAlign: 'center' }}>
-                <td>{friend.userName}</td>
-                <td>{friend.userEmail}</td>
+              <tr key={friend.friendNo}>
+                <td style={{ paddingLeft: '6vw' }} >{friend.userName}</td>
+                <td style={{ paddingLeft: '5vw' }} >{friend.userEmail}</td>
                 <div id='DetailCallContainer'>
                 <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '28px', fontSize:'25px'}}>
                 <FiPhoneCall style={{ cursor: 'pointer' }} onClick={() => handleCalling(friend)} aria-label={`${friend.userName} 님에게 통화하시려면 버튼을 누르세요.`}/>

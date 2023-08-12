@@ -9,7 +9,8 @@ import SettingButton from "../../components/SettingButton";
 import DeleteButton from "../../components/DeleteButton";
 
 
-const logo = require("../../assets/images/logo_yellow.png");
+const SimpleLogo = require("../../assets/images/logo_yellow.png");
+const DetailLogo = require("../../assets/images/logo_black.png");
 
 /* 표정 버튼 이동 - KSH (VideoRoomComponent.js -> ToolbarComponentClass.js*/
 export const getUserHandicap = async () => {
@@ -61,14 +62,20 @@ export default class ToolbarComponentClass extends Component {
     this.props.sendExpression();
   }
 
+  
   render() {
     const mySessionId = this.props.sessionId;
     const localUser = this.props.user;
+    const theme = localStorage.getItem('theme')
+    const toolbarID = theme === 'simple' ? 'toolbar-simple-theme' : 'toolbar-detail-theme';
+
     return (
-      <AppBar className="toolbar" id="header">
+      <AppBar className="toolbar" id={toolbarID}>
         <Toolbar className="toolbar">
           <div id="navSessionInfo">
-            <img id="header_img" alt="OpenVidu Logo" src={logo} />
+            {theme === 'simple' ? (
+            <img id="header_img" alt="simpleVodaLogo" src={SimpleLogo} />)
+            : ( <img id="header_img" src={DetailLogo} alt="detailVodaLogo" /> )}
 
             {this.props.sessionId && (
               <div id="titleContent">

@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { useAppSelector } from "../../hooks/reduxHook";
 
+import SimpleLogo from "../../assets/images/logo_yellow.png"
 
 const StyledLink = styled(Link)`
 text-decoration: none;

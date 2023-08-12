@@ -560,6 +560,7 @@ class VideoRoomComponent extends Component {
   render() {
     const mySessionId = this.state.mySessionId;
     const localUser = this.state.localUser;
+    const theme = localStorage.getItem('theme')
 
     return (
       <div className="container" id="container">
@@ -574,8 +575,8 @@ class VideoRoomComponent extends Component {
           hearExpression={this.hearExpression}
           sendExpression={this.sendExpression}
         />
-
-        <div id="layout" className="bounds">
+        { theme === 'simple' ? (
+        <div id="layout" className="simplebounds">
           {this.state.subscribers.map((sub, i) => (
             <div key={i} className="OT_root OT_subscriber custom-class" id="remoteUsers">
               <StreamComponent user={sub} streamId={sub.streamManager.stream.streamId} />
@@ -587,7 +588,21 @@ class VideoRoomComponent extends Component {
               <StreamComponent user={localUser} handleNickname={this.nicknameChanged}/>
             </div>
           )}
-          </div>
+        </div>) : (
+          <div id="layout" className="detailbounds">
+          {this.state.subscribers.map((sub, i) => (
+            <div key={i} className="OT_root OT_subscriber custom-class" id="remoteUsers">
+              <StreamComponent user={sub} streamId={sub.streamManager.stream.streamId} />
+            </div>
+          ))}
+          {localUser !== undefined && localUser.getStreamManager() !== undefined && (
+            <div className="OT_root OT_publisher custom-class" id="localUser">
+              {/* <StreamComponent user={localUser} handleNickname={this.nicknameChanged} handleExpressionData={this.handleExpressionDataFromStream}/> */}
+              <StreamComponent user={localUser} handleNickname={this.nicknameChanged}/>
+            </div>
+          )}
+        </div>
+        )}
           {/* <div>
             {getUserHandicap ? (<SettingButton tabIndex={1} id='hearExpression' text='표정 듣기' onClick={this.hearExpression} aria-label='표정 듣기 버튼입니다.'  />
             ) : (<SettingButton tabIndex={1} id='sendExpression' text='표정 보내기' onClick={this.sendExpression} aria-label='표정 보내기 버튼입니다.' />
