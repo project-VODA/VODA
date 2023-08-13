@@ -50,12 +50,12 @@ public class NotificationService {
         sendToClient("connection", sseEmitter, id, CallNotification.builder().senderEmail("me").content("call to you").build());
 
         // 본인에게 미수신된 이벤트 수신
-        if(!lastEventId.isEmpty()){
-            Map<String, Object> events = sseRepository.findAllEventCacheStartWithByEmail(userEmail);
-            events.entrySet().stream()
-                    .filter(entry -> lastEventId.compareTo(entry.getKey()) < 0)
-                    .forEach(entry -> sendToClient("call",sseEmitter, entry.getKey(), entry.getValue()));
-        }
+        Map<String, Object> events = sseRepository.findAllEventCacheStartWithByEmail(userEmail);
+        events.entrySet().stream()
+                .forEach(entry -> {
+                    sendToClient("call", sseEmitter, entry.getKey(), entry.getValue());
+                });
+        sseRepository.deleteAllEventCacheStartWithId(userEmail);
 
         return sseEmitter;
     }
@@ -74,7 +74,6 @@ public class NotificationService {
         log.info("senderEmail :{}, receiverEmail:{}",senderEmail, receiverEmail );
         // receiver에게 해당되어 있는 sseEmitter 가져오기
         Map<String, SseEmitter> sseEmitters = sseRepository.findAllEmitterStartWithByEmail(receiverEmail);
-        log.info("{}", sseEmitters.size());
         // receiver id 생성
         String receiverId = getIdWithTime(receiverEmail);
         // eventcache에 저장
