@@ -10,12 +10,14 @@ import SmallYellowButton from "../components/SmallYellowBtn"
 import Button from "./SettingButton";
 import RedButton from "./DeleteButton"
 import Input from "./InputText";
+import SmallRedButton from '../components/SmallRedBtn'
 import { deleteFriend, registFriend, searchUser } from "../apis/friend";
 
 import '../styles/simple/SimpleWaitingPage.css'
 import { updateCall } from "../store/callSlice";
 import useErrorHandlers from "../hooks/useError";
 import { useAppDispatch, useAppSelector } from "../hooks/reduxHook";
+import Modal from 'react-modal';
 
 // react-icons
 import { FiPhoneCall } from "react-icons/fi";
@@ -26,6 +28,19 @@ const inputColor = {
   backgroundColor: 'white',
   marginTop: '28px',
 };
+
+const SimpleModal = {
+  content: {
+    backgroundColor: '#001d3d',
+  },
+}
+
+const DetailModal = {
+  content: {
+    backgroundColor: '#fff',
+  },
+}
+
 
 type User = {
   userEmail: string;
@@ -42,7 +57,8 @@ const UserSearchList = () => {
 
   const [keyword, setKeyword] = useState('');
   const [userList, setUserList] = useState<UserList>([]);
-  // const [callSend, setCallSend] = useState()
+  const [isMsgOpen, setIsMsgOpen] = useState(false);
+  const [msg, setMsg] = useState('');
 
   const userSearchRequest = {
     keyword: keyword,
@@ -66,12 +82,23 @@ const UserSearchList = () => {
 
     sendCalling(callSendRequest)
       .then((res) => {
-        dispatch(updateCall({
-          sessionToken: res.data.sessionToken,
-          sessionId: res.data.sessiondId,
-          callNo: res.data.callNo
-        }));
-        navigate('/video');
+        //console.log(res);
+        const msg = res.data;
+
+        if(msg=="senderOn"){
+          setMsg("자신에게 걸려온 통화가 있는지 확인하세요");
+          setIsMsgOpen(true);
+        } else if( msg=="receiverOn"){
+          setMsg("상대방이 통화중입니다.");
+          setIsMsgOpen(true);
+        }else {
+          dispatch(updateCall({
+            sessionToken: res.data.sessionToken,
+            sessionId: res.data.sessiondId,
+            callNo: res.data.callNo
+          }));
+          navigate('/video');
+        }
       })
       .catch((err) => {
         errorHandlers(err.response, handleCalling, user);
@@ -167,6 +194,32 @@ const UserSearchList = () => {
           )}
         </tbody>
       </table>
+      <Modal id="messageModel"
+        isOpen={isMsgOpen} 
+        onRequestClose={(e) => setIsMsgOpen(false)}
+        ariaHideApp={false}
+        style={{
+          content: {
+            backgroundColor: localStorage.getItem('theme') === 'detail' ? 'white' : '#001d3d',
+            width: '400px', // Adjust the width as needed
+            height: '300px', // Adjust the height as needed
+            margin: 'auto', // Center the modal
+            display: 'flex', // Flex container
+            flexDirection: 'column', // Stack content vertically
+            justifyContent: 'center', // Center horizontally
+            alignItems: 'center', // Center vertically
+          }
+        }}
+        shouldCloseOnOverlayClick={false}
+      >
+        <p style={{textAlign: 'center', fontSize: 'xx-large', margin: '5%'}}>{msg}</p>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
+          <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <SmallRedButton id="exitButton" onClick={(e) => setIsMsgOpen(false)} text="닫기" aria-label="창 닫기 버튼"/>
+          </span>
+        </div>
+      </Modal>
+
     </>
   );
 };
