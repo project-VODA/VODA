@@ -3,3 +3,8 @@
 #RegisterContainer {
   margin: 3.8% 9%;
 }
+
+.InputText {
+  background-color: #f0ffff;
+  color: black;
+}

@@ -14,6 +14,7 @@ import Input from "../../components/InputText";
 import { searchUser } from "../../apis/friend";
 import { sendCalling } from "../../apis/calling";
 
+import VideoCall from "../../assets/images/VideoCall2.jpg"
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -54,7 +55,7 @@ const DetailRoom = () => {
     return (
       <>
       <StyledLink to='' aria-label="영상통화를 걸 친구를 찾는 페이지입니다.">
-        <Title title="Friend" />
+        <Title title="영상통화" />
       </StyledLink>
       <FriendList/>
       <RecentCalls/>
@@ -63,9 +64,7 @@ const DetailRoom = () => {
   }
   return (
     <>
-      <StyledLink to='' aria-label="영상통화를 걸 친구를 찾는 페이지입니다.">
-        <Title title="영상통화" />
-      </StyledLink>
+      <img src={VideoCall} alt="VideoCall" />
       <DivideContainer
         leftChild={<FriendList></FriendList>}
         rightChild={<RecentCalls></RecentCalls>}

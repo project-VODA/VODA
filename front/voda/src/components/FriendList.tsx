@@ -169,8 +169,8 @@ const FriendList = () => {
   </>
       <table className = 'friendTable' style={{ borderCollapse: 'separate', borderSpacing: '0px 20px',  }}>
         <colgroup>
-          <col width = "45%" />
-          <col width = "45%" />
+          <col width = "20%" />
+          <col width = "10%" />
           <col width = "10%" />
         </colgroup>
         <thead>
@@ -180,10 +180,18 @@ const FriendList = () => {
             <th id='DetailCallContainer'></th>
           </tr>
         </thead>
+      </table>
+      <hr style={{ margin: '0 7%' }} />
+      <table className = 'friendTable' style={{ borderCollapse: 'separate', borderSpacing: '0px 20px',  }}>
+        <colgroup>
+          <col width = "20%" />
+          <col width = "10%" />
+          <col width = "10%" />
+        </colgroup>
         <tbody>
           {friendList.length === 0 ? <tr><td colSpan={3} style={{ textAlign: 'center' }}>친구가 존재하지 않습니다.</td></tr> :
             friendList.map((friend: Friend) => (
-              <tr key={friend.friendNo}>
+              <tr key={friend.friendNo} style={{ borderCollapse: 'separate', borderSpacing: '0px 20px',}}>
                 <td style={{ paddingLeft: '6vw' }} >{friend.userName}</td>
                 <td style={{ paddingLeft: '5vw' }} >{friend.userEmail}</td>
                 <div id='DetailCallContainer'>
