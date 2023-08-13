@@ -47,6 +47,40 @@ class VideoRoomComponent extends Component {
     this.audioPlayer = new Audio();
     this.typeNo = this.props.typeNo;
     this.isIncall = this.props.isIncall;
+    const advices = [
+      [
+        "화난 표정을 하고 있어요. 기분이 안좋아 보이는데 무슨 일이 있냐고 물어보세요."
+      ],
+      [
+        "역겨운 표정을 하고 있어요. 기분이 안좋아 보이는데 무슨 일이 있냐고 물어보세요."
+      ],
+      [
+        "행복한 표정을 하고 있어요. 오늘 어떤 좋은 일이 있었는지 물어보세요.",
+        "행복한 표정을 하고 있어요. 상대방이 행복해 하니까 나도 행복하다고 공감을 표시해 보세요.",
+        "행복한 표정을 하고 있어요. 상대방의 기쁨을 함께 나누며 대화를 이어가보세요."
+      ],
+      [
+        "무표정을 하고 있어요. 오늘 하루동안 있었던 일로 대화를 시작해볼까요?",
+        "무표정을 하고 있어요. 상대방의 관심사로 대화를 시작해볼까요?",
+        "무표정을 하고 있어요. 상대방이 무슨 생각을 하고 있는지 물어보세요."
+      ],
+      [
+        "슬픈 표정을 하고 있어요. 위로의 말을 건네보세요",
+        "슬픈 표정을 하고 있어요. 도움이 필요하면 언제든지 얘기하라고 위로의 말을 건네보세요",
+        "슬픈 표정을 하고 있어요. 함께 슬픔을 나누며 따뜻한 말을 건네보세요.",
+      ],
+      [
+        "무서운 표정을 하고 있어요. 무슨 일이 있었는지 물어보세요.",
+      ],
+      [
+        "놀란 표정을 하고 있어요. 무슨 일이 있었는지 물어보세요",
+        "놀란 표정을 하고 있어요. 상대방의 놀란 마음에 공감을 표시해 보세요",
+      ],
+      [
+        "표정이 감지되지 않았습니다."
+      ]
+    ];
+    
 
     this.joinSession = this.joinSession.bind(this);
     this.leaveSession = this.leaveSession.bind(this);
@@ -307,15 +341,15 @@ class VideoRoomComponent extends Component {
   }
 
   // voda - KJW
-  playAudio = (expression) => {
+  playExpression = (expressionData) => {
 
     let text = '';
-    switch(expression){
+    switch(expressionData.expression){
       case 'angry': 
         text = '화난 표정';
         break;
       case 'disgust': 
-        text = '화난 표정';
+        text = '역겨운 표정';
         break;
       case 'happy': 
         text = '행복한 표정';
@@ -335,15 +369,54 @@ class VideoRoomComponent extends Component {
       default:
         text = '표정이 감지되지 않았습니다.';
     }
+    let voiceName = this.typeNo === 0? 'ko-KR-Neural2-C' : 'ko-KR-Neural2-A';
+    tts(text, voiceName);
+  };
 
-     console.log('typeNo:', this.typeNo);
+  // voda - KJW
+  playExpressionWithAdvice = (expressionData) => {
+    let index = 0;
+    switch(expressionData.expression){
+      case 'angry': 
+        index = 0;
+        break;
+      case 'disgust': 
+        index = 1;
+        break;
+      case 'happy': 
+        index = 2;
+        break;
+      case 'neutral': 
+        index = 3;
+        break;
+      case 'sad': 
+        index = 4;
+        break;
+      case 'scared':
+        index = 5; 
+        break;
+      case 'surprised': 
+        index = 6;
+        break;
+      default:
+        index = 7;
+    }
+
+    let text = this.advices[index][Math.floor(Math.random() * this.advices[index].length)];
+    let voiceName = this.typeNo === 2? 'ko-KR-Neural2-C' : 'ko-KR-Neural2-A';
+    tts(text, voiceName);
+  };
+
+  // voda - KJW
+  tts(text, voiceName){
+    console.log('typeNo:', this.typeNo);
     const requestData = {
       input: {
         text: text,
       },
       voice: {
         languageCode: 'ko-KR',
-        name: this.typeNo === 0 ? 'ko-KR-Neural2-C' : 'ko-KR-Neural2-A',
+        name: voiceName,
       },
       audioConfig: {
         audioEncoding: 'MP3',
@@ -364,7 +437,7 @@ class VideoRoomComponent extends Component {
       .catch(error => {
         console.error('TTS API 요청 중 오류:', error);
       });
-  };
+  }
 
   subscribeToUserChanged() {
     // voda - KJW
@@ -378,7 +451,12 @@ class VideoRoomComponent extends Component {
     // voda - KJW
     this.state.session.on('signal:send-expression', (event) => {
       if (event.from.connectionId !== this.state.session.connection.connectionId) {
-        this.playAudio(event.data);
+        console.log('typeNo:', this.typeNo);
+        if(this.typeNo === 0 || this.typeNo === 1){
+          this.playExpression(JSON.parse(event.data));
+        }else{
+          this.playExpressionWithAdvice(JSON.parse(event.data));
+        }
       }
     });
 
@@ -500,10 +578,10 @@ class VideoRoomComponent extends Component {
 	sendExpression = () => {
     // Check if the localUser is connected and has a stream manager
 		if (this.state.localUser && this.state.localUser.getStreamManager()) {
-      console.log('표정: ',this.props.expression);
+      console.log('표정 데이터: ', this.props.expressionData)
 		  // Send the text data as a broadcast message to all participants
 		  this.state.session.signal({
-			data: this.props.expression,
+			data: JSON.stringify(this.props.expressionData),
 			to: [], // Empty array means broadcast to everyone
 			type: 'send-expression', // Use the same type as the receiver is listening to
 		  })
@@ -639,7 +717,7 @@ const mapStateToProps = state => {
   return {
     typeNo: state.user.userSetting.userSettingTypeNo,
     isIncall: state.call.isIncall,
-    expression : state.expression.expression,
+    expressionData : state.expression.expressionData,
   };
 };
 
