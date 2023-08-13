@@ -21,9 +21,10 @@ import { useAppDispatch } from "../../hooks/reduxHook";
 import { HttpStatusCode } from "axios";
 
 const StyledLink = styled(TitleLink)`
-text-decoration: none;
-color: inherit;
+  text-decoration: none;
+  color: inherit;
 `;
+
 
 const SimpleLogin = () => {
   const [email, setEmail] = useState('');
@@ -93,6 +94,7 @@ const SimpleLogin = () => {
       </StyledLink>
       <div id='RegisterContainer'>
       <Input
+        className="InputText"
         type="email"
         alt="Input Email"
         placeholder="이메일을 입력하세요"
@@ -103,6 +105,7 @@ const SimpleLogin = () => {
       />
 
       <Input
+        className="InputText"
         alt="password"
         type="password"
         placeholder="비밀번호"

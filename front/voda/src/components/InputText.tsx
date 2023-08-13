@@ -46,16 +46,18 @@ interface InputProps {
   checked?: boolean;
   style?: React.CSSProperties;
   tabIndex?: number;
+  className?: string;
 }
 
 
-export default function Input({ type, placeholder, value, onChange, 'aria-label':ariaLabel, readonly, checked, style, tabIndex}: InputProps) {
+export default function Input({ type, placeholder, value, onChange, 'aria-label':ariaLabel, readonly, checked, style, tabIndex, className}: InputProps) {
 
   const { theme } = useContext(ThemeContext);
 
   return (
     <TextContainer>
       <InputField
+        className={className}
         type={type}
         placeholder={placeholder}
         theme={theme}

@@ -11,6 +11,9 @@ import Info from '../../components/InfoText';
 import { sendAuthenticationCode } from '../../apis/email';
 import useErrorHandlers from '../../hooks/useError';
 
+import DetailLogo from '../../assets/images/logo_black.png'
+import SimpleTitle from '../../components/SimpleTitle';
+
 
 const SimpleSignup = () => {
   const [email, setEmail] = useState('');
@@ -119,6 +122,7 @@ const SimpleSignup = () => {
 
   return (
     <>
+      <SimpleTitle onClick=''/>
       <Title title='회원가입'/>
       
       <Input 

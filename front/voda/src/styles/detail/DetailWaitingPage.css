@@ -1,3 +1,8 @@
 #DetailCallContainer {
   padding: 15px 60px;
 }
+
+.recentCallBtn {
+  padding: 0px !important;
+  margin: 0px !important;
+}

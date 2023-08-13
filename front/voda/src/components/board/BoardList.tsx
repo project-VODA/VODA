@@ -122,7 +122,7 @@ return (
           {/* <hr className='tableHr' /> */}
           <hr/>
         <table className='DetailBoardTable'>
-        <colgroup>
+          <colgroup>
             <col width="10%" />
             <col width="40%" />
             <col width="20%" />

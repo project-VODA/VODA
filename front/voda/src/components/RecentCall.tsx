@@ -87,7 +87,7 @@ const RecentCalls = () => {
   };
 
   return (
-    <>
+    <div style={{ marginTop: '48.9px'}}>
     <span> {localStorage.getItem('theme') === 'simple' ? (<div style={{ marginBottom: '60px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', padding: '10px' }}>
       <span style={{ marginLeft: 'auto', marginRight: 'auto', fontSize:'1.9vw', fontWeight: 'bolder' }}>최근 통화 목록</span></div>)
     :(<div style={{ marginTop:'5.6vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', padding: '10px' }}>
@@ -101,7 +101,7 @@ const RecentCalls = () => {
         <col width = "10%" />
       </colgroup>
       <thead>
-        <tr style={{ borderCollapse: 'separate', borderSpacing: '0px 20px',  }}>
+        <tr style={{ borderCollapse: 'separate', borderSpacing: '0px 20px', fontSize: '1.6vw' }}>
           <th>이름</th>
           <th>통화시간</th>
           <th id='DetailCallContainer'></th>
@@ -110,27 +110,28 @@ const RecentCalls = () => {
       <tbody>
         {callHistoryList.length === 0 ? <tr><td colSpan={3}>통화 기록이 존재하지 않습니다.</td></tr> :
           callHistoryList.map((callHistory: CallHistory) => (
-            <tr key={callHistory.startTime}  style={{ paddingLeft: '5vw' }}>
+            <tr key={callHistory.startTime}  style={{ paddingLeft: '5vw', fontSize: '1.4vw' }}>
               <td>{callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverName : callHistory.senderName}</td>
               {/* <td text-align='center'>{callHistory.startTime}</td> */}
               <td>
                 {callHistory.startTime !== null ? callHistory.startTime : '시작 시간 없음'}
               </td>
               <div id='DetailCallContainer'>
-              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '40%', fontSize:'25px', margin: '7% 55px 2%'}}>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '40%', fontSize:'25px', padding: '6vh 0px 0px'}}>
               <span>
                 {localStorage.getItem('theme') === 'simple' ?
-              (<td text-align='center'><Button text="통화" onClick={() => handleCalling(callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverEmail : callHistory.senderEmail)} aria-label={`${callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverName : callHistory.senderName} 님에게 전화를 하려면 버튼을 누르세요`}/></td>
+              (<td text-align='center'><Button className="RecentCallBtn" text="통화" onClick={() => handleCalling(callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverEmail : callHistory.senderEmail)} aria-label={`${callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverName : callHistory.senderName} 님에게 전화를 하려면 버튼을 누르세요`}/></td>
               ) : (<FiPhoneCall onClick={() => handleCalling(callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverEmail : callHistory.senderEmail)} />)}
               </span></div></div>
             </tr>
         ))}
       </tbody>
     </table> ) : (
+      <div>
       <table className = 'recentCallTable'  style={{ borderCollapse: 'separate', borderSpacing: '0px 20px',  }}>
       <colgroup>
-        <col width = "45%" />
-        <col width = "45%" />
+        <col width = "20%" />
+        <col width = "10%" />
         <col width = "10%" />
       </colgroup>
       <thead>
@@ -141,7 +142,15 @@ const RecentCalls = () => {
           <th> </th>) : ( <th id='DetailCallContainer'></th> )}
         </tr>
       </thead>
-      <tbody>
+      </table>
+      <hr style={{ margin: '0 7%' }} />
+      <table className = 'recentCallTable'  style={{ borderCollapse: 'separate', borderSpacing: '0px 20px',  }}>
+      <colgroup>
+        <col width = "20%" />
+        <col width = "10%" />
+        <col width = "10%" />
+      </colgroup>
+      <tbody style={{ borderCollapse: 'separate', borderSpacing: '0px 20px' }}>
         {callHistoryList.length === 0 ? <tr><td colSpan={3} style={{ textAlign: 'center' }}>통화 기록이 존재하지 않습니다.</td></tr> :
           callHistoryList.map((callHistory: CallHistory) => (
             <tr key={callHistory.startTime}  >
@@ -159,7 +168,7 @@ const RecentCalls = () => {
             </tr>
         ))}
       </tbody>
-    </table>)}</span>
+    </table></div>)}</span>
 
     <Modal id="messageModel"
         isOpen={isMsgOpen} 
@@ -186,7 +195,7 @@ const RecentCalls = () => {
           </span>
         </div>
       </Modal>
-    </>
+    </div>
   );
 };
 

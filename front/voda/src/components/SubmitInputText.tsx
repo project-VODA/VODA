@@ -25,8 +25,7 @@ const InputField = styled.input<ThemeProps>`
   padding: 8px;
   margin-bottom: 20px;
   border: 1px solid ${({ theme }) => theme.text};
-  color: ${({ theme }) => theme.text};
-  background-color: ${({ theme }) => theme.body};
+
   max-width: 450px;
 
   text-align: center;
@@ -35,7 +34,8 @@ const InputField = styled.input<ThemeProps>`
     text-align: center;
   }
 `;
-
+  // color: ${({ theme }) => theme.text};
+  // background-color: ${({ theme }) => theme.body};  상속 받아서 색상 적용하려면 위로 이동하셔요
 interface InputProps {
   type: string;
   placeholder: string;
@@ -44,10 +44,11 @@ interface InputProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyPress?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   'aria-label'?: string;
+  className?: string;
 }
 
 
-export default function Input({ type, placeholder, value, onChange, onKeyPress, 'aria-label':ariaLabel}: InputProps) {
+export default function Input({ type, placeholder, value, onChange, onKeyPress, 'aria-label':ariaLabel, className}: InputProps) {
   const { theme } = useContext(ThemeContext);
 
   return (
@@ -60,6 +61,7 @@ export default function Input({ type, placeholder, value, onChange, onKeyPress, 
         onChange={onChange}
         onKeyPress={onKeyPress}
         aria-label={ariaLabel}
+        className={className}
       />
     </TextContainer>
   )
