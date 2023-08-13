@@ -69,10 +69,7 @@ public class MeetingController {
             return new ResponseEntity<>(RECEIVERON, HttpStatus.OK); //http 200
         } else {
             log.info("통화가능");
-            // 1. callhistory에 meeting 기록 (상태는 대기?)
-            CallHistory callHistory = callHistoryService.createMainCallHistory(senderEmail, receiverEmail);
-
-            // 2. session 생성
+            // 1. session 생성
             UUID randomStr = UUID.randomUUID();
             sessionId = randomStr.toString();
 
@@ -92,6 +89,9 @@ public class MeetingController {
             } catch (OpenViduHttpException e) {
                 return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR); //http 500
             }
+
+            // 2. callhistory에 meeting 기록 (상태는 대기?)
+            CallHistory callHistory = callHistoryService.createMainCallHistory(senderEmail, receiverEmail);
             // 3. callNo 가져오기
             int currentCallNo = callHistory.getCallNo();
             // 4. receiver에게 통화 알림 및 token 전달
