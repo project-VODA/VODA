@@ -3,11 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 const expressionSlice = createSlice({
     name: 'expressionSlice',
     initialState: {
-      expression: '',
+      expressionData : {
+        expression: '',
+        probability:0,
+      }
     },
     reducers: {
         updateExpressionData: (state, action) => {
-          state.expression = action.payload;
+          state.expressionData.expression = action.payload.expression;
+          state.expressionData.probability = action.payload.probability;
         }
     }
 });
