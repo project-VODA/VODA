@@ -79,7 +79,10 @@ export default function OvVideoComponent(props) {
         }
       });
       
-      dispatch(updateExpressionData(highestExpression.expression))
+      dispatch(updateExpressionData({
+        expression: highestExpression.expression,
+        probability: highestExpression.probability,
+      }))
     }
   }
 
