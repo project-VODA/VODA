@@ -41,7 +41,7 @@ const userSlice = createSlice({
             state.isLogin = true;
         },
         userSliceLogout:(state) => {
-            state = initialState
+            return initialState;
         },
         updateAccessToken:(state, action: PayloadAction<{accessToken: string}>) => {
             state.accessToken = action.payload.accessToken;
