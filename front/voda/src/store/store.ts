@@ -38,7 +38,14 @@ import expressionSlice from "./expressionSlice";
 import persistStore from "redux-persist/es/persistStore";
 import persistReducer from "redux-persist/es/persistReducer";
 import thunk from "redux-thunk";
+import { createTransform } from "redux-persist";
+import { decryptData, encryptData } from "./encrypt";
 
+
+const encryptTransform: any = createTransform(
+  (inboundState, key) => encryptData(JSON.stringify(inboundState)),
+  (outboundState, key) => JSON.parse(decryptData(outboundState))
+);
 
 const reducers = combineReducers({
   user: userSlice.reducer,
@@ -49,6 +56,7 @@ const reducers = combineReducers({
 const persistConfig = {
   key: 'root',
   storage: storageSession,
+  transforms: [encryptTransform],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
