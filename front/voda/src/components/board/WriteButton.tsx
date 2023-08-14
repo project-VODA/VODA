@@ -36,6 +36,7 @@ export interface ButtonProps {
   onClick?: () => void;
   text: string;
   'aria-label'?: string;
+  tabIndex?: number;
 }
 
 export default function Button({ onClick, text, "aria-label":ariaLabel }: ButtonProps ) {
