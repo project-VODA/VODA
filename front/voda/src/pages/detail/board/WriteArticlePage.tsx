@@ -37,6 +37,16 @@ const StyledQuill = styled(ReactQuill)`
   }
 `
 
+const StyledInput = styled(Input)`
+  max-width: 700px;
+  min-width: 210px;
+  width: 44.5%
+`
+
+const StyledRegistButton = styled(RegistButton)`
+  max-width: 600px;
+  width: 38%
+`
 
 const SimpleWriteArticle = () => {
   const [title, setTitle] = useState('');
@@ -70,7 +80,7 @@ const SimpleWriteArticle = () => {
       <StyledLink to='' aria-label='새 문의글을 작성하는 페이지입니다.'>
         <Title title='문의글 작성' />
       </StyledLink>
-      <Input
+      <StyledInput
         type="text"
         placeholder="제목"
         value={title}
@@ -83,7 +93,7 @@ const SimpleWriteArticle = () => {
           placeholder="건의하고 싶은 내용을 자세히 입력해주세요"
           modules={{
             toolbar: [
-              [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+              [{ 'header': '1' }, { 'header': '2' },],
               [{ 'list': 'ordered' }, { 'list': 'bullet' }],
               ['bold', 'italic', 'underline'],
               [{ 'color': [] }, { 'background': [] }],
@@ -92,8 +102,9 @@ const SimpleWriteArticle = () => {
             ],
           }}
           style={{
-            width: '58%',
-            maxWidth: '600px',
+            width: '50vw',
+            maxWidth: '700px',
+            minWidth:'210px',
             marginBottom: '2%',
             color: '#001d3d',
             background: 'rgba(200, 200, 200, 0.5)',
@@ -103,7 +114,7 @@ const SimpleWriteArticle = () => {
         />
       </QuillContainer>
 
-      <RegistButton text="등록" onClick={handleRegist}></RegistButton>
+      <StyledRegistButton style={{ width: '50vw', maxWidth:'700px'}} text="등록" onClick={handleRegist}></StyledRegistButton>
       
     </>
   );

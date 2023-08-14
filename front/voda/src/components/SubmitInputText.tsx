@@ -18,15 +18,17 @@ const TextContainer = styled.div`
 
 // 테마(모드) 별로 색상 고려해줘야됌!!
 const InputField = styled.input<ThemeProps>`
-  width: 58%;
+  width: 29vw;
   height: 40px;
   border-radius: 20px;
   font-size: 20px;
   padding: 8px;
   margin-bottom: 20px;
   border: 1px solid ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.text};
+  background-color: ${({ theme }) => theme.body};  상속 받아서 색상 적용하려면 위로 이동하셔요
 
-  max-width: 450px;
+  max-width: 467px;
 
   text-align: center;
 
@@ -34,8 +36,6 @@ const InputField = styled.input<ThemeProps>`
     text-align: center;
   }
 `;
-  // color: ${({ theme }) => theme.text};
-  // background-color: ${({ theme }) => theme.body};  상속 받아서 색상 적용하려면 위로 이동하셔요
 interface InputProps {
   type: string;
   placeholder: string;

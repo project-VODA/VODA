@@ -10,10 +10,19 @@ import { Link } from "react-router-dom";
 import { MdAssignmentAdd } from 'react-icons/md'
 import FroClientImg from "../../assets/images/ForClient.jpg"
 
-const StyledLink = styled(Link)`
-text-decoration: none;
-color: inherit;
+const StyledLink = styled(Link)<StyledLinkProps>`
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 `;
+
+interface StyledLinkProps {
+  to: string;
+  text?: string;
+  title: string;
+  children: React.ReactNode;
+}
+
 
 const ListContainer = styled.div`
   display: flex;
@@ -36,9 +45,9 @@ const SimpleFeedBack = () => {
             <ListContainer>
               <img src={ FroClientImg } alt="" />
               <div>
-                <div style={{ fontSize: '1.4vw', display:'flex', justifyContent:'flex-end', marginTop: '40px', cursor:'pointer' }}>
-                  <MdAssignmentAdd onClick={handleWriteArticle} aria-label='새 글 작성하기' />
-                  &nbsp;&nbsp;새 글 작성하기
+                <div style={{ fontSize: '1.4vw', display:'flex', justifyContent:'flex-end', marginTop: '40px', position:'relative', }}>
+                  <MdAssignmentAdd onClick={handleWriteArticle} aria-label='새 글 작성하기' style={{ cursor:'pointer' }}/>
+                  &nbsp;&nbsp; <StyledLink title='NewPost' to='/write'> 새 글 작성하기</StyledLink>
                   </div>
                 <div style={{ padding: '67px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                   <BoardList />
