@@ -153,7 +153,7 @@ const RecentCalls = () => {
       <tbody style={{ borderCollapse: 'separate', borderSpacing: '0px 20px' }}>
         {callHistoryList.length === 0 ? <tr><td colSpan={3} style={{ textAlign: 'center' }}>통화 기록이 존재하지 않습니다.</td></tr> :
           callHistoryList.map((callHistory: CallHistory) => (
-            <tr key={callHistory.startTime}  >
+            <tr key={callHistory.endTime}  >
               <td style={{ paddingLeft: '7vw' }}>{callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverName : callHistory.senderName}</td>
               <td style={{textAlign: 'center'}}>
                 {callHistory.startTime !== null ? callHistory.startTime : '시작 시간 없음'}
