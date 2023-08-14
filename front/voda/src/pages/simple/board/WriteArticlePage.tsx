@@ -26,6 +26,17 @@ const QuillContainer = styled.div`
   justify-content: center;
 `
 
+const StyledInput = styled(Input)`
+  max-width: 700px;
+  min-width: 210px;
+  width: 44.5%
+`
+// const StyledRegistButton = styled(RegistButton)`
+//   max-width: 600px;
+//   min-width: 210px;
+//   width: 38%
+// `
+
 const StyledQuill = styled(ReactQuill)`
   .ql-toolbar.ql-snow {
     border: none;
@@ -71,7 +82,7 @@ const SimpleWriteArticle = () => {
       <StyledLink to='/home' aria-label='새 게시물을 작성하는 페이지입니다. 홈 페이지로 이동하시려면 이 버튼을 누르세요.'>
         <SimpleTitle imgSrc='SimpleLogo' aria-label='고객의 소리함 페이지입니다.'/>
       </StyledLink>
-      <Input
+      <StyledInput
         type="text"
         placeholder="제목"
         value={title}
@@ -86,8 +97,7 @@ const SimpleWriteArticle = () => {
           modules={{
             toolbar: [
               [ { 'header': '1', 'aria-label': 'H1 글자 크기' },
-                { 'header': '2', 'aria-label': 'H2 글자 크기' },
-                { 'font': [], 'aria-label': '글씨체 설정' } ],
+                { 'header': '2', 'aria-label': 'H2 글자 크기' },],
               [{ 'list': 'ordered' }, { 'list': 'bullet' }],
               ['bold', 'italic', 'underline'],
               [{ 'color': [] }, { 'background': [] }],
@@ -96,8 +106,9 @@ const SimpleWriteArticle = () => {
             ],
           }}
           style={{
-            width: '58%',
-            maxWidth: '600px',
+            width: '50vw',
+            maxWidth: '700px',
+            minWidth:'210px',
             marginBottom: '2%',
             color: '#001d3d',
             background: 'white',
@@ -107,7 +118,7 @@ const SimpleWriteArticle = () => {
         />
       </QuillContainer>
 
-      <RegistButton text="등록" onClick={handleRegist}></RegistButton>
+      <RegistButton style={{ width: '50vw', maxWidth:'700px'}} text="등록" onClick={handleRegist}></RegistButton>
       
     </>
   );
