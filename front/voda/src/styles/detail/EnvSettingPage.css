@@ -1,0 +1,121 @@
+.allContainer {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  /* flex-wrap: wrap; */
+  /*margin-top: 5%;*/
+  margin-bottom: 5%;
+}
+
+/* Rectangle 1 */
+.alarmContainer,
+.modeContainer {
+  flex: 0 0 calc(40% - 10vw); /* 두 상자의 너비가 같고, 간격을 위해 5vw를 뺀 값으로 설정 */
+  border: 5px solid #001D3D;
+  border-radius: 10%;
+  height: 45vh;
+  padding: 15px;
+  display: inline-block;
+  /* margin: 10%; */
+}
+
+/* 음성 음성과 조언 */
+.chooseAlarm{
+left: 20vw;
+top: 50vh;
+font-family: 'Koddi';
+font-size: 30px;
+text-align: center;
+color: #001D3D;
+/*margin-left: 40%;*/
+/*margin-top: 10%;*/
+margin-bottom: 20%;
+overflow: hidden;
+}
+
+
+/* 디테일 모드 심플 모드 */
+.chooseMode{
+  left: 20vw;
+  top: 50vh;
+  font-family: 'Koddi';
+  font-size: 30px;
+  text-align: center;
+  color: #001D3D;
+  /*margin-left: 40%;
+  margin-top: 10%;*/
+  /*margin-bottom: 20%;*/
+  overflow: hidden;
+}
+
+
+/* 알림 설정 */
+.alarmTitle{
+/*position: absolute;*/
+width: auto;
+height: auto;
+left: 19vw;
+top: 42vh;
+
+font-family: 'Koddi';
+font-style: normal;
+font-weight: 400;
+font-size: 48px;
+line-height: 58px;
+text-align: center;
+
+margin-top: 20px;
+
+color: #001D3D;
+}
+
+
+/* 모드 설정 */
+
+.modeTitle{
+/*position: absolute;*/
+width: auto;
+height: auto;
+left: 69vw;
+top: 42vh;
+
+font-family: 'Koddi';
+font-style: normal;
+font-weight: 400;
+font-size: 48px;
+line-height: 58px;
+text-align: center;
+
+margin-top: 20px;
+
+color: #001D3D;
+}
+
+
+.modifyButton {
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  left: 48vw;
+  height: 10vh;
+  width: 20vw;
+}
+
+/* 라디오 버튼 css */
+
+[type="radio"] {
+  vertical-align: middle;
+  appearance: none;
+  border: max(2px, 0.1em) solid #001D3D;
+  border-radius: 50%;
+  width: 1.25em;
+  height: 1.25em;
+}
+
+[type="radio"]:checked {
+  background-color: #001D3D;
+}
+
+[type="radio"]:hover {
+  box-shadow: 0 0 0 max(4px, 0.2em) #003566;
+}
