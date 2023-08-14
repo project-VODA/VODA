@@ -19,7 +19,7 @@ const ButtonContainer = styled.div`
 
 // 테마(모드) 별로 색상 고려해줘야됌!!
 const RegisterButton = styled('button')<ThemeProps>`
-  width: 60%;
+  width: 30vw;
   height: 60px;
   border-radius: 20px;
   font-size: 20px;
