@@ -133,11 +133,8 @@ public class MeetingController {
         callHistoryService.updateCallStatus(currnentCallHistory,2);
         callHistoryService.updateCallTime(currnentCallHistory, "end");
 
-        // 3. callhistory 및 user 연결 테이블에 기록
-        UserCallHistory senderUserCallHistory = new UserCallHistory(callNo,currnentCallHistory.getCallSender());
-        UserCallHistory receiverUserCallHistory = new UserCallHistory(callNo, currnentCallHistory.getCallReceiver());
-//        userCallHistoryService.createUserCallhistory(senderUserCallHistory);
-//        userCallHistoryService.createUserCallhistory(receiverUserCallHistory);
+        // 3. 통화 종료시 수신자의 SSE event 삭제
+        notificationService.deleteEventWhenQuitCall(currnentCallHistory.getCallReceiver());
 
         return new ResponseEntity<>(SUCCESS, HttpStatus.OK); //http 500
 }
