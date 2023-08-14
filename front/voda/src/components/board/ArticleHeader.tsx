@@ -5,6 +5,11 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { ThemeContext } from '../../App';
 import { SimpleTheme, Theme } from '../../styles/theme';
+import RedButton from '../SmallRedBtn';
+import YellowButton from '../SmallYellowBtn';
+import { useNavigate } from 'react-router-dom';
+import { deleteArticle } from '../../apis/board';
+import { useAppSelector } from '../../hooks/reduxHook';
 
 
 interface ThemeProps {
@@ -20,44 +25,78 @@ const DivContainer = styled.div`
 const HeaderField = styled.div<ThemeProps>`
   width: 58%;
   height: 30px;
-  border-radius: 20px;
+  /* border-radius: 20px; */
   font-size: 16px;
   padding: 8px;
   margin-bottom: 16px;
-  border: 1px solid ${({ theme }) => theme.text};
+  /* border: 1px solid ${({ theme }) => theme.text}; */
   color: ${({ theme }) => theme.text};
   background-color: ${({ theme }) => theme.body};
-
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   &::placeholder {
     text-align: center;
+    
   }
 `;
 
 const LeftSpanField = styled.span`
-    text-align: left;
-    
-    margin-bottom: 10px;
+  text-align: left;
+  margin-right: 20px;
 `;
 
 const RightSpanField = styled.span`
-    text-align: right;
+  text-align: right;
+  display: flex;
+  align-items: center;
+`;
+
+const ButtonsContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const ModifyButton = styled(YellowButton)`
+`;
+
+const DeleteButton = styled(RedButton)`
 `;
 
 interface HeaderProps {
-    articleNo: Number;
+    userEmail: string;
+    articleNo: number;
     // articleTitle : String;
     articleRegDate : String;
 }
 
-export default function ArticleHeader( {articleNo, articleRegDate  } : HeaderProps ) {
-    const { theme } = useContext(ThemeContext);
+export default function ArticleHeader( { userEmail, articleNo, articleRegDate  } : HeaderProps ) {
+  const userInfo = useAppSelector((state) => state.user.userInfo);
+  const navigate = useNavigate();
 
-    return(
-        <HeaderField>
-            <LeftSpanField>글번호 - {articleNo}</LeftSpanField>
-            <br/>
-            <RightSpanField>작성일자 - {articleRegDate}</RightSpanField>
-        </HeaderField>
-    )
+  const handleDeleteArticle = () => {
+    deleteArticle(articleNo)
+      .then((res) => {
+        navigate('/feedback');
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+  }
+
+  return(
+      <HeaderField>
+          <LeftSpanField>글번호 - {articleNo}</LeftSpanField>
+          <RightSpanField>작성일자 - {articleRegDate}</RightSpanField>
+            { userInfo.role == "1" || userInfo.userEmail == userEmail ? 
+              <ButtonsContainer>
+                <ModifyButton text="수정" onClick={(e) => navigate(`/modify/${articleNo}`)} />
+                <DeleteButton text="삭제" onClick={handleDeleteArticle} />
+              </ButtonsContainer> :
+              null
+            }            
+      </HeaderField>
+  )
 }

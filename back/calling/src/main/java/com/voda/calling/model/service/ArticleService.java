@@ -43,7 +43,7 @@ public class ArticleService {
 
     public Article updateArticle(Article article){
         article.setArticleModified(1);
-        String registTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:MM:SS"));
+        String registTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         article.setArticleRegTime(registTime);
         return articleRepository.save(article);
     }
