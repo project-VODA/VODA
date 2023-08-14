@@ -12,8 +12,8 @@ interface ThemeProps {
 }
 
 const WriteButton = styled.button<ThemeProps>`
-  width: 20vh;
-  height: 10vh;
+  width: 110vh;
+  height: 8vh;
   border-radius: 10px;
   font-size: 20px;
   margin: 16px;
