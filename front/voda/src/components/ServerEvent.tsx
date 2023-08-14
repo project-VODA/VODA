@@ -101,14 +101,22 @@ export default function SseComponent() {
       setCallNo(response.callNo);
     });
     eventSource.addEventListener("logout", (event) => {
+      console.log("강제 로그아웃");
+      if(eventSource && eventSource.readyState !== eventSource.CLOSED){
+        console.log("sse 연결 끊김");
+        eventSource.close();
+      }
       dispatch(userSliceLogout());
       navigate('/');
+      alert("다른 곳에서 로그인 하여 접속이 종료되었습니다.");
     });
 
     return () => {
-      if(eventSource){
-        console.log("연결 끊김");
-        eventSource.close();
+      if(userEmail == null || userEmail == ''){
+        if(eventSource &&  eventSource.readyState !== eventSource.CLOSED){
+          console.log("sse 연결 끊김");
+          eventSource.close();
+        }
       }
     }
   }, [userEmail]);
