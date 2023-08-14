@@ -31,6 +31,7 @@ import SimpleRoom from './pages/simple/WaitingRoomPage';
 import SimpleFeedBack from './pages/simple/FeedBackPage';
 import SimpleWriteArticle from './pages/simple/board/WriteArticlePage';
 import SimpleDetailArticle from './pages/simple/board/DetailArticlePage';
+import SimpleModifyArticle from './pages/simple/board/ModifyArticlePage';
 import SimpleColor from './pages/simple/ColorPage';
 
 import DetailHomePage from './pages/detail/HomePage';
@@ -115,6 +116,7 @@ const App: React.FC = () => {
     { path: isLogin ? '/feedback' : '/', element: theme === SimpleTheme ? <SimpleFeedBack/> : <DetailFeedBack/> },
     { path: isLogin ? '/write' : '/', element: theme === SimpleTheme ? <SimpleWriteArticle/> : <DetailWriteArticle/> },
     { path: isLogin ? '/view/:articleNo' : '/', element: theme === SimpleTheme ? <SimpleDetailArticle/> : <SimpleDetailArticle/> },
+    { path: isLogin ? '/modify/:articleNo' : '/', element: theme === SimpleTheme ? <SimpleModifyArticle/> : <SimpleModifyArticle/> },
     { path: '/error', element: <ErrorPage />},
     { path: '*', element: <Navigate replace to="/" /> },
     

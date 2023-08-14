@@ -47,6 +47,9 @@ const SimpleDetailArticle = () => {
       getArticleDetail(articleNo)
         .then((res) => {
           setDetailBoardData(res);
+
+          console.log("작성자: " + detailBoardData.userEmail);
+          console.log("글 내용: " + detailBoardData.articleContent);
         })
         .catch((err) => {
           errorHandlers(err.response, handleArticlDetail);
@@ -61,7 +64,7 @@ const SimpleDetailArticle = () => {
           <ItemContainer>
               {/* 게시글 header */}
               {/* <StyledLink to='' aria-label={`${detailBoardData.articleNo}번째 글, 작성일시 ${detailBoardData.articleRegTime}`}> */}
-            <ArticleHeader articleNo={detailBoardData.articleNo} articleRegDate={detailBoardData.articleRegTime} aria-label={`${detailBoardData.articleNo}번째 글, 작성일시 ${detailBoardData.articleRegTime}`}/>
+            <ArticleHeader userEmail={detailBoardData.userEmail} articleNo={detailBoardData.articleNo} articleRegDate={detailBoardData.articleRegTime} aria-label={`${detailBoardData.articleNo}번째 글, 작성일시 ${detailBoardData.articleRegTime}`}/>
               {/* </StyledLink> */}
               {/* 게시글 content */}
               {/* <StyledLink to='' aria-label={`게시글 내용, ${detailBoardData.articleTitle}`}> */}

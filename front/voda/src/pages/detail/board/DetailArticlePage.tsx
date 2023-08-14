@@ -21,7 +21,6 @@ const ItemContainer = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  
 `;
 
 
@@ -61,7 +60,7 @@ const SimpleDetailArticle = () => {
             <ItemContainer>
                 {/* 게시글 header */}
                 {/* <StyledLink to='' aria-label={`${detailBoardData.articleNo}번째 글, 작성일시 ${detailBoardData.articleRegTime}`}> */}
-                  <ArticleHeader articleNo={detailBoardData.articleNo} articleRegDate={detailBoardData.articleRegTime} aria-label={`${detailBoardData.articleNo}번째 글, 작성일시 ${detailBoardData.articleRegTime}`}/>
+                  <ArticleHeader userEmail={detailBoardData.userEmail} articleNo={detailBoardData.articleNo} articleRegDate={detailBoardData.articleRegTime} aria-label={`${detailBoardData.articleNo}번째 글, 작성일시 ${detailBoardData.articleRegTime}`}/>
                 {/* </StyledLink> */}
 
                 {/* 게시글 content */}
