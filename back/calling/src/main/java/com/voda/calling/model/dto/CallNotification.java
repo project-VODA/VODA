@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CallNotification {
 
+    private String eventName;
     private String receiverEmail;
     private String senderEmail;
     private String sessionId;

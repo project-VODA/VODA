@@ -1,5 +1,6 @@
 package com.voda.calling.repository;
 
+import com.voda.calling.model.dto.CallNotification;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class SseRepositoryImpl implements SseRepository{
     private final Map<String, SseEmitter> emitters = new ConcurrentHashMap<>();
-    private final Map<String, Object> eventCache = new ConcurrentHashMap<>();
+    private final Map<String, CallNotification> eventCache = new ConcurrentHashMap<>();
 
     /**
      * emitterId-sseEmitter 쌍을 저장
@@ -33,7 +34,7 @@ public class SseRepositoryImpl implements SseRepository{
      * @param event
      */
     @Override
-    public void saveEventCache(String eventCacheId, Object event) {
+    public void saveEventCache(String eventCacheId, CallNotification event) {
         eventCache.put(eventCacheId, event);
     }
 
@@ -55,7 +56,7 @@ public class SseRepositoryImpl implements SseRepository{
     }
 
     @Override
-    public Map<String, Object> findAllEventCacheStartWithByEmail(String userEmail) {
+    public Map<String, CallNotification> findAllEventCacheStartWithByEmail(String userEmail) {
         return eventCache.entrySet().stream()
                 .filter(entry -> entry.getKey().startsWith(userEmail))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
