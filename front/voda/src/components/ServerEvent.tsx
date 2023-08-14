@@ -158,6 +158,7 @@ export default function SseComponent() {
   }
 
   function exitcall() {
+    
     if (openViduSession) {
       openViduSession.disconnect(); // OpenVidu 세션에서 연결을 끊습니다.
     }
