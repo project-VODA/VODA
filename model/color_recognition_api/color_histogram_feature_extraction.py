@@ -169,7 +169,11 @@ def training():
 
     # blue color training images
     for f in os.listdir('./training_dataset/blue'):
-        color_histogram_of_training_image('./training_dataset/blue/' + f)		
+        color_histogram_of_training_image('./training_dataset/blue/' + f)
+
+    # violet color training images
+    for f in os.listdir('./training_dataset/violet'):
+        color_histogram_of_training_image('./training_dataset/violet/' + f)		
 
     # apricot color training images - 살색
     for f in os.listdir('./training_dataset/apricot'):

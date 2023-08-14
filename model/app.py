@@ -81,6 +81,29 @@ def index():  # put application's code here
             image.save('temp.jpg')  # Save the uploaded image temporarily
             color_result = classify_color('temp.jpg')
             os.remove('temp.jpg')  # Remove the temporary image
+            if color_result == 'red':
+                color_result = '빨간색'
+            elif color_result == 'yellow':
+                color_result = '노란색'
+            elif color_result == 'green':
+                color_result = '초록색'
+            elif color_result == 'orange':
+                color_result = '주황색'
+            elif color_result == 'white':
+                color_result = '흰색'
+            elif color_result == 'black':
+                color_result = '검정색'
+            elif color_result == 'blue':
+                color_result = '파란색'
+            elif color_result == 'violet':
+                color_result = '보라색'
+            elif color_result == 'apricot':
+                color_result = '살구색'
+            elif color_result == 'brown':
+                color_result = '갈색'
+            elif color_result == 'pink':
+                color_result = '분홍색'
+
             return jsonify({'color': color_result})
         except Exception as e:
             return jsonify({'error': str(e)})
