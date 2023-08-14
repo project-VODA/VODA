@@ -1,22 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
 import SimpleTitle from '../../components/SimpleTitle';
-import Input from '../../components/InputText';
 import ModifyButton from '../../components/RegisterButton';
-import DeleteButton from '../../components/DeleteButton';
-import CheckBox from '../../components/CheckBox';
-import { cancelUser, changePassword, getUserInfo, logout, updateUserInfo, updateUserSetting } from '../../apis/user';
-import Info from '../../components/InfoText';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
-import { UserInfoType, UserSettingType, userSliceLogout } from '../../store/userSlice';
+import { updateUserSetting } from '../../apis/user';
 import { Link } from "react-router-dom";
 
-import DivideContainer from '../../components/DivideHorizontalContainer';
-
-import '../../styles/simple/EnvSettingPage.css'
+import '../../styles/detail/EnvSettingPage.css'
 import { useAppSelector } from '../../hooks/reduxHook';
 import useLogOut from '../../hooks/useLogout';
 import useErrorHandlers from '../../hooks/useError';
@@ -74,7 +65,7 @@ const SimpleEnvSettingPage = () => {
           <div className='alarmContainer'>
             <p className='alarmTitle' aria-label='알림을 선택하세요. 남자, 여자 목소리, 조언을 선택 가능합니다.' tabIndex={1}>알림 설정</p>
             <div className='chooseAlarm'>
-            <div style={{ marginTop:'100px' }}>
+            <div style={{ marginTop:'70px' }}>
               <label tabIndex={2}>
                 <input
                   type='radio'
@@ -116,6 +107,7 @@ const SimpleEnvSettingPage = () => {
                 음성 & 조언
               </label>
             </div>
+            <div style={{marginTop: '20px'}}></div>
           </div>
         </div>
       
@@ -124,7 +116,7 @@ const SimpleEnvSettingPage = () => {
       <div className='modeContainer'>
         <div className='modeTitle' aria-label='모드를 설정할 수 있습니다.' tabIndex={5}>모드 설정</div>
       <div className='chooseMode'>
-        <div style={{ marginTop:'100px' }}>
+        <div style={{ marginTop:'70px' }}>
           <label  tabIndex={6}>
             <input
               type='radio'
@@ -152,6 +144,7 @@ const SimpleEnvSettingPage = () => {
             심플 모드
           </label>
         </div>
+        <div style={{marginTop: '20px'}}></div>
       </div>
       </div>
       </div>
