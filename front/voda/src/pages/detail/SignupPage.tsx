@@ -12,7 +12,11 @@ import { sendAuthenticationCode } from '../../apis/email';
 import useErrorHandlers from '../../hooks/useError';
 
 import DetailLogo from '../../assets/images/logo_black.png'
+import '../../styles/detail/AgreementContainer.css'
+
 import SimpleTitle from '../../components/SimpleTitle';
+import AgreementContent1 from '../../components/AgreementContent1';
+import AgreementContent2 from '../../components/AgreementContent2';
 
 
 const SimpleSignup = () => {
@@ -26,6 +30,8 @@ const SimpleSignup = () => {
   const [emailAuthentication, setEmailAuthentication] = useState(false);
   const [authenticationCode, setAuthenticationCode] = useState('');
   const [userCode, setUserCode] = useState('');
+  const [agreeCheck1, setAgreeCheck1] = useState(false);
+  const [agreeCheck2, setAgreeCheck2] = useState(false);
 
   const userData = {
     userEmail: email,
@@ -44,28 +50,28 @@ const SimpleSignup = () => {
     // 비밀번호 정규표현식 - 8~15자 영문 숫자 특수문자
     let pwReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/
 
-    if(!email) {
-      msg = '이메일을 입력해주세요'; 
+    if (!email) {
+      msg = '이메일을 입력해주세요';
       err = true;
-    }else if(!err && !email.match(emailReg)){
+    } else if (!err && !email.match(emailReg)) {
       msg = '올바른 이메일을 입력해주세요';
       err = true;
-    }else if(!err && password.length === 0){
+    } else if (!err && password.length === 0) {
       msg = '비밀번호를 입력해주세요';
       err = true;
-    }else if(!err && !password.match(pwReg)) {
+    } else if (!err && !password.match(pwReg)) {
       msg = '비밀번호는 8자 이상 15자 이하 영문/특수문자/숫자 조합이어야 합니다'
       err = true;
-    }else if(!err && passwordCheck.length === 0){
+    } else if (!err && passwordCheck.length === 0) {
       msg = '비밀번호 확인을 입력해주세요';
       err = true;
-    }else if(!err && !name) {
+    } else if (!err && !name) {
       msg = '이름을 입력해주세요';
       err = true;
-    }else if (!err && !pwFlag) {
+    } else if (!err && !pwFlag) {
       msg = '비밀번호가 일치하지 않습니다';
       err = true;
-    }else if (!err && !emailAuthentication) {
+    } else if (!err && !emailAuthentication) {
       msg = '이메일 인증이 진행되지 않았습니다';
       err = true;
     }
@@ -103,7 +109,7 @@ const SimpleSignup = () => {
     if (authenticationCode === userCode) {
       alert("인증 성공");
       setEmailAuthentication(true);
-    }else{
+    } else {
       alert("인증 코드가 일치하지 않습니다")
     }
   }
@@ -122,53 +128,75 @@ const SimpleSignup = () => {
 
   return (
     <>
-      <SimpleTitle onClick=''/>
-      <Title title='회원가입'/>
-      
-      <Input 
-        type="email"
-        placeholder="이메일" 
-        value={email} 
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      {!emailSend && !emailAuthentication && <RegisterButton text='이메일 인증 코드 발송' onClick={handleEmailSender}/>}
-      {emailSend && !emailAuthentication && 
-        <>
-          <Input 
-            type="text"
-            placeholder="인증코드 입력"
-            value={userCode}
-            onChange={(e) => setUserCode(e.target.value)}
+      <SimpleTitle onClick='' />
+
+      {agreeCheck1 && agreeCheck2 ? (
+        <div>
+          <Title title='회원가입' />
+          <Input
+            type="email"
+            placeholder="이메일"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
-          <RegisterButton text='이메일 인증' onClick={handleEmailAuthentication}/>
-        </>
-      }
-      <Input 
-        type="text"
-        placeholder="이름" 
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <Input 
-        type="password"
-        placeholder="비밀번호" 
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <Input 
-        type="password"
-        placeholder="비밀번호 확인" 
-        value={passwordCheck}
-        onChange={handlePasswordCheckChange}
-      />
-      {pwFlag === false && passwordCheck.length !== 0 && <Info text='비밀번호가 일치하지 않습니다.'/>}
-      <CheckBox
-        label="시각 장애 여부" // 체크박스 옆에 표시될 텍스트
-        checked={handicap} // 체크 여부를 state로 전달
-        onChange={(e) => setHandicap(e.target.checked)} // 체크 상태가 변경될 때 state 업데이트
-      />
-      
-      <RegisterButton text='회원가입' onClick={handleSignup}/>
+          {!emailSend && !emailAuthentication && <RegisterButton text='이메일 인증 코드 발송' onClick={handleEmailSender} />}
+          {emailSend && !emailAuthentication &&
+            <>
+              <Input
+                type="text"
+                placeholder="인증코드 입력"
+                value={userCode}
+                onChange={(e) => setUserCode(e.target.value)}
+              />
+              <RegisterButton text='이메일 인증' onClick={handleEmailAuthentication} />
+            </>
+          }
+          <Input
+            type="text"
+            placeholder="이름"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <Input
+            type="password"
+            placeholder="비밀번호"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Input
+            type="password"
+            placeholder="비밀번호 확인"
+            value={passwordCheck}
+            onChange={handlePasswordCheckChange}
+          />
+          {pwFlag === false && passwordCheck.length !== 0 && <Info text='비밀번호가 일치하지 않습니다.' />}
+          <CheckBox
+            label="시각 장애 여부" // 체크박스 옆에 표시될 텍스트
+            checked={handicap} // 체크 여부를 state로 전달
+            onChange={(e) => setHandicap(e.target.checked)} // 체크 상태가 변경될 때 state 업데이트
+          />
+
+          <RegisterButton text='회원가입' onClick={handleSignup} />
+        </div>
+      ) : (
+        <div id='AgreementContainer'>
+          <AgreementContent1 />
+          <CheckBox
+            label='동의함'
+            checked={agreeCheck1}
+            onChange={(e) => setAgreeCheck1(e.target.checked)}
+            aria-label='개인정보 취급 방침 및 약관 동의서입니다. 동의할 경우 동의해주세요.'
+          />
+          <AgreementContent2 />
+          <CheckBox
+            label='동의함'
+            checked={agreeCheck2}
+            onChange={(e) => setAgreeCheck2(e.target.checked)}
+            aria-label='개인정보 취급 방침 및 약관 동의서입니다. 동의할 경우 동의해주세요.'
+          />
+        </div>
+      )}
+
     </>
   );
 };
