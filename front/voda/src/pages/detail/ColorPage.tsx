@@ -13,6 +13,11 @@ const StyledContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   min-height: calc(100vh - 100px);
+
+  @media (max-width: 768px) {
+    /* 모바일 화면 크기에서는 세로로 배치 */
+    flex-direction: column;
+  }
 `;
 
 const VideoContainer = styled.div`
@@ -22,13 +27,31 @@ const VideoContainer = styled.div`
   overflow: hidden;
   margin-right: 16px;
   margin-top: 60px;
+
+  @media (max-width: 768px) {
+    margin-left: auto;
+    margin-right: auto;
+  }
 `;
 
 const SideContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+`;
+
+const Title = styled.p`
+  margin-top: 120px;
+  text-align: center;
+  font-size: 2em;
+  font-weight: bold;
+
+  @media (max-width: 768px) {
+    /* 모바일 화면 크기에서 스타일 변경 */
+    font-size: 1.5em;
+    margin-top: 60px;
+  }
 `;
 
 const ColorPage = () => {
@@ -57,12 +80,12 @@ const ColorPage = () => {
     marginTop: '16px'
   };
 
-  const titleStyle: React.CSSProperties = {
-    marginTop: '120px',
-    textAlign: 'center',
-    fontSize: '2em',
-    fontWeight: 'bold',
-  };
+  // const titleStyle: React.CSSProperties = {
+  //   marginTop: '120px',
+  //   textAlign: 'center',
+  //   fontSize: '2em',
+  //   fontWeight: 'bold',
+  // };
 
   const textStyle: React.CSSProperties = {
     marginTop: '16px',
@@ -278,7 +301,7 @@ const ColorPage = () => {
         </VideoContainer>
         <div>
           <div>
-            <p style={titleStyle}>How To Use</p>
+            <Title>How To Use</Title>
             <p style={textStyle}>1. 얼굴이 인식될 수 있도록 얼굴을 정면으로 본 후 잠시 기다려 주세요<br /><br />
               2. 색상을 알고 싶은 화장품을 왼쪽 눈에 대고 버튼을 눌러 주세요.<br /><br />
               3. 인식된 색상이 음성으로 안내됩니다.<br /></p>
