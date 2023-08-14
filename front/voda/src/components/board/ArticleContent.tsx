@@ -36,6 +36,7 @@ const ContentField = styled.div<ThemeProps>`
     font-weight: bold;
     margin-bottom: 0.7em;
     margin-top: 0.7em;
+    font-weight: bolder;
   }
 
   ul {
