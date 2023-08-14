@@ -20,10 +20,6 @@ text-decoration: none;
 color: inherit;
 `;
 
-const StyledInput = styled(Input)`
-  background-color: white;
-  color: black;
-`;
 
 const SimpleSignup = () => {
   const [email, setEmail] = useState('');
@@ -138,7 +134,7 @@ const SimpleSignup = () => {
       </StyledLink>
       
     <div id='RegisterContainer'>
-      <StyledInput
+      <Input
         className = "InputText"
         type="email"
         placeholder="이메일" 
@@ -149,7 +145,7 @@ const SimpleSignup = () => {
       {!emailSend && !emailAuthentication && <RegisterButton text='이메일 인증 코드 발송' onClick={handleEmailSender} aria-label='회원가입을 위한 이메일 인증 코드 발송 버튼입니다.'/>}
       {emailSend && !emailAuthentication && 
         <>
-          <StyledInput
+          <Input
             type="text"
             placeholder="인증코드 입력"
             value={userCode}
@@ -159,21 +155,21 @@ const SimpleSignup = () => {
           <RegisterButton text='이메일 인증' onClick={handleEmailAuthentication}/>
         </>
       }
-      <StyledInput 
+      <Input 
         type="text"
         placeholder="이름" 
         value={name}
         onChange={(e) => setName(e.target.value)}
         aria-label='이름 입력 칸입니다. 회원가입을 위해 이름을 입력해주세요.'
       />
-      <StyledInput 
+      <Input 
         type="password"
         placeholder="비밀번호" 
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         aria-label='비밀번호 입력 칸입니다. 회원가입을 위해 8자 이상, 15자 이하, 그리고 영문, 특수문자, 숫자 조합의 비밀번호를 입력해주세요.'
       />
-      <StyledInput 
+      <Input 
         type="password"
         placeholder="비밀번호 확인" 
         value={passwordCheck}
