@@ -40,6 +40,7 @@ public class NotificationService {
 
         // sseEmitter 생성 및 저장
         SseEmitter sseEmitter = sseRepository.save(id, new SseEmitter(DEFAULT_TIMEOUT));
+        log.info("sse 할당");
 
         // 문제가 생길경우 취소
         sseEmitter.onCompletion(() -> sseRepository.deleteById(id));
@@ -47,15 +48,17 @@ public class NotificationService {
         sseEmitter.onError((e) -> sseRepository.deleteById(id));
 
         // 에러 방지 위해 더미 데이터 보내기
-        sendToClient("connection", sseEmitter, id, CallNotification.builder().senderEmail("me").content("call to you").build());
+        sendToClient("connection", sseEmitter, id, CallNotification.builder().eventName("connection").senderEmail("me").content("call to you").build());
 
         // 본인에게 미수신된 이벤트 수신
-//        Map<String, Object> events = sseRepository.findAllEventCacheStartWithByEmail(userEmail);
-//        events.entrySet().stream()
-//                .forEach(entry -> {
-//                    sendToClient("call", sseEmitter, entry.getKey(), entry.getValue());
-//                });
-//        sseRepository.deleteAllEventCacheStartWithId(userEmail);
+        Map<String, CallNotification> events = sseRepository.findAllEventCacheStartWithByEmail(userEmail);
+        events.entrySet().stream()
+                .forEach(entry -> {
+                    if(entry.getValue().getEventName().equals("call")) {
+                        sendToClient(entry.getValue().getEventName(), sseEmitter, entry.getKey(), entry.getValue());
+                    }
+                });
+        sseRepository.deleteAllEventCacheStartWithId(userEmail);
 
         return sseEmitter;
     }
@@ -70,7 +73,7 @@ public class NotificationService {
     public void send(String eventName, String senderEmail, String receiverEmail, String sessionId,String token, int callNo, String content) throws AlarmFailedException {
         log.info("{} to {}", senderEmail, receiverEmail);
         // 전달할 내용 생성
-        CallNotification callNotification = makeNotification(senderEmail, receiverEmail, sessionId, token, callNo, content);
+        CallNotification callNotification = makeNotification(eventName, senderEmail, receiverEmail, sessionId, token, callNo, content);
         log.info("senderEmail :{}, receiverEmail:{}",senderEmail, receiverEmail );
         // receiver에게 해당되어 있는 sseEmitter 가져오기
         Map<String, SseEmitter> sseEmitters = sseRepository.findAllEmitterStartWithByEmail(receiverEmail);
@@ -125,8 +128,9 @@ public class NotificationService {
      * @param content
      * @return callNotification
      */
-    private CallNotification makeNotification(String senderEmail, String receiverEmail, String sessionId, String token, int callNo, String content){
+    private CallNotification makeNotification(String eventName, String senderEmail, String receiverEmail, String sessionId, String token, int callNo, String content){
         return CallNotification.builder()
+                .eventName(eventName)
                 .senderEmail(senderEmail)
                 .receiverEmail(receiverEmail)
                 .sessionId(sessionId)
