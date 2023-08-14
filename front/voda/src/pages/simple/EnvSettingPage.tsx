@@ -59,10 +59,10 @@ const SimpleEnvSettingPage = () => {
       </StyledLink>
 
 
-        <div className='allContainer'>
-          <div className='alarmContainer'>
-            <p className='alarmTitle' aria-label='알림을 선택하세요. 남자, 여자 목소리, 조언을 선택 가능합니다.' tabIndex={1}>알림 설정</p>
-            <div className='chooseAlarm'>
+        <div className='allContainerS'>
+          <div className='alarmContainerS'>
+            <p className='alarmTitleS' aria-label='알림을 선택하세요. 남자, 여자 목소리, 조언을 선택 가능합니다.' tabIndex={1}>알림 설정</p>
+            <div className='chooseAlarmS'>
             <div style={{ marginTop:'70px' }}>
               <label tabIndex={2}>
                 <input
@@ -125,9 +125,9 @@ const SimpleEnvSettingPage = () => {
       
 
 
-      <div className='modeContainer'>
-        <div className='modeTitle' aria-label='모드를 설정할 수 있습니다.' tabIndex={6}>모드 설정</div>
-          <div className='chooseMode'>
+      <div className='modeContainerS'>
+        <div className='modeTitleS' aria-label='모드를 설정할 수 있습니다.' tabIndex={6}>모드 설정</div>
+          <div className='chooseModeS'>
             <div style={{ marginTop:'70px' }}>
               <label  tabIndex={7}>
                 <input
