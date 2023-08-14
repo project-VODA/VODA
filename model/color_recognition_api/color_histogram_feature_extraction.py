@@ -103,6 +103,13 @@ def color_histogram_of_training_image(img_name):
         data_source = 'blue'
     elif 'violet' in img_name:
         data_source = 'violet'
+    # 추가 데이터
+    elif 'apricot' in img_name:
+        data_source = 'apricot'
+    elif 'brown' in img_name:
+        data_source = 'brown'
+    elif 'pink' in img_name:
+        data_source = 'pink'
 
     # load the image
     image = cv2.imread(img_name)
@@ -137,30 +144,41 @@ def color_histogram_of_training_image(img_name):
 def training():
 
     # red color training images
-    print('train data 경로:', os.getcwd())
-    for f in os.listdir('../training_dataset/red'):
-        color_histogram_of_training_image('../training_dataset/red/' + f)
+    for f in os.listdir('./training_dataset/red'):
+        color_histogram_of_training_image('./training_dataset/red/' + f)
 
     # yellow color training images
-    for f in os.listdir('../training_dataset/yellow'):
-        color_histogram_of_training_image('../training_dataset/yellow/' + f)
+    for f in os.listdir('./training_dataset/yellow'):
+        color_histogram_of_training_image('./training_dataset/yellow/' + f)
 
     # green color training images
-    for f in os.listdir('../training_dataset/green'):
-        color_histogram_of_training_image('../training_dataset/green/' + f)
+    for f in os.listdir('./training_dataset/green'):
+        color_histogram_of_training_image('./training_dataset/green/' + f)
 
     # orange color training images
-    for f in os.listdir('../training_dataset/orange'):
-        color_histogram_of_training_image('../training_dataset/orange/' + f)
+    for f in os.listdir('./training_dataset/orange'):
+        color_histogram_of_training_image('./training_dataset/orange/' + f)
 
     # white color training images
-    for f in os.listdir('../training_dataset/white'):
-        color_histogram_of_training_image('../training_dataset/white/' + f)
+    for f in os.listdir('./training_dataset/white'):
+        color_histogram_of_training_image('./training_dataset/white/' + f)
 
     # black color training images
-    for f in os.listdir('../training_dataset/black'):
-        color_histogram_of_training_image('../training_dataset/black/' + f)
+    for f in os.listdir('./training_dataset/black'):
+        color_histogram_of_training_image('./training_dataset/black/' + f)
 
     # blue color training images
-    for f in os.listdir('../training_dataset/blue'):
-        color_histogram_of_training_image('../training_dataset/blue/' + f)		
+    for f in os.listdir('./training_dataset/blue'):
+        color_histogram_of_training_image('./training_dataset/blue/' + f)		
+
+    # apricot color training images - 살색
+    for f in os.listdir('./training_dataset/apricot'):
+        color_histogram_of_training_image('./training_dataset/apricot/' + f)
+
+    # brown color training images
+    for f in os.listdir('./training_dataset/brown'):
+        color_histogram_of_training_image('./training_dataset/brown/' + f)
+
+    # pink color training images
+    for f in os.listdir('./training_dataset/pink'):
+        color_histogram_of_training_image('./training_dataset/pink/' + f)
