@@ -101,10 +101,24 @@ const SimpleEnvSettingPage = () => {
                   value='2'
                   checked={notificationType === 2}
                   onChange={() => setNotificationType(2)}
-                  aria-label='음성과 상황에 맞는 조언'
+                  aria-label='남성음성과 상황에 맞는 조언'
                   style={{ width: '20px', height: '20px' }}
                 />
-                음성 & 조언
+                남성음성 & 조언
+              </label>
+            </div>
+            <div style={{ marginTop:'20px' }}>
+              <label tabIndex={5}>
+                <input
+                  type='radio'
+                  name='typeNo'
+                  value='2'
+                  checked={notificationType === 3}
+                  onChange={() => setNotificationType(3)}
+                  aria-label='여성음성과 상황에 맞는 조언'
+                  style={{ width: '20px', height: '20px' }}
+                />
+                여성음성 & 조언
               </label>
             </div>
             <div style={{marginTop: '20px'}}></div>
@@ -114,10 +128,10 @@ const SimpleEnvSettingPage = () => {
 
 
       <div className='modeContainer'>
-        <div className='modeTitle' aria-label='모드를 설정할 수 있습니다.' tabIndex={5}>모드 설정</div>
+        <div className='modeTitle' aria-label='모드를 설정할 수 있습니다.' tabIndex={6}>모드 설정</div>
       <div className='chooseMode'>
         <div style={{ marginTop:'70px' }}>
-          <label  tabIndex={6}>
+          <label  tabIndex={7}>
             <input
               type='radio'
               name='screenMode'
@@ -131,7 +145,7 @@ const SimpleEnvSettingPage = () => {
           </label>
         </div>
         <div style={{ marginTop:'20px' }}>
-          <label tabIndex={7} >
+          <label tabIndex={8} >
             <input
               aria-label='심플 모드'
               type='radio'
@@ -156,7 +170,7 @@ const SimpleEnvSettingPage = () => {
           onClick={handleModify}
           aria-label='설정 변경 버튼입니다.'
           style={{ width: '250px', height: '56px'}}
-          tabIndex={8}
+          tabIndex={9}
         />
       </ButtonContainer>
     </>
