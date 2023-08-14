@@ -355,9 +355,9 @@ export default function Navigation() {
             <ChannelButton onClick={toFeedback}>
               <MenuLink to="/feedback">고객의 소리함</MenuLink>
             </ChannelButton>
-            <ChannelButton onClick={toFace}>
+            {/* <ChannelButton onClick={toFace}>
               <MenuLink to="/face-test">비디오</MenuLink>
-            </ChannelButton>
+            </ChannelButton> */}
             <ChannelButton onClick={toColor}>
               <MenuLink to="/color">색상 인식</MenuLink>
             </ChannelButton>
