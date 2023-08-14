@@ -50,12 +50,12 @@ public class NotificationService {
         sendToClient("connection", sseEmitter, id, CallNotification.builder().senderEmail("me").content("call to you").build());
 
         // 본인에게 미수신된 이벤트 수신
-        Map<String, Object> events = sseRepository.findAllEventCacheStartWithByEmail(userEmail);
-        events.entrySet().stream()
-                .forEach(entry -> {
-                    sendToClient("call", sseEmitter, entry.getKey(), entry.getValue());
-                });
-        sseRepository.deleteAllEventCacheStartWithId(userEmail);
+//        Map<String, Object> events = sseRepository.findAllEventCacheStartWithByEmail(userEmail);
+//        events.entrySet().stream()
+//                .forEach(entry -> {
+//                    sendToClient("call", sseEmitter, entry.getKey(), entry.getValue());
+//                });
+//        sseRepository.deleteAllEventCacheStartWithId(userEmail);
 
         return sseEmitter;
     }
