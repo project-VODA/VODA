@@ -4,8 +4,6 @@ import { OpenVidu } from 'openvidu-browser';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import StreamComponent from './stream/StreamComponent';
-import './VideoRoomComponent.css';
-import '../styles/simple/video.css'
 
 import SettingButton from '../components/SettingButton';
 import OpenViduLayout from '../layout/openvidu-layout';
@@ -15,6 +13,8 @@ import { offCalling } from "../apis/calling";
 import ToolbarComponentClass from './toolbar/ToolbarComponentClass';
 import ToolbarComponent from './toolbar/ToolbarComponent';
 
+import './VideoRoomComponent.css';
+import '../styles/simple/video.css'
 // export const getUserHandicap = async () => {
 //   const res = await axiosServer().get(`/users/mypage`);
 //   return res.data.useHandicap;

@@ -1,4 +1,4 @@
-.allContainerS {
+.allContainer {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -8,10 +8,10 @@
 }
 
 /* Rectangle 1 */
-.alarmContainerS,
-.modeContainerS {
+.alarmContainer,
+.modeContainer {
   flex: 0 0 calc(40% - 10vw); /* 두 상자의 너비가 같고, 간격을 위해 5vw를 뺀 값으로 설정 */
-  border: 5px solid #FFC300;
+  border: 5px solid #001D3D;
   border-radius: 10%;
   height: 45vh;
   padding: 15px;
@@ -20,13 +20,13 @@
 }
 
 /* 음성 음성과 조언 */
-.chooseAlarmS{
+.chooseAlarm{
 left: 20vw;
 top: 50vh;
 font-family: 'Koddi';
 font-size: 30px;
 text-align: center;
-color: #FFC300;
+color: #001D3D;
 /*margin-left: 40%;*/
 /*margin-top: 10%;*/
 margin-bottom: 20%;
@@ -35,13 +35,13 @@ overflow: hidden;
 
 
 /* 디테일 모드 심플 모드 */
-.chooseModeS{
+.chooseMode{
   left: 20vw;
   top: 50vh;
   font-family: 'Koddi';
   font-size: 30px;
   text-align: center;
-  color: #FFC300;
+  color: #001D3D;
   /*margin-left: 40%;
   margin-top: 10%;*/
   /*margin-bottom: 20%;*/
@@ -50,7 +50,7 @@ overflow: hidden;
 
 
 /* 알림 설정 */
-.alarmTitleS{
+.alarmTitle{
 /*position: absolute;*/
 width: auto;
 height: auto;
@@ -66,13 +66,13 @@ text-align: center;
 
 margin-top: 20px;
 
-color: #FFC300;
+color: #001D3D;
 }
 
 
 /* 모드 설정 */
 
-.modeTitleS{
+.modeTitle{
 /*position: absolute;*/
 width: auto;
 height: auto;
@@ -88,11 +88,11 @@ text-align: center;
 
 margin-top: 20px;
 
-color: #FFC300;
+color: #001D3D;
 }
 
 
-.modifyButtonS {
+.modifyButton {
   /* display: flex; */
   justify-content: center;
   align-items: center;
@@ -103,36 +103,19 @@ color: #FFC300;
 
 /* 라디오 버튼 css */
 
-.chooseAlarmS input[type="radio"] {
+[type="radio"] {
   vertical-align: middle;
   appearance: none;
-  border: max(2px, 0.1em) solid #FFC300;
+  border: max(2px, 0.1em) solid #001D3D;
   border-radius: 50%;
   width: 1.25em;
   height: 1.25em;
 }
 
-.chooseAlarmS input[type="radio"]:checked {
-  background-color: #FFC300;
+[type="radio"]:checked {
+  background-color: #001D3D;
 }
 
-.chooseAlarmS input[type="radio"]:hover {
-  box-shadow: 0 0 0 max(4px, 0.2em) #FFD60A;
-}
-
-.chooseModeS input[type="radio"] {
-  vertical-align: middle;
-  appearance: none;
-  border: max(2px, 0.1em) solid #FFC300;
-  border-radius: 50%;
-  width: 1.25em;
-  height: 1.25em;
-}
-
-.chooseModeS input[type="radio"]:checked {
-  background-color: #FFC300;
-}
-
-.chooseModeS input[type="radio"]:hover {
-  box-shadow: 0 0 0 max(4px, 0.2em) #FFD60A;
+[type="radio"]:hover {
+  box-shadow: 0 0 0 max(4px, 0.2em) #003566;
 }
