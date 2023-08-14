@@ -15,6 +15,33 @@ import numpy as np
 # from color_recognition_api import knn_classifier as knn_classifier
 
 
+def kmeansColorCluster(image, clusters, rounds):
+    height, width = image.shape[:2]
+    samples = np.zeros([ height * width, 3 ], dtype=np.float32)
+
+    count = 0
+    for x in range(height):
+        for y in range(width):
+            samples[count] = image[x][y]
+            count += 1
+
+    compactness, labels, centers = cv2.kmeans(
+        samples, # 비지도 학습 데이터 정렬
+        clusters, # 군집화 개수
+        None, # 각 샘플의 군집 번호 정렬
+        criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 
+                    10000, # max_iter 
+                    0.0001), # epsilon 
+        attempts = rounds, 
+        flags = cv2.KMEANS_PP_CENTERS
+    )
+    
+    centers = np.uint8(centers)
+    res = centers[labels.flatten()]
+    
+    return res.reshape((image.shape)), centers, round(compactness, 4)
+
+
 def color_histogram_of_test_image(test_src_image):
 
     # load the image
