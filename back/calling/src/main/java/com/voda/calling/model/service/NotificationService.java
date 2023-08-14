@@ -139,4 +139,8 @@ public class NotificationService {
                 .content(content)
                 .build();
     }
+
+    public void deleteEventWhenQuitCall(String email){
+        sseRepository.deleteAllEventCacheStartWithId(email);
+    }
 }
