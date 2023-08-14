@@ -11,8 +11,9 @@ import { SimpleTheme, Theme } from "../styles/theme";
 import detailLogo from "../assets/images/logo_black.png";
 import { FiSettings } from "react-icons/fi";
 import { HiUser, HiOutlineLogout } from "react-icons/hi";
-import { GrUserSettings } from "react-icons/gr";
-import { FaBars } from "react-icons/fa";
+import { GrUserSettings, GrInfo, GrFormClose } from "react-icons/gr";
+import { FaBars, FaHeadphonesAlt, FaRegPaperPlane } from "react-icons/fa";
+import { LuPipette } from "react-icons/lu";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { UserInfoType, userSliceLogout } from "../store/userSlice";
@@ -142,12 +143,23 @@ const UserDropDown = styled("button")`
 const MenuLinkContainer = styled("span")`
   display: flex;
   align-items: center;
-
   text-decoration: none;
   color: #282424; 
   font-size: 1rem;;
   white-space: nowrap;
-`
+`;
+
+const HamburgerMenuLinkContainer = styled("span")`
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #282424; 
+  font-size: 1.7rem;
+  white-space: nowrap;
+  margin-bottom: 50px;
+`;
 
 const MenuLink = styled(Link)`
   text-decoration: none;
@@ -156,11 +168,19 @@ const MenuLink = styled(Link)`
   font-size: 1.2rem;
 `;
 
+const HamburgerMenuLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+  font-weight: bolder;
+  font-size: 2rem;
+  margin-bottom: 40px;
+`;
+
 const MenuButton = styled("button")`
   border: none;
   background-color: white;
   font-weight: bolder;
-`
+`;
 
 const UserInfoText = styled("span")`
   display: flex;
@@ -171,7 +191,7 @@ const UserInfoText = styled("span")`
   margin-right: 1vw;
   font-size: 1rem;;
   white-space: nowrap;
-`
+`;
 
 const HiUserIcon = styled(HiUser)`
   margin-right: 0.5vw;
@@ -189,7 +209,7 @@ const DropDownMenu = styled.div<DropDownMenuProps>`
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: ${({ visible }) => (visible ? "block" : "none")};
-  z-index: 1;
+  z-index: 2;
   a {
     display: block;
     padding: 8px 16px;
@@ -216,6 +236,19 @@ const DropDownMenu = styled.div<DropDownMenuProps>`
   }
 `;
 
+const MobileMenuContainer = styled.div<DropDownMenuProps>`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  display: ${({ visible }) => (visible ? "block" : "none")};
+  z-index: 2;
+  padding: 50px;
+  padding-top: 100px;
+`;
+
 const IconWrapper = styled.div`
   align-items: center;
   font-size: 1.5rem;
@@ -233,7 +266,7 @@ const HamburgerButton = styled.button`
   position: absolute;
   top: 7%;
   right: 10%;
-  z-index: 1;
+  z-index: 3;
   background: none;
   border: none;
   cursor: pointer;
@@ -260,6 +293,9 @@ export default function Navigation() {
 
   const handleMobileMenuToggle = () => {
     setMobileMenuOpen((current) => !current);
+    setTimeout(() => {
+      setDropDownVisible(isMobileMenuOpen);
+    }, 500);
   }
 
   const RedirectHomePage = () => {
@@ -373,8 +409,68 @@ export default function Navigation() {
         {/* {loginModalOpen && <LoginModal setLoginModalOpen={setLoginModalOpen} />} */}
       </NavContainer>
       <HamburgerButton onClick={handleMobileMenuToggle}>
-        <FaBars size={48} />
+        {isMobileMenuOpen ? <GrFormClose size={36} /> : <FaBars size={36} /> }  
       </HamburgerButton>
+      <MobileMenuContainer visible={isMobileMenuOpen}>
+        <HamburgerMenuLink to="/about" onClick={handleMobileMenuToggle}>
+          <HamburgerMenuLinkContainer>
+            <IconWrapper>
+              <GrInfo/>
+            </IconWrapper>
+            서비스소개
+          </HamburgerMenuLinkContainer>
+        </HamburgerMenuLink>
+        <HamburgerMenuLink to="/waiting" onClick={handleMobileMenuToggle}>
+          <HamburgerMenuLinkContainer>
+            <IconWrapper>
+              <FaHeadphonesAlt/>
+            </IconWrapper>
+            영상통화
+          </HamburgerMenuLinkContainer>
+        </HamburgerMenuLink>
+        <HamburgerMenuLink to="/feedback" onClick={handleMobileMenuToggle}>
+          <HamburgerMenuLinkContainer>
+            <IconWrapper>
+              <FaRegPaperPlane/>
+            </IconWrapper>
+            고객의소리함
+          </HamburgerMenuLinkContainer>
+        </HamburgerMenuLink>
+        <HamburgerMenuLink to="/color" onClick={handleMobileMenuToggle}>
+          <HamburgerMenuLinkContainer>
+            <IconWrapper>
+              <LuPipette/>
+            </IconWrapper>
+            색상인식
+          </HamburgerMenuLinkContainer>
+        </HamburgerMenuLink>
+        <HamburgerMenuLink to="/mypage" onClick={handleMobileMenuToggle}>
+          <HamburgerMenuLinkContainer>
+            <IconWrapper>
+              <GrUserSettings/>
+            </IconWrapper>
+            마이페이지
+          </HamburgerMenuLinkContainer>
+        </HamburgerMenuLink>
+        <HamburgerMenuLink to="/setting" onClick={handleMobileMenuToggle}>
+          <HamburgerMenuLinkContainer>
+            <IconWrapper>
+              <MyFiSettings/>
+            </IconWrapper>
+            환경설정
+          </HamburgerMenuLinkContainer>
+        </HamburgerMenuLink>
+        <HamburgerMenuLink to="/" onClick={handleMobileMenuToggle}>
+          <HamburgerMenuLinkContainer>
+            <IconWrapper>
+              <HiOutlineLogout/>
+            </IconWrapper>
+            로그아웃
+          </HamburgerMenuLinkContainer>
+          <MenuButton onClick={logout}>
+          </MenuButton>
+        </HamburgerMenuLink>
+      </MobileMenuContainer>
     </>
   );
 }
