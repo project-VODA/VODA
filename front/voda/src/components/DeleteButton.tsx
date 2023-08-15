@@ -15,20 +15,21 @@ interface ThemeProps {
 const DeleteButton = styled('button')<ThemeProps>`
   width: 8vw;
   height: 40px;
-  border-radius: 15px;
+  border-radius: 10px;
   font-size: 1.3vw;
   padding: 8px;
   margin: 8px;
   background: #ff0000;
   border: none;
   color: ${({ theme }) =>
-    theme === SimpleTheme ? '#ffffff' : '#003566'};
+    theme === SimpleTheme ? '#ffffff' : '#ffffff'};
+
 
   &:hover {
     transition: all 0.1s ease-in-out;
   }
 `;
-
+  // color: '#ffffff';
 // border: 1px solid ${({ theme }) =>
 // theme === SimpleTheme ? '#ff0000' : '#003566'};
 

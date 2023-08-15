@@ -14,7 +14,7 @@ interface ThemeProps {
 const SmallYellowButton = styled('button')<ThemeProps>`
   width: 60px;
   height: 40px;
-  border-radius: 15px;
+  border-radius: 10px;
   font-size: 18px;
   padding: 8px;
   margin: 8px;

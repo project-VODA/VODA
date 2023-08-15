@@ -3,6 +3,7 @@ import Hovering from "../../components/AboutHover";
 import Title from "../../components/Title";
 import logo_black from '../../assets/images/logo_black.png'
 import styled from "styled-components";
+import Footer from "../../components/AboutFooter"
 
 import "../../styles/detail/DetailAbout.css"
 import "../../styles/detail/AboutHover.css"
@@ -20,6 +21,7 @@ const RelativeContainer = styled.div`
 
 const AboutHover = () => {
   return (
+    <>
     <StyledContainer>
       <RelativeContainer>
         <div className="AllContainer">
@@ -35,6 +37,7 @@ const AboutHover = () => {
         </div>
       </RelativeContainer>
     </StyledContainer>
+    </>
   );
 };
 
