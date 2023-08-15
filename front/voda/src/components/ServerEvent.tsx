@@ -158,12 +158,14 @@ export default function SseComponent() {
   }
 
   function exitcall() {
-    
+    console.log("나가기 눌렸니?");
+    setIsReject(false);
+    console.log(openViduSession);
     if (openViduSession) {
+      console.log("~!!!!");
       openViduSession.disconnect(); // OpenVidu 세션에서 연결을 끊습니다.
     }
-    setisCallModalOpen(false);
-
+    
   }
 
   return (
@@ -172,7 +174,7 @@ export default function SseComponent() {
       {isReject ? (
         <Modal id="callModal"
         isOpen={isReject} 
-        onRequestClose={(e) => setisCallModalOpen(false)}
+        onRequestClose={(e) => setIsReject(false)}
         ariaHideApp={false}
         style={localStorage.getItem('theme') === 'detail' ? DetailModal : SimpleModal}
         shouldCloseOnOverlayClick={false}
