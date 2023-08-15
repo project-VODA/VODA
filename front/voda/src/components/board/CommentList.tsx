@@ -6,6 +6,7 @@ import Button from '../RegisterButton';
 import { useAppSelector } from '../../hooks/reduxHook';
 import SmallRedButton from '../SmallRedBtn';
 import SmallYellowButton from '../SmallYellowBtn';
+import useErrorHandlers from '../../hooks/useError';
 
 
 type Comment = {
@@ -71,32 +72,19 @@ const CommentList: React.FC<{ articleNo: number }> = ({ articleNo }) => {
     commentContent: content,
   };
 
+  const errorHandlers = useErrorHandlers();
+
   useEffect(() => {
-    getComments(articleNo)
-    .then((res: CommentList) => {
-      console.log(res);
-      setComments(res);
-    })
-    .catch((err: Error) => {
-      console.log(err);
-    })
+    handleGetComments(articleNo);
   }, [])
   
   const handleWriteComment = () => {
     registComment(commentRequest)
       .then((res) => {
-        getComments(articleNo)
-        .then((res: CommentList) => {
-          console.log(res);
-          setComments(res);
-          setContent('');
-        })
-        .catch((err: Error) => {
-          console.log(err);
-        })
+        handleCommentsAfterWrite(articleNo);
       })
       .catch((err) => {
-        console.error(err);
+        errorHandlers(err.response, handleWriteComment);
       })
   }
 
@@ -120,38 +108,55 @@ const CommentList: React.FC<{ articleNo: number }> = ({ articleNo }) => {
 
     updateComment(modifyCommentRequest)
       .then((res) => {
-        getComments(articleNo)
-          .then((res: CommentList) => {
-            console.log(res);
-            setComments(res);
-            setContent('');
-            setIsClickModify(-1);
-          })
-          .catch((err: Error) => {
-            console.log(err);
-          })
+        handleCommentsAfterModify(articleNo);
       })
       .catch((err) => {
-        console.error(err);
+        errorHandlers(err.response, handleModifyConfirm, commentNo);
       }) 
   }
 
   const handleDeleteComment = (commentNo: number) => {
     deleteComment(commentNo)
       .then((res) => {
-        getComments(articleNo)
-          .then((res: CommentList) => {
-            console.log(res);
-            setComments(res);
-            setContent('');
-          })
-          .catch((err: Error) => {
-            console.log(err);
-          })
+        handleCommentsAfterWrite(articleNo);
       })
       .catch((err) => {
-        console.error(err);
+        errorHandlers(err.response, handleDeleteComment, commentNo);
       })
+  }
+
+  /* for error handling  */
+  const handleGetComments = (articleNo: number) => {
+    getComments(articleNo)
+    .then((res: CommentList) => {
+      setComments(res);
+    })
+    .catch((err) => {
+      errorHandlers(err.response, handleGetComments, articleNo);
+    })
+  }
+
+  const handleCommentsAfterWrite = (articleNo: number) => {
+    getComments(articleNo)
+    .then((res: CommentList) => {
+      setComments(res);
+      setContent('');
+    })
+    .catch((err) => {
+      errorHandlers(err.response, handleCommentsAfterWrite, articleNo);
+    })
+  }
+
+  const handleCommentsAfterModify = (articleNo: number) => {
+    getComments(articleNo)
+    .then((res: CommentList) => {
+      setComments(res);
+      setContent('');
+      setIsClickModify(-1);
+    })
+    .catch((err) => {
+      errorHandlers(err.response, handleCommentsAfterModify, articleNo);
+    })
   }
 
   return (

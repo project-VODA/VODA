@@ -10,6 +10,7 @@ import YellowButton from '../SmallYellowBtn';
 import { useNavigate } from 'react-router-dom';
 import { deleteArticle } from '../../apis/board';
 import { useAppSelector } from '../../hooks/reduxHook';
+import useErrorHandlers from '../../hooks/useError';
 
 
 interface ThemeProps {
@@ -75,6 +76,7 @@ interface HeaderProps {
 export default function ArticleHeader( { userEmail, articleNo, articleRegDate  } : HeaderProps ) {
   const userInfo = useAppSelector((state) => state.user.userInfo);
   const navigate = useNavigate();
+  const errorHandlers = useErrorHandlers();
 
   const handleDeleteArticle = () => {
     deleteArticle(articleNo)
@@ -82,7 +84,7 @@ export default function ArticleHeader( { userEmail, articleNo, articleRegDate  }
         navigate('/feedback');
       })
       .catch((err) => {
-        console.error(err);
+        errorHandlers(err.response, handleDeleteArticle);
       })
   }
 
