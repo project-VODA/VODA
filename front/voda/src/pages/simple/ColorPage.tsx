@@ -4,7 +4,7 @@ import { RootState } from '../../store/store';
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import SimpleTitle from '../../components/SimpleTitle';
-import Button from '../../components/board/WriteButton';
+import Button from '../../components/SettingButton'
 
 import { colorRecognition } from "../../apis/color";
 import { tts } from "../../apis/tts"
@@ -47,10 +47,11 @@ const SideContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 60px;
 `;
 
 const Title = styled.p`
-  margin-top: 120px;
+  margin-top: 60px;
   text-align: center;
   font-size: 2em;
   font-weight: bold;
@@ -69,13 +70,6 @@ const ColorPage = () => {
     WebkitTransform: 'rotateY(180deg)',
     width: '100%',
     height: 'auto',
-  };
-
-  const titleStyle: React.CSSProperties = {
-    marginTop: '16px',
-    textAlign: 'center',
-    fontSize: '2em',
-    fontWeight: 'bold',
   };
 
   const textStyle: React.CSSProperties = {
@@ -115,7 +109,12 @@ const ColorPage = () => {
   }
 
   const colorTTS = (color: string) => {
-    const text = `인식된 색상은 ${color}입니다.`; // 음성으로 변환할 텍스트
+    let text = '';
+    if(color === undefined){
+      text = '색상을 인식하지 못했습니다.';
+    } else{
+      text = `인식된 색상은 ${color}입니다.`; // 음성으로 변환할 텍스트
+    }
 
     const requestData = {
       input: {

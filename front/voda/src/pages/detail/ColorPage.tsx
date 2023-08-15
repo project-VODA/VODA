@@ -80,13 +80,6 @@ const ColorPage = () => {
     marginTop: '16px'
   };
 
-  // const titleStyle: React.CSSProperties = {
-  //   marginTop: '120px',
-  //   textAlign: 'center',
-  //   fontSize: '2em',
-  //   fontWeight: 'bold',
-  // };
-
   const textStyle: React.CSSProperties = {
     marginTop: '16px',
     textAlign: 'center',
@@ -125,8 +118,13 @@ const ColorPage = () => {
   }
 
   const colorTTS = (color: string) => {
-    const text = `인식된 색상은 ${color}입니다.`; // 음성으로 변환할 텍스트
-
+    let text = '';
+    if(color === undefined){
+      text = '색상을 인식하지 못했습니다.';
+    } else{
+      text = `인식된 색상은 ${color}입니다.`; // 음성으로 변환할 텍스트
+    }
+    
     const requestData = {
       input: {
         text: text,
