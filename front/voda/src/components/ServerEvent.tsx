@@ -28,6 +28,9 @@ const ButtonContainer = styled.div`
 `;
 
 const SimpleModal = {
+  overlay: {
+    zIndex: 1000,
+  },
   content: {
     backgroundColor: '#001d3d',
   },
