@@ -41,7 +41,6 @@ class VideoRoomComponent extends Component {
       localUser: undefined,
       subscribers: [],
       currentVideoDevice: undefined,
-      // currentExpressionData: undefined,
     };
 
     this.audioPlayer = new Audio();
@@ -342,7 +341,8 @@ class VideoRoomComponent extends Component {
 
   // voda - KJW
   playExpression = (expressionData) => {
-
+    console.log('확인 1: ',expressionData);
+    console.log('확인 2: ',expressionData.expression);
     let text = '';
     switch(expressionData.expression){
       case 'angry': 
@@ -370,7 +370,34 @@ class VideoRoomComponent extends Component {
         text = '표정이 감지되지 않았습니다.';
     }
     let voiceName = this.typeNo === 0? 'ko-KR-Neural2-C' : 'ko-KR-Neural2-A';
-    tts(text, voiceName);
+
+    const requestData = {
+      input: {
+        text: text,
+      },
+      voice: {
+        languageCode: 'ko-KR',
+        name: voiceName,
+      },
+      audioConfig: {
+        audioEncoding: 'MP3',
+      },
+    };
+
+    tts(requestData)
+      .then((res) => {
+        const audioData = res.audioContent;
+        const audioArrayBuffer = Uint8Array.from(atob(audioData), c => c.charCodeAt(0)).buffer;
+        const audioBlob = new Blob([audioArrayBuffer], { type: 'audio/mpeg' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+
+        this.audioPlayer.src = audioUrl;
+        this.audioPlayer.play();
+      }
+      )
+      .catch(error => {
+        console.error('TTS API 요청 중 오류:', error);
+      });
   };
 
   // voda - KJW
@@ -404,12 +431,7 @@ class VideoRoomComponent extends Component {
 
     let text = this.advices[index][Math.floor(Math.random() * this.advices[index].length)];
     let voiceName = this.typeNo === 2? 'ko-KR-Neural2-C' : 'ko-KR-Neural2-A';
-    tts(text, voiceName);
-  };
 
-  // voda - KJW
-  tts(text, voiceName){
-    console.log('typeNo:', this.typeNo);
     const requestData = {
       input: {
         text: text,
@@ -437,7 +459,7 @@ class VideoRoomComponent extends Component {
       .catch(error => {
         console.error('TTS API 요청 중 오류:', error);
       });
-  }
+  };
 
   subscribeToUserChanged() {
     // voda - KJW
@@ -730,7 +752,7 @@ class VideoRoomComponent extends Component {
 // 리덕스 스토어의 userSetting 값을 VideoRoomComponent 컴포넌트의 props로 매핑
 const mapStateToProps = state => {
   return {
-    typeNo: state.user.userSetting.userSettingTypeNo,
+    typeNo: state.user.userSetting.usersettingTypeNo,
     isIncall: state.call.isIncall,
     expressionData : state.expression.expressionData,
   };
