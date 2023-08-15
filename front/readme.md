@@ -266,6 +266,7 @@
   - commentName className (수정 필요시 css파일)으로 댓글 내용 길어질 시 닉네임 세로화 현상 제거
   - 디테일 댓글 수정 삭제 버튼 수정
   - footer 컴포넌트는 만들어 놨으나, 푸터가 들어가면 about 페이지에서 튕김현상 발생
+  - FriendList 닫기 버튼 변경
 
 - 23.08.15 YSH
   - 통화 거절 모달에서 나가기 버튼 클릭시 leavesession

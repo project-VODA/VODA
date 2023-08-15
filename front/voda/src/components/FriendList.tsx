@@ -18,6 +18,7 @@ import DeleteFriendButton from './SmallRedBtn'
 import { FiPhoneCall } from "react-icons/fi"
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { ImUserPlus } from 'react-icons/im'
+import { FiX } from 'react-icons/fi'
 
 //API
 import { deleteFriend, getFriendList } from '../apis/friend';
@@ -159,7 +160,7 @@ const FriendList = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', padding: '10px' }}>
         <span style={{ marginLeft: 'auto', marginRight: 'auto', fontSize:'2.2vw', fontWeight: 'bolder' }}>친구 찾기</span>
         <span style={{ display: 'flex', justifyContent: 'flex-end'}}>
-          <SmallRedButton onClick={(e) => setModalOpen(false)} text="X" />
+          <FiX onClick={(e) => setModalOpen(false)} style={{ fontSize: '2.5vw' }} />
         </span>
       </div>
 
