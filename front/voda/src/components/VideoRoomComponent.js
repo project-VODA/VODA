@@ -46,7 +46,7 @@ class VideoRoomComponent extends Component {
     this.audioPlayer = new Audio();
     this.typeNo = this.props.typeNo;
     this.isIncall = this.props.isIncall;
-    const advices = [
+    this.advices = [
       [
         "화난 표정을 하고 있어요. 기분이 안좋아 보이는데 무슨 일이 있냐고 물어보세요."
       ],
@@ -341,8 +341,7 @@ class VideoRoomComponent extends Component {
 
   // voda - KJW
   playExpression = (expressionData) => {
-    console.log('확인 1: ',expressionData);
-    console.log('확인 2: ',expressionData.expression);
+    
     let text = '';
     switch(expressionData.expression){
       case 'angry': 
@@ -402,6 +401,7 @@ class VideoRoomComponent extends Component {
 
   // voda - KJW
   playExpressionWithAdvice = (expressionData) => {
+
     let index = 0;
     switch(expressionData.expression){
       case 'angry': 
@@ -474,10 +474,11 @@ class VideoRoomComponent extends Component {
     this.state.session.on('signal:send-expression', (event) => {
       if (event.from.connectionId !== this.state.session.connection.connectionId) {
         console.log('typeNo:', this.typeNo);
+        const expressionData = JSON.parse(event.data);
         if(this.typeNo === 0 || this.typeNo === 1){
-          this.playExpression(JSON.parse(event.data));
+          this.playExpression(expressionData);
         }else{
-          this.playExpressionWithAdvice(JSON.parse(event.data));
+          this.playExpressionWithAdvice(expressionData);
         }
       }
     });
