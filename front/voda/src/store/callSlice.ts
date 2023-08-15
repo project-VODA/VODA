@@ -10,7 +10,7 @@ const callSlice = createSlice({
             callNo: 0,
         },
         //통화상태 (통화중:true, 통화X:false)
-        isInCall: false,
+        isRejectCall: false,
     },
     reducers : {
         updateCall: (state, action) => {
@@ -23,15 +23,15 @@ const callSlice = createSlice({
             state.callInfo.sessionId = '';
             state.callInfo.callNo = 0;
         },
-        setIsInCall: (state, action) => {
-            state.isInCall = action.payload;
+        setIsRejectCall: (state, action) => {
+            state.isRejectCall = action.payload;
         },
     }
 
 });
 
 export default callSlice;
-export const { updateCall, initCall, setIsInCall } = callSlice.actions;
+export const { updateCall, initCall, setIsRejectCall } = callSlice.actions;
 
 export interface callInfoType {
     sessionToken : string,

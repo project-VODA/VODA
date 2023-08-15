@@ -31,7 +31,7 @@ class VideoRoomComponent extends Component {
     this.hasBeenUpdated = false;
     this.layout = new OpenViduLayout();
     let sessionName = this.props.sessionName ? this.props.sessionName : 'SessionA';
-    let userName = this.props.user ? this.props.user : 'OpenVidu_User' + Math.floor(Math.random() * 100);
+    let userName = this.props.user ? this.props.user : '사용자' + Math.floor(Math.random() * 100);
     this.remotes = [];
     this.localUserAccessAllowed = false;
     this.state = {
@@ -45,7 +45,7 @@ class VideoRoomComponent extends Component {
 
     this.audioPlayer = new Audio();
     this.typeNo = this.props.typeNo;
-    this.isIncall = this.props.isIncall;
+    this.isRejectCall = this.props.isRejectCall;
     this.advices = [
       [
         "화난 표정을 하고 있어요. 기분이 안좋아 보이는데 무슨 일이 있냐고 물어보세요."
@@ -109,13 +109,19 @@ class VideoRoomComponent extends Component {
       animate: true, // Whether you want to animate the transitions
     };
 
-    // console.log(this.props.token);
-
     this.layout.initLayoutContainer(document.getElementById('layout'), openViduLayoutOptions);
     window.addEventListener('beforeunload', this.onbeforeunload);
     window.addEventListener('resize', this.updateLayout);
     window.addEventListener('resize', this.checkSize);
     this.joinSession();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // console.log("감지하니?");
+    // isRejectCall 상태 변화 감지
+    if (this.props.isRejectCall !== prevProps.isRejectCall && this.props.isRejectCall) {
+      this.leaveSession();
+    }
   }
 
 
@@ -128,6 +134,7 @@ class VideoRoomComponent extends Component {
 
   onbeforeunload(event) {
     this.leaveSession();
+
   }
 
   joinSession() {
@@ -188,7 +195,7 @@ class VideoRoomComponent extends Component {
     var devices = await this.OV.getDevices();
     var videoDevices = devices.filter(device => device.kind === 'videoinput');
 
-    let publisher = this.OV.initPublisher(undefined, {
+    let publisher = await this.OV.initPublisher(undefined, {
       audioSource: undefined,
       videoSource: videoDevices[0].deviceId,
       publishAudio: localUser.isAudioActive(),
@@ -246,7 +253,6 @@ class VideoRoomComponent extends Component {
   leaveSession() {
     const mySession = this.state.session;
     console.log("video컴포넌트 에 왔니? : " + this.props.callNo);
-
     //voda :ysh
     //back server 통화 종료
     offCalling(this.props.callNo)
@@ -267,6 +273,8 @@ class VideoRoomComponent extends Component {
         /*if (this.props.leaveSession) {
           this.props.leaveSession();
         }*/
+        // isRejectCall 상태를 false로 업데이트
+        this.setState({ isRejectCall: false });
       })
       .catch((err) => {
         console.log(err);
@@ -754,8 +762,8 @@ class VideoRoomComponent extends Component {
 const mapStateToProps = state => {
   return {
     typeNo: state.user.userSetting.usersettingTypeNo,
-    isIncall: state.call.isIncall,
     expressionData : state.expression.expressionData,
+    // isRejectCall : state.callNo.isRejectCall,
   };
 };
 
