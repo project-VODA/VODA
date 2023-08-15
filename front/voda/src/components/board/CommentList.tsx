@@ -6,7 +6,15 @@ import Button from '../RegisterButton';
 import { useAppSelector } from '../../hooks/reduxHook';
 import SmallRedButton from '../SmallRedBtn';
 import SmallYellowButton from '../SmallYellowBtn';
+import CommentWriteBtn from '../CommentBtn';
+import '../../styles/detail/CommentList.css'
 import useErrorHandlers from '../../hooks/useError';
+
+// react-icons
+import { AiTwotoneEdit } from 'react-icons/ai'
+import { FiX } from 'react-icons/fi'
+import { BsCheckLg } from 'react-icons/bs'
+import { LiaReplySolid } from 'react-icons/lia'
 
 
 type Comment = {
@@ -17,6 +25,11 @@ type Comment = {
 };
 
 type CommentList = Comment[];
+
+const ButtonsContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
 
 const TableContainer = styled.div`
   justify-content: center;
@@ -172,13 +185,25 @@ const CommentList: React.FC<{ articleNo: number }> = ({ articleNo }) => {
             <tbody>
               {comments.map((comment: Comment) => (
                 <tr key={comment.commentNo}>
-                  <td>{comment.userName}</td>
-                  <td>{ isClickModify === comment.commentNo ? <input type='text' value={modifiedContent} onChange={(e) => setModifiedContent(e.target.value)} /> : <span>{comment.commentContent}</span>}</td>
-                  <td>{comment.commentRegTime}</td>
-                  { userInfo.role == "1" && isClickModify !== comment.commentNo ? <td><SmallYellowButton onClick={(e) => handleModifyComment(comment.commentNo, comment.commentContent)} text="수정" aria-label="댓글 수정" /></td> : null}
-                  { userInfo.role == "1" && isClickModify === comment.commentNo ? <td><SmallYellowButton onClick={(e) => handleModifyConfirm(comment.commentNo)} text="확인" aria-label="댓글 수정 확인" /></td> : null}
-                  { userInfo.role == "1" && isClickModify !== comment.commentNo ? <td><SmallRedButton onClick={(e) => handleDeleteComment(comment.commentNo)} text="삭제" aria-label="댓글 삭제" /></td> : null}
-                  { userInfo.role == "1" && isClickModify === comment.commentNo ? <td><SmallRedButton onClick={handleCancelModify} text="취소" aria-label="댓글 수정 취소" /></td> : null}
+                  <td className='commentName' style={{ verticalAlign: 'middle' }}>{comment.userName}</td>
+                  <td className='commentContent' style={{ textAlign: 'left', verticalAlign: 'middle' }}>{ isClickModify === comment.commentNo ? <input type='text' value={modifiedContent} onChange={(e) => setModifiedContent(e.target.value)} /> : <span>{comment.commentContent}</span>}</td>
+                  {localStorage.getItem('theme') === 'simple' ? (
+                    <ButtonsContainer>
+                    <td>{comment.commentRegTime}</td>
+                      { userInfo.role == "1" && isClickModify !== comment.commentNo ? <td style={{ margin: '0px', padding: '0px', }}><SmallYellowButton onClick={(e) => handleModifyComment(comment.commentNo, comment.commentContent)} text="수정" aria-label="댓글 수정" /></td> : null}
+                      { userInfo.role == "1" && isClickModify === comment.commentNo ? <td style={{ margin: '0px', padding: '0px', }}><SmallYellowButton onClick={(e) => handleModifyConfirm(comment.commentNo)} text="확인" aria-label="댓글 수정 확인" /></td> : null}
+                      { userInfo.role == "1" && isClickModify !== comment.commentNo ? <td style={{ margin: '0px', padding: '0px', }}><SmallRedButton style={{ width: '60px' }} onClick={(e) => handleDeleteComment(comment.commentNo)} text="삭제" aria-label="댓글 삭제" /></td> : null}
+                      { userInfo.role == "1" && isClickModify === comment.commentNo ? <td style={{ margin: '0px', padding: '0px', }}><SmallRedButton style={{ width: '60px' }} onClick={handleCancelModify} text="취소" aria-label="댓글 수정 취소" /></td> : null}
+                    </ButtonsContainer>
+                  ):(
+                    <ButtonsContainer>
+                    <td>{comment.commentRegTime}</td>
+                      { userInfo.role == "1" && isClickModify !== comment.commentNo ? <td style={{ margin: '0px', padding: '4px 0px 0px', fontSize: '25px' }}><AiTwotoneEdit onClick={(e) => handleModifyComment(comment.commentNo, comment.commentContent)} aria-label="댓글 수정" /></td> : null}
+                      { userInfo.role == "1" && isClickModify === comment.commentNo ? <td style={{ margin: '0px', padding: '4px 0px 0px', fontSize: '25px' }}><BsCheckLg onClick={(e) => handleModifyConfirm(comment.commentNo)} aria-label="댓글 수정 확인" /></td> : null}
+                      { userInfo.role == "1" && isClickModify !== comment.commentNo ? <td style={{ margin: '0px', padding: '4px 0px 0px', fontSize: '25px' }}><FiX style={{ width: '60px' }} onClick={(e) => handleDeleteComment(comment.commentNo)} aria-label="댓글 삭제" /></td> : null}
+                      { userInfo.role == "1" && isClickModify === comment.commentNo ? <td style={{ margin: '0px', padding: '4px 0px 0px', fontSize: '25px' }}><LiaReplySolid style={{ width: '60px' }} onClick={handleCancelModify} aria-label="댓글 수정 취소" /></td> : null}
+                    </ButtonsContainer>
+                  )}
                 </tr>
               ))}
             </tbody>
@@ -187,7 +212,7 @@ const CommentList: React.FC<{ articleNo: number }> = ({ articleNo }) => {
         { userInfo.role == "1" ? 
           <CommentInputContainer>
             <CommentInput placeholder='댓글 내용을 입력해주세요.' value={content} onChange={(e) => setContent(e.target.value)}/>
-            <SmallYellowButton onClick={handleWriteComment} aria-label='댓글을 등록하는 버튼입니다.' text="등록" />
+            <CommentWriteBtn onClick={handleWriteComment} aria-label='댓글을 등록하는 버튼입니다.' text="등록" />
           </CommentInputContainer> :
           null
         }
