@@ -8,9 +8,10 @@ import { updateUserSetting } from '../../apis/user';
 import { Link } from "react-router-dom";
 
 import '../../styles/simple/EnvSettingPage.css'
-import { useAppSelector } from '../../hooks/reduxHook';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHook';
 import useLogOut from '../../hooks/useLogout';
 import useErrorHandlers from '../../hooks/useError';
+import { updateSliceUserSetting } from '../../store/userSlice';
 
 const StyledLink = styled(Link)`
 text-decoration: none;
@@ -40,12 +41,15 @@ const SimpleEnvSettingPage = () => {
 
   const naviagte = useNavigate();
   const logout = useLogOut();
+  const dispatch = useAppDispatch();
   const errorHandlers = useErrorHandlers();
 
   const handleModify = () => {
     updateUserSetting(userSettingRequest)
       .then((res) => {
-        logout();
+        alert("설정이 변경되었습니다.");
+        dispatch(updateSliceUserSetting({usersettingTypeNo: userSettingRequest.usersettingTypeNo
+          , usersettingScreenType: userSettingRequest.usersettingScreenType}));
       })
       .catch((err) => {
         errorHandlers(err.response, handleModify);
