@@ -11,6 +11,10 @@ import { useNavigate } from 'react-router-dom';
 import { deleteArticle } from '../../apis/board';
 import { useAppSelector } from '../../hooks/reduxHook';
 
+// react-icons
+import { AiFillEdit } from 'react-icons/ai'
+import { RiDeleteBin6Line } from 'react-icons/ri'
+
 
 interface ThemeProps {
   theme: Theme;
@@ -85,18 +89,35 @@ export default function ArticleHeader( { userEmail, articleNo, articleRegDate  }
         console.error(err);
       })
   }
-
+if (localStorage.getItem('theme') === 'simple')
+{
   return(
       <HeaderField>
           <LeftSpanField>글번호 - {articleNo}</LeftSpanField>
           <RightSpanField>작성일자 - {articleRegDate}</RightSpanField>
             { userInfo.role == "1" || userInfo.userEmail == userEmail ? 
               <ButtonsContainer>
-                <ModifyButton text="수정" onClick={(e) => navigate(`/modify/${articleNo}`)} />
-                <DeleteButton text="삭제" onClick={handleDeleteArticle} />
+                <YellowButton text='수정' onClick={(e) => navigate(`/modify/${articleNo}`)} />
+                <RedButton style={{ width: '60px' }} text='삭제' onClick={handleDeleteArticle} />
               </ButtonsContainer> :
               null
             }            
       </HeaderField>
   )
+  
+} else {
+  return(
+    <HeaderField>
+        <LeftSpanField>글번호 - {articleNo}</LeftSpanField>
+        <RightSpanField>작성일자 - {articleRegDate}</RightSpanField>
+          { userInfo.role == "1" || userInfo.userEmail == userEmail ? 
+            <ButtonsContainer>
+              <AiFillEdit style={{ fontSize: '2.2vw' }} onClick={(e) => navigate(`/modify/${articleNo}`)} />
+              <RiDeleteBin6Line style={{ fontSize: '2.2vw', marginLeft: '20px' }} onClick={handleDeleteArticle} />
+            </ButtonsContainer> :
+            null
+          }            
+    </HeaderField>
+)
+}
 }
