@@ -8,14 +8,14 @@ import HandleButton from './HandleBtn';
 
 import { receiveCalling, rejectCalling } from '../apis/calling';
 
-import { Session } from 'openvidu-browser';
-import { callInfoType, updateCall } from '../store/callSlice';
+import { callInfoType, updateCall, setIsRejectCall } from '../store/callSlice';
 import { styled } from 'styled-components';
 import AlarmAudio from './AlarmAudio';
 import { userSliceLogout } from '../store/userSlice';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHook';
 import useErrorHandlers from '../hooks/useError';
 import { error } from 'console';
+
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -56,7 +56,6 @@ export default function SseComponent() {
   const [isCallModalOpen, setisCallModalOpen] = useState(false);
   const [isReject, setIsReject] = useState(false); //통화거절
 
-  const [openViduSession, setOpenViduSession] = useState<Session | null>(null);
   const userEmail = useAppSelector((state) => state.user.userInfo.userEmail);
   const [alarm, setAlarm] = useState(getNotificaationPermission());
 
@@ -161,14 +160,9 @@ export default function SseComponent() {
   }
 
   function exitcall() {
-    console.log("나가기 눌렸니?");
+    dispatch(setIsRejectCall(true));
     setIsReject(false);
-    console.log(openViduSession);
-    if (openViduSession) {
-      console.log("~!!!!");
-      openViduSession.disconnect(); // OpenVidu 세션에서 연결을 끊습니다.
-    }
-    
+    navigate('/home');
   }
 
   return (
