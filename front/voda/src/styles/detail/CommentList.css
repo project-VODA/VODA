@@ -1,0 +1,7 @@
+.commentName{
+  min-width: 80px !important;
+}
+
+.commentContent{
+  min-width: 200px;
+}

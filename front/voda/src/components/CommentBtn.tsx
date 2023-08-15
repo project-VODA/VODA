@@ -11,22 +11,20 @@ interface ThemeProps {
   theme: Theme;
 }
 
-const SmallRedButton = styled('button')<ThemeProps>`
-  width: 3vw;
-  height: 40px;
-  border-radius: 10px;
+const CommentWriteBtn = styled('button')<ThemeProps>`
+  width: 120px;
+  height: 60px;
+  border-radius: 7px;
   font-size: 18px;
-  padding: 8px;
-  margin: 8px;
+  padding: 10px;
+  margin: -20px 8px 0px;
   border: 1px solid ${({ theme }) => theme.text};
-  background: #f11818;
-  border: none;
-  color: ${({ theme }) =>
-    theme === SimpleTheme ? '#ffffff' : '#ffffff'};
+  background: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.body};
 
   &:hover {
     background: ${({ theme }) =>
-      theme === SimpleTheme ? '#fe4242' : '#fe4242'};
+      theme === SimpleTheme ? '#FFD60A' : '#003566'};
     transition: all 0.1s ease-in-out;
   }
 `;
@@ -37,16 +35,14 @@ export interface ButtonProps {
   onClick: (event: any) => void;
   'aria-label'?: string
   id? : string;
-  tabIndex?: number;
-  style?: React.CSSProperties;
 }
 
-export default function Setting({ text, onClick, "aria-label":ariaLabel, id, style }: ButtonProps ) {
+export default function Setting({ text, onClick, "aria-label":ariaLabel, id }: ButtonProps ) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <>
-      <SmallRedButton style={style} theme={theme} onClick={onClick} aria-label={ariaLabel} id={id}>{text}</SmallRedButton>
+      <CommentWriteBtn theme={theme} onClick={onClick} aria-label={ariaLabel} id={id}>{text}</CommentWriteBtn>
     </>
   );
 }
