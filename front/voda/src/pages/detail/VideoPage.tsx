@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 
 import VideoRoomComponent from '../../components/VideoRoomComponent';
 import '../../styles/simple/video.css'
-import { Link } from "react-router-dom";
-import styled from "styled-components";
 import { useAppSelector } from "../../hooks/reduxHook";
 
 const DetailVideo = () => {

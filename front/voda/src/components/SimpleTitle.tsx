@@ -7,10 +7,6 @@ import DetailLogo from '../assets/images/logo_black.png'
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
-import LandingPage from '../pages/LandingPage';
-
-const theme = localStorage.getItem('theme')
-
 interface ColorProps {
   color: string;
   'aria-live'?: string;

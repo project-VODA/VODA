@@ -1,16 +1,13 @@
-import { axiosServer } from '../apis/server';
 import { tts } from "../apis/tts"
 import { OpenVidu } from 'openvidu-browser';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import StreamComponent from './stream/StreamComponent';
 
-import SettingButton from '../components/SettingButton';
 import OpenViduLayout from '../layout/openvidu-layout';
 import UserModel from '../constants/user-model';
 
 import { offCalling } from "../apis/calling";
-import ToolbarComponentClass from './toolbar/ToolbarComponentClass';
 import ToolbarComponent from './toolbar/ToolbarComponent';
 
 import './VideoRoomComponent.css';
@@ -21,9 +18,7 @@ import '../styles/simple/video.css'
 // }
 
 var localUser = new UserModel();
-const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8080/voda/';
-
-const userHandicap = sessionStorage.getItem("userHandicap")
+// const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8080/voda/';
 
 class VideoRoomComponent extends Component {
   constructor(props) {

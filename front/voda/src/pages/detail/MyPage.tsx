@@ -5,7 +5,7 @@ import Input from '../../components/InputText';
 import SettingButton from '../../components/SettingButton';
 import DeleteButton from '../../components/DeleteButton';
 import CheckBox from '../../components/CheckBox';
-import { cancelUser, changePassword, getUserInfo, logout, updateUserInfo } from '../../apis/user';
+import { cancelUser, changePassword, getUserInfo, updateUserInfo } from '../../apis/user';
 import Info from '../../components/InfoText';
 import { updateUserName, } from '../../store/userSlice';
 import { Link } from "react-router-dom";
@@ -40,7 +40,7 @@ const DetailMyPage = () => {
   const [passwordCheck, setPasswordCheck] = useState('');
   const [pwFlag, setPwFlag] = useState(false);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const errorHandlers = useErrorHandlers();
   const logout = useLogOut();
@@ -58,9 +58,9 @@ const DetailMyPage = () => {
 
   useEffect(handleGetUserInfo, []);
 
-  const RedirectHomePage = () => {
-    navigate('/home');
-  }
+  // const RedirectHomePage = () => {
+  //   navigate('/home');
+  // }
 
   function handleGetUserInfo() {
     getUserInfo()
