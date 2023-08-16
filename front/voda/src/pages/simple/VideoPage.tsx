@@ -1,28 +1,29 @@
 import React, { useState, useEffect } from "react";
 // import { useLocation } from 'react-router-dom';
 
-import Title from '../../components/Title';
+// import Title from '../../components/Title';
 
 // import OpenVidu from "../../components/OpenVidu";
 import VideoRoomComponent from '../../components/VideoRoomComponent';
 import '../../styles/simple/video.css'
-import { Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
+// Link, 
+// import { useNavigate } from "react-router-dom";
+// import styled from "styled-components";
+// import { useSelector } from "react-redux";
+// import { RootState } from "../../store/store";
 import { useAppSelector } from "../../hooks/reduxHook";
 
-import SimpleLogo from "../../assets/images/logo_yellow.png"
+// import SimpleLogo from "../../assets/images/logo_yellow.png"
 
-const StyledLink = styled(Link)`
-text-decoration: none;
-color: inherit;
-`;
+// const StyledLink = styled(Link)`
+// text-decoration: none;
+// color: inherit;
+// `;
 
 
 const SimpleVideo = () => {
   const [localStream, setLocalStream] = useState<MediaStream>();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // const location = useLocation();
   const {sessionToken, callNo} = useAppSelector((state) => state.call.callInfo);
@@ -48,7 +49,7 @@ const SimpleVideo = () => {
         localStream.getTracks().forEach(track => track.stop());
       }
     }
-  }, []);
+  }, [localStream]);
 
   return (
     <>

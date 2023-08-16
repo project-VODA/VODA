@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { deleteFriend, getFriendList } from '../apis/friend';
+// import { deleteFriend, getFriendList } from '../apis/friend';
 
 import Button from "./SettingButton";
 import Modal from 'react-modal';
 import SmallRedButton from '../components/SmallRedBtn'
 import { getRecentCallList, sendCalling } from '../apis/calling';
-import { userInfo } from 'os';
-import { UserInfoType } from '../store/userSlice';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../store/store';
+// import { userInfo } from 'os';
+// import { UserInfoType } from '../store/userSlice';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { RootState } from '../store/store';
 import { useNavigate } from 'react-router-dom';
 
 import { updateCall } from "../store/callSlice";
@@ -66,10 +66,10 @@ const RecentCalls = () => {
         console.log(res);
         const msg = res.data;
 
-        if(msg=="senderOn"){
+        if(msg === "senderOn"){
           setMsg("자신에게 걸려온 통화가 있는지 확인하세요");
           setIsMsgOpen(true);
-        } else if( msg=="receiverOn"){
+        } else if( msg === "receiverOn"){
           setMsg("상대방이 통화중입니다.");
           setIsMsgOpen(true);
         }else {

@@ -2,10 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import Title from '../../components/Title';
+// import Title from '../../components/Title';
 
 import '../../styles/simple/About.css'
-import SimpleLogo from '../../assets/images/logo_yellow.png'
+// import SimpleLogo from '../../assets/images/logo_yellow.png'
 import SimpleLogoSqr from '../../assets/images/logo_yellow_sqr.png'
 import SimpleTitle from "../../components/SimpleTitle";
 

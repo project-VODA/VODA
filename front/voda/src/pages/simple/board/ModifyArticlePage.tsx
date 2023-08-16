@@ -4,17 +4,18 @@ import styled from 'styled-components';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-import { getArticleDetail, registArticle, updateArticle } from '../../../apis/board';
+// registArticle, 
+import { getArticleDetail, updateArticle } from '../../../apis/board';
 
 import SimpleTitle from '../../../components/SimpleTitle';
 import Input from '../../../components/InputText';
 import RegistButton from '../../../components/RegisterButton';
-import { UserInfoType } from '../../../store/userSlice';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../store/store';
+// import { UserInfoType } from '../../../store/userSlice';
+// import { useSelector } from 'react-redux';
+// import { RootState } from '../../../store/store';
 import { Link } from "react-router-dom";
 import { useAppSelector } from '../../../hooks/reduxHook';
-import useErrorHandlers from '../../../hooks/useError';
+// import useErrorHandlers from '../../../hooks/useError';
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -56,7 +57,7 @@ const SimpleModifyArticle = () => {
       .catch((err) => {
         console.error(err);
       })
-  }, [])
+  }, [articleNo])
 
   const articleUpdateRequest = {
     articleNo: articleNo,

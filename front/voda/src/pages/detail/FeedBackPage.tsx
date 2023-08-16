@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from "react-router-dom";
 
-import SimpleTitle from '../../components/SimpleTitle';
+// import SimpleTitle from '../../components/SimpleTitle';
 import BoardList from '../../components/board/BoardList';
-import WriteButton from '../../components/board/WriteButton';
+// import WriteButton from '../../components/board/WriteButton';
 import { Link } from "react-router-dom";
 
 import { MdAssignmentAdd } from 'react-icons/md'

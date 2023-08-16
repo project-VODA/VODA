@@ -1,10 +1,10 @@
 // components/Input.tsx
 
-import React, { useContext } from 'react';
+// import React, { useContext } from 'react';
 
 import styled from 'styled-components';
-import { ThemeContext } from '../../App';
-import { SimpleTheme, Theme } from '../../styles/theme';
+// import { ThemeContext } from '../../App';
+import { Theme } from '../../styles/theme';
 import RedButton from '../SmallRedBtn';
 import YellowButton from '../SmallYellowBtn';
 import { useNavigate } from 'react-router-dom';
@@ -21,10 +21,10 @@ interface ThemeProps {
   theme: Theme;
 }
 
-const DivContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
+// const DivContainer = styled.div`
+//   display: flex;
+//   justify-content: center;
+// `;
 
 // 테마(모드) 별로 색상 고려해줘야됌!!
 const HeaderField = styled.div<ThemeProps>`
@@ -64,11 +64,11 @@ const ButtonsContainer = styled.div`
   align-items: center;
 `;
 
-const ModifyButton = styled(YellowButton)`
-`;
+// const ModifyButton = styled(YellowButton)`
+// `;
 
-const DeleteButton = styled(RedButton)`
-`;
+// const DeleteButton = styled(RedButton)`
+// `;
 
 interface HeaderProps {
     userEmail: string;
@@ -97,7 +97,7 @@ if (localStorage.getItem('theme') === 'simple')
       <HeaderField>
           <LeftSpanField>글번호 - {articleNo}</LeftSpanField>
           <RightSpanField>작성일자 - {articleRegDate}</RightSpanField>
-            { userInfo.role == "1" || userInfo.userEmail == userEmail ? 
+            { userInfo.role === "1" || userInfo.userEmail === userEmail ? 
               <ButtonsContainer>
                 <YellowButton text='수정' onClick={(e) => navigate(`/modify/${articleNo}`)} />
                 <RedButton style={{ width: '60px' }} text='삭제' onClick={handleDeleteArticle} />
@@ -112,7 +112,7 @@ if (localStorage.getItem('theme') === 'simple')
     <HeaderField>
         <LeftSpanField>글번호 - {articleNo}</LeftSpanField>
         <RightSpanField>작성일자 - {articleRegDate}</RightSpanField>
-          { userInfo.role == "1" || userInfo.userEmail == userEmail ? 
+          { userInfo.role === "1" || userInfo.userEmail === userEmail ? 
             <ButtonsContainer>
               <AiFillEdit style={{ fontSize: '2.2vw' }} onClick={(e) => navigate(`/modify/${articleNo}`)} />
               <RiDeleteBin6Line style={{ fontSize: '2.2vw', marginLeft: '20px' }} onClick={handleDeleteArticle} />

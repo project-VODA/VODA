@@ -4,7 +4,7 @@ import React, { useContext } from 'react';
 
 import styled from 'styled-components';
 import { ThemeContext } from '../App';
-import { SimpleTheme, Theme } from '../styles/theme';
+import { Theme } from '../styles/theme';
 
 
 interface ThemeProps {

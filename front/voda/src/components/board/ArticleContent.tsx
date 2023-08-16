@@ -1,18 +1,18 @@
-import React, { useContext, useMemo } from 'react';
+// import React, { useContext, useMemo } from 'react';
 
 import styled from 'styled-components';
-import { ThemeContext } from '../../App';
-import { SimpleTheme, Theme } from '../../styles/theme';
+// import { ThemeContext } from '../../App';
+import { Theme } from '../../styles/theme';
 import DOMPurify from "dompurify";
 
 interface ThemeProps {
   theme: Theme;
 }
 
-const DivContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
+// const DivContainer = styled.div`
+//   display: flex;
+//   justify-content: center;
+// `;
 
 // 테마(모드) 별로 색상 고려해줘야됌!!
 const ContentField = styled.div<ThemeProps>`

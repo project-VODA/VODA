@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Link, useParams } from "react-router-dom";
+// import { Link, useParams } from "react-router-dom";
 import styled from 'styled-components';
 import { deleteComment, getComments, registComment, updateComment } from '../../apis/board';
-import Button from '../RegisterButton';
+// import Button from '../RegisterButton';
 import { useAppSelector } from '../../hooks/reduxHook';
 import SmallRedButton from '../SmallRedBtn';
 import SmallYellowButton from '../SmallYellowBtn';
@@ -66,11 +66,11 @@ const CommentInput = styled.textarea`
   resize: none;
 `;
 
-const CommentWriteButton = styled(Button)`
-  width: 10%;
-  border: none;
-  display: flex;
-`;
+// const CommentWriteButton = styled(Button)`
+//   width: 10%;
+//   border: none;
+//   display: flex;
+// `;
 
 const CommentList: React.FC<{ articleNo: number }> = ({ articleNo }) => {
   const userInfo = useAppSelector((state) => state.user.userInfo);
@@ -190,18 +190,18 @@ const CommentList: React.FC<{ articleNo: number }> = ({ articleNo }) => {
                   {localStorage.getItem('theme') === 'simple' ? (
                     <ButtonsContainer>
                     <td>{comment.commentRegTime}</td>
-                      { userInfo.role == "1" && isClickModify !== comment.commentNo ? <td style={{ margin: '0px', padding: '0px', }}><SmallYellowButton onClick={(e) => handleModifyComment(comment.commentNo, comment.commentContent)} text="수정" aria-label="댓글 수정" /></td> : null}
-                      { userInfo.role == "1" && isClickModify === comment.commentNo ? <td style={{ margin: '0px', padding: '0px', }}><SmallYellowButton onClick={(e) => handleModifyConfirm(comment.commentNo)} text="확인" aria-label="댓글 수정 확인" /></td> : null}
-                      { userInfo.role == "1" && isClickModify !== comment.commentNo ? <td style={{ margin: '0px', padding: '0px', }}><SmallRedButton style={{ width: '60px' }} onClick={(e) => handleDeleteComment(comment.commentNo)} text="삭제" aria-label="댓글 삭제" /></td> : null}
-                      { userInfo.role == "1" && isClickModify === comment.commentNo ? <td style={{ margin: '0px', padding: '0px', }}><SmallRedButton style={{ width: '60px' }} onClick={handleCancelModify} text="취소" aria-label="댓글 수정 취소" /></td> : null}
+                      { userInfo.role === "1" && isClickModify !== comment.commentNo ? <td style={{ margin: '0px', padding: '0px', }}><SmallYellowButton onClick={(e) => handleModifyComment(comment.commentNo, comment.commentContent)} text="수정" aria-label="댓글 수정" /></td> : null}
+                      { userInfo.role === "1" && isClickModify === comment.commentNo ? <td style={{ margin: '0px', padding: '0px', }}><SmallYellowButton onClick={(e) => handleModifyConfirm(comment.commentNo)} text="확인" aria-label="댓글 수정 확인" /></td> : null}
+                      { userInfo.role === "1" && isClickModify !== comment.commentNo ? <td style={{ margin: '0px', padding: '0px', }}><SmallRedButton style={{ width: '60px' }} onClick={(e) => handleDeleteComment(comment.commentNo)} text="삭제" aria-label="댓글 삭제" /></td> : null}
+                      { userInfo.role === "1" && isClickModify === comment.commentNo ? <td style={{ margin: '0px', padding: '0px', }}><SmallRedButton style={{ width: '60px' }} onClick={handleCancelModify} text="취소" aria-label="댓글 수정 취소" /></td> : null}
                     </ButtonsContainer>
                   ):(
                     <ButtonsContainer>
                     <td>{comment.commentRegTime}</td>
-                      { userInfo.role == "1" && isClickModify !== comment.commentNo ? <td style={{ margin: '0px', padding: '4px 0px 0px', fontSize: '25px' }}><AiTwotoneEdit onClick={(e) => handleModifyComment(comment.commentNo, comment.commentContent)} aria-label="댓글 수정" /></td> : null}
-                      { userInfo.role == "1" && isClickModify === comment.commentNo ? <td style={{ margin: '0px', padding: '4px 0px 0px', fontSize: '25px' }}><BsCheckLg onClick={(e) => handleModifyConfirm(comment.commentNo)} aria-label="댓글 수정 확인" /></td> : null}
-                      { userInfo.role == "1" && isClickModify !== comment.commentNo ? <td style={{ margin: '0px', padding: '4px 0px 0px', fontSize: '25px' }}><FiX style={{ width: '60px' }} onClick={(e) => handleDeleteComment(comment.commentNo)} aria-label="댓글 삭제" /></td> : null}
-                      { userInfo.role == "1" && isClickModify === comment.commentNo ? <td style={{ margin: '0px', padding: '4px 0px 0px', fontSize: '25px' }}><LiaReplySolid style={{ width: '60px' }} onClick={handleCancelModify} aria-label="댓글 수정 취소" /></td> : null}
+                      { userInfo.role === "1" && isClickModify !== comment.commentNo ? <td style={{ margin: '0px', padding: '4px 0px 0px', fontSize: '25px' }}><AiTwotoneEdit onClick={(e) => handleModifyComment(comment.commentNo, comment.commentContent)} aria-label="댓글 수정" /></td> : null}
+                      { userInfo.role === "1" && isClickModify === comment.commentNo ? <td style={{ margin: '0px', padding: '4px 0px 0px', fontSize: '25px' }}><BsCheckLg onClick={(e) => handleModifyConfirm(comment.commentNo)} aria-label="댓글 수정 확인" /></td> : null}
+                      { userInfo.role === "1" && isClickModify !== comment.commentNo ? <td style={{ margin: '0px', padding: '4px 0px 0px', fontSize: '25px' }}><FiX style={{ width: '60px' }} onClick={(e) => handleDeleteComment(comment.commentNo)} aria-label="댓글 삭제" /></td> : null}
+                      { userInfo.role === "1" && isClickModify === comment.commentNo ? <td style={{ margin: '0px', padding: '4px 0px 0px', fontSize: '25px' }}><LiaReplySolid style={{ width: '60px' }} onClick={handleCancelModify} aria-label="댓글 수정 취소" /></td> : null}
                     </ButtonsContainer>
                   )}
                 </tr>
@@ -209,7 +209,7 @@ const CommentList: React.FC<{ articleNo: number }> = ({ articleNo }) => {
             </tbody>
           </table>
         </div>
-        { userInfo.role == "1" ? 
+        { userInfo.role === "1" ? 
           <CommentInputContainer>
             <CommentInput placeholder='댓글 내용을 입력해주세요.' value={content} onChange={(e) => setContent(e.target.value)}/>
             <CommentWriteBtn onClick={handleWriteComment} aria-label='댓글을 등록하는 버튼입니다.' text="등록" />
