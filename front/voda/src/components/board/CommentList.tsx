@@ -85,7 +85,7 @@ const CommentList: React.FC<{ articleNo: number }> = ({ articleNo }) => {
   }, [])
   
   const handleWriteComment = () => {
-    if(commentRequest.commentContent.length !== 0) {
+    if(commentRequest.commentContent) {
       registComment(commentRequest)
       .then((res) => {
         handleCommentsAfterWrite(articleNo);
@@ -116,7 +116,7 @@ const CommentList: React.FC<{ articleNo: number }> = ({ articleNo }) => {
       userEmail: userInfo.userEmail,
     }
 
-    if(modifyCommentRequest.commentContent.length !== 0) {
+    if(modifyCommentRequest.commentContent) {
       updateComment(modifyCommentRequest)
       .then((res) => {
         handleCommentsAfterModify(articleNo);
