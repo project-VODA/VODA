@@ -20,7 +20,7 @@ color: inherit;
 const QuillContainer = styled.div`
   display: flex;
   justify-content: center;
-`
+`;
 
 const StyledQuill = styled(ReactQuill)`
   .ql-toolbar.ql-snow {
@@ -32,18 +32,18 @@ const StyledQuill = styled(ReactQuill)`
   .ql-editor {
     justify-content: center;
   }
-`
+`;
 
 const StyledInput = styled(Input)`
   max-width: 700px;
   min-width: 210px;
-  width: 44.5%
-`
+  width: 44.5%;
+`;
 
 const StyledRegistButton = styled(RegistButton)`
   max-width: 600px;
-  width: 38%
-`
+  width: 38%;
+`;
 
 const SimpleWriteArticle = () => {
   const [title, setTitle] = useState('');
@@ -54,17 +54,21 @@ const SimpleWriteArticle = () => {
   const articleData = {
     articleTitle: title,
     articleContent: content,
-  }
+  };
 
   const handleRegist = () => {
-    registArticle(articleData)
-      .then((res) => {
-        RedirectListPage();
-      })
-      .catch((err) => {
-        errorHandlers(err.response, handleRegist);
-      })
-  }
+    if(articleData.articleTitle && articleData.articleContent) {
+      registArticle(articleData)
+        .then((res) => {
+          RedirectListPage();
+        })
+        .catch((err) => {
+          errorHandlers(err.response, handleRegist);
+        })
+      } else {
+      alert("제목이나 내용이 비어있습니다.");
+    };
+  };
 
   const navigate = useNavigate();
 
