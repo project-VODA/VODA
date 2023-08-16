@@ -176,10 +176,12 @@ export default function SseComponent() {
         style={localStorage.getItem('theme') === 'detail' ? DetailModal : SimpleModal}
         shouldCloseOnOverlayClick={false}
       >
-        <p style={{textAlign: 'center', fontSize: 'xx-large', margin: '5%'}}>{content}</p>
-        <ButtonContainer>
-          <HandleButton text='나가기' onClick={exitcall} />
-        </ButtonContainer>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <p style={{ textAlign: 'center', fontSize: 'xx-large', margin: '5%' }}>{content}</p>
+          <ButtonContainer>
+            <HandleButton text='나가기' onClick={exitcall} />
+          </ButtonContainer>
+        </div>
       </Modal>
       ) : (
         <Modal id="callModal"
