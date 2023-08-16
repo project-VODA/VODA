@@ -177,7 +177,7 @@ const CommentList: React.FC<{ articleNo: number }> = ({ articleNo }) => {
                   <td className='commentContent' style={{ textAlign: 'left', verticalAlign: 'middle' }}>{ isClickModify === comment.commentNo ? <input type='text' value={modifiedContent} onChange={(e) => setModifiedContent(e.target.value)} /> : <span>{comment.commentContent}</span>}</td>
                   {localStorage.getItem('theme') === 'simple' ? (
                     <ButtonsContainer>
-                    <td>{comment.commentRegTime}</td>
+                    <td style={{ margin: '0px', padding: '18px 0px 0px' }}>{comment.commentRegTime}</td>
                       { userInfo.role == "1" && isClickModify !== comment.commentNo ? <td style={{ margin: '0px', padding: '0px', }}><SmallYellowButton onClick={(e) => handleModifyComment(comment.commentNo, comment.commentContent)} text="수정" aria-label="댓글 수정" /></td> : null}
                       { userInfo.role == "1" && isClickModify === comment.commentNo ? <td style={{ margin: '0px', padding: '0px', }}><SmallYellowButton onClick={(e) => handleModifyConfirm(comment.commentNo)} text="확인" aria-label="댓글 수정 확인" /></td> : null}
                       { userInfo.role == "1" && isClickModify !== comment.commentNo ? <td style={{ margin: '0px', padding: '0px', }}><SmallRedButton style={{ width: '60px' }} onClick={(e) => handleDeleteComment(comment.commentNo)} text="삭제" aria-label="댓글 삭제" /></td> : null}
