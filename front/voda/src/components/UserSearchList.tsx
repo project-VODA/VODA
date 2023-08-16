@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../store/store";
 import { sendCalling } from "../apis/calling";
 import { useNavigate } from "react-router-dom";
 
-import { UserInfoType } from "../store/userSlice";
-
-import SmallYellowButton from "../components/SmallYellowBtn"
 import Button from "./SettingButton";
 import RedButton from "./DeleteButton"
 import Input from "./InputText";
@@ -28,19 +23,6 @@ const inputColor = {
   backgroundColor: 'white',
   marginTop: '28px',
 };
-
-const SimpleModal = {
-  content: {
-    backgroundColor: '#001d3d',
-  },
-}
-
-const DetailModal = {
-  content: {
-    backgroundColor: '#fff',
-  },
-}
-
 
 type User = {
   userEmail: string;
