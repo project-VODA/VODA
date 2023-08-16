@@ -153,11 +153,6 @@ const UserSearchList = () => {
         tabIndex={0}
       />
       <table id="tbodyContainer" style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '28px'}}>
-        {/* <colgroup>
-          <col width="30%" />
-          <col width="30%" />
-          <col width="40%" />
-        </colgroup> */}
         <tbody id="FriendContainer" tabIndex={2}>
           {userList.length === 0 ? (
             <tr>
@@ -188,7 +183,6 @@ const UserSearchList = () => {
                   </div>
                   )}
                 </td>
-
               </tr>
             ))
           )}
@@ -201,13 +195,13 @@ const UserSearchList = () => {
         style={{
           content: {
             backgroundColor: localStorage.getItem('theme') === 'detail' ? 'white' : '#001d3d',
-            width: '400px', // Adjust the width as needed
-            height: '300px', // Adjust the height as needed
-            margin: 'auto', // Center the modal
-            display: 'flex', // Flex container
-            flexDirection: 'column', // Stack content vertically
-            justifyContent: 'center', // Center horizontally
-            alignItems: 'center', // Center vertically
+            width: '400px',
+            height: '300px',
+            margin: 'auto',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
           }
         }}
         shouldCloseOnOverlayClick={false}

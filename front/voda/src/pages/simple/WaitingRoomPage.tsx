@@ -9,12 +9,9 @@ import SimpleTitle from '../../components/SimpleTitle';
 import HandleButton from '../../components/HandleBtn';
 import UserSearchList from "../../components/UserSearchList";
 import RecentCalls from "../../components/RecentCall";
-// import DeleteFriendButton from '../../components/DeleteFriendBtn'
-import { searchUser } from "../../apis/friend";
-import { sendCalling } from "../../apis/calling";
+
 import SmallRedButton from '../../components/SmallRedBtn'
 
-import Styles from 'react-modal'
 import '../../styles/simple/SimpleWaitingPage.css'
 
 const StyledLink = styled(Link)`
@@ -29,25 +26,6 @@ const ButtonContainer = styled.div`
   align-items: center;
   text-align: center;
 `;
-
-// const modalColor = {
-//   content: {
-    
-//   },
-// }
-
-// const modalStyle: Styles = {
-//   content: {
-//     backgroundColor: "#001d3d",
-//     width: "90%", // 원하는 너비로 조정
-//     maxWidth: "unset", // 최대 너비 제거
-//     margin: "0 auto", // 가운데 정렬
-//     border: "none", // 테두리 제거
-//     padding: "20px", // 내부 패딩
-//     overflowX: "hidden", // 가로 스크롤 숨김
-//     overflowY: "auto", // 세로 스크롤 유지
-//   },
-// };
 
 const SimpleRoom = () => {
   const [isFriendModalOpen, setFriendModalOpen] = useState(false);
@@ -90,15 +68,13 @@ const SimpleRoom = () => {
           style={{     
             content: {
               backgroundColor: "#001d3d",
-              width: "80vw", // 원하는 너비로 조정
-              maxWidth: "unset", // 최대 너비 제거
-              margin: "0 auto", // 가운데 정렬
-              border: "none", // 테두리 제거
-              padding: "20px", // 내부 패딩
-              // overflowX: "hidden",
+              width: "80vw",
+              maxWidth: "unset",
+              margin: "0 auto",
+              border: "none",
+              padding: "20px",
               overflowX: isMobile ? "auto" : "hidden",
-              // 가로 스크롤 1500(전체화면 기준 내용이 가려지는 크기) 이하에는 스크롤 생기게
-              overflowY: "auto", // 세로 스크롤 유지
+              overflowY: "auto",
             }
           }}
         >

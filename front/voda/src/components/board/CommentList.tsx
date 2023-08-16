@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
-// import { Link, useParams } from "react-router-dom";
 import styled from 'styled-components';
 import { deleteComment, getComments, registComment, updateComment } from '../../apis/board';
-// import Button from '../RegisterButton';
 import { useAppSelector } from '../../hooks/reduxHook';
 import SmallRedButton from '../SmallRedBtn';
 import SmallYellowButton from '../SmallYellowBtn';
@@ -66,11 +64,6 @@ const CommentInput = styled.textarea`
   resize: none;
 `;
 
-// const CommentWriteButton = styled(Button)`
-//   width: 10%;
-//   border: none;
-//   display: flex;
-// `;
 
 const CommentList: React.FC<{ articleNo: number }> = ({ articleNo }) => {
   const userInfo = useAppSelector((state) => state.user.userInfo);
@@ -177,11 +170,6 @@ const CommentList: React.FC<{ articleNo: number }> = ({ articleNo }) => {
       <TableContainer>
         <div className='commentList'>
           <table className='commentTable'>
-            {/* <colgroup>
-              <col width="10%" />
-              <col width="70%" />
-              <col width="20%" />
-            </colgroup> */}
             <tbody>
               {comments.map((comment: Comment) => (
                 <tr key={comment.commentNo}>
@@ -213,15 +201,11 @@ const CommentList: React.FC<{ articleNo: number }> = ({ articleNo }) => {
           <CommentInputContainer>
             <CommentInput placeholder='댓글 내용을 입력해주세요.' value={content} onChange={(e) => setContent(e.target.value)}/>
             <CommentWriteBtn onClick={handleWriteComment} aria-label='댓글을 등록하는 버튼입니다.' text="등록" />
-          </CommentInputContainer> :
-          null
+          </CommentInputContainer>
+          : null
         }
         
       </TableContainer>
-
-
-
-      
     </>
   );
 }

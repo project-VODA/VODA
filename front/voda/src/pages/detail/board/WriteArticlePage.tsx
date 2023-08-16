@@ -9,9 +9,6 @@ import { registArticle } from '../../../apis/board';
 import Title from '../../../components/Title';
 import Input from '../../../components/InputText';
 import RegistButton from '../../../components/RegisterButton';
-// import { UserInfoType } from '../../../store/userSlice';
-// import { useSelector } from 'react-redux';
-// import { RootState } from '../../../store/store';
 import { Link } from "react-router-dom";
 import useErrorHandlers from '../../../hooks/useError';
 

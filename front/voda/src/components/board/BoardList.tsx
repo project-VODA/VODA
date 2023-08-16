@@ -60,9 +60,9 @@ const BoardList: React.FC = () => {
       .catch((err) => {
         errorHandlers(err.response, handleGetArticles);
       })
-  }
-  
-  if (localStorage.getItem('theme' ) === 'simple') {
+    }
+
+if (localStorage.getItem('theme' ) === 'simple') {
   return (
     <TableContainer>
       <div className='boardList'>
@@ -100,8 +100,9 @@ const BoardList: React.FC = () => {
     </TableContainer>
   );
 }
+
 return (
-  <>
+    <>
       <div className='DetailBoardList'>
         <table className='DetailBoardTable'>
           <colgroup>
@@ -119,7 +120,6 @@ return (
             </tr>
           </thead>
         </table>
-          {/* <hr className='tableHr' /> */}
           <hr/>
         <table className='DetailBoardTable'>
           <colgroup>
@@ -144,8 +144,8 @@ return (
           </tbody>
         </table>
       </div>
-  </>
-)
+    </>
+  )
 }
   
 export default BoardList;

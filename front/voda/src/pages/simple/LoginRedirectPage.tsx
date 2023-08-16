@@ -1,8 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { loginGoogle, loginKakao, redirectKakao } from "../../apis/user";
-//import { useAppDispatch } from "../../constants/types";
-import { updateAccessToken, updateLoginStatus, }  from "../../store/authReducer";
+import { loginGoogle, loginKakao, } from "../../apis/user";
 
 interface LoginRedirectPageProps {
   isGoogle?: boolean;
@@ -43,7 +41,7 @@ function LoginRedirectPage({ isGoogle }: LoginRedirectPageProps) {
         })
         .catch((err) => console.log(err));
     }
-  }, [isGoogle, /*dispatch*/, code, updateUserStatus, navigate]);
+  }, [isGoogle, code, updateUserStatus, navigate]);
 
   return (
     <div style={{ textAlign: "center" }}>

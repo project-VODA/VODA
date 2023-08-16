@@ -9,11 +9,7 @@ import { registArticle } from '../../../apis/board';
 import SimpleTitle from '../../../components/SimpleTitle';
 import Input from '../../../components/InputText';
 import RegistButton from '../../../components/RegisterButton';
-// import { UserInfoType } from '../../../store/userSlice';
-// import { useSelector } from 'react-redux';
-// import { RootState } from '../../../store/store';
 import { Link } from "react-router-dom";
-// import { useAppSelector } from '../../../hooks/reduxHook';
 import useErrorHandlers from '../../../hooks/useError';
 
 const StyledLink = styled(Link)`
@@ -31,11 +27,6 @@ const StyledInput = styled(Input)`
   min-width: 210px;
   width: 44.5%
 `
-// const StyledRegistButton = styled(RegistButton)`
-//   max-width: 600px;
-//   min-width: 210px;
-//   width: 38%
-// `
 
 const StyledQuill = styled(ReactQuill)`
   .ql-toolbar.ql-snow {

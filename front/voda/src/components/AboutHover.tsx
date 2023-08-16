@@ -1,4 +1,3 @@
-// AboutHover.tsx
 import React, { useState } from "react";
 import "../styles/detail/DetailAbout.css";
 import Smile from '../assets/images/Smile.jpg';

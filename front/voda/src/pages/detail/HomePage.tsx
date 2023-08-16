@@ -1,10 +1,7 @@
-import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Button from "../../components/SettingButton"
 import Carousel from "../../components/carousel/carousel";
-import useLogOut from "../../hooks/useLogout";
-import { useAppSelector } from "../../hooks/reduxHook";
 
 const DetailPage = () => {
   

@@ -1,5 +1,3 @@
-// components/Button.tsx
-
 import React, { useContext } from 'react';
 
 import styled from 'styled-components';
@@ -39,10 +37,6 @@ const RegisterButton = styled('button')<ThemeProps>`
     transition: all 0.1s ease-in-out;
   }
 `;
-
-//// hover - color
-// color: ${({ theme }) =>
-// theme === SimpleTheme ? theme.mainColor : theme.body};
 
 export interface ButtonProps {
   text: string;

@@ -1,32 +1,21 @@
-// Navigation.tsx
 import { Link, useNavigate } from "react-router-dom";
-// import { useAppSelector } from "../constants/types";
-
-// 로그인 관련
-// import { useAppSelector } from "../../constants/types";
+import { useState } from "react";
 
 import styled from "styled-components";
-// , Theme
+import detailLogo from "../assets/images/logo_black.png";
+
+// Theme
 import { SimpleTheme } from "../styles/theme";
 
-import detailLogo from "../assets/images/logo_black.png";
+import { useAppSelector } from "../hooks/reduxHook";
+import useLogOut from "../hooks/useLogout";
+
+// react-icons
+import { LuPipette } from "react-icons/lu";
 import { FiSettings } from "react-icons/fi";
 import { HiUser, HiOutlineLogout } from "react-icons/hi";
 import { GrUserSettings, GrInfo, GrFormClose } from "react-icons/gr";
 import { FaBars, FaHeadphonesAlt, FaRegPaperPlane } from "react-icons/fa";
-import { LuPipette } from "react-icons/lu";
-// import { useDispatch, useSelector } from "react-redux";
-// import { RootState } from "../store/store";
-// import { UserInfoType, userSliceLogout } from "../store/userSlice";
-import { useState } from "react";
-// import { logout } from "../apis/user";
-import { useAppSelector } from "../hooks/reduxHook";
-import useLogOut from "../hooks/useLogout";
-
-// KMJ 스타일 가이드에 대한 설명 - typescript styled-components
-// 1) 단일 props 사용 시, props 명 : 타입 지정
-// 2) 다수의 props 사용 시 interface 작성
-// 2-1) 상속 받는 컴포넌트에 타입 지정 - 하단 참조
 
 interface DropDownMenuProps {
   visible: boolean;
@@ -63,25 +52,10 @@ const NavContentContainer = styled.div`
   transition: all 0.5s ease-in-out;
 `;
 
-// interface ColorProps {
-//   color: string;
-// }
-
 const LogoImage = styled.img`
   width: 120px;
   height: auto;
 `;
-
-// const TitleContainer = styled("header")<ColorProps>`
-//   height: 100%;
-//   font-size: 2rem;
-//   font-weight: 900;
-//   color: ${({ color }) => color};
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   transition: all 0.5s ease-in-out;
-// `;
 
 const InfoContainer = styled.div`
   position: relative;
@@ -109,7 +83,6 @@ const LogoContainer = styled("button")`
   }
 `;
 
-// 원래는 LoginButton
 const ChannelButton = styled("button")`
   width: 120px;
   height: 63px;
@@ -285,7 +258,6 @@ export default function Navigation() {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   const navigate = useNavigate();
-  // const dispatch = useAppDispatch();
   const logout = useLogOut();
 
   const handleDropDownToggle = () => {
@@ -299,10 +271,6 @@ export default function Navigation() {
     }, 500);
   }
 
-  // const RedirectHomePage = () => {
-  //   navigate("/")
-  // }
-
   const toAbout = () => {
     navigate("/about")
   }
@@ -314,10 +282,6 @@ export default function Navigation() {
   const toFeedback = () => {
     navigate("/feedback")
   }
-
-  // const toFace = () => {
-  //   navigate("/face-test")
-  // }
 
   const toHome = () => {
     navigate("/home")
@@ -343,10 +307,7 @@ export default function Navigation() {
               />
             </Link>
           </LogoContainer>
-          {/* <TitleContainer color={theme.mainColor}>제목</TitleContainer> */}
           <InfoContainer>
-            {/* <ChannelButton theme={theme}>test</ChannelButton> */}
-            {/* <ChannelButton theme={theme}><Link to="/about">ABOUT</Link></ChannelButton> */}
             <ChannelButton onClick={toAbout}>
               <MenuLink to="/about">서비스 소개</MenuLink>
             </ChannelButton>
@@ -356,9 +317,6 @@ export default function Navigation() {
             <ChannelButton onClick={toFeedback}>
               <MenuLink to="/feedback">고객의 소리함</MenuLink>
             </ChannelButton>
-            {/* <ChannelButton onClick={toFace}>
-              <MenuLink to="/face-test">비디오</MenuLink>
-            </ChannelButton> */}
             <ChannelButton onClick={toColor}>
               <MenuLink to="/color">색상 인식</MenuLink>
             </ChannelButton>
@@ -407,7 +365,6 @@ export default function Navigation() {
             </UserDropDown>
           </InfoContainer>
         </NavContentContainer>
-        {/* {loginModalOpen && <LoginModal setLoginModalOpen={setLoginModalOpen} />} */}
       </NavContainer>
       <HamburgerButton onClick={handleMobileMenuToggle}>
         {isMobileMenuOpen ? <GrFormClose size={36} /> : <FaBars size={36} /> }  

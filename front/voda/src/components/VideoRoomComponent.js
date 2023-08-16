@@ -1,16 +1,16 @@
-// import { axiosServer } from '../apis/server';
+import { axiosServer } from '../apis/server';
 import { tts } from "../apis/tts"
 import { OpenVidu } from 'openvidu-browser';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import StreamComponent from './stream/StreamComponent';
 
-// import SettingButton from '../components/SettingButton';
+import SettingButton from '../components/SettingButton';
 import OpenViduLayout from '../layout/openvidu-layout';
 import UserModel from '../constants/user-model';
 
 import { offCalling } from "../apis/calling";
-// import ToolbarComponentClass from './toolbar/ToolbarComponentClass';
+import ToolbarComponentClass from './toolbar/ToolbarComponentClass';
 import ToolbarComponent from './toolbar/ToolbarComponent';
 
 import './VideoRoomComponent.css';
@@ -21,9 +21,9 @@ import '../styles/simple/video.css'
 // }
 
 var localUser = new UserModel();
-// const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8080/voda/';
+const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8080/voda/';
 
-// const userHandicap = sessionStorage.getItem("userHandicap")
+const userHandicap = sessionStorage.getItem("userHandicap")
 
 class VideoRoomComponent extends Component {
   constructor(props) {
@@ -48,19 +48,15 @@ class VideoRoomComponent extends Component {
     this.isRejectCall = this.props.isRejectCall;
     this.advices = [
       [
-        "화난 표정을 하고 있어요. 기분이 안좋아 보이는데 무슨 일이 있냐고 물어보세요.",
-        "화난 표정을 하고 있어요. 언짢은 일이 있었는지 물어보세요."
+        "화난 표정을 하고 있어요. 기분이 안좋아 보이는데 무슨 일이 있냐고 물어보세요."
       ],
       [
-        "역겨운 표정을 하고 있어요. 기분이 안좋아 보이는데 무슨 일이 있냐고 물어보세요.",
-        "역겨운 표정을 하고 있어요. 속이 안좋은지 물어보세요."
+        "역겨운 표정을 하고 있어요. 기분이 안좋아 보이는데 무슨 일이 있냐고 물어보세요."
       ],
       [
         "행복한 표정을 하고 있어요. 오늘 어떤 좋은 일이 있었는지 물어보세요.",
         "행복한 표정을 하고 있어요. 상대방이 행복해 하니까 나도 행복하다고 공감을 표시해 보세요.",
-        "행복한 표정을 하고 있어요. 상대방의 기쁨을 함께 나누며 대화를 이어가보세요.",
-        "행복한 표정을 하고 있어요. 상대방의 행복한 모습에 나도 설레이다고 공감을 표시해 보세요.",
-        "행복한 표정을 하고 있어요. 상대방의 행복한 모습을 보니 나에게 있었던 행복한 일이 생각난다며 대화를 이어나가 보세요."
+        "행복한 표정을 하고 있어요. 상대방의 기쁨을 함께 나누며 대화를 이어가보세요."
       ],
       [
         "무표정을 하고 있어요. 오늘 하루동안 있었던 일로 대화를 시작해볼까요?",
@@ -74,7 +70,6 @@ class VideoRoomComponent extends Component {
       ],
       [
         "무서운 표정을 하고 있어요. 무슨 일이 있었는지 물어보세요.",
-        "무서운 표정을 하고 있어요. 도움이 필요하면 손을 흔들라고 말해보세요."
       ],
       [
         "놀란 표정을 하고 있어요. 무슨 일이 있었는지 물어보세요",
@@ -692,13 +687,15 @@ class VideoRoomComponent extends Component {
         { theme === 'simple' ? (
         <div id="layout" className="simplebounds">
           {this.state.subscribers.map((sub, i) => (
-            <div key={i}
+            <div 
+              key={i}
               className="OT_root OT_subscriber custom-class" 
               id="remoteUsers"
-              // style={{ 
-              //   transform: 'rotateY(180deg)',
-              //   WebkitTransform: 'rotateY(180deg)', }}
-                >
+              style={{
+                transform: 'rotateY(180deg)',
+                WebkitTransform: 'rotateY(180deg)', 
+              }}
+            >
               <StreamComponent user={sub} streamId={sub.streamManager.stream.streamId} />
             </div>
           ))}
