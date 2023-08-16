@@ -63,13 +63,17 @@ const SimpleModifyArticle = () => {
   }
 
   const handleUpdate = () => {
-    updateArticle(articleUpdateRequest)
-      .then((res) => {
-        navigate(`/view/${articleNo}`);
-      })
-      .catch((err) => {
-        console.error(err);
-      })
+    if(articleUpdateRequest.articleTitle.length !== 0 || articleUpdateRequest.articleContent.length !== 0) {
+      updateArticle(articleUpdateRequest)
+        .then((res) => {
+          navigate(`/view/${articleNo}`);
+        })
+        .catch((err) => {
+          console.error(err);
+        })
+    } else {
+      alert("제목이나 내용이 비어있습니다.");
+    };
   }
 
   return (

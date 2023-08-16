@@ -85,13 +85,17 @@ const CommentList: React.FC<{ articleNo: number }> = ({ articleNo }) => {
   }, [])
   
   const handleWriteComment = () => {
-    registComment(commentRequest)
+    if(commentRequest.commentContent.length !== 0) {
+      registComment(commentRequest)
       .then((res) => {
         handleCommentsAfterWrite(articleNo);
       })
       .catch((err) => {
         errorHandlers(err.response, handleWriteComment);
       })
+    } else {
+      alert("댓글의 내용을 입력해주세요.")
+    }    
   }
 
   const handleModifyComment = (commentNo: number, initialContent: string) => {
@@ -112,13 +116,17 @@ const CommentList: React.FC<{ articleNo: number }> = ({ articleNo }) => {
       userEmail: userInfo.userEmail,
     }
 
-    updateComment(modifyCommentRequest)
+    if(modifyCommentRequest.commentContent.length !== 0) {
+      updateComment(modifyCommentRequest)
       .then((res) => {
         handleCommentsAfterModify(articleNo);
       })
       .catch((err) => {
         errorHandlers(err.response, handleModifyConfirm, commentNo);
-      }) 
+      })
+    } else {
+      alert("댓글 내용을 입력해주세요.");
+    }
   }
 
   const handleDeleteComment = (commentNo: number) => {
