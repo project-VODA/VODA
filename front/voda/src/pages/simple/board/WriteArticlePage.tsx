@@ -53,13 +53,15 @@ const SimpleWriteArticle = () => {
   }
 
   const handleRegist = () => {
-    registArticle(articleData)
-      .then((res) => {
-        RedirectListPage();
-      })
-      .catch((err) => {
-        errorHandlers(err.response, handleRegist);
-      })
+    if(articleData.articleTitle.length !== 0 || articleData.articleContent.length !== 0){
+      registArticle(articleData)
+        .then((res) => {
+          RedirectListPage();
+        })
+        .catch((err) => {
+          errorHandlers(err.response, handleRegist);
+        })
+    }
   }
 
   const navigate = useNavigate();
