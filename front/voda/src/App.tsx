@@ -2,14 +2,14 @@
 
 import React, { createContext } from 'react';
 // import { RootState } from './store/reducers'; // 가정: RootState는 redux store의 전체 상태 타입입니다.
-import { BrowserRouter as Router, Route, Routes, Navigate, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 
 // redux
 //import { useAppDispatch, useAppSelector } from "./constants/types";
-import { axiosInstance } from "./apis/instance";
-import {
-  updateAccessToken, updateLoginStatus,
-} from "./store/authReducer";
+// import { axiosInstance } from "./apis/instance";
+// import {
+//   updateAccessToken, updateLoginStatus,
+// } from "./store/authReducer";
 
 
 // import Navbar from './components/Navbar';
@@ -52,17 +52,17 @@ import FaceTest from './pages/detail/FaceTest';
 
 // 스타일 & 모드(mode)
 import { GlobalStyle } from './styles/global-styles';
-import { SimpleTheme, DetailTheme, Theme } from './styles/theme';
+import { SimpleTheme, Theme } from './styles/theme';
 import { useMode } from './hooks/useMode';
 
 import ModeToggle from './components/ModeToggle';
 import DetailWriteArticle from './pages/detail/board/WriteArticlePage';
 import { styled } from 'styled-components';
-import simpleLogo from "./assets/images/logo_yellow.png";
+// import simpleLogo from "./assets/images/logo_yellow.png";
 import ErrorPage from './pages/ErrorPage';
-import { UserInfoType, UserSettingType } from './store/userSlice';
-import { useSelector } from 'react-redux';
-import { RootState } from './store/store';
+// import { UserInfoType, UserSettingType } from './store/userSlice';
+// import { useSelector } from 'react-redux';
+// import { RootState } from './store/store';
 import { useAppSelector } from './hooks/reduxHook';
 
 // 1) 다수의 props 발생 시 interface 설정
@@ -80,10 +80,10 @@ export const ThemeContext = createContext<ContextProps>({
   },
 });
 
-const LogoImage = styled.img`
-  width: 120px;
-  height: auto;
-`;
+// const LogoImage = styled.img`
+//   width: 120px;
+//   height: auto;
+// `;
 
 // 화면 사이즈 조정
 const AppContainer = styled.div`

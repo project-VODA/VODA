@@ -59,7 +59,7 @@ export default function OvVideoComponent(props) {
       analyzeExpression(expressionDataRef.current);
 
       // console.log(expressionDataRef.current)
-    }, 100); // 0.1초 대기
+    }, 10); // 0.1초 대기
   };
 
 

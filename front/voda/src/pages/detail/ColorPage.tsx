@@ -174,27 +174,27 @@ const ColorPage = () => {
   };
 
   // 전체 캡쳐
-  function captureScreen() {
-    const video = videoRef.current;
-    const canvas = canvasRef.current;
+  // function captureScreen() {
+  //   const video = videoRef.current;
+  //   const canvas = canvasRef.current;
 
-    if (video && canvas) {
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
+  //   if (video && canvas) {
+  //     canvas.width = video.videoWidth;
+  //     canvas.height = video.videoHeight;
 
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  //     const ctx = canvas.getContext('2d');
+  //     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-      canvas.toBlob((blob: Blob | null) => {
-        if (blob) {
-          const formData = new FormData();
-          formData.append('image', blob);
-          setCapturedImage(URL.createObjectURL(blob));
-          getColor(formData);
-        }
-      });
-    }
-  }
+  //     canvas.toBlob((blob: Blob | null) => {
+  //       if (blob) {
+  //         const formData = new FormData();
+  //         formData.append('image', blob);
+  //         setCapturedImage(URL.createObjectURL(blob));
+  //         getColor(formData);
+  //       }
+  //     });
+  //   }
+  // }
 
   const captureLeftEye = async () => {
     const video = videoRef.current;

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams, Link  } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { getArticleDetail, updateArticle } from '../../../apis/board';
+// updateArticle
+import { getArticleDetail } from '../../../apis/board';
 
 import Title from '../../../components/Title';
 import Button from '../../../components/RegisterButton';

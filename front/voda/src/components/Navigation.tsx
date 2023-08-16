@@ -1,12 +1,13 @@
 // Navigation.tsx
-import { Link, useLocation, useNavigate } from "react-router-dom";
-//import { useAppSelector } from "../constants/types";
+import { Link, useNavigate } from "react-router-dom";
+// import { useAppSelector } from "../constants/types";
 
 // 로그인 관련
 // import { useAppSelector } from "../../constants/types";
 
 import styled from "styled-components";
-import { SimpleTheme, Theme } from "../styles/theme";
+// , Theme
+import { SimpleTheme } from "../styles/theme";
 
 import detailLogo from "../assets/images/logo_black.png";
 import { FiSettings } from "react-icons/fi";
@@ -14,12 +15,12 @@ import { HiUser, HiOutlineLogout } from "react-icons/hi";
 import { GrUserSettings, GrInfo, GrFormClose } from "react-icons/gr";
 import { FaBars, FaHeadphonesAlt, FaRegPaperPlane } from "react-icons/fa";
 import { LuPipette } from "react-icons/lu";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store/store";
-import { UserInfoType, userSliceLogout } from "../store/userSlice";
+// import { useDispatch, useSelector } from "react-redux";
+// import { RootState } from "../store/store";
+// import { UserInfoType, userSliceLogout } from "../store/userSlice";
 import { useState } from "react";
-import { logout } from "../apis/user";
-import { useAppDispatch, useAppSelector } from "../hooks/reduxHook";
+// import { logout } from "../apis/user";
+import { useAppSelector } from "../hooks/reduxHook";
 import useLogOut from "../hooks/useLogout";
 
 // KMJ 스타일 가이드에 대한 설명 - typescript styled-components
@@ -62,25 +63,25 @@ const NavContentContainer = styled.div`
   transition: all 0.5s ease-in-out;
 `;
 
-interface ColorProps {
-  color: string;
-}
+// interface ColorProps {
+//   color: string;
+// }
 
 const LogoImage = styled.img`
   width: 120px;
   height: auto;
 `;
 
-const TitleContainer = styled("header")<ColorProps>`
-  height: 100%;
-  font-size: 2rem;
-  font-weight: 900;
-  color: ${({ color }) => color};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.5s ease-in-out;
-`;
+// const TitleContainer = styled("header")<ColorProps>`
+//   height: 100%;
+//   font-size: 2rem;
+//   font-weight: 900;
+//   color: ${({ color }) => color};
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   transition: all 0.5s ease-in-out;
+// `;
 
 const InfoContainer = styled.div`
   position: relative;
@@ -284,7 +285,7 @@ export default function Navigation() {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const logout = useLogOut();
 
   const handleDropDownToggle = () => {
@@ -298,9 +299,9 @@ export default function Navigation() {
     }, 500);
   }
 
-  const RedirectHomePage = () => {
-    navigate("/")
-  }
+  // const RedirectHomePage = () => {
+  //   navigate("/")
+  // }
 
   const toAbout = () => {
     navigate("/about")
@@ -314,9 +315,9 @@ export default function Navigation() {
     navigate("/feedback")
   }
 
-  const toFace = () => {
-    navigate("/face-test")
-  }
+  // const toFace = () => {
+  //   navigate("/face-test")
+  // }
 
   const toHome = () => {
     navigate("/home")

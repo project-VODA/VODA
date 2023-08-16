@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
-import Button from "./SettingButton";
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../store/store';
-import { UserInfoType } from '../store/userSlice';
+// import Button from "./SettingButton";
+// import { useSelector, useDispatch } from 'react-redux';
+// import { RootState } from '../store/store';
+// import { UserInfoType } from '../store/userSlice';
 import { sendCalling } from '../apis/calling';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
@@ -11,8 +11,8 @@ import UserSearchList from "../components/UserSearchList";
 // import Button from "../components/SettingButton";
 import SmallRedButton from "../components/SmallRedBtn";
 
-import FriendPageButton from '../components/FriendPageBtn'
-import DeleteFriendButton from './SmallRedBtn'
+// import FriendPageButton from '../components/FriendPageBtn'
+// import DeleteFriendButton from './SmallRedBtn'
 
 // react-icons
 import { FiPhoneCall } from "react-icons/fi"
@@ -112,10 +112,10 @@ const FriendList = () => {
         console.log(res);
         const msg = res.data;
 
-        if(msg=="senderOn"){
+        if(msg === "senderOn"){
           setMsg("자신에게 걸려온 통화가 있는지 확인하세요");
           setIsMsgOpen(true);
-        } else if( msg=="receiverOn"){
+        } else if( msg === "receiverOn"){
           setMsg("상대방이 통화중입니다.");
           setIsMsgOpen(true);
         }else {

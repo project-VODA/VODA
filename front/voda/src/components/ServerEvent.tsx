@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store/store';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { RootState } from '../store/store';
 import { API_URL } from '../constants/url';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
@@ -8,13 +8,14 @@ import HandleButton from './HandleBtn';
 
 import { receiveCalling, rejectCalling } from '../apis/calling';
 
-import { callInfoType, updateCall, setIsRejectCall } from '../store/callSlice';
+// callInfoType, 
+import { updateCall, setIsRejectCall } from '../store/callSlice';
 import { styled } from 'styled-components';
 import AlarmAudio from './AlarmAudio';
 import { userSliceLogout } from '../store/userSlice';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHook';
 import useErrorHandlers from '../hooks/useError';
-import { error } from 'console';
+// import { error } from 'console';
 
 
 const ButtonContainer = styled.div`
@@ -62,7 +63,7 @@ export default function SseComponent() {
   let eventSource: EventSource = null;
 
   useEffect(() => {
-    if(userEmail == null || userEmail == ''){
+    if(userEmail === null || userEmail === ''){
       if(eventSource &&  eventSource.readyState !== eventSource.CLOSED){
         console.log("sse 연결 끊김");
         eventSource.close();
@@ -114,7 +115,7 @@ export default function SseComponent() {
     });
 
     return () => {
-      if(userEmail == null || userEmail == ''){
+      if(userEmail === null || userEmail === ''){
         if(eventSource &&  eventSource.readyState !== eventSource.CLOSED){
           console.log("sse 연결 끊김");
           eventSource.close();
