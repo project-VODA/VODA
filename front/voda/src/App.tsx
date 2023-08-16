@@ -1,5 +1,3 @@
-// App.tsx
-
 import React, { createContext } from 'react';
 // import { RootState } from './store/reducers'; // 가정: RootState는 redux store의 전체 상태 타입입니다.
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
@@ -12,7 +10,6 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-d
 // } from "./store/authReducer";
 
 
-// import Navbar from './components/Navbar';
 import Navigation from './components/Navigation';
 import LandingPage from './pages/LandingPage';
 import ServerEvent from './components/ServerEvent';
@@ -58,11 +55,7 @@ import { useMode } from './hooks/useMode';
 import ModeToggle from './components/ModeToggle';
 import DetailWriteArticle from './pages/detail/board/WriteArticlePage';
 import { styled } from 'styled-components';
-// import simpleLogo from "./assets/images/logo_yellow.png";
 import ErrorPage from './pages/ErrorPage';
-// import { UserInfoType, UserSettingType } from './store/userSlice';
-// import { useSelector } from 'react-redux';
-// import { RootState } from './store/store';
 import { useAppSelector } from './hooks/reduxHook';
 
 // 1) 다수의 props 발생 시 interface 설정
@@ -79,11 +72,6 @@ export const ThemeContext = createContext<ContextProps>({
     return null;
   },
 });
-
-// const LogoImage = styled.img`
-//   width: 120px;
-//   height: auto;
-// `;
 
 // 화면 사이즈 조정
 const AppContainer = styled.div`
@@ -119,13 +107,6 @@ const App: React.FC = () => {
     { path: isLogin ? '/modify/:articleNo' : '/', element: theme === SimpleTheme ? <SimpleModifyArticle/> : <SimpleModifyArticle/> },
     { path: '/error', element: <ErrorPage />},
     { path: '*', element: <Navigate replace to="/" /> },
-    
-    // { path: '/', element: screenMode === 'simple' ? <SimpleHomePage /> : <DetailHomePage /> },
-    // { path: '/about', element: screenMode === 'simple' ? <SimpleAbout /> : <DetailAbout /> },
-    // { path: '/login', element: screenMode === 'simple' ? <SimpleLogin /> : <DetailLogin /> },
-    // { path: '/mypage', element: screenMode === 'simple' ? <SimpleMyPage /> : <DetailMyPage /> },
-    // { path: '/video', element: screenMode === 'simple' ? <SimpleVideo /> : <DetailVideo /> },
-    // { path: '*', element: <Navigate replace to="/" /> },
   ];
 
   // screenMode에 따라서 SimplePage 또는 DetailPage를 렌더링합니다.
@@ -138,7 +119,7 @@ const App: React.FC = () => {
           {theme === SimpleTheme ? 
           <></> : 
           <Navigation />}
-          <ModeToggle />
+          {window.location.pathname !== '/video' && <ModeToggle />}
           <Routes>
             {commonRoutes.map((route) => (
               <Route key={route.path} path={route.path} element={<div style={{ marginTop:

@@ -1,4 +1,3 @@
-import { resourceLimits } from "worker_threads";
 import { SERVER_URL } from "../constants/url";
 import { axiosInstance } from "./instance";
 

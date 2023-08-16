@@ -1,5 +1,3 @@
-// components/Button.tsx
-
 import React, { useContext } from 'react';
 
 import styled from 'styled-components';
@@ -29,10 +27,6 @@ const DeleteButton = styled('button')<ThemeProps>`
     transition: all 0.1s ease-in-out;
   }
 `;
-  // color: '#ffffff';
-// border: 1px solid ${({ theme }) =>
-// theme === SimpleTheme ? '#ff0000' : '#003566'};
-
 
 export interface ButtonProps {
   text: string;

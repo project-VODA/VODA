@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ReactQuill from 'react-quill';
@@ -9,11 +9,7 @@ import { registArticle } from '../../../apis/board';
 import SimpleTitle from '../../../components/SimpleTitle';
 import Input from '../../../components/InputText';
 import RegistButton from '../../../components/RegisterButton';
-import { UserInfoType } from '../../../store/userSlice';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../store/store';
 import { Link } from "react-router-dom";
-import { useAppSelector } from '../../../hooks/reduxHook';
 import useErrorHandlers from '../../../hooks/useError';
 
 const StyledLink = styled(Link)`

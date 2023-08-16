@@ -1,6 +1,3 @@
-// HandleBtn.tsx
-// NavButton 스타일 따옴
-
 import React, { useContext } from 'react';
 
 import styled from 'styled-components';

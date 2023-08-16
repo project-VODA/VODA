@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from 'react';
-// import { deleteFriend, getFriendList } from '../apis/friend';
 
 import Button from "./SettingButton";
 import Modal from 'react-modal';
 import SmallRedButton from '../components/SmallRedBtn'
 import { getRecentCallList, sendCalling } from '../apis/calling';
-// import { userInfo } from 'os';
-// import { UserInfoType } from '../store/userSlice';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { RootState } from '../store/store';
 import { useNavigate } from 'react-router-dom';
 
 import { updateCall } from "../store/callSlice";
+import '../styles/detail/DetailWaitingPage.css'
 
 // react-icons
 import { FiPhoneCall } from "react-icons/fi"
-import '../styles/detail/DetailWaitingPage.css'
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHook';
 import useErrorHandlers from '../hooks/useError';
 
@@ -112,7 +107,6 @@ const RecentCalls = () => {
           callHistoryList.map((callHistory: CallHistory) => (
             <tr key={callHistory.startTime}  style={{ paddingLeft: '5vw', fontSize: '1.4vw' }}>
               <td>{callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverName : callHistory.senderName}</td>
-              {/* <td text-align='center'>{callHistory.startTime}</td> */}
               <td>
                 {callHistory.startTime !== null ? callHistory.startTime : '시작 시간 없음'}
               </td>
@@ -177,13 +171,13 @@ const RecentCalls = () => {
         style={{
           content: {
             backgroundColor: localStorage.getItem('theme') === 'detail' ? 'white' : '#001d3d',
-            width: '400px', // Adjust the width as needed
-            height: '300px', // Adjust the height as needed
-            margin: 'auto', // Center the modal
-            display: 'flex', // Flex container
-            flexDirection: 'column', // Stack content vertically
-            justifyContent: 'center', // Center horizontally
-            alignItems: 'center', // Center vertically
+            width: '400px',
+            height: '300px',
+            margin: 'auto',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
           }
         }}
         shouldCloseOnOverlayClick={false}

@@ -5,8 +5,6 @@ const authReducer = createSlice({
   initialState: {
     isLogin: false,
     accessToken: "",
-    // routeHistory: "",
-    // openLoginModal: false,
   },
   reducers: {
     login: (state, action) => {
@@ -19,12 +17,6 @@ const authReducer = createSlice({
     updateLoginStatus: (state, action: PayloadAction<boolean>) => {
       state.isLogin = action.payload;
     },
-    // updateRouteHistory: (state, action: PayloadAction<string>) => {
-    //   state.routeHistory = action.payload;
-    // },
-    // updateOpenLoginModal: (state, action: PayloadAction<boolean>) => {
-    //   state.openLoginModal = action.payload;
-    // },
   },
 });
 
@@ -32,7 +24,5 @@ export const {
   login,
   updateLoginStatus,
   updateAccessToken,
-  // updateRouteHistory,
-  // updateOpenLoginModal,
 } = authReducer.actions;
 export default authReducer;

@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
-// import SimpleTitle from '../../components/SimpleTitle';
 import Input from '../../components/InputText';
 import SettingButton from '../../components/SettingButton';
 import DeleteButton from '../../components/DeleteButton';
 import CheckBox from '../../components/CheckBox';
 import { cancelUser, changePassword, getUserInfo, logout, updateUserInfo } from '../../apis/user';
 import Info from '../../components/InfoText';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
-import { UserInfoType, updateUserName, userSliceLogout } from '../../store/userSlice';
+import { updateUserName, } from '../../store/userSlice';
 import { Link } from "react-router-dom";
-// import DetailLogo from "../../assets/images/logo_black.png"
 import DetailLogo from "../../components/DetailLogo"
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHook';
 import useErrorHandlers from '../../hooks/useError';
@@ -24,8 +20,6 @@ text-decoration: none;
 color: inherit;
 `;
 
-
-
 const ButtonContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -33,7 +27,6 @@ const ButtonContainer = styled.div`
   align-items: center;
   text-align: center;
 `;
-
 
 const DetailMyPage = () => {
   // redux에서 저장된 정보 가져오기

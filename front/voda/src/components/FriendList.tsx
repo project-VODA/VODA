@@ -1,18 +1,9 @@
 import React, { useEffect, useState } from 'react';
-
-// import Button from "./SettingButton";
-// import { useSelector, useDispatch } from 'react-redux';
-// import { RootState } from '../store/store';
-// import { UserInfoType } from '../store/userSlice';
 import { sendCalling } from '../apis/calling';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import UserSearchList from "../components/UserSearchList";
-// import Button from "../components/SettingButton";
 import SmallRedButton from "../components/SmallRedBtn";
-
-// import FriendPageButton from '../components/FriendPageBtn'
-// import DeleteFriendButton from './SmallRedBtn'
 
 // react-icons
 import { FiPhoneCall } from "react-icons/fi"
@@ -50,19 +41,6 @@ const FriendList = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  // 모달 닫힐 때 친구 목록 갱신 필요, 리덕스 이용해야 함.. 
-  // isModalOpen을 FriendList 컴포넌트로 넘기는 식이 이상적일듯
-
-  // useEffect(() => {
-  //   getFriendList(sessionStorage.getItem("userEmail"))
-  //         .then((res: FriendsList) => {
-  //           setFriendList(res);
-  //         })
-  //         .catch((err) => {
-  //           console.log(err);
-  //         })
-  // }, [isModalOpen])
 
   // redux에서 저장된 정보 가져오기
   const userInfo = useAppSelector((state) => state.user.userInfo);
@@ -145,15 +123,13 @@ const FriendList = () => {
       style={{     
         content: {
           backgroundColor: "#f0f0f0",
-          width: "80vw", // 원하는 너비로 조정
-          maxWidth: "unset", // 최대 너비 제거
-          margin: "0 auto", // 가운데 정렬
-          border: "none", // 테두리 제거
-          padding: "20px", // 내부 패딩
-          // overflowX: "hidden",
+          width: "80vw",
+          maxWidth: "unset",
+          margin: "0 auto",
+          border: "none",
+          padding: "20px",
           overflowX: isMobile ? "auto" : "hidden",
-          // 가로 스크롤 1500(전체화면 기준 내용이 가려지는 크기) 이하에는 스크롤 생기게
-          overflowY: "auto", // 세로 스크롤 유지
+          overflowY: "auto",
         }
       }}
     >
@@ -212,13 +188,13 @@ const FriendList = () => {
         style={{
           content: {
             backgroundColor: localStorage.getItem('theme') === 'detail' ? 'white' : '#001d3d',
-            width: '400px', // Adjust the width as needed
-            height: '300px', // Adjust the height as needed
-            margin: 'auto', // Center the modal
-            display: 'flex', // Flex container
-            flexDirection: 'column', // Stack content vertically
-            justifyContent: 'center', // Center horizontally
-            alignItems: 'center', // Center vertically
+            width: '400px',
+            height: '300px',
+            margin: 'auto',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
           }
         }}
         shouldCloseOnOverlayClick={false}

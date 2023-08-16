@@ -1,5 +1,3 @@
-// components/Title.tsx
-
 import React, { useContext } from 'react';
 
 import styled from 'styled-components';
@@ -47,7 +45,6 @@ interface TitleProps {
   imgSrc?: string;
   onClick?: string;
   tabIndex?: number;
-  // to?: string;
 }
 
 

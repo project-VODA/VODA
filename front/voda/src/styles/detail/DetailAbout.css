@@ -12,12 +12,10 @@ height: 521px;
 left: 128px;
 top: 233px;
 
-/* background: url(logo_black.png); */
 border: 1px solid #000000;
 box-shadow: inset 0px 4px 4px #000000;
 filter: blur(15px);
 backdrop-filter: blur(10px);
-/* Note: backdrop-filter has minimal browser support */
 }
 
 /* “ 표정을 소리로 보다 ” */

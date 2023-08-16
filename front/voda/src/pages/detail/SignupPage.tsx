@@ -11,7 +11,6 @@ import Info from '../../components/InfoText';
 import { sendAuthenticationCode } from '../../apis/email';
 import useErrorHandlers from '../../hooks/useError';
 
-// import DetailLogo from '../../assets/images/logo_black.png'
 import '../../styles/detail/AgreementContainer.css'
 
 import SimpleTitle from '../../components/SimpleTitle';

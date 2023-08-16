@@ -1,5 +1,4 @@
 import { useState } from 'react';
-// import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
 import SimpleTitle from '../../components/SimpleTitle';
@@ -9,7 +8,6 @@ import { Link } from "react-router-dom";
 
 import '../../styles/simple/EnvSettingPage.css'
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHook';
-// import useLogOut from '../../hooks/useLogout';
 import useErrorHandlers from '../../hooks/useError';
 import { updateSliceUserSetting } from '../../store/userSlice';
 
@@ -39,8 +37,6 @@ const SimpleEnvSettingPage = () => {
     usersettingScreenType: screenMode,
   };
 
-  // const naviagte = useNavigate();
-  // const logout = useLogOut();
   const dispatch = useAppDispatch();
   const errorHandlers = useErrorHandlers();
 

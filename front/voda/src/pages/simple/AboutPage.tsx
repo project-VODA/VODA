@@ -2,10 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-// import Title from '../../components/Title';
-
 import '../../styles/simple/About.css'
-// import SimpleLogo from '../../assets/images/logo_yellow.png'
 import SimpleLogoSqr from '../../assets/images/logo_yellow_sqr.png'
 import SimpleTitle from "../../components/SimpleTitle";
 
@@ -32,7 +29,6 @@ const SimpleAbout = () => {
             Assistance <br/>
               <div className="aboutSlogan" aria-label="세상을 소리로 보다" tabIndex={5}><img className="SqrLogo" src={SimpleLogoSqr} alt="VODA 로고" aria-label="보다 로고"/>
               세상을 "소리"로 보다.
-            {/* <img src={SimpleLogo} alt="VODA 로고" aria-label="보다 로고" /> */}
             </div>
           
         </p>

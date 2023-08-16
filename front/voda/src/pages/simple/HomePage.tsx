@@ -1,15 +1,11 @@
-import React , { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import SimpleTitle from '../../components/SimpleTitle';
 import HandleButton from '../../components/HandleBtn';
-import { redirectKakao, logout } from '../../apis/user';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
-import { userSliceLogout } from '../../store/userSlice';
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHook';
+import { useAppSelector } from '../../hooks/reduxHook';
 import useLogOut from '../../hooks/useLogout';
 
 const StyledLink = styled(Link)`
@@ -28,18 +24,17 @@ const ButtonContainer = styled.div`
 const SimpleHomePage = () => {
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const logout = useLogOut();
   const isLogin = useAppSelector((state) => state.user.isLogin);
 
-  const RedirectSocialLogin = () => {
-    navigate('/social-login');
-  };
+  // const RedirectSocialLogin = () => {
+  //   navigate('/social-login');
+  // };
 
-  const handleSocialLogin = () => {
-    // navigate('/social-login');
-    redirectKakao();
-  };
+  // const handleSocialLogin = () => {
+  //   // navigate('/social-login');
+  //   redirectKakao();
+  // };
 
   const redirectAbout = () => {
     navigate('/about')
@@ -47,7 +42,6 @@ const SimpleHomePage = () => {
 
   const redirectVideo = () => {
     navigate('/waiting')
-    // navigate('/video')
   };
 
   const redirectMyPage = () => {
@@ -62,17 +56,11 @@ const SimpleHomePage = () => {
     navigate('/feedback')
   };
 
-  const redirectEnvPage = () => {
-    navigate('/setting')
-  };
 
   const redirectColor = () => {
     navigate('/color')
   }
 
-  const RedirectHomePage = () => {
-    navigate('/');
-  };
   
   //로그인 여부 확인
   //const accessToken = sessionStorage.getItem("accessToken");

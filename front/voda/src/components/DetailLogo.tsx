@@ -1,5 +1,3 @@
-// components/Title.tsx
-
 import React, { useContext } from 'react';
 
 import styled from 'styled-components';
@@ -7,8 +5,6 @@ import { ThemeContext } from '../App';
 import DetailLogo from '../assets/images/logo_black.png'
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-
-import LandingPage from '../pages/LandingPage';
 
 interface ColorProps {
   color: string;

@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import { SimpleTheme, DetailTheme, Theme } from '../styles/theme';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
 import { useAppSelector } from './reduxHook';
 
 export const useMode = () => {
