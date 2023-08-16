@@ -687,7 +687,13 @@ class VideoRoomComponent extends Component {
         { theme === 'simple' ? (
         <div id="layout" className="simplebounds">
           {this.state.subscribers.map((sub, i) => (
-            <div key={i} className="OT_root OT_subscriber custom-class" id="remoteUsers">
+            <div key={i}
+              className="OT_root OT_subscriber custom-class" 
+              id="remoteUsers"
+              // style={{ 
+              //   transform: 'rotateY(180deg)',
+              //   WebkitTransform: 'rotateY(180deg)', }}
+                >
               <StreamComponent user={sub} streamId={sub.streamManager.stream.streamId} />
             </div>
           ))}
