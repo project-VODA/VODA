@@ -1,5 +1,5 @@
 import {useEffect, useRef} from 'react'
-import alarmSound from '../assets/sounds/alarm.mp3';
+import alarmSound from '../assets/sounds/Galaxy_Bells.mp3';
 
 export default function AlarmAudio(props: {playing: boolean}){
   const audioRef = useRef(null);
