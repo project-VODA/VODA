@@ -63,7 +63,7 @@ const SimpleModifyArticle = () => {
   }
 
   const handleUpdate = () => {
-    if(articleUpdateRequest.articleTitle.length !== 0 || articleUpdateRequest.articleContent.length !== 0) {
+    if(articleUpdateRequest.articleTitle && articleUpdateRequest.articleContent) {
       updateArticle(articleUpdateRequest)
         .then((res) => {
           navigate(`/view/${articleNo}`);

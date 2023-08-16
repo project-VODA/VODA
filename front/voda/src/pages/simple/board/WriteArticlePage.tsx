@@ -53,7 +53,7 @@ const SimpleWriteArticle = () => {
   };
 
   const handleRegist = () => {
-    if(articleData.articleTitle.length !== 0 || articleData.articleContent.length !== 0) {
+    if(articleData.articleTitle && articleData.articleContent) {
       registArticle(articleData)
         .then((res) => {
           RedirectListPage();
