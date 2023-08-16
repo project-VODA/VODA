@@ -81,7 +81,7 @@ if (localStorage.getItem('theme') === 'simple')
     <HeaderField>
       <LeftSpanField>글번호 - {articleNo}</LeftSpanField>
       <RightSpanField>작성일자 - {articleRegDate}</RightSpanField>
-      { userInfo.role === "1" || userInfo.userEmail === userEmail ? 
+      { userInfo.role == "1" || userInfo.userEmail === userEmail ? 
       <ButtonsContainer>
         <YellowButton text='수정' onClick={(e) => navigate(`/modify/${articleNo}`)} />
         <RedButton style={{ width: '60px' }} text='삭제' onClick={handleDeleteArticle} />
@@ -96,7 +96,7 @@ if (localStorage.getItem('theme') === 'simple')
     <HeaderField>
       <LeftSpanField>글번호 - {articleNo}</LeftSpanField>
       <RightSpanField>작성일자 - {articleRegDate}</RightSpanField>
-      { userInfo.role === "1" || userInfo.userEmail === userEmail ? 
+      { userInfo.role == "1" || userInfo.userEmail === userEmail ? 
         <ButtonsContainer>
           <AiFillEdit style={{ fontSize: '2.2vw' }} onClick={(e) => navigate(`/modify/${articleNo}`)} />
           <RiDeleteBin6Line style={{ fontSize: '2.2vw', marginLeft: '20px' }} onClick={handleDeleteArticle} />
