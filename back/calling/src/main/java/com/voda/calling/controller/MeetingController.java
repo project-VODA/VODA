@@ -111,7 +111,6 @@ public class MeetingController {
     public ResponseEntity<String> receiveMeeting(@PathVariable int callNo)  {
         //이메일과 세션ID를 넘겨주면
         int currentCallNo = callNo;
-        String receiverSessionToken;
 
         CallHistory currentCall = callHistoryService.getCallHistory(currentCallNo);
 
@@ -178,43 +177,5 @@ public class MeetingController {
         return new ResponseEntity<>(REJECT, HttpStatus.OK);
     }
 
-
-    /**
-     * @param params The Session properties
-     * @return The Session ID
-     */
-    // session을 만드는 함수
-//    @PostMapping("/sessions")
-//    public ResponseEntity<String> initializeSession(@RequestBody(required = false) Map<String, Object> params)
-//            throws OpenViduJavaClientException, OpenViduHttpException {
-//        SessionProperties properties = SessionProperties.fromJson(params).build();
-//        Session session = openVidu.createSession(properties);
-//        return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
-//    }
-//
-//    /**
-//     * @param sessionId The Session in which to create the Connection
-//     * @param params    The Connection properties
-//     * @return The Token associated to the Connection
-//     */
-//    // sessionId에 맞는 session의 토큰을 얻는 함수
-//    @PostMapping("/sessions/{sessionId}/connections")
-//    public ResponseEntity<String> createConnection(@PathVariable("sessionId") String sessionId,
-//                                                   @RequestBody(required = false) Map<String, Object> params)
-//            throws OpenViduJavaClientException, OpenViduHttpException {
-//        Session session = openVidu.getActiveSession(sessionId);
-//        if (session == null) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//        ConnectionProperties properties = ConnectionProperties.fromJson(params).build();
-////        log.info(properties.getData());
-////        log.info(properties.getRtspUri());
-////        log.info(properties.getKurentoOptions().toString());
-////        log.info(String.valueOf(properties.getRole()));
-////        log.info(properties.getNetworkCache().toString());
-//        Connection connection = session.createConnection(properties);
-//        log.info(connection.getToken());
-//        return new ResponseEntity<>(connection.getToken(), HttpStatus.OK);
-//    }
 
 }
