@@ -30,8 +30,8 @@ const SimpleAbout = () => {
             Over <br/>
             Diverse <br/>
             Assistance <br/>
-              <div className="aboutSlogan" aria-label="표정을 소리로 보다" tabIndex={5}><img className="SqrLogo" src={SimpleLogoSqr} alt="VODA 로고" aria-label="보다 로고"/>
-              "표정"을 "소리"로 보다.
+              <div className="aboutSlogan" aria-label="세상을 소리로 보다" tabIndex={5}><img className="SqrLogo" src={SimpleLogoSqr} alt="VODA 로고" aria-label="보다 로고"/>
+              세상을 "소리"로 보다.
             {/* <img src={SimpleLogo} alt="VODA 로고" aria-label="보다 로고" /> */}
             </div>
           
@@ -39,8 +39,8 @@ const SimpleAbout = () => {
         <div className="ourService">
           <p
             tabIndex={6} 
-            aria-label="표정을 소리로 보다 + Voice Over Diverse Assistance 라는 의미의 VODA는 시각장애인과 비장애인의 영상 통화를 돕기위한 표정 알림 서비스와 화장품(물건)의 색상을 음성으로 알려주는 색상 인식 서비스를 제공합니다.">
-              표정을 소리로 보다 + Voice Over Diverse Assistance 라는 의미의 VODA는 시각장애인과 비장애인의 영상 통화를 돕기위한 표정 알림<br/> 서비스와 화장품(물건)의 색상을 음성으로 알려주는 색상 인식 서비스를 제공합니다.
+            aria-label="세상을 소리로 보다 + Voice Over Diverse Assistance 라는 의미의 VODA는 시각장애인과 비장애인의 영상 통화를 돕기위한 표정 알림 서비스와 화장품(물건)의 색상을 음성으로 알려주는 색상 인식 서비스를 제공합니다.">
+              세상을 소리로 보다 + Voice Over Diverse Assistance 라는 의미의 VODA는 시각장애인과 비장애인의 영상 통화를 돕기위한 표정 알림<br/> 서비스와 화장품(물건)의 색상을 음성으로 알려주는 색상 인식 서비스를 제공합니다.
           </p>
           <p style={{ fontWeight:'bold', margin: '50px 0px', fontSize:'30px'}}
             tabIndex={7}
