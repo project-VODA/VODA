@@ -1,6 +1,7 @@
-package com.voda.calling.repository;
+package com.voda.calling.repository.custom;
 
 import com.voda.calling.model.dto.CallNotification;
+import com.voda.calling.repository.SseRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 
 @Repository
 @Slf4j
-public class SseRepositoryImpl implements SseRepository{
+public class SseRepositoryImpl implements SseRepository {
     private final Map<String, SseEmitter> emitters = new ConcurrentHashMap<>();
     private final Map<String, CallNotification> eventCache = new ConcurrentHashMap<>();
 
