@@ -50,8 +50,4 @@ public class CronService {
 
     }
 
-//    @Scheduled(cron = "0/5 * * * * *")
-//    public void crontest() {
-//        System.out.println(LocalDateTime.now());
-//    }
 }
