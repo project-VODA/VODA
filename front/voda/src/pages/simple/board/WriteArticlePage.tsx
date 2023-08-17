@@ -89,6 +89,7 @@ const SimpleWriteArticle = () => {
           value={content}
           onChange={setContent}
           placeholder="건의하고 싶은 내용을 자세히 입력해주세요"
+          aria-label="글 작성시에 사용할 수 있는 버튼이 11개 준비되어 있습니다. 순서에 따라 H1크기, H2크기, 순서 매기기, 리스트로 정렬하기, 볼드체, 이탤릭체, 밑줄, 글자색, 배경색, 링크, 초기화 버튼입니다."
           modules={{
             toolbar: [
               [ { 'header': '1', 'aria-label': 'H1 글자 크기' },
