@@ -1,13 +1,17 @@
 /* simple signup 페이지와 simple login 페이지의 중앙 배치를 위한 id=RegisterContainer css입니다. */
 
 #AgreementContainer {
-  margin: 3.8% 30% 0% 30%;
-  width:40%;
-  height:500px;
-  overflow:auto;  
+  /* margin: 3.8% 30% 30% 30%; */
+  top: 0;
+  left: 0;
+  width:70%;
+  /* height:100px; */
   border:1px solid #FFC300;
-  border-radius: 10px;
-  
+  /* border-radius: 10px; */
+  /* justify-content: center; */
+  /* display: flex;
+  flex-direction: column; */
+  transform: translate(23%, 0%);
 }
 
 #context1 {

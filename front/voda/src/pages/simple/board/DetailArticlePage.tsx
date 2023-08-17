@@ -65,11 +65,11 @@ const SimpleDetailArticle = () => {
           <ItemContainer tabIndex={0}>
               {/* 게시글 header */}
               {/* <StyledLink to='' aria-label={`${detailBoardData.articleNo}번째 글, 작성일시 ${detailBoardData.articleRegTime}`}> */}
-            <ArticleHeader tabIndex={1} userEmail={detailBoardData.userEmail} articleNo={detailBoardData.articleNo} articleRegDate={detailBoardData.articleRegTime} aria-label={`${detailBoardData.articleNo}번째 글, 작성일시 ${detailBoardData.articleRegTime}`}/>
+            <ArticleHeader tabIndex={0} userEmail={detailBoardData.userEmail} articleNo={detailBoardData.articleNo} articleRegDate={detailBoardData.articleRegTime} aria-label={`${detailBoardData.articleNo}번째 글, 작성일시 ${detailBoardData.articleRegTime}`}/>
               {/* </StyledLink> */}
               {/* 게시글 content */}
               {/* <StyledLink to='' aria-label={`게시글 내용, ${detailBoardData.articleTitle}`}> */}
-            <ArticleContent tabIndex={2} articleContent={detailBoardData.articleContent} aria-label={`게시글 내용, ${detailBoardData.articleContent}`}/>
+            <ArticleContent tabIndex={0} articleContent={detailBoardData.articleContent} aria-label={`게시글 내용, ${detailBoardData.articleContent}`}/>
               {/* </StyledLink> */}
             {/* <CommentContent></CommentContent> */}
             <CommentList articleNo={articleNo} />
