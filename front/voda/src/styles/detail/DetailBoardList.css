@@ -1,0 +1,18 @@
+.DetailBoardList {
+  justify-content: center;
+  width: 75vw;
+}
+
+.DetailBoardthead th{
+  font-size: 1.8vw !important;
+}
+
+
+.DetailBoardTable th, .DetailBoardTable td {
+  padding: 10px;
+  padding-top: 25px;
+  text-align: center;
+  font-size: 1.4vw;
+  justify-content: center;
+  width: 82vw;
+}

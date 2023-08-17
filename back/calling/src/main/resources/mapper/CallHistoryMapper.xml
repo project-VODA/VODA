@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.voda.calling.mapper.CallHistoryMapper">
+
+    <select id="findRecentCall" parameterType="String" resultType="Map">
+        SELECT user1.user_email as senderEmail, user1.user_name as senderName, user2.user_email as receiverEmail, user2.user_name as receiverName,
+               MAX(callhistory.call_no) AS recent_call_no,
+               DATE_FORMAT(MAX(callhistory.call_starttime), '%Y-%m-%d %H:%i:%s') AS call_starttime,
+               DATE_FORMAT(MAX(callhistory.call_endtime), '%Y-%m-%d %H:%i:%s') AS call_endtime
+        FROM
+            callhistory
+        JOIN
+            users AS user1 ON user1.user_email = callhistory.call_sender
+        JOIN
+            users AS user2 ON user2.user_email = callhistory.call_receiver
+        WHERE
+            callhistory.call_status = 2
+            AND (callhistory.call_sender = #{userEmail} OR callhistory.call_receiver = #{userEmail} )
+        GROUP BY
+            user1.user_email,
+            user1.user_name,
+            user2.user_email,
+            user2.user_name
+        ORDER BY
+            recent_call_no DESC
+    </select>
+
+</mapper>

@@ -1,0 +1,35 @@
+#customModalContainer {
+  width: '150%';
+  height: '150%';
+  overflow: hidden;
+}
+
+#customModal {
+  max-width: 1500px !important;
+  min-width: 20px;
+  min-height: 550px;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+#FriendContainer td {
+  padding: 0px 4vw 3%; 
+  font-size: 1.54vw;
+}
+
+.callButton {
+  width: 8vw !important;
+}
+
+.delButton {
+  width: 8vw !important;
+}
+
+.addButton {
+  width: 8vw !important;
+}
+
+.exitButton {
+  display: inline-block;
+}

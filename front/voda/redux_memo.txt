@@ -1,0 +1,23 @@
+1. redux 설치
+2. store 생성 -> actions, index, reducers.ts
+	L actions -> reducers
+3. app 에서 provider 컴포넌트 생성
+ & redux store 제공
+
+4. 컴포넌트에서 redux 사용, connect 함수 사용
+	L 
+
+VODA
+  ├─ public/
+  ├─ src/
+  │   ├── components/
+  │   │   └── Navbar.tsx
+  │   ├── pages/
+  │   │   ├── SimplePage.tsx
+  │   │   └── DetailPage.tsx
+  │   └─ store/
+  │          ├── actions.ts
+  │          ├── reducers.ts
+  │          └── index.ts
+  ├─── App.tsx
+  └─── ...

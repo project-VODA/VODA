@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2"
+             xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+    <!--  EntityManagerFactory 생성 시 사용되는 persistence name -->
+    <persistence-unit name="persistence">
+        <properties>
+            <!-- 필수 속성 -->
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.user" value="ssafy77"/>
+            <property name="javax.persistence.jdbc.password" value="ssafy77"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/voda"/>
+
+            <!-- 하이버네이트 사용 시 다른 DB에서 MySQL 문법을 사용 가능하도록 변경.-->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
+            <!-- 콘솔에 SQL 출력 여부 -->
+            <property name="hibernate.show_sql" value="true"/>
+            <!-- 가독성 높여주는 formatting 여부 -->
+            <property name="hibernate.format_sql" value="true"/>
+            <!-- Comment 확인 여부 -->
+            <property name="hibernate.use_sql_comments" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>
