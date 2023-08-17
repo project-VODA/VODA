@@ -26,6 +26,10 @@ const DeleteButton = styled('button')<ThemeProps>`
   &:hover {
     transition: all 0.1s ease-in-out;
   }
+
+  @media (max-width: 768px) {
+    width: 80%; /* 또는 원하는 크기로 지정 */
+  }
 `;
 
 export interface ButtonProps {
