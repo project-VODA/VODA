@@ -1,0 +1,99 @@
+#toolbar-simple-theme {
+  color: #ffffff;
+  height: 40px;
+  background-color: #001d3d;
+  padding: 0;
+  position: fixed;
+  top: 83%;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  min-width: 400px !important;
+  box-shadow: none !important;
+  /* margin-top: 120px; */
+}
+
+#toolbar-detail-theme {
+  color: #ffffff;
+  height: 40px;
+  background-color: #ffffff;
+  padding: 0;
+  position: fixed;
+  top: 83%;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  min-width: 400px !important;
+  box-shadow: none !important;
+  /* margin-top: 120px; */
+}
+
+.toolbar{
+  padding: 0 !important;
+}
+
+#navSessionInfo {
+  position: absolute;
+}
+
+#navButtons {
+  position: absolute;
+  left: 0;
+  right: 0;
+  min-width: 400px;
+}
+#navChatButton {
+  position: absolute;
+  right: 10px;
+  top: 0;
+}
+
+#titleContent{
+  max-width: 100px;
+  background-color: #494949;
+  margin: 5px -18px;
+  padding: 0px 15px;
+  font-size: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  float: right;
+  margin-top: 20px;
+}
+  
+.titleContentLight{
+  background-color: #dfdfdf !important; 
+  color: #000;
+}
+
+#header_img {
+  max-width: 135px;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+#session-title{
+  font-family: 'Koddi'; 
+}
+
+
+#point{
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 12px;
+  right: 33px;
+  border-radius: 50%;
+  background-color: #ffa600;
+  border: 1px solid #000;
+  z-index: 99999;
+}
+
+.pointLight{
+  border: 1px solid #ffffff !important;
+}
+
+@media only screen and (max-width: 700px) {
+  #titleContent, #navChatButton {
+      display: none;
+  }
+}
