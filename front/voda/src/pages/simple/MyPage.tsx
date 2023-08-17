@@ -28,6 +28,10 @@ const ButtonContainer = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 
