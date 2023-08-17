@@ -1,6 +1,11 @@
+# :ear: VODA 
+**V oice-**   
+**O ver**   
+**D iverse**   
+**A ssistance**  
+<br/> <br/>   
 
-
-# :heart 역할
+# :heart: 역할
 
 |  |  Main | Sub | JIRA 관리자 |
 | --- | --- | --- | --- |
