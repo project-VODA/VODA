@@ -703,8 +703,12 @@ class VideoRoomComponent extends Component {
         </div>) : (
           <div id="layout" className="detailbounds">
           {this.state.subscribers.map((sub, i) => (
-            <div key={i} className="OT_root OT_subscriber custom-class" id="remoteUsers">
-              <StreamComponent user={sub} streamId={sub.streamManager.stream.streamId} />
+            <div key={i} className="OT_root OT_subscriber custom-class" id="remoteUsers"
+            style={{
+              transform: 'rotateY(180deg)',
+              WebkitTransform: 'rotateY(180deg)', 
+            }}>
+              <StreamComponent user={suFb} streamId={sub.streamManager.stream.streamId} />
             </div>
           ))}
           {localUser !== undefined && localUser.getStreamManager() !== undefined && (
