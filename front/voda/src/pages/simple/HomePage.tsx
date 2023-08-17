@@ -73,16 +73,16 @@ const SimpleHomePage = () => {
       <ButtonContainer>
         <HandleButton tabIndex={1} text='서비스 소개' onClick={redirectAbout} />
         <HandleButton tabIndex={2} text='영상통화' onClick={redirectVideo} />
-        <HandleButton tabIndex={3} text="고객의 소리함" onClick={redirectFeedback} />
-        <HandleButton tabIndex={4}text='마이 페이지' onClick={redirectMyPage} />
+        <HandleButton tabIndex={3} text="색상 인식" onClick={redirectColor} />
+        <HandleButton tabIndex={4} text="고객의 소리함" onClick={redirectFeedback} />
         {/* <HandleButton text='redirect' onClick={RedirectSocialLogin} /> */}
         {/* <HandleButton text='카카오 로그인' onClick={handleSocialLogin} /> */}
-        <HandleButton text="색상 인식" onClick={redirectColor} />
+        <HandleButton tabIndex={5}text='마이 페이지' onClick={redirectMyPage} />
         {/* 로그인 유저 존재 여부에 따라 버튼 렌더링 */}
         {isLogin ? (
-          <HandleButton tabIndex={5} text="로그아웃" onClick={logout} />
+          <HandleButton tabIndex={6} text="로그아웃" onClick={logout} />
           ) : (
-          <HandleButton tabIndex={5} text="로그인" onClick={redirectLogin} />
+          <HandleButton tabIndex={6} text="로그인" onClick={redirectLogin} />
         )}
       </ButtonContainer>
     </>
