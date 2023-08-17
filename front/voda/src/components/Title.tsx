@@ -25,6 +25,7 @@ interface TitleProps {
   title: string;
   className?: string;
   'aria-label'?: string;
+  tabIndex?: number;
 }
 
 export default function Title({ title, 'aria-label':ariaLabel }: TitleProps) {
