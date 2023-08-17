@@ -58,9 +58,10 @@ interface HeaderProps {
   userEmail: string;
   articleNo: number;
   articleRegDate : String;
+  tabIndex?: number;
 }
 
-export default function ArticleHeader( { userEmail, articleNo, articleRegDate  } : HeaderProps ) {
+export default function ArticleHeader( { userEmail, articleNo, articleRegDate, tabIndex  } : HeaderProps ) {
   const userInfo = useAppSelector((state) => state.user.userInfo);
   const navigate = useNavigate();
   const errorHandlers = useErrorHandlers();
@@ -79,12 +80,12 @@ if (localStorage.getItem('theme') === 'simple')
   return  (
 
     <HeaderField>
-      <LeftSpanField>글번호 - {articleNo}</LeftSpanField>
-      <RightSpanField>작성일자 - {articleRegDate}</RightSpanField>
+      <LeftSpanField tabIndex={tabIndex} >글번호 - {articleNo}</LeftSpanField>
+      <RightSpanField tabIndex={tabIndex} >작성일자 - {articleRegDate}</RightSpanField>
       { userInfo.role == "1" || userInfo.userEmail === userEmail ? 
       <ButtonsContainer>
-        <YellowButton text='수정' onClick={(e) => navigate(`/modify/${articleNo}`)} />
-        <RedButton style={{ width: '60px' }} text='삭제' onClick={handleDeleteArticle} />
+        <YellowButton tabIndex={tabIndex}  text='수정' onClick={(e) => navigate(`/modify/${articleNo}`)} />
+        <RedButton tabIndex={tabIndex}  style={{ width: '60px' }} text='삭제' onClick={handleDeleteArticle} />
       </ButtonsContainer>
       : null
       }            
@@ -94,12 +95,12 @@ if (localStorage.getItem('theme') === 'simple')
 
   return  (
     <HeaderField>
-      <LeftSpanField>글번호 - {articleNo}</LeftSpanField>
-      <RightSpanField>작성일자 - {articleRegDate}</RightSpanField>
+      <LeftSpanField tabIndex={tabIndex} >글번호 - {articleNo}</LeftSpanField>
+      <RightSpanField tabIndex={tabIndex} >작성일자 - {articleRegDate}</RightSpanField>
       { userInfo.role == "1" || userInfo.userEmail === userEmail ? 
         <ButtonsContainer>
-          <AiFillEdit style={{ fontSize: '2.2vw' }} onClick={(e) => navigate(`/modify/${articleNo}`)} />
-          <RiDeleteBin6Line style={{ fontSize: '2.2vw', marginLeft: '20px' }} onClick={handleDeleteArticle} />
+          <AiFillEdit tabIndex={tabIndex} style={{ fontSize: '2.2vw' }} onClick={(e) => navigate(`/modify/${articleNo}`)} />
+          <RiDeleteBin6Line tabIndex={tabIndex} style={{ fontSize: '2.2vw', marginLeft: '20px' }} onClick={handleDeleteArticle} />
         </ButtonsContainer>
         : null
       }            
