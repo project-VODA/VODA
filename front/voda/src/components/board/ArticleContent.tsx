@@ -53,14 +53,15 @@ const ContentField = styled.div<ThemeProps>`
 interface ContentProps {
   articleContent: string;
   'aria-label'?: string;
+  tabIndex? : number;
 }
 
-export default function ArticleContent( {articleContent, 'aria-label':ariaLabel} : ContentProps ) {
+export default function ArticleContent( {articleContent, 'aria-label':ariaLabel, tabIndex} : ContentProps ) {
     const sanitizedContent = DOMPurify.sanitize(articleContent);
 
     return(
       <>
-        <ContentField aria-label={ariaLabel} dangerouslySetInnerHTML =
+        <ContentField tabIndex={tabIndex} aria-label={ariaLabel} dangerouslySetInnerHTML =
         {{ __html: sanitizedContent }}
         />
       </>
