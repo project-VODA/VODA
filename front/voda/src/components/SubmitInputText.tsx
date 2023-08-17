@@ -33,6 +33,10 @@ const InputField = styled.input<ThemeProps>`
   &::placeholder {
     text-align: center;
   }
+
+  @media (max-width: 768px) {
+    width: 80%; /* 또는 원하는 크기로 지정 */
+  }
 `;
 interface InputProps {
   type: string;

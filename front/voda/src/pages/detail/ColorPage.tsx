@@ -301,7 +301,7 @@ const ColorPage = () => {
           <div>
             <Title>How To Use</Title>
             <p style={textStyle}>1. 얼굴이 인식될 수 있도록 얼굴을 정면으로 본 후 잠시 기다려 주세요<br /><br />
-              2. 색상을 알고 싶은 화장품을 왼쪽 눈에 대고 버튼을 눌러 주세요.<br /><br />
+              2. 색상을 알고 싶은 물건을 왼쪽 눈에 대고 버튼을 눌러 주세요.<br /><br />
               3. 인식된 색상이 음성으로 안내됩니다.<br /></p>
           </div>
           <SideContainer>

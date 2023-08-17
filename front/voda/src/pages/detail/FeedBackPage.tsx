@@ -27,6 +27,10 @@ const ListContainer = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
+
+  @media (max-width: 768px) {
+    flex-direction: column; /* 모바일 화면에서 세로 방향으로 배치 */
+  }
 `;
 
 const SimpleFeedBack = () => {
