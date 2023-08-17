@@ -4,7 +4,7 @@ A flask server is used to recognize the color of an object. A separate run of th
 
 If you want to use it with the web on a local server, follow the steps below.
 
-* Check file path
+* Check file path(start from root)
 ```
 cd model/
 ```
