@@ -32,7 +32,7 @@ const DetailPage = () => {
           </p>
           <p className="caption-one-line-text">
             VODA는 시각 장애인에게 비언어적 소통을 지원하기 위해 탄생했습니다.<br/>
-            서비스에 대한 소개와 사용방법 등 저희 서비스에 대해서 자세히 알아보세요.
+            서비스에 대한 소개와 사용방법 등 VODA에 대해서 자세히 알아보세요.
           </p>
           <Button 
             className='caption-button'
@@ -64,8 +64,28 @@ const DetailPage = () => {
       )
     },
     {
+      src: "https://img.freepik.com/free-vector/multi-coloured-gradient-pastel-colours_78370-1977.jpg?w=1060&t=st=1692245665~exp=1692246265~hmac=51c1832658426da7cbd4da0bf77f52d6a8306d03c02e473680a45f4a02d4add0",
+      alt: "Image 3",
+      caption: (
+        <>
+          <p className='caption-title'>
+            색상 음성 안내 서비스
+          </p>
+          <p className="caption-one-line-text">
+            VODA의 색상 인식을 통해 외출 전이나 영상통화 전<br/>
+            화장품이나 옷의 색상을 음성으로 확인하세요.
+          </p>
+          <Button 
+            className='caption-button'  
+            text="바로가기"
+            onClick={(e) => navigate('/color')}
+          />
+        </>
+      )
+    },
+    {
       src: "https://img.freepik.com/free-vector/coloured-blurred-background_1112-511.jpg?w=740&t=st=1691379411~exp=1691380011~hmac=50f2c93b217feaae65ff72b5fcbca32f3725b3e62171843fb96a1a2d15f1441d",
-      alt: "Image 2",
+      alt: "Image 4",
       caption: (
         <>
           <p className='caption-title'>
