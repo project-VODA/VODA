@@ -178,22 +178,27 @@ const SimpleSignup = () => {
           <RegisterButton text='회원가입' onClick={handleSignup} />
         </div>
       ) : (
+        <>
         <div id='AgreementContainer'>
           <AgreementContent1 />
-          <CheckBox
+          <br/>
+          <CheckBox 
             label='동의함'
             checked={agreeCheck1}
-            onChange={(e) => setAgreeCheck1(e.target.checked)}
+            onChange={(e)=> setAgreeCheck1(e.target.checked)}
             aria-label='개인정보 취급 방침 및 약관 동의서입니다. 동의할 경우 동의해주세요.'
           />
+          <br/><br/>
           <AgreementContent2 />
-          <CheckBox
+          <br/>
+          <CheckBox 
             label='동의함'
             checked={agreeCheck2}
-            onChange={(e) => setAgreeCheck2(e.target.checked)}
+            onChange={(e)=> setAgreeCheck2(e.target.checked)}
             aria-label='개인정보 취급 방침 및 약관 동의서입니다. 동의할 경우 동의해주세요.'
           />
         </div>
+        </>
       )}
 
     </>

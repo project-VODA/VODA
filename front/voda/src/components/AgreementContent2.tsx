@@ -1,6 +1,37 @@
 // AgreementContent.tsx
 import React from 'react';
+import styled from 'styled-components';
 
+const ContextBox = styled.div`
+  overflow: scroll;
+  height: 35vh;
+  overflow-x: hidden;
+
+  h1 {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 0.7em;
+    margin-top: 0.7em;
+    font-weight: bolder;
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  ul, ol {
+    margin-left: 1.5em; 
+  }
+
+  li {
+    margin-bottom: 0.5em;
+  }
+
+`
 
 const AgreementContent2 = () => {
   const date = new Date();
@@ -10,7 +41,7 @@ const AgreementContent2 = () => {
   const dateString = year + '-' + month + '-' + day;
 
   return (
-    <div id='context1'>
+    <ContextBox>
       <h1>개인정보 취급 방침 및 약관 동의서</h1>
       <br />
 
@@ -71,7 +102,7 @@ const AgreementContent2 = () => {
 
       <p>[{dateString}]</p>
 
-    </div>
+    </ContextBox>
   );
 };
 

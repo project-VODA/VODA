@@ -14,7 +14,6 @@
   height: 45vh;
   padding: 15px;
   display: inline-block;
-  /* margin: 10%; */
 }
 
 /* 음성 음성과 조언 */
@@ -25,8 +24,6 @@ font-family: 'Koddi';
 font-size: 30px;
 text-align: center;
 color: #001D3D;
-/*margin-left: 40%;*/
-/*margin-top: 10%;*/
 margin-bottom: 20%;
 overflow: hidden;
 }
@@ -40,16 +37,12 @@ overflow: hidden;
   font-size: 30px;
   text-align: center;
   color: #001D3D;
-  /*margin-left: 40%;
-  margin-top: 10%;*/
-  /*margin-bottom: 20%;*/
   overflow: hidden;
 }
 
 
 /* 알림 설정 */
 .alarmTitle{
-/*position: absolute;*/
 width: auto;
 height: auto;
 left: 19vw;
@@ -71,7 +64,6 @@ color: #001D3D;
 /* 모드 설정 */
 
 .modeTitle{
-/*position: absolute;*/
 width: auto;
 height: auto;
 left: 69vw;
@@ -91,7 +83,6 @@ color: #001D3D;
 
 
 .modifyButton {
-  /* display: flex; */
   justify-content: center;
   align-items: center;
   left: 48vw;

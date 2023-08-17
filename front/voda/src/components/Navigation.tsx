@@ -314,11 +314,11 @@ export default function Navigation() {
             <ChannelButton onClick={toWaiting}>
               <MenuLink to="/waiting">영상 통화</MenuLink>
             </ChannelButton>
-            <ChannelButton onClick={toFeedback}>
-              <MenuLink to="/feedback">고객의 소리함</MenuLink>
-            </ChannelButton>
             <ChannelButton onClick={toColor}>
               <MenuLink to="/color">색상 인식</MenuLink>
+            </ChannelButton>
+            <ChannelButton onClick={toFeedback}>
+              <MenuLink to="/feedback">고객의 소리함</MenuLink>
             </ChannelButton>
             
             
@@ -386,20 +386,20 @@ export default function Navigation() {
             영상통화
           </HamburgerMenuLinkContainer>
         </HamburgerMenuLink>
-        <HamburgerMenuLink to="/feedback" onClick={handleMobileMenuToggle}>
-          <HamburgerMenuLinkContainer>
-            <IconWrapper>
-              <FaRegPaperPlane/>
-            </IconWrapper>
-            고객의소리함
-          </HamburgerMenuLinkContainer>
-        </HamburgerMenuLink>
         <HamburgerMenuLink to="/color" onClick={handleMobileMenuToggle}>
           <HamburgerMenuLinkContainer>
             <IconWrapper>
               <LuPipette/>
             </IconWrapper>
             색상인식
+          </HamburgerMenuLinkContainer>
+        </HamburgerMenuLink>
+        <HamburgerMenuLink to="/feedback" onClick={handleMobileMenuToggle}>
+          <HamburgerMenuLinkContainer>
+            <IconWrapper>
+              <FaRegPaperPlane/>
+            </IconWrapper>
+            고객의소리함
           </HamburgerMenuLinkContainer>
         </HamburgerMenuLink>
         <HamburgerMenuLink to="/mypage" onClick={handleMobileMenuToggle}>

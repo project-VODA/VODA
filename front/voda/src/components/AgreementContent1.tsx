@@ -1,5 +1,37 @@
 // AgreementContent.tsx
 import React from 'react';
+import styled from 'styled-components';
+
+const ContextBox = styled.div`
+  overflow: scroll;
+  height: 35vh;
+  overflow-x: hidden;
+
+  h1 {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 0.7em;
+    margin-top: 0.7em;
+    font-weight: bolder;
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  ul, ol {
+    margin-left: 1.5em; 
+  }
+
+  li {
+    margin-bottom: 0.5em;
+  }
+
+`
 
 
 const AgreementContent1 = () => {
@@ -10,7 +42,7 @@ const AgreementContent1 = () => {
   const dateString = year + '-' + month + '-' + day;
 
   return (
-    <div id='context1'>
+    <ContextBox>
       <h1>Voda 홈페이지 이용약관 (실시간 영상통화 및 AI 분석 서비스 포함)</h1>
       <p>효력 발생일: <span>[{dateString}]</span></p>
       <br />
@@ -91,7 +123,7 @@ const AgreementContent1 = () => {
         이용자 여러분께서는 본 약관을 숙독하고 동의 여부를 결정하시기 바랍니다. "사이트" 이용으로 인해 발생하는 모든 활동에 대한 책임은 이용자 본인에게 있습니다.
       </p>
 
-    </div>
+    </ContextBox>
   );
 };
 
