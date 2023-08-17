@@ -708,7 +708,7 @@ class VideoRoomComponent extends Component {
               transform: 'rotateY(180deg)',
               WebkitTransform: 'rotateY(180deg)', 
             }}>
-              <StreamComponent user={suFb} streamId={sub.streamManager.stream.streamId} />
+              <StreamComponent user={sub} streamId={sub.streamManager.stream.streamId} />
             </div>
           ))}
           {localUser !== undefined && localUser.getStreamManager() !== undefined && (
