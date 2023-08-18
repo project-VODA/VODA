@@ -2,7 +2,8 @@
 **V oice-**   
 **O ver**   
 **D iverse**   
-**A ssistance**  
+**A ssistance**
+<img src="../exec/resource/img/VODA_logo.png" width="100" height="100">
 <br/> <br/>   
 
 # :heart: 역할
