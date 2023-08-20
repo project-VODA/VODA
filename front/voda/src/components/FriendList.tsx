@@ -50,6 +50,7 @@ const FriendList = () => {
   const [isMsgOpen, setIsMsgOpen] = useState(false);
   const [msg, setMsg] = useState('');
   const [totalItem, setTotalItem] = useState(0);
+  const [nowPage, setNowPage] = useState(1);
 
   const navigate = useNavigate();
   const errorhandlers = useErrorHandlers();
@@ -58,15 +59,23 @@ const FriendList = () => {
   useEffect(handleFriendList, []);
 
   function handleFriendList() {
-    getFriendList(userInfo.userEmail)
+    getFriendList(userInfo.userEmail, nowPage)
       .then((res) => {
         setFriendList(res.data.content);
         setTotalItem(res.data.totalElements);
+        console.log(nowPage);
       })
       .catch((err) => {
         errorhandlers(err.response, handleFriendList);
       })
   }
+
+  const setPage = (currentPage: React.SetStateAction<number>) => {
+    console.log("클릭함?");
+    console.log(currentPage);
+    setNowPage(currentPage);
+    handleFriendList();
+  };
   
 
   const handleDeleteFriend = (friend: Friend) => {
@@ -210,7 +219,7 @@ const FriendList = () => {
         </div>
       </Modal>
 
-      {/* <Paging/> */}
+      <Paging page={nowPage} count={totalItem} setPage={setPage}/>
     </>
   );
 };

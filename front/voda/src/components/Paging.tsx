@@ -3,24 +3,22 @@ import Pagination from "react-js-pagination";
 
 import '../styles/detail/Paging.css';
 
-//const Paging = ({page, count, setPage}) => {
-const Paging = () => {
-  const [page, setPage] = useState(1);
-  const [totalElements, setTotalElements] = useState(1);
+interface PagingProps {
+  page: number;
+  count: number;
+  setPage: (page: number) => void;
+}
 
-  const handlePageChange = (page: React.SetStateAction<number>) => {
-    setPage(page);
-  };
-
+const Paging: React.FC<PagingProps> = ({page, count, setPage}) => {
   return (
     <Pagination
       activePage={page}
       itemsCountPerPage={5}
-      totalItemsCount={totalElements}
+      totalItemsCount={count}
       pageRangeDisplayed={5}
       prevPageText={"‹"}
       nextPageText={"›"}
-      onChange={handlePageChange}
+      onChange={setPage}
     />
   );
 };
