@@ -1,6 +1,6 @@
 import React, { createContext } from 'react';
 // import { RootState } from './store/reducers'; // 가정: RootState는 redux store의 전체 상태 타입입니다.
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from "react-router-dom";
 
 // redux
 //import { useAppDispatch, useAppSelector } from "./constants/types";
@@ -83,8 +83,17 @@ const AppContainer = styled.div`
 
 const App: React.FC = () => {
   const isLogin = useAppSelector((state) => state.user.isLogin);
-
   const { theme, toggleTheme } = useMode();
+
+  //특정 페이지(/video)에서 모드토글 안보이게 하기
+  const ToggleWrapper = () => {
+    const location = useLocation();
+  
+    if (location.pathname === '/video') {
+      return null;
+    }
+    return <ModeToggle />;
+  }
 
   const commonRoutes = [
     { path: '/', element: theme === SimpleTheme ? <LandingPage /> : <LandingPage /> },
@@ -119,7 +128,7 @@ const App: React.FC = () => {
           {theme === SimpleTheme ? 
           <></> : 
           <Navigation />}
-          {window.location.pathname !== '/video' && <ModeToggle />}
+          <ToggleWrapper />
           <Routes>
             {commonRoutes.map((route) => (
               <Route key={route.path} path={route.path} element={<div style={{ marginTop:
