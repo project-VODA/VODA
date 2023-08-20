@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 import { MdAssignmentAdd } from 'react-icons/md'
 import FroClientImg from "../../assets/images/ForClient.jpg"
+import Footer from "../../components/Footer";
 
 const StyledLink = styled(Link)<StyledLinkProps>`
   text-decoration: none;
@@ -18,6 +19,21 @@ interface StyledLinkProps {
   text?: string;
   title: string;
   children: React.ReactNode;
+}
+
+const FooterContainer = styled.div`
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+`;
+
+const FooterContent = {
+  companyName: "VODA",
+  email: "voda.a707@gmail.com",
+  QnA: "vodavoda.site/feedback",
+  address: "서울특별시 강남구 테헤란로 212",
+  time: "오전 9시부터 오후 6시까지 상담 가능합니다.",
+  logoUrl: "../../assets/images/logo_black_sqr.png"
 }
 
 
@@ -55,7 +71,7 @@ const SimpleFeedBack = () => {
                 </div>
               </div>
             </ListContainer>
-
+            <Footer content={FooterContent} />
 
 
         </>
