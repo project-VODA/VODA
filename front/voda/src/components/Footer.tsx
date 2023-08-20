@@ -55,12 +55,12 @@ const Footer: React.FC<FooterProps> = ({ content }) => {
           <Logo src={sqrLogo} alt="sqrlogo" />
           <TextContainer>
             <p style={{ fontSize: "35px" }}>{content.companyName}</p>
-            <p style={{ marginTop: "20px" }}>Email: {content.email}</p>
+            <p style={{ marginTop: "20px" }}>Email : {content.email}</p>
             <p style={{ marginTop: "10px" }}>주소 : {content.address}</p>
             <p style={{ marginTop: "10px" }}>
-              Q&A: <a href={content.QnA}>{content.QnA}</a>
+              Q&A : <a href={content.QnA}>{content.QnA}</a>
             </p>
-            <p style={{ marginTop: "10px" }}>상담 가능 시간: {content.time}</p>
+            <p style={{ marginTop: "10px" }}>상담 가능 시간 : {content.time}</p>
           </TextContainer>
         </FooterContent>
       </ContentWrapper>
