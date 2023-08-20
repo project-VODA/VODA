@@ -5,6 +5,8 @@ import com.voda.calling.model.dto.Article;
 import com.voda.calling.repository.ArticleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -21,8 +23,8 @@ public class ArticleService {
     ArticleRepository articleRepository;
 
 
-    public List<Article> getArticleList () {
-        List<Article> articleList = articleRepository.findByArticleCancelOrderByArticleNoDesc(0);
+    public Page<Article> getArticleList (Pageable pageable) {
+        Page<Article> articleList = articleRepository.findByArticleCancelOrderByArticleNoDesc(0, pageable);
         return articleList;
     }
 

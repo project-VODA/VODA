@@ -27,4 +27,12 @@ public class FriendResponse {
         this.userName = userName;
         this.isFriend = isFriend;
     }
+
+    public FriendResponse(FriendResponse friendResponse) {
+
+        this.friendNo = friendResponse.getFriendNo();
+        this.userEmail = friendResponse.getUserEmail();
+        this.userName = friendResponse.getUserName();
+
+    }
 }

@@ -7,6 +7,8 @@ import com.voda.calling.repository.FriendRepository;
 import com.voda.calling.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -40,9 +42,9 @@ public class FriendService {
         return userRepository.searchUsersByKeyword(keyword, userEmail);
     }
 
-    public List<FriendResponse> searchAllFriend(String userEmail) {
-        List<FriendResponse> friendList = userRepository.searchFriendsByUserEmail(userEmail);
-
+    public Page<FriendResponse> searchAllFriend(String userEmail, Pageable pageable) {
+        Page<FriendResponse> friendList = userRepository.searchFriendsByUserEmail(userEmail, pageable);
+        log.info(String.valueOf(friendList.getTotalPages()));
         return friendList;
     }
 
