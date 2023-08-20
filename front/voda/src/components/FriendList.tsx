@@ -18,6 +18,7 @@ import { updateCall } from "../store/callSlice";
 import '../styles/detail/DetailWaitingPage.css'
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHook';
 import useErrorHandlers from '../hooks/useError';
+import Paging from './Paging';
 
 type Friend = {
   friendNo: number;
@@ -48,6 +49,7 @@ const FriendList = () => {
   const [friendList, setFriendList] = useState<FriendsList>([]);
   const [isMsgOpen, setIsMsgOpen] = useState(false);
   const [msg, setMsg] = useState('');
+  const [totalItem, setTotalItem] = useState(0);
 
   const navigate = useNavigate();
   const errorhandlers = useErrorHandlers();
@@ -57,8 +59,9 @@ const FriendList = () => {
 
   function handleFriendList() {
     getFriendList(userInfo.userEmail)
-      .then((res: FriendsList) => {
-        setFriendList(res);
+      .then((res) => {
+        setFriendList(res.data.content);
+        setTotalItem(res.data.totalElements);
       })
       .catch((err) => {
         errorhandlers(err.response, handleFriendList);
@@ -206,6 +209,8 @@ const FriendList = () => {
           </span>
         </div>
       </Modal>
+
+      {/* <Paging/> */}
     </>
   );
 };

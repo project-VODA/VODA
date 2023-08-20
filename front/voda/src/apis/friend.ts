@@ -21,7 +21,8 @@ export const searchUser = async (userSearchRequest: object) => {
 // 친구 목록
 export const getFriendList = async (userEmail: string) => {
   const res = await axiosServer().get<any>(`/friends/${userEmail}`);
-  return res.data;
+  console.log(res);
+  return res;
 }
 
 // 친구 삭제
