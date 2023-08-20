@@ -74,14 +74,15 @@ const IconContainerWrapper = styled.div`
 `;
 
 const IconContainer = styled.p`
-  font-size: 3rem;
+  font-size: 3vw;
   font-weight: bolder;
   display: inline-flex;
   align-items: center;
   gap: 15px;
   justify-content: center;
+  flex-wrap: wrap;
+  
 
-  width: 30;
 `;
 
 const cities = ["Seoul", "Daejeon", "Gwangju", "Gumi", "Busan"];
