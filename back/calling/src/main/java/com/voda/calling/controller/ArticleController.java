@@ -45,6 +45,7 @@ public class ArticleController {
     @GetMapping()
     public ResponseEntity<?> getArticleList(@PageableDefault(size = 5) Pageable pageable) {
         log.info("게시글 목록 불러오기");
+        log.info("페이지번호 : {}",String.valueOf(pageable.getPageNumber()));
         try {
             Page<Article> list = articleService.getArticleList(pageable);
 

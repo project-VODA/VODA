@@ -86,7 +86,7 @@ public class FriendController {
     @GetMapping("/{userEmail}")
     public ResponseEntity<?> searchAllFriend(@PathVariable String userEmail, @PageableDefault(size = 5) Pageable pageable) {
         log.info("FriendController - searchAllFriend : 친구 목록");
-
+        log.info("페이지번호 : {}",String.valueOf(pageable.getPageNumber()));
         try{
             Page<FriendResponse> friendList = friendService.searchAllFriend(userEmail, pageable);
 

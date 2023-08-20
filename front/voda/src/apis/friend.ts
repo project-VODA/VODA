@@ -19,8 +19,8 @@ export const searchUser = async (userSearchRequest: object) => {
 }
 
 // 친구 목록
-export const getFriendList = async (userEmail: string) => {
-  const res = await axiosServer().get<any>(`/friends/${userEmail}`);
+export const getFriendList = async (userEmail: string, page :number) => {
+  const res = await axiosServer().get<any>(`/friends/${userEmail}?page=${page-1}`);
   console.log(res);
   return res;
 }
