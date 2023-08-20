@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import useErrorHandlers from '../../hooks/useError';
 
 import '../../styles/detail/DetailBoardList.css'
+import Paging from '../Paging';
 
 type Article = {
   articleNo: number;
@@ -148,6 +149,7 @@ return (
           </tbody>
         </table>
       </div>
+      {/* <Paging /> */}
     </>
   )
 }
