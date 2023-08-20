@@ -28,9 +28,10 @@ const ButtonContainer = styled.div`
 `;
 
 const WeatherContainer = styled.div`
-  position: fixed;
-  bottom: 8%;
+  position: relative;
+  bottom: -5%;
   left: 50%;
+  width: 50%;
   transform: translateX(-50%);
 `;
 
@@ -83,9 +84,6 @@ const SimpleHomePage = () => {
       <StyledLink to='/home' aria-label='홈페이지입니다.'>
         <SimpleTitle tabIndex={0} imgSrc='SimpleLogo' aria-live='assertive' aria-label='홈페이지입니다.'/>
       </StyledLink>
-      <WeatherContainer>
-        <WeatherCurrentSimple/>
-      </WeatherContainer>
       <ButtonContainer>
         <HandleButton tabIndex={1} text='서비스 소개' onClick={redirectAbout} />
         <HandleButton tabIndex={2} text='영상통화' onClick={redirectVideo} />
@@ -101,6 +99,9 @@ const SimpleHomePage = () => {
           <HandleButton tabIndex={6} text="로그인" onClick={redirectLogin} />
         )}
       </ButtonContainer>
+      <WeatherContainer>
+        <WeatherCurrentSimple/>
+      </WeatherContainer>
     </PageContainer>
   );
 };
