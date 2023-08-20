@@ -3,6 +3,8 @@ import { styled } from "styled-components"
 import weather from "../../apis/weather";
 import { BsFillBrightnessHighFill, BsFillCloudFill, BsFillCloudLightningFill, BsCloudDrizzleFill, BsFillCloudRainFill, BsFillCloudSnowFill, BsFillCloudHaze2Fill, BsEmojiAngry, BsArrowLeftShort, BsArrowRightShort } from "react-icons/bs";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md"
+import { CSSTransition } from 'react-transition-group';
+import '../../styles/detail/Weather.css'
 
 interface WeatherOption {
   icon: React.ComponentType;
@@ -183,9 +185,16 @@ const WeatherCurrent = () => {
         <div>
           <IconContainerWrapper>
             <MdKeyboardArrowLeft onClick={prevCity} size={23}/>
-            <IconContainer>
-              {currentCityKorean} <WeatherIcon weather={weatherInfo.weather} size={23} /> {Math.round(weatherInfo.temp)}°C {weatherInfo.weather}
-            </IconContainer>
+            <CSSTransition
+              in={true} // 슬라이드가 나타난 상태인 경우
+              appear={true} // 컴포넌트가 처음에 마운트될 때도 애니메이션 적용
+              timeout={500} // 애니메이션 지속 시간 (밀리초)
+              classNames="slide" // 애니메이션에 사용할 클래스 이름
+            >
+              <IconContainer>
+                {currentCityKorean} <WeatherIcon weather={weatherInfo.weather} size={23} /> {Math.round(weatherInfo.temp)}°C {weatherInfo.weather}
+              </IconContainer>
+            </CSSTransition>
             <MdKeyboardArrowRight onClick={nextCity} size={23}/>
           </IconContainerWrapper>
         </div>
