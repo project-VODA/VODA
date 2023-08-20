@@ -7,6 +7,12 @@ import SimpleTitle from '../../components/SimpleTitle';
 import HandleButton from '../../components/HandleBtn';
 import { useAppSelector } from '../../hooks/reduxHook';
 import useLogOut from '../../hooks/useLogout';
+import WeatherCurrentSimple from '../../components/weather/WeatherCurrentSimple';
+
+const PageContainer = styled.div`
+  position: relative;
+  height: 100vh;
+`;
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -19,6 +25,13 @@ const ButtonContainer = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
+`;
+
+const WeatherContainer = styled.div`
+  position: fixed;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%);
 `;
 
 const SimpleHomePage = () => {
@@ -66,10 +79,13 @@ const SimpleHomePage = () => {
   //const accessToken = sessionStorage.getItem("accessToken");
 
   return (
-    <>
-    <StyledLink to='/home' aria-label='홈페이지입니다.'>
-      <SimpleTitle tabIndex={0} imgSrc='SimpleLogo' aria-live='assertive' aria-label='홈페이지입니다.'/>
-    </StyledLink>
+    <PageContainer>
+      <StyledLink to='/home' aria-label='홈페이지입니다.'>
+        <SimpleTitle tabIndex={0} imgSrc='SimpleLogo' aria-live='assertive' aria-label='홈페이지입니다.'/>
+      </StyledLink>
+      <WeatherContainer>
+        <WeatherCurrentSimple/>
+      </WeatherContainer>
       <ButtonContainer>
         <HandleButton tabIndex={1} text='서비스 소개' onClick={redirectAbout} />
         <HandleButton tabIndex={2} text='영상통화' onClick={redirectVideo} />
@@ -85,7 +101,7 @@ const SimpleHomePage = () => {
           <HandleButton tabIndex={6} text="로그인" onClick={redirectLogin} />
         )}
       </ButtonContainer>
-    </>
+    </PageContainer>
   );
 };
 
