@@ -58,8 +58,8 @@ const BoardList: React.FC = () => {
 
   function handleGetArticles() {
     getArticles()
-      .then((res: ArticleList) => {
-        setArticles(res);
+      .then((res) => {
+        setArticles(res.data.content);
       })
       .catch((err) => {
         errorHandlers(err.response, handleGetArticles);

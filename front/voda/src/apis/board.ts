@@ -3,7 +3,7 @@ import {axiosServer} from "./server";
 // 게시글 목록
 export const getArticles = async () => {
   const res = await axiosServer().get<any>(`/articles/`);
-  return res.data;
+  return res;
 }
 
 // 게시글 상세 내용 

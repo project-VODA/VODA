@@ -3,6 +3,8 @@ package com.voda.calling.repository;
 import com.voda.calling.model.dto.FriendResponse;
 import com.voda.calling.model.dto.User;
 import com.voda.calling.model.dto.UserSearchResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -44,7 +46,9 @@ public interface UserRepository extends JpaRepository<User, String> { //JpaRepos
             "AND u.userEmail != :userEmail " +
             "AND f.friendEmail IS NOT NULL"
             )
-    List<FriendResponse> searchFriendsByUserEmail(String userEmail);
+    Page<FriendResponse> searchFriendsByUserEmail(String userEmail, Pageable pageable);
+//    List<FriendResponse> searchFriendsByUserEmail(String userEmail, Pageable pageable);
+
 
 
 
