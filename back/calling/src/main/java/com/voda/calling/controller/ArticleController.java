@@ -7,6 +7,9 @@ import com.voda.calling.util.JwtUtil;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,10 +43,10 @@ public class ArticleController {
             @ApiResponse(code = 500, message = "게시글 목록 불러오기 실패 - 서버(DB)오류")
     })
     @GetMapping()
-    public ResponseEntity<?> getArticleList() {
+    public ResponseEntity<?> getArticleList(@PageableDefault(size = 5) Pageable pageable) {
         log.info("게시글 목록 불러오기");
         try {
-            List<Article> list = articleService.getArticleList();
+            Page<Article> list = articleService.getArticleList(pageable);
 
             LocalDateTime now = LocalDateTime.now();
             for (Article article : list) {
@@ -57,7 +60,7 @@ public class ArticleController {
             }
 
             log.info("게시글 목록 불러오기 성공");
-            return new ResponseEntity<List<Article>>(list, HttpStatus.OK);
+            return new ResponseEntity<Page<Article>>(list, HttpStatus.OK);
         } catch (Exception e) {
             log.info("게시글 목록 불러오기 실패 - 서버(DB)오류");
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
