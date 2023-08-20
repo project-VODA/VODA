@@ -207,7 +207,7 @@ const FooterContent = {
   email: "voda.a707@gmail.com",
   QnA: "vodavoda.site/feedback",
   address: "서울특별시 강남구 테헤란로 212",
-  time: "평일 오전 9시부터 오후 6시까지 상담 가능합니다.",
+  time: "평일 오전 9시 - 오후 6시",
   logoUrl: "../../assets/images/logo_black_sqr.png"
 }
 
