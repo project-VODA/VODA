@@ -133,6 +133,7 @@ import { Link } from "react-router-dom";
 import logo_black from '../../assets/images/logo_black.png';
 import Smile from '../../assets/images/Smile.jpg';
 import styled from "styled-components";
+import Footer from "../../components/Footer";
 
 const StyledContainer = styled.div`
   display: flex;
@@ -194,6 +195,21 @@ const Text = styled.span`
   font-size: 1em;
   padding-bottom: 5px
 `;
+
+const FooterContainer = styled.div`
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+`;
+
+const FooterContent = {
+  companyName: "VODA",
+  email: "voda.a707@gmail.com",
+  QnA: "vodavoda.site/feedback",
+  address: "서울특별시 강남구 테헤란로 212",
+  time: "오전 9시부터 오후 6시까지 상담 가능합니다.",
+  logoUrl: "../../assets/images/logo_black_sqr.png"
+}
 
 const AboutHover:React.FC = () => {    
   const [isHovered, setIsHovered] = useState(false);
@@ -257,6 +273,7 @@ const AboutHover:React.FC = () => {
         <Text>화면 우측 하단에 있는 모드 토글 버튼을 통해 모드를 변경할 수 있습니다.</Text>
         </TextContainer>
     </Section>
+    <Footer content={FooterContent} />
     </>
   );
 };
