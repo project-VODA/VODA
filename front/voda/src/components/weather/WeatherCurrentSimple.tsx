@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import { styled } from "styled-components"
 import weather from "../../apis/weather";
 import { BsFillBrightnessHighFill, BsFillCloudFill, BsFillCloudLightningFill, BsCloudDrizzleFill, BsFillCloudRainFill, BsFillCloudSnowFill, BsFillCloudHaze2Fill, BsEmojiAngry, BsArrowLeftShort, BsArrowRightShort } from "react-icons/bs";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md"
 
 interface WeatherOption {
   icon: React.ComponentType;
@@ -81,7 +82,7 @@ const IconContainer = styled.p`
   gap: 15px;
   justify-content: center;
   flex-wrap: wrap;
-  
+  tabIndex={8}
 
 `;
 
@@ -92,6 +93,23 @@ const WeatherCurrentSimple = () => {
   const [currentCityIndex, setCurrentCityIndex] = useState(0);
   const currentCity = cities[currentCityIndex];
   const [currentCityKorean, setCurrentCityKorean] = useState(currentCity);
+  const [autoRotate, setAutoRotate] = useState(true); // 기본값 true로 설정
+  const autoRotateInterval = 5000; // 5초
+  const intervalId = useRef<NodeJS.Timer | undefined>(); // useRef로 intervalId 선언
+
+  useEffect(() => {
+    if (autoRotate) {
+      intervalId.current = setInterval(() => {
+        nextCity();
+      }, autoRotateInterval);
+    }
+
+    return () => {
+      if (intervalId.current) {
+        clearInterval(intervalId.current);
+      }
+    };
+  }, [autoRotate]);
 
   const nextCity = () => {
     setCurrentCityIndex((prevIndex) => (prevIndex + 1) % cities.length);
@@ -148,6 +166,7 @@ const WeatherCurrentSimple = () => {
       
       return "#003d3d"; // Default color
     }};
+    aria-label=${`현재 ${currentCityKorean}의 날씨는 ${weatherInfo.weather} 입니다.`}; 
   ` : null;
 
   return (
@@ -155,11 +174,11 @@ const WeatherCurrentSimple = () => {
       {weatherInfo.icon && (
         <div>
           <IconContainerWrapper>
-            <BsArrowLeftShort onClick={prevCity} size={72}/>
-            <IconContainer>
-              {currentCityKorean} <WeatherIcon weather={weatherInfo.weather} size={72} /> {Math.round(weatherInfo.temp)}°C {weatherInfo.weather}
+            <MdKeyboardArrowLeft onClick={prevCity} size={72}/>
+            <IconContainer tabIndex={8}>
+              {currentCityKorean} <WeatherIcon weather={weatherInfo.weather} size={72} aria-label={`현재 ${currentCityKorean}의 날씨는 ${Math.round(weatherInfo.temp)}도 로 ${weatherInfo.weather} 입니다.`}/> {Math.round(weatherInfo.temp)}°C {weatherInfo.weather}
             </IconContainer>
-            <BsArrowRightShort onClick={nextCity} size={72}/>
+            <MdKeyboardArrowRight onClick={nextCity} size={72}/>
           </IconContainerWrapper>
         </div>
       )}
