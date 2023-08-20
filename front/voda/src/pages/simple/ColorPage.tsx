@@ -7,6 +7,7 @@ import SimpleTitle from '../../components/SimpleTitle';
 import Button from '../../components/SettingButton'
 
 import { colorRecognition } from "../../apis/color";
+import { cosmeticRecognition } from "../../apis/color";
 import { tts } from "../../apis/tts"
 import * as faceapi from 'face-api.js';
 
@@ -80,6 +81,7 @@ const ColorPage = () => {
   };
 
   const [color, setColor] = useState(null);
+  const [cosmetic, setCosmetic] = useState(null);
   const typeNo = useSelector((state: RootState) => state.user.userSetting.usersettingTypeNo);
   const voiceName = typeNo === 0 || typeNo === 2 ? 'ko-KR-Neural2-C' : 'ko-KR-Neural2-A';
   const videoRef = useRef(null);
@@ -146,6 +148,44 @@ const ColorPage = () => {
       });
   }
 
+  const cosmeticTTS  = (cosmetic: string) => {
+    let text = '';
+    if(cosmetic === undefined){
+      text = '화장품을 인식하지 못했습니다.';
+    } else{
+      text = `인식된 화장품은 ${cosmetic}입니다.`;
+    }
+    
+    const requestData = {
+      input: {
+        text: text,
+      },
+      voice: {
+        languageCode: 'ko-KR', // 원하는 언어 코드
+        name: voiceName,
+      },
+      audioConfig: {
+        audioEncoding: 'MP3', // MP3 포맷으로 설정
+      },
+    };
+
+    tts(requestData)
+      .then((res) => {
+        const audioData = res.audioContent;
+        const audioArrayBuffer = Uint8Array.from(atob(audioData), c => c.charCodeAt(0)).buffer;
+        const audioBlob = new Blob([audioArrayBuffer], { type: 'audio/mpeg' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+
+        audioPlayer.src = audioUrl;
+        audioPlayer.play();
+
+      }
+      )
+      .catch(error => {
+        console.error('TTS API 요청 중 오류:', error);
+      });
+  }
+
   const stopWebcam = () => {
     const stream = videoRef.current?.srcObject as MediaStream;
     if (stream) {
@@ -165,26 +205,38 @@ const ColorPage = () => {
 
 
   //전체 캡쳐
-  // function captureScreen() {
-  //   const video = videoRef.current;
-  //   const canvas = canvasRef.current;
+  const captureScreen = () => {
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
 
-  //   if (video && canvas) {
-  //     canvas.width = video.videoWidth;
-  //     canvas.height = video.videoHeight;
+    if (video && canvas) {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
 
-  //     const ctx = canvas.getContext('2d');
-  //     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-  //     canvas.toBlob((blob: Blob | null) => {
-  //       if (blob) {
-  //         const formData = new FormData();
-  //         formData.append('image', blob);
-  //         getColor(formData);
-  //       }
-  //     });
-  //   }
-  // }
+      canvas.toBlob((blob: Blob | null) => {
+        if (blob) {
+          const formData = new FormData();
+          formData.append('image', blob);
+          
+          cosmeticRecognition(formData)
+            .then((res) => {
+              setCosmetic(res.cosmetic);
+              cosmeticTTS(res.cosmetic);
+              console.log('typeNo: ', typeNo)
+              console.log('인식된 화장품: ', res.cosmetic);
+            }
+            )
+            .catch((err) => {
+              console.log(err)
+            }
+          )
+        }
+      });
+    }
+  }
 
   const captureLeftEye = async () => {
     const video = videoRef.current;
@@ -300,9 +352,13 @@ const ColorPage = () => {
           </div>
           <SideContainer>
             <Button tabIndex={4} onClick={captureLeftEye} text="Start " aria-label="색상 인식 버튼" />
+            <Button tabIndex={5} onClick={captureScreen} text="전체 캡쳐 " aria-label="화장품 인식 버튼" />
             <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
             {color && (
               <p style={textStyle}>인식된 색상: {color}</p>
+            )}
+            {cosmetic && (
+              <p style={textStyle}>인식된 화장품: {cosmetic}</p>
             )}
           </SideContainer>
         </div>
