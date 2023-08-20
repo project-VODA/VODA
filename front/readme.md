@@ -335,3 +335,4 @@
   - 심플모드 날씨 리더기가 읽도록 수정
   - 5초마다 다른 지역의 날씨가 표시되도록 수정
   - Detail About 페이지에 footer 추가(footer 컴포넌트)
+  - Detail Feedback 페이지에 footer 추가
