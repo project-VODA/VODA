@@ -3,14 +3,31 @@ from flask_cors import CORS
 
 # color classify package
 import os
+
+import numpy as np
 import cv2
 from color_recognition_api import color_histogram_feature_extraction
 from color_recognition_api import knn_classifier
 # import matplotlib.pyplot as plt
 
+# cosmetics classify package
+import torch
+from PIL import Image
+from yolov5.models.experimental import attempt_load
+from yolov5.utils.general import non_max_suppression
+
+
 app = Flask(__name__)
 CORS(app)
 context_path = '/flask'  # 원하는 컨텍스트 경로 설정
+
+# Load YOLOv5 model
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+model = attempt_load('yolov5/runs/train/best.pt')
+model.eval()
+
+# model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=False)
+# model.load_state_dict(torch.load('best.pt'))
 
 PATH = 'training.data'
 
@@ -33,36 +50,6 @@ def classify_color(image_path):
     color_histogram_feature_extraction.color_histogram_of_test_image(new_image)
     prediction = knn_classifier.main('training.data', 'test.data')
     print('Detected color is:', prediction)
-
-    ######################################################################### 
-    # 클러스터링 결과에 대한 이미지 비교
-    ######################################################################### 
-    # channels_original = cv2.split(source_image)
-    # channels_segmented = cv2.split(new_image)
-
-    # # Plot original and segmented images with histograms
-    # plt.figure(figsize=(12, 8))
-
-    # plt.subplot(2, 2, 1)
-    # plt.imshow(cv2.cvtColor(source_image, cv2.COLOR_BGR2RGB))
-    # plt.title("Original Image")
-
-    # plt.subplot(2, 2, 2)
-    # plt.imshow(cv2.cvtColor(new_image, cv2.COLOR_BGR2RGB))
-    # plt.title("Segmented Image")
-
-    # plt.subplot(2, 2, 3)
-    # for channel in channels_original:
-    #     plt.plot(cv2.calcHist([channel], [0], None, [256], [0, 256]))
-    # plt.title("Original Histogram")
-
-    # plt.subplot(2, 2, 4)
-    # for channel in channels_segmented:
-    #     plt.plot(cv2.calcHist([channel], [0], None, [256], [0, 256]))
-    # plt.title("Segmented Histogram")
-
-    # plt.tight_layout()
-    # plt.show()
 
     return prediction
 
@@ -109,6 +96,44 @@ def index():  # put application's code here
             return jsonify({'error': str(e)})
     else:
         return jsonify({'error': '올바르지 않은 요청입니다.'})
+
+
+
+@app.route(context_path + '/cosmetics', methods=['POST'])
+def detect_cosmetics():  # put application's code here
+    if request.method == 'POST':
+        try:
+            image = request.files['image']
+            image.save('temp.jpg')
+
+            # YOLOv5 모델을 사용하여 이미지 분석
+            input_image = Image.open('temp.jpg').convert('RGB')
+            input_image = np.array(input_image)
+            results = model(input_image)
+            
+            pred = non_max_suppression(results.pred, conf_thres=0.3, iou_thres=0.4)
+            detected_objects = []
+            
+            for det in pred[0]:
+                class_id = int(det[5])
+                score = float(det[4])
+                label = model.names[class_id]
+                bounding_box = det[:4].tolist()
+
+                detected_objects.append({
+                    'label': label,
+                    'score': score,
+                    'bounding_box': bounding_box
+                })
+
+            os.remove('temp.jpg')
+
+            return jsonify({'objects': detected_objects})
+        except Exception as e:
+            return jsonify({'error': str(e)})
+    else:
+        return jsonify({'error': '올바르지 않은 요청입니다.'})
+
 
 if __name__ == '__main__':
     app.run(port=5000, host="0.0.0.0")
