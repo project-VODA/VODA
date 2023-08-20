@@ -214,7 +214,7 @@ const ColorPage = () => {
   };
 
   // 전체 캡쳐
-  function captureScreen() {
+  const captureScreen = () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
 

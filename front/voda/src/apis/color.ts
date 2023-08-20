@@ -12,7 +12,7 @@ export const colorRecognition = async (capturedImage:FormData) => {
 }
 
 export const cosmeticRecognition = async (capturedImage:FormData) => {
-  const res = await axiosFlask.post<any>(`/cosmetic`, capturedImage);
+  const res = await axiosFlask.post<any>(`/cosmetics`, capturedImage);
   console.log('test cosmetic: ', res);
   return res.data;
 }
