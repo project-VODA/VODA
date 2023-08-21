@@ -109,7 +109,7 @@ def detect_cosmetics():  # put application's code here
             # 결과 이미지 저장 및 반환
             img_with_boxes = results.render()[0]  # 결과 이미지 생성
             img_path = 'result.jpg'
-            img_with_boxes.save(img_path)  # 이미지 저장
+            #img_with_boxes.save(img_path)  # 이미지 저장
             print('결과 이미지:', img_with_boxes)
 
             return jsonify({'objects': object_results})

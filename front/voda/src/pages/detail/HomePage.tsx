@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 import Button from "../../components/SettingButton"
 import Carousel from "../../components/carousel/carousel";
+import Img1 from "../../assets/images/slideImage1.png";
 
 const DetailPage = () => {
   
@@ -43,7 +44,7 @@ const DetailPage = () => {
       ),
     },
     {
-      src: "https://img.freepik.com/free-photo/out-focus-colorful-bokeh-neon-lights_23-2148328121.jpg?w=1060&t=st=1692597745~exp=1692598345~hmac=ca5267a5f9d8533e1b5078b04b1004623fd07fa56cfec8b0c42a5092384c29bf",
+      src: "https://img.freepik.com/free-photo/vivid-blurred-colorful-wallpaper-background_58702-2817.jpg?w=1060&t=st=1692627385~exp=1692627985~hmac=6b9cb13c713c8fd42cc27806f0731b8af0c77bc35e91e24680b6dedec499c0ba",
       alt: "Image 2",
       caption: (
         <>
