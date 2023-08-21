@@ -135,10 +135,10 @@ const WeatherCurrent = () => {
     weather.get(`/weather?q=${currentCity}&appid=7e666eba846dc3ddbbdc7b55dd6f19a1&units=metric`)
       .then((res) => {
 
-        console.log(res.data.weather[0].main);
-        console.log("체감온도: " + res.data.main.feels_like);
-        console.log("습도: " + res.data.main.humidity);
-        console.log("기온: " + res.data.main.temp);
+        // console.log(res.data.weather[0].main);
+        // console.log("체감온도: " + res.data.main.feels_like);
+        // console.log("습도: " + res.data.main.humidity);
+        // console.log("기온: " + res.data.main.temp);
         const currentWeather = res.data.weather[0].main;
         const currentWeatherOption = weatherOptions[currentWeather];
         
