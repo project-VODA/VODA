@@ -53,22 +53,35 @@ const TableContainer = styled.div`
 const BoardList: React.FC = () => {
   
   const [articles, setArticles] = useState<ArticleList>([]);
+  const [totalItem, setTotalItem] = useState(0);
+  const [nowPage, setNowPage] = useState(1);
+
   const errorHandlers = useErrorHandlers();
 
-  useEffect(handleGetArticles, [])
+  useEffect(handleGetArticles, [nowPage]);
 
   function handleGetArticles() {
-    getArticles()
+    getArticles(nowPage)
       .then((res) => {
         setArticles(res.data.content);
+        setTotalItem(res.data.totalElements);
       })
       .catch((err) => {
         errorHandlers(err.response, handleGetArticles);
       })
     }
 
+    const setPage = (currentPage: React.SetStateAction<number>) => {
+      console.log("클릭함?");
+      console.log(currentPage);
+      setNowPage(currentPage);
+      // handleFriendList();
+    };
+
 if (localStorage.getItem('theme' ) === 'simple') {
   return (
+    <>
+    <div>
     <TableContainer>
       <div className='boardList'>
         <table className='boardTable'>
@@ -103,6 +116,12 @@ if (localStorage.getItem('theme' ) === 'simple') {
         </table>
       </div>
     </TableContainer>
+    </div>
+    <br/>
+    <div>
+      <Paging page={nowPage} count={totalItem} setPage={setPage}/>
+    </div>
+    </>
   );
 }
 
@@ -149,7 +168,7 @@ return (
           </tbody>
         </table>
       </div>
-      {/* <Paging /> */}
+      <Paging page={nowPage} count={totalItem} setPage={setPage}/>
     </>
   )
 }
