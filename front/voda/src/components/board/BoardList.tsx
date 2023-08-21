@@ -71,8 +71,8 @@ const BoardList: React.FC = () => {
       .then((res) => {
         setArticles(res.data.content);
         setTotalItem(res.data.totalElements);
-        console.log(nowPage);
-        console.log(res.data.content);
+        // console.log(nowPage);
+        // console.log(res.data.content);
       })
       .catch((err) => {
         errorHandlers(err.response, handleGetArticles);
@@ -80,8 +80,8 @@ const BoardList: React.FC = () => {
     }
 
     const setPage = (currentPage: React.SetStateAction<number>) => {
-      console.log("클릭함?");
-      console.log(currentPage);
+      // console.log("클릭함?");
+      // console.log(currentPage);
       setNowPage(currentPage);
     };
 
