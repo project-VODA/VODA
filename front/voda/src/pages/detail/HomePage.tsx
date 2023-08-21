@@ -64,7 +64,7 @@ const DetailPage = () => {
       )
     },
     {
-      src: "https://img.freepik.com/free-vector/multi-coloured-gradient-pastel-colours_78370-1977.jpg?w=1060&t=st=1692245665~exp=1692246265~hmac=51c1832658426da7cbd4da0bf77f52d6a8306d03c02e473680a45f4a02d4add0",
+      src: "https://img.freepik.com/free-photo/vivid-blurred-colorful-background_58702-2644.jpg?w=1060&t=st=1692583606~exp=1692584206~hmac=8b751961dbf8be01a37befdcc9f52fea60c348ff317fffde6ea4642ec38111e2",
       alt: "Image 3",
       caption: (
         <>
