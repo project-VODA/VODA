@@ -5,27 +5,12 @@ import styled from "styled-components";
 import '../../styles/simple/About.css'
 import SimpleLogoSqr from '../../assets/images/logo_yellow_sqr.png'
 import SimpleTitle from "../../components/SimpleTitle";
-// import SimpleFooter from "../../components/SimpleFooter";
 
 const StyledLink = styled(Link)`
   text-decoration: none;
   color: inherit;
 `;
 
-const FooterContainer = styled.div`
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-`;
-
-const FooterContent = {
-  companyName: "VODA",
-  email: "voda.a707@gmail.com",
-  QnA: "vodavoda.site/feedback",
-  address: "서울특별시 강남구 테헤란로 212",
-  time: "평일 오전 9시 - 오후 6시",
-  logoUrl: "../../assets/images/logo_black_sqr.png"
-}
 
 const SimpleAbout = () => {
   return (
@@ -109,7 +94,6 @@ const SimpleAbout = () => {
       > VODA로 표정을, 색상을, 그리고 세상을 소리로 보다.
       </p>
     </div>
-    {/* <SimpleFooter content={FooterContent} /> */}
   </>
   );
 };

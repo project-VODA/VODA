@@ -5,7 +5,6 @@ import SimpleTitle from '../../components/SimpleTitle';
 import BoardList from '../../components/board/BoardList';
 import WriteButton from '../../components/board/WriteButton';
 import { Link } from "react-router-dom";
-// import SimpleFooter from '../../components/SimpleFooter';
 
 
 const StyledLink = styled(Link)`
@@ -13,21 +12,6 @@ text-decoration: none;
 color: inherit;
 `;
 
-const FooterContainer = styled.div`
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background-color: #f0f0f0;
-`;
-
-const FooterContent = {
-  companyName: "VODA",
-  email: "voda.a707@gmail.com",
-  QnA: "vodavoda.site/feedback",
-  address: "서울특별시 강남구 테헤란로 212",
-  time: "평일 오전 9시 - 오후 6시",
-  logoUrl: "../../assets/images/logo_black_sqr.png"
-}
 
 const NewPostContainer = styled.div`
   display: flex;
@@ -66,7 +50,6 @@ const SimpleFeedBack = () => {
                 <BoardList />
 
             </ListContainer>
-            {/* <SimpleFooter content={FooterContent} /> */}
 
 
         </>
