@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./carousel.css";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import Img1 from "../../assets/images/slideImage1.png";
+import Img2 from "../../assets/images/slideImage2.png";
+import Img3 from "../../assets/images/slideImage3.png";
 
 interface Slide {
-  src: string;
   alt: string;
   caption?: any;
 }
@@ -11,6 +13,8 @@ interface Slide {
 interface CarouselProps {
   slides: Slide[];
 }
+
+const images = [Img1, Img2, Img1, Img3];
 
 const CarouselComponent: React.FC<CarouselProps> = ({ slides }) => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -50,7 +54,7 @@ const CarouselComponent: React.FC<CarouselProps> = ({ slides }) => {
         </button>
         <div className={`slide ${slideTransition}`}>
           <img
-            src={slides[activeIndex].src}
+            src={images[activeIndex]}
             alt={slides[activeIndex].alt}
             style={{ objectFit: "cover" }}
           />
