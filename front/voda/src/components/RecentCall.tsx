@@ -15,11 +15,13 @@ import { FiPhoneCall } from "react-icons/fi"
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHook';
 import useErrorHandlers from '../hooks/useError';
 
-const ContextBox = styled.div`
+const ScrollBox = styled.div`
   overflow: scroll;
   height: 70vh;
   overflow-x: hidden;
+`
 
+const ContextBox = styled.div`
   h1 {
     font-size: 2em;
     font-weight: bold;
@@ -171,6 +173,7 @@ const RecentCalls = () => {
       </thead>
       </table>
       <hr style={{ margin: '0 7%' }} />
+      <ScrollBox>
       <table className = 'recentCallTable'  style={{ borderCollapse: 'separate', borderSpacing: '0px 20px',  }}>
       <colgroup>
         <col width = "20%" />
@@ -195,7 +198,7 @@ const RecentCalls = () => {
             </tr>
         ))}
       </tbody>
-    </table></div>)}</span>
+    </table></ScrollBox></div>)}</span>
     </ContextBox>
 
     <Modal id="messageModel"
