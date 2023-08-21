@@ -23,7 +23,6 @@ const DetailPage = () => {
 
   const slides = [
     {
-      src: "https://img.freepik.com/free-photo/vivid-blurred-colorful-background_58702-2545.jpg",
       alt: "Image 1",
       caption: (
         <>
@@ -43,7 +42,6 @@ const DetailPage = () => {
       ),
     },
     {
-      src: "https://img.freepik.com/free-photo/out-focus-colorful-bokeh-neon-lights_23-2148328121.jpg?w=1060&t=st=1692597745~exp=1692598345~hmac=ca5267a5f9d8533e1b5078b04b1004623fd07fa56cfec8b0c42a5092384c29bf",
       alt: "Image 2",
       caption: (
         <>
@@ -64,7 +62,6 @@ const DetailPage = () => {
       )
     },
     {
-      src: "https://img.freepik.com/free-photo/vivid-blurred-colorful-background_58702-2545.jpg",
       alt: "Image 3",
       caption: (
         <>
@@ -84,7 +81,6 @@ const DetailPage = () => {
       )
     },
     {
-      src: "https://img.freepik.com/premium-vector/abstract-pastel-color-background-with-pink-purple-gradient-effect-graphic-design-decoration_120819-463.jpg",
       alt: "Image 4",
       caption: (
         <>
