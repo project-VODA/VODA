@@ -64,7 +64,7 @@ const DetailPage = () => {
       )
     },
     {
-      src: "https://img.freepik.com/free-photo/vivid-blurred-colorful-wallpaper-background_58702-4403.jpg?w=1060&t=st=1692597850~exp=1692598450~hmac=4a45ade56bc92cc538df032cbc5fdafc50585f0a81c90033f8d4c784335526ce",
+      src: "https://img.freepik.com/free-photo/vivid-blurred-colorful-background_58702-2545.jpg",
       alt: "Image 3",
       caption: (
         <>
