@@ -19,6 +19,20 @@ const ScrollBox = styled.div`
   overflow: scroll;
   height: 70vh;
   overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 10px;  
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 29, 61, .8);
+    border-radius: 10px;  
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 53, 102, .1);
+    border-radius: 10px;  
+  }
 `
 
 const ContextBox = styled.div`
