@@ -101,7 +101,7 @@ const FriendList = () => {
       .then((res) => {
         setFriendList(res.data.content);
         setTotalItem(res.data.totalElements);
-        console.log(nowPage);
+        // console.log(nowPage);
       })
       .catch((err) => {
         errorhandlers(err.response, handleFriendList);
@@ -109,8 +109,8 @@ const FriendList = () => {
   }
 
   const setPage = (currentPage: React.SetStateAction<number>) => {
-    console.log("클릭함?");
-    console.log(currentPage);
+    // console.log("클릭함?");
+    // console.log(currentPage);
     setNowPage(currentPage);
     // handleFriendList();
   };
