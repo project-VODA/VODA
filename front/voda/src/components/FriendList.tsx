@@ -55,8 +55,8 @@ const FriendList = () => {
   const navigate = useNavigate();
   const errorhandlers = useErrorHandlers();
   const dispatch = useAppDispatch();
-
-  useEffect(handleFriendList, []);
+ 
+  useEffect(handleFriendList, [nowPage]);
 
   function handleFriendList() {
     getFriendList(userInfo.userEmail, nowPage)
@@ -74,7 +74,7 @@ const FriendList = () => {
     console.log("클릭함?");
     console.log(currentPage);
     setNowPage(currentPage);
-    handleFriendList();
+    // handleFriendList();
   };
   
 
