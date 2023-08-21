@@ -12,6 +12,7 @@ import WeatherCurrentSimple from '../../components/weather/WeatherCurrentSimple'
 const PageContainer = styled.div`
   position: relative;
   height: 100vh;
+  overflow-x: hidden;
 `;
 
 const StyledLink = styled(Link)`
