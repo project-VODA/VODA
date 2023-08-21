@@ -101,16 +101,15 @@ def detect_cosmetics():  # put application's code here
             image_bytes = image.read()
             img  = Image.open(io.BytesIO(image_bytes))
             results = model(img, size=640)
-            print('model results: ', results)
+            # print('model results: ', type(results), results)
+            results_box = model([img])
+            results_box.render()
+            
+            # 박스 쳐진 이미지 result.jpg로 저장
+            Image.fromarray(results_box.ims[0]).save('result.jpg')
 
             object_results = results.pandas().xyxy[0].to_json(orient="records")
-            print('object: ', object_results)
-
-            # 결과 이미지 저장 및 반환
-            img_with_boxes = results.render()[0]  # 결과 이미지 생성
-            img_path = 'result.jpg'
-            #img_with_boxes.save(img_path)  # 이미지 저장
-            print('결과 이미지:', img_with_boxes)
+            print('object results: ', object_results)
 
             return jsonify({'objects': object_results})
         except Exception as e:

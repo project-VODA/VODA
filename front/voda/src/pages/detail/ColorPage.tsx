@@ -240,11 +240,11 @@ const ColorPage = () => {
           
           cosmeticRecognition(formData)
             .then((res) => {
-              setCosmetic(res.cosmetic);
-              cosmeticTTS(res.cosmetic);
+              // setCosmetic(res.cosmetic);
+              // cosmeticTTS(res.cosmetic);
               console.log(JSON.parse(res.objects));
               console.log('typeNo: ', typeNo)
-              console.log('인식된 화장품: ', res.cosmetic);
+              console.log('인식된 정보: ', res.objects);
             }
             )
             .catch((err) => {

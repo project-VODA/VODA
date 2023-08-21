@@ -343,10 +343,10 @@ class VideoRoomComponent extends Component {
   }
 
   // voda - KJW
-  playExpression = (expressionData) => {
+  playExpression = (expression) => {
     
     let text = '';
-    switch(expressionData.expression){
+    switch(expression){
       case 'angry': 
         text = '화난 표정';
         break;
@@ -403,10 +403,10 @@ class VideoRoomComponent extends Component {
   };
 
   // voda - KJW
-  playExpressionWithAdvice = (expressionData) => {
+  playExpressionWithAdvice = (expression) => {
 
     let index = 0;
-    switch(expressionData.expression){
+    switch(expression){
       case 'angry': 
         index = 0;
         break;
@@ -477,11 +477,11 @@ class VideoRoomComponent extends Component {
     this.state.session.on('signal:send-expression', (event) => {
       if (event.from.connectionId !== this.state.session.connection.connectionId) {
         console.log('typeNo:', this.typeNo);
-        const expressionData = JSON.parse(event.data);
+        const expression = event.data;
         if(this.typeNo === 0 || this.typeNo === 1){
-          this.playExpression(expressionData);
+          this.playExpression(expression);
         }else{
-          this.playExpressionWithAdvice(expressionData);
+          this.playExpressionWithAdvice(expression);
         }
       }
     });
@@ -604,10 +604,10 @@ class VideoRoomComponent extends Component {
 	sendExpression = () => {
     // Check if the localUser is connected and has a stream manager
 		if (this.state.localUser && this.state.localUser.getStreamManager()) {
-      console.log('표정 데이터: ', this.props.expressionData)
+      console.log('표정 데이터: ', this.props.expressionData.expression)
 		  // Send the text data as a broadcast message to all participants
 		  this.state.session.signal({
-			data: JSON.stringify(this.props.expressionData),
+			data: this.props.expressionData.expression,
 			to: [], // Empty array means broadcast to everyone
 			type: 'send-expression', // Use the same type as the receiver is listening to
 		  })
