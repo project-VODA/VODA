@@ -124,7 +124,7 @@ if (localStorage.getItem('theme' ) === 'simple') {
       </div>
     </TableContainer>
     <PagingContainer>
-        <Paging page={nowPage} count={totalItem} setPage={setPage}/>
+        <Paging style={{ cursor:"pointer" }} page={nowPage} count={totalItem} setPage={setPage}/>
       </PagingContainer>
     </div>
     </>
@@ -174,7 +174,7 @@ return (
           </tbody>
         </table>
       <PagingContainer>
-        <Paging page={nowPage} count={totalItem} setPage={setPage}/>
+        <Paging style={{ cursor: "pointer" }} page={nowPage} count={totalItem} setPage={setPage}/>
       </PagingContainer>
       </div>
     </>
