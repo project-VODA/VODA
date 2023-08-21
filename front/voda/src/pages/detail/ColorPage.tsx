@@ -78,7 +78,8 @@ const ColorPage = () => {
     transform: 'rotateY(180deg)',
     WebkitTransform: 'rotateY(180deg)',
     width: '300px',
-    marginTop: '16px'
+    marginTop: '16px',
+    position: 'relative',
   };
 
   const textStyle: React.CSSProperties = {
@@ -87,6 +88,12 @@ const ColorPage = () => {
     fontSize: '1em',
     fontWeight: 'bold',
   };
+
+  const boxStyle: React.CSSProperties = {
+    position: 'absolute',
+    border: '2px solid red',
+    boxSizing: 'border-box',
+  }
 
   const [capturedImage, setCapturedImage] = useState(null);
   const [color, setColor] = useState(null);
@@ -235,6 +242,7 @@ const ColorPage = () => {
             .then((res) => {
               setCosmetic(res.cosmetic);
               cosmeticTTS(res.cosmetic);
+              console.log(JSON.parse(res.objects));
               console.log('typeNo: ', typeNo)
               console.log('인식된 화장품: ', res.cosmetic);
             }
