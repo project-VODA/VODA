@@ -16,6 +16,12 @@ type Article = {
 
 type ArticleList = Article[];
 
+const PagingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 50px; // 페이징 컨트롤 위 여백 조절
+`;
+
 const StyledLink = styled(Link)`
   text-decoration: none;
   color: inherit;
@@ -116,10 +122,9 @@ if (localStorage.getItem('theme' ) === 'simple') {
         </table>
       </div>
     </TableContainer>
-    </div>
-    <br/>
-    <div>
-      <Paging page={nowPage} count={totalItem} setPage={setPage}/>
+    <PagingContainer>
+        <Paging page={nowPage} count={totalItem} setPage={setPage}/>
+      </PagingContainer>
     </div>
     </>
   );
@@ -167,8 +172,10 @@ return (
             ))}
           </tbody>
         </table>
+      <PagingContainer>
+        <Paging page={nowPage} count={totalItem} setPage={setPage}/>
+      </PagingContainer>
       </div>
-      <Paging page={nowPage} count={totalItem} setPage={setPage}/>
     </>
   )
 }

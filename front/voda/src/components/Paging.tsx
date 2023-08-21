@@ -7,6 +7,7 @@ interface PagingProps {
   page: number;
   count: number;
   setPage: (page: number) => void;
+  style?: React.CSSProperties;
 }
 
 const Paging: React.FC<PagingProps> = ({page, count, setPage}) => {
