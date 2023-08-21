@@ -82,8 +82,6 @@ const IconContainer = styled.p`
   gap: 15px;
   justify-content: center;
   flex-wrap: wrap;
-  tabIndex={8}
-
 `;
 
 const cities = ["Seoul", "Daejeon", "Gwangju", "Gumi", "Busan"];
@@ -166,7 +164,6 @@ const WeatherCurrentSimple = () => {
       
       return "#003d3d"; // Default color
     }};
-    aria-label=${`현재 ${currentCityKorean}의 날씨는 ${weatherInfo.weather} 입니다.`}; 
   ` : null;
 
   return (
