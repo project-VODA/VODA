@@ -19,6 +19,7 @@ import '../styles/detail/DetailWaitingPage.css'
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHook';
 import useErrorHandlers from '../hooks/useError';
 import Paging from './Paging';
+import styled from 'styled-components';
 
 type Friend = {
   friendNo: number;
@@ -28,6 +29,43 @@ type Friend = {
 
 type FriendsList = Friend[];
 
+const PagingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 100px; // 페이징 컨트롤 위 여백 조절
+`;
+
+
+const ContextBox = styled.div`
+  overflow: scroll;
+  height: 50vh;
+  overflow-x: hidden;
+
+  h1 {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 0.7em;
+    margin-top: 0.7em;
+    font-weight: bolder;
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  ul, ol {
+    margin-left: 1.5em; 
+  }
+
+  li {
+    margin-bottom: 0.5em;
+  }
+
+`
 
 const FriendList = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -156,6 +194,7 @@ const FriendList = () => {
       <UserSearchList/>
     </Modal>
   </>
+      {/* <ContextBox> */}
       <table className = 'friendTable' style={{ borderCollapse: 'separate', borderSpacing: '0px 20px',  }}>
         <colgroup>
           <col width = "20%" />
@@ -192,6 +231,7 @@ const FriendList = () => {
           ))}
         </tbody>
       </table>
+      {/* </ContextBox> */}
 
       <Modal id="messageModel"
         isOpen={isMsgOpen} 
@@ -218,8 +258,9 @@ const FriendList = () => {
           </span>
         </div>
       </Modal>
-
-      <Paging page={nowPage} count={totalItem} setPage={setPage}/>
+      <PagingContainer>
+        <Paging page={nowPage} count={totalItem} setPage={setPage}/>
+      </PagingContainer>
     </>
   );
 };

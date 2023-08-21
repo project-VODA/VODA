@@ -8,11 +8,43 @@ import { useNavigate } from 'react-router-dom';
 
 import { updateCall } from "../store/callSlice";
 import '../styles/detail/DetailWaitingPage.css'
+import { styled } from 'styled-components';
 
 // react-icons
 import { FiPhoneCall } from "react-icons/fi"
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHook';
 import useErrorHandlers from '../hooks/useError';
+
+const ContextBox = styled.div`
+  overflow: scroll;
+  height: 70vh;
+  overflow-x: hidden;
+
+  h1 {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 0.7em;
+    margin-top: 0.7em;
+    font-weight: bolder;
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  ul, ol {
+    margin-left: 1.5em; 
+  }
+
+  li {
+    margin-bottom: 0.5em;
+  }
+
+`
 
 
 type CallHistory = {
@@ -82,7 +114,8 @@ const RecentCalls = () => {
   };
 
   return (
-    <div style={{ marginTop: '48.9px'}}>
+    <div style={{ marginTop: '7px'}}>
+      <ContextBox>
     <span> {localStorage.getItem('theme') === 'simple' ? (<div style={{ marginBottom: '60px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', padding: '10px' }}>
       <span style={{ marginLeft: 'auto', marginRight: 'auto', fontSize:'1.9vw', fontWeight: 'bolder' }}>최근 통화 목록</span></div>)
     :(<div style={{ marginTop:'5.6vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', padding: '10px' }}>
@@ -163,6 +196,7 @@ const RecentCalls = () => {
         ))}
       </tbody>
     </table></div>)}</span>
+    </ContextBox>
 
     <Modal id="messageModel"
         isOpen={isMsgOpen} 
