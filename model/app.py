@@ -108,10 +108,19 @@ def detect_cosmetics():  # put application's code here
             # 박스 쳐진 이미지 result.jpg로 저장
             Image.fromarray(results_box.ims[0]).save('result.jpg')
 
-            object_results = results.pandas().xyxy[0].to_json(orient="records")
-            print('object results: ', object_results)
+            # confidence 값이 0.5 이상인 객체들만 추출
+            confident_objects = [obj for obj in results.pandas().xyxy[0].to_dict(orient="records") if obj['confidence'] >= 0.5]
 
-            return jsonify({'objects': object_results})
+            # object_results = results.pandas().xyxy[0].to_json(orient="records")
+            # print('object results: ', object_results)
+
+            print('object results: ', confident_objects)
+            return jsonify({'objects': confident_objects})      # object_results
+
+        # 객체된 물체 없을 경우, 인덱스 에러가 발생하면 빈 배열
+        except IndexError:
+            return jsonify({'objects': []})
+
         except Exception as e:
             return jsonify({'error': str(e)})
     else:
