@@ -5,7 +5,7 @@ import SimpleTitle from '../../components/SimpleTitle';
 import BoardList from '../../components/board/BoardList';
 import WriteButton from '../../components/board/WriteButton';
 import { Link } from "react-router-dom";
-import SimpleFooter from '../../components/SimpleFooter';
+// import SimpleFooter from '../../components/SimpleFooter';
 
 
 const StyledLink = styled(Link)`
@@ -66,7 +66,7 @@ const SimpleFeedBack = () => {
                 <BoardList />
 
             </ListContainer>
-            <SimpleFooter content={FooterContent} />
+            {/* <SimpleFooter content={FooterContent} /> */}
 
 
         </>

@@ -5,7 +5,7 @@ import styled from "styled-components";
 import '../../styles/simple/About.css'
 import SimpleLogoSqr from '../../assets/images/logo_yellow_sqr.png'
 import SimpleTitle from "../../components/SimpleTitle";
-import SimpleFooter from "../../components/SimpleFooter";
+// import SimpleFooter from "../../components/SimpleFooter";
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -109,7 +109,7 @@ const SimpleAbout = () => {
       > VODA로 표정을, 색상을, 그리고 세상을 소리로 보다.
       </p>
     </div>
-    <SimpleFooter content={FooterContent} />
+    {/* <SimpleFooter content={FooterContent} /> */}
   </>
   );
 };
