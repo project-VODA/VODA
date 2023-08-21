@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 
 import Button from "../../components/SettingButton"
 import Carousel from "../../components/carousel/carousel";
-import Img1 from "../../assets/images/slideImage1.png";
 
 const DetailPage = () => {
   
@@ -24,7 +23,6 @@ const DetailPage = () => {
 
   const slides = [
     {
-      src: "https://img.freepik.com/free-photo/vivid-blurred-colorful-background_58702-2545.jpg",
       alt: "Image 1",
       caption: (
         <>
@@ -44,7 +42,6 @@ const DetailPage = () => {
       ),
     },
     {
-      src: "https://img.freepik.com/free-photo/vivid-blurred-colorful-wallpaper-background_58702-2817.jpg?w=1060&t=st=1692627385~exp=1692627985~hmac=6b9cb13c713c8fd42cc27806f0731b8af0c77bc35e91e24680b6dedec499c0ba",
       alt: "Image 2",
       caption: (
         <>
@@ -65,7 +62,6 @@ const DetailPage = () => {
       )
     },
     {
-      src: "https://img.freepik.com/free-photo/vivid-blurred-colorful-background_58702-2545.jpg",
       alt: "Image 3",
       caption: (
         <>
@@ -85,7 +81,6 @@ const DetailPage = () => {
       )
     },
     {
-      src: "https://img.freepik.com/premium-vector/abstract-pastel-color-background-with-pink-purple-gradient-effect-graphic-design-decoration_120819-463.jpg",
       alt: "Image 4",
       caption: (
         <>
