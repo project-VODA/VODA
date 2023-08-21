@@ -32,7 +32,7 @@ type FriendsList = Friend[];
 const PagingContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 100px; // 페이징 컨트롤 위 여백 조절
+  //margin-top: 100px; // 페이징 컨트롤 위 여백 조절
 `;
 
 

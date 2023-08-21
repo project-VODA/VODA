@@ -17,7 +17,7 @@ import useErrorHandlers from '../hooks/useError';
 
 const ScrollBox = styled.div`
   overflow: scroll;
-  height: 70vh;
+  height: 50vh;
   overflow-x: hidden;
 
   &::-webkit-scrollbar {
