@@ -1,7 +1,7 @@
 import { Link } from "d3-shape";
 import React from "react";
 import styled from "styled-components";
-import sqrLogo from "../assets/images/logo_black_sqr.png"
+import sqrLogo from "../assets/images/logo_yellow_sqr.png"
 
 interface FooterProps {
   content: {
@@ -20,7 +20,7 @@ const FooterContainer = styled.footer`
   bottom: 0;
   width: 100%;
   height: 250px;
-  background-color: #f0f0f0;
+  background-color:	#696969;
   display: flex;
   align-items: center;
   justify-content: center;
