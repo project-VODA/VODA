@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Pagination from "react-js-pagination";
+import styled from "styled-components";
 
 import '../styles/detail/Paging.css';
 
@@ -10,17 +11,23 @@ interface PagingProps {
   style?: React.CSSProperties;
 }
 
-const Paging: React.FC<PagingProps> = ({page, count, setPage}) => {
+const PagingContainer = styled.div`
+  cursor: pointer;
+`;
+
+const Paging: React.FC<PagingProps> = ({page, count, setPage, style}) => {
   return (
-    <Pagination
-      activePage={page}
-      itemsCountPerPage={5}
-      totalItemsCount={count}
-      pageRangeDisplayed={5}
-      prevPageText={"‹"}
-      nextPageText={"›"}
-      onChange={setPage}
-    />
+    <PagingContainer>
+      <Pagination
+        activePage={page}
+        itemsCountPerPage={5}
+        totalItemsCount={count}
+        pageRangeDisplayed={5}
+        prevPageText={"‹"}
+        nextPageText={"›"}
+        onChange={setPage}
+      />
+    </PagingContainer>
   );
 };
 
