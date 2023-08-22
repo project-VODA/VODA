@@ -352,7 +352,7 @@ const ColorPage = () => {
           </div>
           <SideContainer>
             <Button tabIndex={4} onClick={captureLeftEye} text="Start " aria-label="색상 인식 버튼" />
-            <Button tabIndex={5} onClick={captureScreen} text="전체 캡쳐 " aria-label="화장품 인식 버튼" />
+            {/*<Button tabIndex={5} onClick={captureScreen} text="전체 캡쳐 " aria-label="화장품 인식 버튼" />*/}
             <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
             {color && (
               <p style={textStyle}>인식된 색상: {color}</p>
