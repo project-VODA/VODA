@@ -531,5 +531,9 @@ MigrationBackup/
 # End of https://www.toptal.com/developers/gitignore/api/intellij,java,maven,netbeans,vs
 
 
+<<<<<<< HEAD
 # model
+=======
+# all model
+>>>>>>> dev
 *.pt

@@ -18,6 +18,8 @@ import { updateCall } from "../store/callSlice";
 import '../styles/detail/DetailWaitingPage.css'
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHook';
 import useErrorHandlers from '../hooks/useError';
+import Paging from './Paging';
+import styled from 'styled-components';
 
 type Friend = {
   friendNo: number;
@@ -27,6 +29,43 @@ type Friend = {
 
 type FriendsList = Friend[];
 
+const PagingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  //margin-top: 100px; // 페이징 컨트롤 위 여백 조절
+`;
+
+
+const ContextBox = styled.div`
+  overflow: scroll;
+  height: 50vh;
+  overflow-x: hidden;
+
+  h1 {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 0.7em;
+    margin-top: 0.7em;
+    font-weight: bolder;
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  ul, ol {
+    margin-left: 1.5em; 
+  }
+
+  li {
+    margin-bottom: 0.5em;
+  }
+
+`
 
 const FriendList = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -48,22 +87,33 @@ const FriendList = () => {
   const [friendList, setFriendList] = useState<FriendsList>([]);
   const [isMsgOpen, setIsMsgOpen] = useState(false);
   const [msg, setMsg] = useState('');
+  const [totalItem, setTotalItem] = useState(0);
+  const [nowPage, setNowPage] = useState(1);
 
   const navigate = useNavigate();
   const errorhandlers = useErrorHandlers();
   const dispatch = useAppDispatch();
-
-  useEffect(handleFriendList, []);
+ 
+  useEffect(handleFriendList, [nowPage]);
 
   function handleFriendList() {
-    getFriendList(userInfo.userEmail)
-      .then((res: FriendsList) => {
-        setFriendList(res);
+    getFriendList(userInfo.userEmail, nowPage)
+      .then((res) => {
+        setFriendList(res.data.content);
+        setTotalItem(res.data.totalElements);
+        // console.log(nowPage);
       })
       .catch((err) => {
         errorhandlers(err.response, handleFriendList);
       })
   }
+
+  const setPage = (currentPage: React.SetStateAction<number>) => {
+    // console.log("클릭함?");
+    // console.log(currentPage);
+    setNowPage(currentPage);
+    // handleFriendList();
+  };
   
 
   const handleDeleteFriend = (friend: Friend) => {
@@ -144,6 +194,7 @@ const FriendList = () => {
       <UserSearchList/>
     </Modal>
   </>
+      {/* <ContextBox> */}
       <table className = 'friendTable' style={{ borderCollapse: 'separate', borderSpacing: '0px 20px',  }}>
         <colgroup>
           <col width = "20%" />
@@ -180,6 +231,7 @@ const FriendList = () => {
           ))}
         </tbody>
       </table>
+      {/* </ContextBox> */}
 
       <Modal id="messageModel"
         isOpen={isMsgOpen} 
@@ -206,6 +258,9 @@ const FriendList = () => {
           </span>
         </div>
       </Modal>
+      <PagingContainer>
+        <Paging page={nowPage} count={totalItem} setPage={setPage}/>
+      </PagingContainer>
     </>
   );
 };

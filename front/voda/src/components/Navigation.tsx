@@ -16,6 +16,7 @@ import { FiSettings } from "react-icons/fi";
 import { HiUser, HiOutlineLogout } from "react-icons/hi";
 import { GrUserSettings, GrInfo, GrFormClose } from "react-icons/gr";
 import { FaBars, FaHeadphonesAlt, FaRegPaperPlane } from "react-icons/fa";
+import WeatherCurrent from "./weather/WeatherCurrent";
 
 interface DropDownMenuProps {
   visible: boolean;
@@ -321,7 +322,7 @@ export default function Navigation() {
               <MenuLink to="/feedback">고객의 소리함</MenuLink>
             </ChannelButton>
             
-            
+            <WeatherCurrent/>
             <UserDropDown onClick={handleDropDownToggle}>
               { 
                 isLogin ? 

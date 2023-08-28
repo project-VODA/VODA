@@ -3,14 +3,25 @@ from flask_cors import CORS
 
 # color classify package
 import os
+
 import cv2
 from color_recognition_api import color_histogram_feature_extraction
 from color_recognition_api import knn_classifier
 # import matplotlib.pyplot as plt
 
+# object-detection classify package
+import argparse
+import io
+from PIL import Image
+import json
+import torch
+
+
 app = Flask(__name__)
 CORS(app)
+# CORS(app, supports_credentials=True, origins='*',allow_headers=["Content-Type", "Authorization", "Access-Control-Allow-Credentials"])
 context_path = '/flask'  # 원하는 컨텍스트 경로 설정
+
 
 PATH = 'training.data'
 
@@ -33,36 +44,6 @@ def classify_color(image_path):
     color_histogram_feature_extraction.color_histogram_of_test_image(new_image)
     prediction = knn_classifier.main('training.data', 'test.data')
     print('Detected color is:', prediction)
-
-    ######################################################################### 
-    # 클러스터링 결과에 대한 이미지 비교
-    ######################################################################### 
-    # channels_original = cv2.split(source_image)
-    # channels_segmented = cv2.split(new_image)
-
-    # # Plot original and segmented images with histograms
-    # plt.figure(figsize=(12, 8))
-
-    # plt.subplot(2, 2, 1)
-    # plt.imshow(cv2.cvtColor(source_image, cv2.COLOR_BGR2RGB))
-    # plt.title("Original Image")
-
-    # plt.subplot(2, 2, 2)
-    # plt.imshow(cv2.cvtColor(new_image, cv2.COLOR_BGR2RGB))
-    # plt.title("Segmented Image")
-
-    # plt.subplot(2, 2, 3)
-    # for channel in channels_original:
-    #     plt.plot(cv2.calcHist([channel], [0], None, [256], [0, 256]))
-    # plt.title("Original Histogram")
-
-    # plt.subplot(2, 2, 4)
-    # for channel in channels_segmented:
-    #     plt.plot(cv2.calcHist([channel], [0], None, [256], [0, 256]))
-    # plt.title("Segmented Histogram")
-
-    # plt.tight_layout()
-    # plt.show()
 
     return prediction
 
@@ -110,5 +91,47 @@ def index():  # put application's code here
     else:
         return jsonify({'error': '올바르지 않은 요청입니다.'})
 
+
+
+@app.route(context_path + '/cosmetics', methods=['POST'])
+def detect_cosmetics():  # put application's code here
+    if request.method == 'POST':
+        try:
+            image = request.files['image']
+            image_bytes = image.read()
+            img  = Image.open(io.BytesIO(image_bytes))
+            results = model(img, size=640)
+            # print('model results: ', type(results), results)
+            results_box = model([img])
+            results_box.render()
+            
+            # 박스 쳐진 이미지 result.jpg로 저장
+            Image.fromarray(results_box.ims[0]).save('result.jpg')
+
+            # confidence 값이 0.5 이상인 객체들만 추출
+            confident_objects = [obj for obj in results.pandas().xyxy[0].to_dict(orient="records") if obj['confidence'] >= 0.5]
+
+            # object_results = results.pandas().xyxy[0].to_json(orient="records")
+            # print('object results: ', object_results)
+
+            print('object results: ', confident_objects)
+            return jsonify({'objects': confident_objects})      # object_results
+
+        # 객체된 물체 없을 경우, 인덱스 에러가 발생하면 빈 배열
+        except IndexError:
+            return jsonify({'objects': []})
+
+        except Exception as e:
+            return jsonify({'error': str(e)})
+    else:
+        return jsonify({'error': '올바르지 않은 요청입니다.'})
+
+
 if __name__ == '__main__':
-    app.run(port=5000, host="0.0.0.0")
+    parser = argparse.ArgumentParser(description="Flask api exposing yolov5 model")
+    parser.add_argument("--port", default=5000, type=int, help="port number")
+    parser.add_argument('--model', default='yolov5s', help='model to run, i.e. --model yolov5s')
+    args = parser.parse_args()
+
+    model = torch.hub.load('ultralytics/yolov5', args.model)
+    app.run(port=args.port, host="0.0.0.0")

@@ -17,6 +17,7 @@ const HandleButton = styled.button<ThemeProps>`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-weight: bold;
 
   border: 1px solid ${({ theme }) => theme.text};
   background: ${({ theme }) => theme.text};

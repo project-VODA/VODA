@@ -88,7 +88,7 @@ export default function SseComponent() {
         if(alarm){
           new Notification("VODA", {body: `${response.content}`});
         }
-      }, 4000); 
+      }, 2000); 
     });
     
     eventSource.addEventListener("reject", (event) => {

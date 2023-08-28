@@ -23,7 +23,6 @@ const DetailPage = () => {
 
   const slides = [
     {
-      src: "https://img.freepik.com/free-photo/vivid-blurred-colorful-background_58702-2545.jpg",
       alt: "Image 1",
       caption: (
         <>
@@ -43,7 +42,6 @@ const DetailPage = () => {
       ),
     },
     {
-      src: "https://img.freepik.com/premium-vector/abstract-pastel-color-background-with-pink-purple-gradient-effect-graphic-design-decoration_120819-463.jpg",
       alt: "Image 2",
       caption: (
         <>
@@ -64,7 +62,6 @@ const DetailPage = () => {
       )
     },
     {
-      src: "https://img.freepik.com/free-vector/multi-coloured-gradient-pastel-colours_78370-1977.jpg?w=1060&t=st=1692245665~exp=1692246265~hmac=51c1832658426da7cbd4da0bf77f52d6a8306d03c02e473680a45f4a02d4add0",
       alt: "Image 3",
       caption: (
         <>
@@ -84,7 +81,6 @@ const DetailPage = () => {
       )
     },
     {
-      src: "https://img.freepik.com/free-vector/coloured-blurred-background_1112-511.jpg?w=740&t=st=1691379411~exp=1691380011~hmac=50f2c93b217feaae65ff72b5fcbca32f3725b3e62171843fb96a1a2d15f1441d",
       alt: "Image 4",
       caption: (
         <>

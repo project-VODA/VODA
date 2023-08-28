@@ -9,4 +9,4 @@ export const GOOGLE_API_URL = "https://texttospeech.googleapis.com/v1/text:synth
 //로컬 서버용
 // export const API_URL = "http://localhost:8080/voda";
 // export const FLASK_URL = "http://localhost:5000/flask";
-// export const GOOGLE_API_URL = "https://texttospeech.googleapis.com/v1/text:synthesize";
+// export const GOOGLE_API_URL = "https://texttospeech.googleapis.com/v1/text:synthesize";n
