@@ -123,14 +123,16 @@ SSAFY 9기 2학기 공통 프로젝트
 
 
 ## 프로젝트 산출물
+### DB ERD
+![Alt text](./exec/resource/img/ERD.png) <br/>
 
-**요구사항 명세서**
+### 요구사항 명세서
 ![Alt text](./exec/resource/img/요구사항명세서.JPG) <br/>
 
-**API명세서** 
+### API명세서
 
 
-**아키텍쳐 다이어그램**
+### 아키텍쳐 다이어그램
 ![Alt text](./exec/resource/img/아키텍쳐.png) <br/>
 
 
