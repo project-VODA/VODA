@@ -37,7 +37,8 @@ SSAFY 9기 2학기 공통 프로젝트
 
 ### Back
 - Spring Boot
-- 
+- JPA
+- MySql
 
 
 ### AI Model
@@ -48,7 +49,9 @@ SSAFY 9기 2학기 공통 프로젝트
 
 
 ### Infra
-- 
+- AWS EC2
+- Nginx
+- Docker
 
 
 
