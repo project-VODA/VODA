@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import styled from 'styled-components';
 import { colorRecognition } from "../../apis/color";
+import { cosmeticRecognition } from "../../apis/color";
 import { tts } from "../../apis/tts"
 import { CgColorPicker } from "react-icons/cg";
 import * as faceapi from 'face-api.js';
@@ -39,6 +40,7 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
+margin-top: 60px;
 `;
 
 const Title = styled.p`
@@ -65,7 +67,6 @@ const ColorPage = () => {
 
   const buttonStyle: React.CSSProperties = {
     margin: '16px',
-    marginTop: '60px',
     borderRadius: '500px',
     fontSize: '20px',
     fontWeight: 'bold',
@@ -77,7 +78,8 @@ const ColorPage = () => {
     transform: 'rotateY(180deg)',
     WebkitTransform: 'rotateY(180deg)',
     width: '300px',
-    marginTop: '16px'
+    marginTop: '16px',
+    position: 'relative',
   };
 
   const textStyle: React.CSSProperties = {
@@ -87,8 +89,15 @@ const ColorPage = () => {
     fontWeight: 'bold',
   };
 
+  const boxStyle: React.CSSProperties = {
+    position: 'absolute',
+    border: '2px solid red',
+    boxSizing: 'border-box',
+  }
+
   const [capturedImage, setCapturedImage] = useState(null);
   const [color, setColor] = useState(null);
+  const [cosmetic, setCosmetic] = useState(null);
   const typeNo = useSelector((state: RootState) => state.user.userSetting.usersettingTypeNo);
   const voiceName = typeNo === 0 || typeNo === 2 ? 'ko-KR-Neural2-C' : 'ko-KR-Neural2-A';
   const videoRef = useRef(null);
@@ -156,6 +165,44 @@ const ColorPage = () => {
   }
 
 
+  const cosmeticTTS  = (cosmetic: string) => {
+    let text = '';
+    if(cosmetic === undefined){
+      text = '화장품을 인식하지 못했습니다.';
+    } else{
+      text = `인식된 화장품은 ${cosmetic}입니다.`;
+    }
+    
+    const requestData = {
+      input: {
+        text: text,
+      },
+      voice: {
+        languageCode: 'ko-KR', // 원하는 언어 코드
+        name: voiceName,
+      },
+      audioConfig: {
+        audioEncoding: 'MP3', // MP3 포맷으로 설정
+      },
+    };
+
+    tts(requestData)
+      .then((res) => {
+        const audioData = res.audioContent;
+        const audioArrayBuffer = Uint8Array.from(atob(audioData), c => c.charCodeAt(0)).buffer;
+        const audioBlob = new Blob([audioArrayBuffer], { type: 'audio/mpeg' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+
+        audioPlayer.src = audioUrl;
+        audioPlayer.play();
+
+      }
+      )
+      .catch(error => {
+        console.error('TTS API 요청 중 오류:', error);
+      });
+  }
+
   const stopWebcam = () => {
     const stream = videoRef.current?.srcObject as MediaStream;
     if (stream) {
@@ -174,27 +221,39 @@ const ColorPage = () => {
   };
 
   // 전체 캡쳐
-  // function captureScreen() {
-  //   const video = videoRef.current;
-  //   const canvas = canvasRef.current;
+  const captureScreen = () => {
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
 
-  //   if (video && canvas) {
-  //     canvas.width = video.videoWidth;
-  //     canvas.height = video.videoHeight;
+    if (video && canvas) {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
 
-  //     const ctx = canvas.getContext('2d');
-  //     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-  //     canvas.toBlob((blob: Blob | null) => {
-  //       if (blob) {
-  //         const formData = new FormData();
-  //         formData.append('image', blob);
-  //         setCapturedImage(URL.createObjectURL(blob));
-  //         getColor(formData);
-  //       }
-  //     });
-  //   }
-  // }
+      canvas.toBlob((blob: Blob | null) => {
+        if (blob) {
+          const formData = new FormData();
+          formData.append('image', blob);
+          setCapturedImage(URL.createObjectURL(blob));
+          
+          cosmeticRecognition(formData)
+            .then((res) => {
+              console.log('typeNo: ', typeNo)
+              console.log('인식된 정보: ', res.objects);
+              // setCosmetic(res.cosmetic);
+              // cosmeticTTS(res.cosmetic);
+            }
+            )
+            .catch((err) => {
+              console.log(err)
+            }
+          )
+        }
+      });
+    }
+  }
 
   const captureLeftEye = async () => {
     const video = videoRef.current;
@@ -306,8 +365,12 @@ const ColorPage = () => {
           </div>
           <SideContainer>
           <button onClick={captureLeftEye} style={buttonStyle}>Start <CgColorPicker size={20} /></button>
+          {/*<button onClick={captureScreen} style={buttonStyle}>전체 캡쳐 <CgColorPicker size={20} /></button>*/}
           {color && (
             <p style={textStyle}>인식된 색상: {color}</p>
+          )}
+          {cosmetic && (
+            <p style={textStyle}>인식된 화장품: {cosmetic}</p>
           )}
           {capturedImage && (
             <div>

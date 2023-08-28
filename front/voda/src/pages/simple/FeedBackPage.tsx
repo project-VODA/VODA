@@ -12,6 +12,7 @@ text-decoration: none;
 color: inherit;
 `;
 
+
 const NewPostContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -49,7 +50,6 @@ const SimpleFeedBack = () => {
                 <BoardList />
 
             </ListContainer>
-
 
 
         </>

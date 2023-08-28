@@ -104,7 +104,7 @@ const SimpleEnvSettingPage = () => {
                   aria-label='남성음성과 상황에 맞는 조언'
                   style={{ width: '20px', height: '20px' }}
                 />
-                남성음성 & 조언
+                남자 목소리 & 대화 조언
               </label>
             </div>
             <div style={{ marginTop:'20px' }}>
@@ -118,7 +118,7 @@ const SimpleEnvSettingPage = () => {
                   aria-label='여성음성과 상황에 맞는 조언'
                   style={{ width: '20px', height: '20px' }}
                 />
-                여성음성 & 조언
+                여자 목소리 & 대화 조언
               </label>
             </div>
             <div style={{marginTop: '20px'}}></div>
