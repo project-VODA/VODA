@@ -131,7 +131,10 @@ SSAFY 9기 2학기 공통 프로젝트
 ![Alt text](./exec/resource/img/요구사항명세서.JPG) <br/>
 
 ### API명세서
-
+![Alt text](./exec/resource/img/api1.PNG) <br/>
+![Alt text](./exec/resource/img/api2.PNG) <br/>
+![Alt text](./exec/resource/img/api3.PNG) <br/>
+![Alt text](./exec/resource/img/api4.PNG) <br/>
 
 ### 아키텍쳐 다이어그램
 ![Alt text](./exec/resource/img/아키텍쳐.png) <br/>
