@@ -365,7 +365,7 @@ const ColorPage = () => {
           </div>
           <SideContainer>
           <button onClick={captureLeftEye} style={buttonStyle}>Start <CgColorPicker size={20} /></button>
-          {/*<button onClick={captureScreen} style={buttonStyle}>전체 캡쳐 <CgColorPicker size={20} /></button>*/}
+          <button onClick={captureScreen} style={buttonStyle}>전체 캡쳐 <CgColorPicker size={20} /></button>
           {color && (
             <p style={textStyle}>인식된 색상: {color}</p>
           )}
