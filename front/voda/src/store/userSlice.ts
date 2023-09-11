@@ -49,14 +49,14 @@ const userSlice = createSlice({
         updateUserName: (state, action: PayloadAction<string>) => {
             state.userInfo.userName = action.payload;
         },
-        updateUserSetting: (state, action: PayloadAction<UserSettingType>) => {
+        updateSliceUserSetting: (state, action: PayloadAction<UserSettingType>) => {
             state.userSetting = action.payload;
         }
     }
 });
 
 export default userSlice;
-export const {userSliceLogin, userSliceLogout, updateAccessToken, updateUserName, updateUserSetting} = userSlice.actions;
+export const {userSliceLogin, userSliceLogout, updateAccessToken, updateUserName, updateSliceUserSetting} = userSlice.actions;
 
 export interface UserInfoType{
     userEmail: string,

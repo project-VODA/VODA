@@ -1,29 +1,24 @@
-import { axiosServer } from '../apis/server';
 import { tts } from "../apis/tts"
 import { OpenVidu } from 'openvidu-browser';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import StreamComponent from './stream/StreamComponent';
-import './VideoRoomComponent.css';
-import '../styles/simple/video.css'
 
-import SettingButton from '../components/SettingButton';
 import OpenViduLayout from '../layout/openvidu-layout';
 import UserModel from '../constants/user-model';
 
 import { offCalling } from "../apis/calling";
-import ToolbarComponentClass from './toolbar/ToolbarComponentClass';
 import ToolbarComponent from './toolbar/ToolbarComponent';
 
+import './VideoRoomComponent.css';
+import '../styles/simple/video.css'
 // export const getUserHandicap = async () => {
 //   const res = await axiosServer().get(`/users/mypage`);
 //   return res.data.useHandicap;
 // }
 
 var localUser = new UserModel();
-const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8080/voda/';
-
-const userHandicap = sessionStorage.getItem("userHandicap")
+// const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8080/voda/';
 
 class VideoRoomComponent extends Component {
   constructor(props) {
@@ -31,7 +26,7 @@ class VideoRoomComponent extends Component {
     this.hasBeenUpdated = false;
     this.layout = new OpenViduLayout();
     let sessionName = this.props.sessionName ? this.props.sessionName : 'SessionA';
-    let userName = this.props.user ? this.props.user : 'OpenVidu_User' + Math.floor(Math.random() * 100);
+    let userName = this.props.user ? this.props.user : '사용자' + Math.floor(Math.random() * 100);
     this.remotes = [];
     this.localUserAccessAllowed = false;
     this.state = {
@@ -41,13 +36,12 @@ class VideoRoomComponent extends Component {
       localUser: undefined,
       subscribers: [],
       currentVideoDevice: undefined,
-      // currentExpressionData: undefined,
     };
 
     this.audioPlayer = new Audio();
     this.typeNo = this.props.typeNo;
-    this.isIncall = this.props.isIncall;
-    const advices = [
+    this.isRejectCall = this.props.isRejectCall;
+    this.advices = [
       [
         "화난 표정을 하고 있어요. 기분이 안좋아 보이는데 무슨 일이 있냐고 물어보세요."
       ],
@@ -110,13 +104,19 @@ class VideoRoomComponent extends Component {
       animate: true, // Whether you want to animate the transitions
     };
 
-    // console.log(this.props.token);
-
     this.layout.initLayoutContainer(document.getElementById('layout'), openViduLayoutOptions);
     window.addEventListener('beforeunload', this.onbeforeunload);
     window.addEventListener('resize', this.updateLayout);
     window.addEventListener('resize', this.checkSize);
     this.joinSession();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // console.log("감지하니?");
+    // isRejectCall 상태 변화 감지
+    if (this.props.isRejectCall !== prevProps.isRejectCall && this.props.isRejectCall) {
+      this.leaveSession();
+    }
   }
 
 
@@ -129,6 +129,7 @@ class VideoRoomComponent extends Component {
 
   onbeforeunload(event) {
     this.leaveSession();
+
   }
 
   joinSession() {
@@ -189,7 +190,7 @@ class VideoRoomComponent extends Component {
     var devices = await this.OV.getDevices();
     var videoDevices = devices.filter(device => device.kind === 'videoinput');
 
-    let publisher = this.OV.initPublisher(undefined, {
+    let publisher = await this.OV.initPublisher(undefined, {
       audioSource: undefined,
       videoSource: videoDevices[0].deviceId,
       publishAudio: localUser.isAudioActive(),
@@ -247,7 +248,6 @@ class VideoRoomComponent extends Component {
   leaveSession() {
     const mySession = this.state.session;
     console.log("video컴포넌트 에 왔니? : " + this.props.callNo);
-
     //voda :ysh
     //back server 통화 종료
     offCalling(this.props.callNo)
@@ -268,6 +268,8 @@ class VideoRoomComponent extends Component {
         /*if (this.props.leaveSession) {
           this.props.leaveSession();
         }*/
+        // isRejectCall 상태를 false로 업데이트
+        this.setState({ isRejectCall: false });
       })
       .catch((err) => {
         console.log(err);
@@ -341,10 +343,10 @@ class VideoRoomComponent extends Component {
   }
 
   // voda - KJW
-  playExpression = (expressionData) => {
-
+  playExpression = (expression) => {
+    
     let text = '';
-    switch(expressionData.expression){
+    switch(expression){
       case 'angry': 
         text = '화난 표정';
         break;
@@ -370,46 +372,7 @@ class VideoRoomComponent extends Component {
         text = '표정이 감지되지 않았습니다.';
     }
     let voiceName = this.typeNo === 0? 'ko-KR-Neural2-C' : 'ko-KR-Neural2-A';
-    tts(text, voiceName);
-  };
 
-  // voda - KJW
-  playExpressionWithAdvice = (expressionData) => {
-    let index = 0;
-    switch(expressionData.expression){
-      case 'angry': 
-        index = 0;
-        break;
-      case 'disgust': 
-        index = 1;
-        break;
-      case 'happy': 
-        index = 2;
-        break;
-      case 'neutral': 
-        index = 3;
-        break;
-      case 'sad': 
-        index = 4;
-        break;
-      case 'scared':
-        index = 5; 
-        break;
-      case 'surprised': 
-        index = 6;
-        break;
-      default:
-        index = 7;
-    }
-
-    let text = this.advices[index][Math.floor(Math.random() * this.advices[index].length)];
-    let voiceName = this.typeNo === 2? 'ko-KR-Neural2-C' : 'ko-KR-Neural2-A';
-    tts(text, voiceName);
-  };
-
-  // voda - KJW
-  tts(text, voiceName){
-    console.log('typeNo:', this.typeNo);
     const requestData = {
       input: {
         text: text,
@@ -437,7 +400,69 @@ class VideoRoomComponent extends Component {
       .catch(error => {
         console.error('TTS API 요청 중 오류:', error);
       });
-  }
+  };
+
+  // voda - KJW
+  playExpressionWithAdvice = (expression) => {
+
+    let index = 0;
+    switch(expression){
+      case 'angry': 
+        index = 0;
+        break;
+      case 'disgust': 
+        index = 1;
+        break;
+      case 'happy': 
+        index = 2;
+        break;
+      case 'neutral': 
+        index = 3;
+        break;
+      case 'sad': 
+        index = 4;
+        break;
+      case 'scared':
+        index = 5; 
+        break;
+      case 'surprised': 
+        index = 6;
+        break;
+      default:
+        index = 7;
+    }
+
+    let text = this.advices[index][Math.floor(Math.random() * this.advices[index].length)];
+    let voiceName = this.typeNo === 2? 'ko-KR-Neural2-C' : 'ko-KR-Neural2-A';
+
+    const requestData = {
+      input: {
+        text: text,
+      },
+      voice: {
+        languageCode: 'ko-KR',
+        name: voiceName,
+      },
+      audioConfig: {
+        audioEncoding: 'MP3',
+      },
+    };
+
+    tts(requestData)
+      .then((res) => {
+        const audioData = res.audioContent;
+        const audioArrayBuffer = Uint8Array.from(atob(audioData), c => c.charCodeAt(0)).buffer;
+        const audioBlob = new Blob([audioArrayBuffer], { type: 'audio/mpeg' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+
+        this.audioPlayer.src = audioUrl;
+        this.audioPlayer.play();
+      }
+      )
+      .catch(error => {
+        console.error('TTS API 요청 중 오류:', error);
+      });
+  };
 
   subscribeToUserChanged() {
     // voda - KJW
@@ -452,10 +477,11 @@ class VideoRoomComponent extends Component {
     this.state.session.on('signal:send-expression', (event) => {
       if (event.from.connectionId !== this.state.session.connection.connectionId) {
         console.log('typeNo:', this.typeNo);
+        const expression = event.data;
         if(this.typeNo === 0 || this.typeNo === 1){
-          this.playExpression(JSON.parse(event.data));
+          this.playExpression(expression);
         }else{
-          this.playExpressionWithAdvice(JSON.parse(event.data));
+          this.playExpressionWithAdvice(expression);
         }
       }
     });
@@ -578,10 +604,10 @@ class VideoRoomComponent extends Component {
 	sendExpression = () => {
     // Check if the localUser is connected and has a stream manager
 		if (this.state.localUser && this.state.localUser.getStreamManager()) {
-      console.log('표정 데이터: ', this.props.expressionData)
+      console.log('표정 데이터: ', this.props.expressionData.expression)
 		  // Send the text data as a broadcast message to all participants
 		  this.state.session.signal({
-			data: JSON.stringify(this.props.expressionData),
+			data: this.props.expressionData.expression,
 			to: [], // Empty array means broadcast to everyone
 			type: 'send-expression', // Use the same type as the receiver is listening to
 		  })
@@ -656,7 +682,15 @@ class VideoRoomComponent extends Component {
         { theme === 'simple' ? (
         <div id="layout" className="simplebounds">
           {this.state.subscribers.map((sub, i) => (
-            <div key={i} className="OT_root OT_subscriber custom-class" id="remoteUsers">
+            <div 
+              key={i}
+              className="OT_root OT_subscriber custom-class" 
+              id="remoteUsers"
+              style={{
+                transform: 'rotateY(180deg)',
+                WebkitTransform: 'rotateY(180deg)', 
+              }}
+            >
               <StreamComponent user={sub} streamId={sub.streamManager.stream.streamId} />
             </div>
           ))}
@@ -669,7 +703,11 @@ class VideoRoomComponent extends Component {
         </div>) : (
           <div id="layout" className="detailbounds">
           {this.state.subscribers.map((sub, i) => (
-            <div key={i} className="OT_root OT_subscriber custom-class" id="remoteUsers">
+            <div key={i} className="OT_root OT_subscriber custom-class" id="remoteUsers"
+            style={{
+              transform: 'rotateY(180deg)',
+              WebkitTransform: 'rotateY(180deg)', 
+            }}>
               <StreamComponent user={sub} streamId={sub.streamManager.stream.streamId} />
             </div>
           ))}
@@ -730,9 +768,9 @@ class VideoRoomComponent extends Component {
 // 리덕스 스토어의 userSetting 값을 VideoRoomComponent 컴포넌트의 props로 매핑
 const mapStateToProps = state => {
   return {
-    typeNo: state.user.userSetting.userSettingTypeNo,
-    isIncall: state.call.isIncall,
+    typeNo: state.user.userSetting.usersettingTypeNo,
     expressionData : state.expression.expressionData,
+    // isRejectCall : state.callNo.isRejectCall,
   };
 };
 

@@ -1,10 +1,7 @@
-// components/Input.tsx
-
 import React, { useContext } from 'react';
 
 import styled from 'styled-components';
 import { ThemeContext } from '../App';
-import { SimpleTheme, Theme } from '../styles/theme';
 
 const TextContainer = styled.div`
   display: flex;

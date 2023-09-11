@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams, Link  } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { getArticleDetail, updateArticle } from '../../../apis/board';
+// updateArticle
+import { getArticleDetail } from '../../../apis/board';
 
 import Title from '../../../components/Title';
 import Button from '../../../components/RegisterButton';
@@ -47,6 +48,9 @@ const SimpleDetailArticle = () => {
       getArticleDetail(articleNo)
         .then((res) => {
           setDetailBoardData(res);
+
+          console.log("작성자: " + detailBoardData.userEmail);
+          console.log("글 내용: " + detailBoardData.articleContent);
         })
         .catch((err) => {
           errorHandlers(err.response, handleArticlDetail);
@@ -56,16 +60,16 @@ const SimpleDetailArticle = () => {
     return (
       <>
         <StyledLink to='' aria-label={`${detailBoardData.articleTitle} 상세 조회 페이지입니다.`}>
-          <Title title={detailBoardData.articleTitle} />
+          <Title tabIndex={0} title={detailBoardData.articleTitle} />
         </StyledLink>
-          <ItemContainer>
+          <ItemContainer tabIndex={0}>
               {/* 게시글 header */}
               {/* <StyledLink to='' aria-label={`${detailBoardData.articleNo}번째 글, 작성일시 ${detailBoardData.articleRegTime}`}> */}
-            <ArticleHeader articleNo={detailBoardData.articleNo} articleRegDate={detailBoardData.articleRegTime} aria-label={`${detailBoardData.articleNo}번째 글, 작성일시 ${detailBoardData.articleRegTime}`}/>
+            <ArticleHeader tabIndex={0} userEmail={detailBoardData.userEmail} articleNo={detailBoardData.articleNo} articleRegDate={detailBoardData.articleRegTime} aria-label={`${detailBoardData.articleNo}번째 글, 작성일시 ${detailBoardData.articleRegTime}`}/>
               {/* </StyledLink> */}
               {/* 게시글 content */}
               {/* <StyledLink to='' aria-label={`게시글 내용, ${detailBoardData.articleTitle}`}> */}
-            <ArticleContent articleContent={detailBoardData.articleContent} aria-label={`게시글 내용, ${detailBoardData.articleContent}`}/>
+            <ArticleContent tabIndex={0} articleContent={detailBoardData.articleContent} aria-label={`게시글 내용, ${detailBoardData.articleContent}`}/>
               {/* </StyledLink> */}
             {/* <CommentContent></CommentContent> */}
             <CommentList articleNo={articleNo} />

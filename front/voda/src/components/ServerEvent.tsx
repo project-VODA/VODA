@@ -1,6 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store/store';
 import { API_URL } from '../constants/url';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
@@ -8,14 +6,14 @@ import HandleButton from './HandleBtn';
 
 import { receiveCalling, rejectCalling } from '../apis/calling';
 
-import { Session } from 'openvidu-browser';
-import { callInfoType, updateCall } from '../store/callSlice';
+// callInfoType, 
+import { updateCall, setIsRejectCall } from '../store/callSlice';
 import { styled } from 'styled-components';
 import AlarmAudio from './AlarmAudio';
 import { userSliceLogout } from '../store/userSlice';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHook';
 import useErrorHandlers from '../hooks/useError';
-import { error } from 'console';
+
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -28,6 +26,9 @@ const ButtonContainer = styled.div`
 `;
 
 const SimpleModal = {
+  overlay: {
+    zIndex: 1000,
+  },
   content: {
     backgroundColor: '#001d3d',
   },
@@ -53,14 +54,13 @@ export default function SseComponent() {
   const [isCallModalOpen, setisCallModalOpen] = useState(false);
   const [isReject, setIsReject] = useState(false); //통화거절
 
-  const [openViduSession, setOpenViduSession] = useState<Session | null>(null);
   const userEmail = useAppSelector((state) => state.user.userInfo.userEmail);
   const [alarm, setAlarm] = useState(getNotificaationPermission());
 
   let eventSource: EventSource = null;
 
   useEffect(() => {
-    if(userEmail == null || userEmail == ''){
+    if(userEmail === null || userEmail === ''){
       if(eventSource &&  eventSource.readyState !== eventSource.CLOSED){
         console.log("sse 연결 끊김");
         eventSource.close();
@@ -88,7 +88,7 @@ export default function SseComponent() {
         if(alarm){
           new Notification("VODA", {body: `${response.content}`});
         }
-      }, 4000); 
+      }, 2000); 
     });
     
     eventSource.addEventListener("reject", (event) => {
@@ -101,14 +101,22 @@ export default function SseComponent() {
       setCallNo(response.callNo);
     });
     eventSource.addEventListener("logout", (event) => {
+      console.log("강제 로그아웃");
+      if(eventSource && eventSource.readyState !== eventSource.CLOSED){
+        console.log("sse 연결 끊김");
+        eventSource.close();
+      }
       dispatch(userSliceLogout());
       navigate('/');
+      alert("다른 곳에서 로그인 하여 접속이 종료되었습니다.");
     });
 
     return () => {
-      if(eventSource){
-        console.log("연결 끊김");
-        eventSource.close();
+      if(userEmail === null || userEmail === ''){
+        if(eventSource &&  eventSource.readyState !== eventSource.CLOSED){
+          console.log("sse 연결 끊김");
+          eventSource.close();
+        }
       }
     }
   }, [userEmail]);
@@ -150,11 +158,9 @@ export default function SseComponent() {
   }
 
   function exitcall() {
-    if (openViduSession) {
-      openViduSession.disconnect(); // OpenVidu 세션에서 연결을 끊습니다.
-    }
-    setisCallModalOpen(false);
-
+    dispatch(setIsRejectCall(true));
+    setIsReject(false);
+    navigate('/home');
   }
 
   return (
@@ -163,15 +169,17 @@ export default function SseComponent() {
       {isReject ? (
         <Modal id="callModal"
         isOpen={isReject} 
-        onRequestClose={(e) => setisCallModalOpen(false)}
+        onRequestClose={(e) => setIsReject(false)}
         ariaHideApp={false}
         style={localStorage.getItem('theme') === 'detail' ? DetailModal : SimpleModal}
         shouldCloseOnOverlayClick={false}
       >
-        <p style={{textAlign: 'center', fontSize: 'xx-large', margin: '5%'}}>{content}</p>
-        <ButtonContainer>
-          <HandleButton text='나가기' onClick={exitcall} />
-        </ButtonContainer>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <p style={{ textAlign: 'center', fontSize: 'xx-large', margin: '5%' }}>{content}</p>
+          <ButtonContainer>
+            <HandleButton text='나가기' onClick={exitcall} />
+          </ButtonContainer>
+        </div>
       </Modal>
       ) : (
         <Modal id="callModal"

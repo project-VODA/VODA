@@ -41,19 +41,3 @@ export const GlobalStyle = createGlobalStyle<ThemeInterface>`
         line-height: 200%;
     }
 `;
-
-// * {
-// 	box-sizing: border-box;
-// }
-
-// ol, ul, li {
-//     list-style: none;
-// }
-
-// button {
-//     background: none;
-//     cursor: pointer;
-//     border: none;
-//     outline: none;
-//     transition: all 0.5s ease-in-out;
-// }

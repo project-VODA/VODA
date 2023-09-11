@@ -19,9 +19,10 @@ export const searchUser = async (userSearchRequest: object) => {
 }
 
 // 친구 목록
-export const getFriendList = async (userEmail: string) => {
-  const res = await axiosServer().get<any>(`/friends/${userEmail}`);
-  return res.data;
+export const getFriendList = async (userEmail: string, page :number) => {
+  const res = await axiosServer().get<any>(`/friends/${userEmail}?page=${page-1}`);
+  console.log(res);
+  return res;
 }
 
 // 친구 삭제

@@ -88,11 +88,6 @@ public class CallHistoryService {
     }
 
     public void updateCallTime(CallHistory currentcallHistory, String msg){
-//        Timestamp nowTime = new Timestamp(System.currentTimeMillis());
-//        SimpleDateFormat sdf = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
-//        nowTime = Timestamp.valueOf(sdf.format(nowTime));
-//        log.info(nowTime.toString());
-
         LocalDateTime nowTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         Timestamp formattedNowTime = Timestamp.valueOf(nowTime.format(formatter));
@@ -141,17 +136,10 @@ public class CallHistoryService {
             if(item.get("call_starttime")!=null){
                 startTime = item.get("call_starttime").toString();
             }
-//            else{
-//                startTime = item.get("call_endtime").toString();
-//            }
 
             if(item.get("call_endtime")!=null){
                 EndTime = item.get("call_endtime").toString();
             }
-//            else{
-//                EndTime = item.get("call_starttime").toString();
-//            }
-
             log.info(item.get("senderEmail").toString());
 
             RecentCall r = RecentCall.builder()

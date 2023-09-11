@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import errorImage from '../assets/images/errorImage.png';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';

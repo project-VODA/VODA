@@ -4,9 +4,10 @@ import { RootState } from '../../store/store';
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import SimpleTitle from '../../components/SimpleTitle';
-import Button from '../../components/board/WriteButton';
+import Button from '../../components/SettingButton'
 
 import { colorRecognition } from "../../apis/color";
+import { cosmeticRecognition } from "../../apis/color";
 import { tts } from "../../apis/tts"
 import * as faceapi from 'face-api.js';
 
@@ -21,6 +22,11 @@ const StyledContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   min-height: calc(100vh - 100px);
+
+  @media (max-width: 768px) {
+    /* 모바일 화면 크기에서는 세로로 배치 */
+    flex-direction: column;
+  }
 `;
 
 const VideoContainer = styled.div`
@@ -29,6 +35,33 @@ const VideoContainer = styled.div`
   border-radius: 10px;
   overflow: hidden;
   margin-right: 16px;
+
+  @media (max-width: 768px) {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 60px;
+  }
+`;
+
+const SideContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 60px;
+`;
+
+const Title = styled.p`
+  margin-top: 60px;
+  text-align: center;
+  font-size: 2em;
+  font-weight: bold;
+
+  @media (max-width: 768px) {
+    /* 모바일 화면 크기에서 스타일 변경 */
+    font-size: 1.5em;
+    margin-top: 0px;
+  }
 `;
 
 const ColorPage = () => {
@@ -40,14 +73,17 @@ const ColorPage = () => {
     height: 'auto',
   };
 
-  const colorStyle: React.CSSProperties = {
+  const textStyle: React.CSSProperties = {
     margin: '16px',
-    fontSize: '25px',
+    textAlign: 'center',
+    fontSize: '1em',
     fontWeight: 'bold',
   };
 
   const [color, setColor] = useState(null);
+  const [cosmetic, setCosmetic] = useState(null);
   const typeNo = useSelector((state: RootState) => state.user.userSetting.usersettingTypeNo);
+  const voiceName = typeNo === 0 || typeNo === 2 ? 'ko-KR-Neural2-C' : 'ko-KR-Neural2-A';
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const audioPlayer = new Audio();
@@ -75,7 +111,12 @@ const ColorPage = () => {
   }
 
   const colorTTS = (color: string) => {
-    const text = `인식된 색상은 ${color}입니다.`; // 음성으로 변환할 텍스트
+    let text = '';
+    if(color === undefined){
+      text = '색상을 인식하지 못했습니다.';
+    } else{
+      text = `인식된 색상은 ${color}입니다.`; // 음성으로 변환할 텍스트
+    }
 
     const requestData = {
       input: {
@@ -83,7 +124,45 @@ const ColorPage = () => {
       },
       voice: {
         languageCode: 'ko-KR', // 원하는 언어 코드
-        name: typeNo === 0 ? 'ko-KR-Neural2-C' : 'ko-KR-Neural2-A',
+        name: voiceName,
+      },
+      audioConfig: {
+        audioEncoding: 'MP3', // MP3 포맷으로 설정
+      },
+    };
+
+    tts(requestData)
+      .then((res) => {
+        const audioData = res.audioContent;
+        const audioArrayBuffer = Uint8Array.from(atob(audioData), c => c.charCodeAt(0)).buffer;
+        const audioBlob = new Blob([audioArrayBuffer], { type: 'audio/mpeg' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+
+        audioPlayer.src = audioUrl;
+        audioPlayer.play();
+
+      }
+      )
+      .catch(error => {
+        console.error('TTS API 요청 중 오류:', error);
+      });
+  }
+
+  const cosmeticTTS  = (cosmetic: string) => {
+    let text = '';
+    if(cosmetic === undefined){
+      text = '화장품을 인식하지 못했습니다.';
+    } else{
+      text = `인식된 화장품은 ${cosmetic}입니다.`;
+    }
+    
+    const requestData = {
+      input: {
+        text: text,
+      },
+      voice: {
+        languageCode: 'ko-KR', // 원하는 언어 코드
+        name: voiceName,
       },
       audioConfig: {
         audioEncoding: 'MP3', // MP3 포맷으로 설정
@@ -125,7 +204,8 @@ const ColorPage = () => {
   };
 
 
-  function captureScreen() {
+  //전체 캡쳐
+  const captureScreen = () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
 
@@ -140,13 +220,25 @@ const ColorPage = () => {
         if (blob) {
           const formData = new FormData();
           formData.append('image', blob);
-          getColor(formData);
+          
+          cosmeticRecognition(formData)
+            .then((res) => {
+              setCosmetic(res.cosmetic);
+              cosmeticTTS(res.cosmetic);
+              console.log('typeNo: ', typeNo)
+              console.log('인식된 화장품: ', res.cosmetic);
+            }
+            )
+            .catch((err) => {
+              console.log(err)
+            }
+          )
         }
       });
     }
   }
 
-    const captureLeftEye = async () => {
+  const captureLeftEye = async () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
 
@@ -162,7 +254,7 @@ const ColorPage = () => {
         faceapi.nets.faceLandmark68Net.loadFromUri('/models'), // 모델 로드
       ]);
 
-      const detections = await faceapi.detectSingleFace(video, 
+      const detections = await faceapi.detectSingleFace(video,
         new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks();
 
       if (detections) {
@@ -202,83 +294,73 @@ const ColorPage = () => {
             }
           });
         }
+      } else{
+        console.log('얼굴이 인식되지 않았습니다.');
+        setColor(null);
+        const requestData = {
+          input: {
+            text: "얼굴이 인식되지 않았습니다.",
+          },
+          voice: {
+            languageCode: 'ko-KR',
+            name: voiceName,
+          },
+          audioConfig: {
+            audioEncoding: 'MP3',
+          },
+        };
+
+        tts(requestData)
+          .then((res) => {
+            const audioData = res.audioContent;
+            const audioArrayBuffer = Uint8Array.from(atob(audioData), c => c.charCodeAt(0)).buffer;
+            const audioBlob = new Blob([audioArrayBuffer], { type: 'audio/mpeg' });
+            const audioUrl = URL.createObjectURL(audioBlob);
+
+            audioPlayer.src = audioUrl;
+            audioPlayer.play();
+
+          }
+          )
+          .catch(error => {
+            console.error('TTS API 요청 중 오류:', error);
+          });
       }
     }
   }
 
-  // const captureFaceCheek = async () => {
-  //   const video = videoRef.current;
-  //   const canvas = canvasRef.current;
-
-  //   if (video && canvas) {
-  //     canvas.width = video.videoWidth;
-  //     canvas.height = video.videoHeight;
-
-  //     const ctx = canvas.getContext('2d');
-  //     ctx?.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-  //     await Promise.all([
-  //       faceapi.nets.tinyFaceDetector.loadFromUri('/models'), // 모델 로드
-  //       faceapi.nets.faceLandmark68Net.loadFromUri('/models'), // 모델 로드
-  //     ]);
-
-  //     const detections = await faceapi.detectSingleFace(video, 
-  //       new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks();
-
-  //     if (detections) {
-  //       console.log(detections)
-  //       const faceBox = detections.detection.box;
-  //       const landmarks = detections.landmarks;
-
-  //       const startPoint = landmarks.positions[35];
-  //       const endPoint = landmarks.positions[5];
-
-  //       const startX = startPoint.x;
-  //       const startY = startPoint.y;
-  //       const width = startPoint.x - endPoint.x;
-  //       const height = endPoint.y - startPoint.y;
-  //       console.log('시작:', startX, startY);
-  //       console.log('끝:', endPoint.x, endPoint.y);
-  //       console.log('너비:', width);
-  //       console.log('높이:', height);
-
-  //       const faceCanvas = document.createElement('canvas');
-  //       const faceCtx = faceCanvas.getContext('2d');
-
-  //       if (faceBox) {
-  //         faceCanvas.width = width;
-  //         faceCanvas.height = height;
-
-  //         // faceCtx?.drawImage(canvas, faceBox.x, faceBox.y, faceBox.width, faceBox.height, 0, 0, faceBox.width, faceBox.height);
-  //         faceCtx?.drawImage(canvas, startX, startY, width, height, 0, 0, width, height);
-
-  //         faceCanvas.toBlob((blob: Blob | null) => {
-  //           if (blob) {
-  //             const formData = new FormData();
-  //             formData.append('image', blob);
-  //             getColor(formData);
-  //           }
-  //         });
-  //       }
-  //     }
-  //   }
-  // }
 
   return (
     <>
       <StyledLink to='/home' aria-label='색상 인식 페이지입니다. 홈 화면으로 이동하시려면 이 버튼을 누르세요'>
-        <SimpleTitle imgSrc='SimpleLogo' aria-live='assertive' aria-label='색상 인식 페이지입니다. 홈 화면으로 이동하시려면 이 버튼을 누르세요' />
+        <SimpleTitle tabIndex={0} imgSrc='SimpleLogo' aria-live='assertive' aria-label='색상 인식 페이지입니다. 홈 화면으로 이동하시려면 이 버튼을 누르세요' />
       </StyledLink>
+
       <StyledContainer>
         <VideoContainer>
-          <video style={videoStyle} ref={videoRef} autoPlay></video>
+          <video tabIndex={1} style={videoStyle} ref={videoRef} autoPlay aria-label='웹캠 화면'></video>
         </VideoContainer>
         <div>
-          <Button onClick={captureLeftEye} text="Start " aria-label="색상 인식 버튼" />
-          <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
-          {color && (
-            <p style={colorStyle}>인식된 색상: {color}</p>
-          )}
+          <div>
+            <Title tabIndex={2} aria-label='사용 안내'>How To Use</Title>
+            <p tabIndex={3} style={textStyle} aria-label='1 얼굴이 인식될 수 있도록 얼굴을 정면으로 본 후 잠시 기다려 주세요.
+            2 색상을 알고 싶은 물건을 왼쪽 눈에 대고 버튼을 눌러 주세요.
+            3 인식된 색상이 음성으로 안내됩니다.'>
+              1. 얼굴이 인식될 수 있도록 얼굴을 정면으로 본 후 잠시 기다려 주세요<br /><br />
+              2. 색상을 알고 싶은 물건을 왼쪽 눈에 대고 버튼을 눌러 주세요.<br /><br />
+              3. 인식된 색상이 음성으로 안내됩니다.<br /></p>
+          </div>
+          <SideContainer>
+            <Button tabIndex={4} onClick={captureLeftEye} text="Start " aria-label="색상 인식 버튼" />
+            <Button tabIndex={5} onClick={captureScreen} text="전체 캡쳐 " aria-label="화장품 인식 버튼" />
+            <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
+            {color && (
+              <p style={textStyle}>인식된 색상: {color}</p>
+            )}
+            {cosmetic && (
+              <p style={textStyle}>인식된 화장품: {cosmetic}</p>
+            )}
+          </SideContainer>
         </div>
       </StyledContainer>
     </>

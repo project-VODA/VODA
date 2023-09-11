@@ -1,0 +1,26 @@
+/* 슬라이드 애니메이션 정의 */
+.slide-enter {
+  opacity: 0;
+  transform: translateX(-50%);
+  animation: slideCenter 0.5s ease;
+}
+
+.slide-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 500ms, transform 500ms;
+  animation: slideLeft 0.5s ease;
+}
+
+.slide-exit {
+  opacity: 1;
+  transform: translateX(0);
+  animation: slideRight 0.5s ease;
+}
+
+.slide-exit-active {
+  opacity: 0;
+  transform: translateX(-50%);
+  transition: opacity 500ms, transform 500ms;
+  animation: slideRight 0.5s ease;
+}

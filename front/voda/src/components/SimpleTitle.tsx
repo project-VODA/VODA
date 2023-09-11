@@ -1,5 +1,3 @@
-// components/Title.tsx
-
 import React, { useContext } from 'react';
 
 import styled from 'styled-components';
@@ -8,10 +6,6 @@ import SimpleLogo from '../assets/images/logo_yellow.png'
 import DetailLogo from '../assets/images/logo_black.png'
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-
-import LandingPage from '../pages/LandingPage';
-
-const theme = localStorage.getItem('theme')
 
 interface ColorProps {
   color: string;
@@ -47,7 +41,6 @@ interface TitleProps {
   imgSrc?: string;
   onClick?: string;
   tabIndex?: number;
-  // to?: string;
 }
 
 

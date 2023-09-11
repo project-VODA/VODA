@@ -1,18 +1,10 @@
-import React, { useContext, useMemo } from 'react';
-
 import styled from 'styled-components';
-import { ThemeContext } from '../../App';
-import { SimpleTheme, Theme } from '../../styles/theme';
+import { Theme } from '../../styles/theme';
 import DOMPurify from "dompurify";
 
 interface ThemeProps {
   theme: Theme;
 }
-
-const DivContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
 
 // 테마(모드) 별로 색상 고려해줘야됌!!
 const ContentField = styled.div<ThemeProps>`
@@ -36,6 +28,7 @@ const ContentField = styled.div<ThemeProps>`
     font-weight: bold;
     margin-bottom: 0.7em;
     margin-top: 0.7em;
+    font-weight: bolder;
   }
 
   ul {
@@ -58,17 +51,19 @@ const ContentField = styled.div<ThemeProps>`
 
 
 interface ContentProps {
-    articleContent: string;
-    'aria-label'?: string;
+  articleContent: string;
+  'aria-label'?: string;
+  tabIndex? : number;
 }
 
-export default function ArticleContent( {articleContent, 'aria-label':ariaLabel} : ContentProps ) {
+export default function ArticleContent( {articleContent, 'aria-label':ariaLabel, tabIndex} : ContentProps ) {
     const sanitizedContent = DOMPurify.sanitize(articleContent);
 
     return(
       <>
-        <ContentField aria-label={ariaLabel} dangerouslySetInnerHTML={{
-          __html: sanitizedContent}}/>
+        <ContentField tabIndex={tabIndex} aria-label={ariaLabel} dangerouslySetInnerHTML =
+        {{ __html: sanitizedContent }}
+        />
       </>
     )
 }

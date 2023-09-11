@@ -1,3 +1,7 @@
+.AllContainer {
+  overflow: hidden;
+}
+
 /* 호버링이미지 */
 .AboutHovering{
 box-sizing: border-box;
@@ -8,12 +12,10 @@ height: 521px;
 left: 128px;
 top: 233px;
 
-/* background: url(logo_black.png); */
 border: 1px solid #000000;
 box-shadow: inset 0px 4px 4px #000000;
 filter: blur(15px);
 backdrop-filter: blur(10px);
-/* Note: backdrop-filter has minimal browser support */
 }
 
 /* “ 표정을 소리로 보다 ” */
@@ -44,8 +46,8 @@ text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 position: absolute;
 width: 320px;
 height: 154px;
-left: 56%;
-top: 24%;
+left: 66%;
+top: 14%;
 
 font-family: 'Secular One';
 font-style: normal;
@@ -67,14 +69,14 @@ text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 position: absolute;
 width: 469px;
 height: 417px;
-left: 58%;
-top: 33%;
+left: 65%;
+top: 30%;
 
 font-family: 'Secular One';
 font-style: normal;
-font-weight: 400;
-font-size: 40px;
-line-height: 73px;
+font-weight: bold;
+font-size: 60px;
+line-height: 100px;
 display: flex;
 align-items: center;
 
@@ -101,7 +103,7 @@ backdrop-filter: blur(10px);
 /* AboutHover.css */
 
 .hover-container {
-  /* left: 500px; */
+  /* left: 20%; */
   justify-content: center;
   padding-right: 250px;
   position: relative;
@@ -115,8 +117,8 @@ backdrop-filter: blur(10px);
 
 .hover-container img {
   display: flex;
-  width: 340px;
-  height: 340px;
+  width: 440px;
+  height: 440px;
   object-fit: cover; 
   filter: blur(20px);
   transition: filter 0.3s ease-in-out;
@@ -142,4 +144,7 @@ backdrop-filter: blur(10px);
   font-size: 1em;
 }
 
-
+.content-container {
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;
+}

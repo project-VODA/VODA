@@ -59,12 +59,12 @@ export default function OvVideoComponent(props) {
       analyzeExpression(expressionDataRef.current);
 
       // console.log(expressionDataRef.current)
-    }, 100); // 0.1초 대기
+    }, 50); // 0.1초 대기
   };
 
 
   const analyzeExpression = (expressionData) => {
-    if (expressionData && expressionData.length > 0) {
+    /*if (expressionData && expressionData.length > 0) {
       let highestExpression = { expression: '', probability: 0 };
       expressionData.forEach((data) => {
         if (data) {     // data 일부 객체에 대해서 undefined 된 경우 무시,
@@ -83,7 +83,41 @@ export default function OvVideoComponent(props) {
         expression: highestExpression.expression,
         probability: highestExpression.probability,
       }))
-    }
+    }*/
+    /** 최대 빈도수로 표정 판별 */
+    if (expressionData && expressionData.length > 0) {
+      let expressionFrequency = {"angry": 0, "disgusted": 0, "fearful": 0, "happy": 0, "neutral": 0, "sad": 0, "surprised": 0}; // 각 표정의 빈도수를 저장할 객체
+
+      expressionData.forEach((data) => {
+          if (data) {
+            let maxProbability = 0;
+            let maxExpression = "neutral";
+              for (const [expression, probability] of Object.entries(data)) {
+                  if (probability && probability > 0 && probability > maxProbability) {
+                      maxExpression = expression;
+                      maxProbability = probability;
+                  }
+              }
+            expressionFrequency[maxExpression]++;
+          }
+      });
+      //console.log(expressionFrequency);
+      let highestExpressionCount = 0;
+      let mostFrequentExpression = '';
+      
+      // 가장 빈도수가 높은 표정 찾기
+      for (const [expression, count] of Object.entries(expressionFrequency)) {
+          if (count > highestExpressionCount) {
+              highestExpressionCount = count;
+              mostFrequentExpression = expression;
+          }
+      }
+      
+      dispatch(updateExpressionData({
+          expression: mostFrequentExpression,
+          probability: highestExpressionCount / expressionData.length
+      }))
+  }
   }
 
     useEffect(() => {

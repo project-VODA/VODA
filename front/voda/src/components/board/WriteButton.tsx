@@ -1,6 +1,3 @@
-// HandleBtn.tsx
-// NavButton 스타일 따옴
-
 import React, { useContext } from 'react';
 
 import styled from 'styled-components';
@@ -12,8 +9,8 @@ interface ThemeProps {
 }
 
 const WriteButton = styled.button<ThemeProps>`
-  width: 20vh;
-  height: 10vh;
+  width: 110vh;
+  height: 8vh;
   border-radius: 10px;
   font-size: 20px;
   margin: 16px;
@@ -36,6 +33,7 @@ export interface ButtonProps {
   onClick?: () => void;
   text: string;
   'aria-label'?: string;
+  tabIndex?: number;
 }
 
 export default function Button({ onClick, text, "aria-label":ariaLabel }: ButtonProps ) {

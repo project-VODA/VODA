@@ -1,5 +1,3 @@
-// components/Button.tsx
-
 import React, { useContext } from 'react';
 
 import styled from 'styled-components';
@@ -14,7 +12,7 @@ interface ThemeProps {
 const SettingButton = styled('button')<ThemeProps>`
   width: 11vw;
   height: 40px;
-  border-radius: 15px;
+  border-radius: 10px;
   font-size: 1.3vw;
   padding: 8px;
   margin: 8px;
@@ -27,6 +25,11 @@ const SettingButton = styled('button')<ThemeProps>`
       theme === SimpleTheme ? '#FFD60A' : '#003566'};
     transition: all 0.1s ease-in-out;
   }
+
+  @media (max-width: 768px) {
+    width: 80%; /* 또는 원하는 크기로 지정 */
+  }
+  
 `;
 
 

@@ -1,23 +1,66 @@
 import React, { useEffect, useState } from 'react';
-import { deleteFriend, getFriendList } from '../apis/friend';
 
 import Button from "./SettingButton";
 import Modal from 'react-modal';
 import SmallRedButton from '../components/SmallRedBtn'
 import { getRecentCallList, sendCalling } from '../apis/calling';
-import { userInfo } from 'os';
-import { UserInfoType } from '../store/userSlice';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../store/store';
 import { useNavigate } from 'react-router-dom';
 
 import { updateCall } from "../store/callSlice";
+import '../styles/detail/DetailWaitingPage.css'
+import { styled } from 'styled-components';
 
 // react-icons
 import { FiPhoneCall } from "react-icons/fi"
-import '../styles/detail/DetailWaitingPage.css'
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHook';
 import useErrorHandlers from '../hooks/useError';
+
+const ScrollBox = styled.div`
+  overflow: scroll;
+  height: 50vh;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 10px;  
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 29, 61, .8);
+    border-radius: 10px;  
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 53, 102, .1);
+    border-radius: 10px;  
+  }
+`
+
+const ContextBox = styled.div`
+  h1 {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 0.7em;
+    margin-top: 0.7em;
+    font-weight: bolder;
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  ul, ol {
+    margin-left: 1.5em; 
+  }
+
+  li {
+    margin-bottom: 0.5em;
+  }
+
+`
 
 
 type CallHistory = {
@@ -66,10 +109,10 @@ const RecentCalls = () => {
         console.log(res);
         const msg = res.data;
 
-        if(msg=="senderOn"){
+        if(msg === "senderOn"){
           setMsg("자신에게 걸려온 통화가 있는지 확인하세요");
           setIsMsgOpen(true);
-        } else if( msg=="receiverOn"){
+        } else if( msg === "receiverOn"){
           setMsg("상대방이 통화중입니다.");
           setIsMsgOpen(true);
         }else {
@@ -87,10 +130,11 @@ const RecentCalls = () => {
   };
 
   return (
-    <div style={{ marginTop: '48.9px'}}>
+    <div style={{ marginTop: '7px'}}>
+      <ContextBox>
     <span> {localStorage.getItem('theme') === 'simple' ? (<div style={{ marginBottom: '60px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', padding: '10px' }}>
       <span style={{ marginLeft: 'auto', marginRight: 'auto', fontSize:'1.9vw', fontWeight: 'bolder' }}>최근 통화 목록</span></div>)
-    :(<div style={{ marginTop:'5.6vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', padding: '10px' }}>
+    :(<div style={{ marginTop:'6.8vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', padding: '10px' }}>
         <span style={{ marginLeft: 'auto', marginRight: 'auto', fontSize:'1.9vw', fontWeight: 'bolder' }}>최근 통화 목록</span>
       </div>)} </span>
       <span> {localStorage.getItem('theme') === 'simple' ? 
@@ -112,7 +156,6 @@ const RecentCalls = () => {
           callHistoryList.map((callHistory: CallHistory) => (
             <tr key={callHistory.startTime}  style={{ paddingLeft: '5vw', fontSize: '1.4vw' }}>
               <td>{callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverName : callHistory.senderName}</td>
-              {/* <td text-align='center'>{callHistory.startTime}</td> */}
               <td>
                 {callHistory.startTime !== null ? callHistory.startTime : '시작 시간 없음'}
               </td>
@@ -144,6 +187,7 @@ const RecentCalls = () => {
       </thead>
       </table>
       <hr style={{ margin: '0 7%' }} />
+      <ScrollBox>
       <table className = 'recentCallTable'  style={{ borderCollapse: 'separate', borderSpacing: '0px 20px',  }}>
       <colgroup>
         <col width = "20%" />
@@ -153,7 +197,7 @@ const RecentCalls = () => {
       <tbody style={{ borderCollapse: 'separate', borderSpacing: '0px 20px' }}>
         {callHistoryList.length === 0 ? <tr><td colSpan={3} style={{ textAlign: 'center' }}>통화 기록이 존재하지 않습니다.</td></tr> :
           callHistoryList.map((callHistory: CallHistory) => (
-            <tr key={callHistory.startTime}  >
+            <tr key={callHistory.endTime}  >
               <td style={{ paddingLeft: '7vw' }}>{callHistory.senderEmail === userInfo.userEmail ? callHistory.receiverName : callHistory.senderName}</td>
               <td style={{textAlign: 'center'}}>
                 {callHistory.startTime !== null ? callHistory.startTime : '시작 시간 없음'}
@@ -168,7 +212,8 @@ const RecentCalls = () => {
             </tr>
         ))}
       </tbody>
-    </table></div>)}</span>
+    </table></ScrollBox></div>)}</span>
+    </ContextBox>
 
     <Modal id="messageModel"
         isOpen={isMsgOpen} 
@@ -177,13 +222,13 @@ const RecentCalls = () => {
         style={{
           content: {
             backgroundColor: localStorage.getItem('theme') === 'detail' ? 'white' : '#001d3d',
-            width: '400px', // Adjust the width as needed
-            height: '300px', // Adjust the height as needed
-            margin: 'auto', // Center the modal
-            display: 'flex', // Flex container
-            flexDirection: 'column', // Stack content vertically
-            justifyContent: 'center', // Center horizontally
-            alignItems: 'center', // Center vertically
+            width: '400px',
+            height: '300px',
+            margin: 'auto',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
           }
         }}
         shouldCloseOnOverlayClick={false}

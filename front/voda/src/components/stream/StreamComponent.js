@@ -26,7 +26,7 @@ export default function StreamComponent(props) {
 
   const toggleNicknameForm = () => {
     if (props.user.isLocal()) {
-      setShowForm(!showForm);
+      setShowForm(false);
     }
   };
 
@@ -82,8 +82,8 @@ export default function StreamComponent(props) {
           </FormControl>
         ) : (
           <div onClick={toggleNicknameForm}>
-            <span id="nickname">{props.user.getNickname()}</span>
-            {props.user.isLocal() && <span id="">(사용자)</span>}
+            {/* <span id="nickname">{props.user.getNickname()}</span>
+            {props.user.isLocal() && <span id="">(사용자)</span>} */}
           </div>
         )}
       </div>

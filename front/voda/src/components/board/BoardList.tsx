@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import useErrorHandlers from '../../hooks/useError';
 
 import '../../styles/detail/DetailBoardList.css'
+import Paging from '../Paging';
 
 type Article = {
   articleNo: number;
@@ -14,6 +15,12 @@ type Article = {
 };
 
 type ArticleList = Article[];
+
+const PagingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 50px; // 페이징 컨트롤 위 여백 조절
+`;
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -42,28 +49,46 @@ const TableContainer = styled.div`
     color: #FFC300;
     text-decoration: none;
   }
+
+  @media (max-width: 768px) {
+    flex-direction: column; /* 모바일 화면에서 세로 방향으로 배치 */
+  }
 `;
 
 
 const BoardList: React.FC = () => {
   
   const [articles, setArticles] = useState<ArticleList>([]);
+  const [totalItem, setTotalItem] = useState(0);
+  const [nowPage, setNowPage] = useState(1);
+
   const errorHandlers = useErrorHandlers();
 
-  useEffect(handleGetArticles, [])
+  useEffect(handleGetArticles, [nowPage]);
 
   function handleGetArticles() {
-    getArticles()
-      .then((res: ArticleList) => {
-        setArticles(res);
+    getArticles(nowPage)
+      .then((res) => {
+        setArticles(res.data.content);
+        setTotalItem(res.data.totalElements);
+        // console.log(nowPage);
+        // console.log(res.data.content);
       })
       .catch((err) => {
         errorHandlers(err.response, handleGetArticles);
       })
-  }
-  
-  if (localStorage.getItem('theme' ) === 'simple') {
+    }
+
+    const setPage = (currentPage: React.SetStateAction<number>) => {
+      // console.log("클릭함?");
+      // console.log(currentPage);
+      setNowPage(currentPage);
+    };
+
+if (localStorage.getItem('theme' ) === 'simple') {
   return (
+    <>
+    <div>
     <TableContainer>
       <div className='boardList'>
         <table className='boardTable'>
@@ -98,10 +123,16 @@ const BoardList: React.FC = () => {
         </table>
       </div>
     </TableContainer>
+    <PagingContainer>
+        <Paging style={{ cursor:"pointer" }} page={nowPage} count={totalItem} setPage={setPage}/>
+      </PagingContainer>
+    </div>
+    </>
   );
 }
+
 return (
-  <>
+    <>
       <div className='DetailBoardList'>
         <table className='DetailBoardTable'>
           <colgroup>
@@ -119,7 +150,6 @@ return (
             </tr>
           </thead>
         </table>
-          {/* <hr className='tableHr' /> */}
           <hr/>
         <table className='DetailBoardTable'>
           <colgroup>
@@ -143,9 +173,12 @@ return (
             ))}
           </tbody>
         </table>
+      <PagingContainer>
+        <Paging style={{ cursor: "pointer" }} page={nowPage} count={totalItem} setPage={setPage}/>
+      </PagingContainer>
       </div>
-  </>
-)
+    </>
+  )
 }
   
 export default BoardList;

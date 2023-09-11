@@ -13,17 +13,16 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import '../../styles/simple/RegisterContainer.css'
+import '../../styles/simple/AgreementContainer.css'
 import useErrorHandlers from '../../hooks/useError';
+import AgreementContent1 from '../../components/AgreementContent1';
+import AgreementContent2 from '../../components/AgreementContent2';
 
 const StyledLink = styled(Link)`
 text-decoration: none;
 color: inherit;
 `;
 
-const StyledInput = styled(Input)`
-  background-color: white;
-  color: black;
-`;
 
 const SimpleSignup = () => {
   const [email, setEmail] = useState('');
@@ -36,6 +35,9 @@ const SimpleSignup = () => {
   const [emailAuthentication, setEmailAuthentication] = useState(false);
   const [authenticationCode, setAuthenticationCode] = useState('');
   const [userCode, setUserCode] = useState('');
+  const [agreeCheck1, setAgreeCheck1] = useState(false);
+  const [agreeCheck2, setAgreeCheck2] = useState(false);
+
 
   const userData = {
     userEmail: email,
@@ -52,7 +54,7 @@ const SimpleSignup = () => {
     // 이메일 정규표현식
     let emailReg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     // 비밀번호 정규표현식 - 8~15자 영문 숫자 특수문자
-    let pwReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/
+    let pwReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-_])(?=.*[0-9]).{8,15}$/
 
     if(!email) {
       msg = '이메일을 입력해주세요'; 
@@ -136,60 +138,86 @@ const SimpleSignup = () => {
       <StyledLink to='/home' aria-label='회원가입 페이지입니다.  홈 화면으로 이동하시려면 이 버튼을 누르세요.'>
         <SimpleTitle imgSrc='SimpleLogo' aria-label='회원가입 페이지입니다.'/>
       </StyledLink>
-      
-    <div id='RegisterContainer'>
-      <StyledInput
-        className = "InputText"
-        type="email"
-        placeholder="이메일" 
-        value={email} 
-        onChange={(e) => setEmail(e.target.value)}
-        aria-label='이메일 입력 칸입니다. 회원가입을 위한 이메일을 입력해주세요.'
-      />
-      {!emailSend && !emailAuthentication && <RegisterButton text='이메일 인증 코드 발송' onClick={handleEmailSender} aria-label='회원가입을 위한 이메일 인증 코드 발송 버튼입니다.'/>}
-      {emailSend && !emailAuthentication && 
-        <>
-          <StyledInput
-            type="text"
-            placeholder="인증코드 입력"
-            value={userCode}
-            onChange={(e) => setUserCode(e.target.value)}
-            aria-label='발송된 인증 코드를 입력해주세요.'
+
+      { agreeCheck1 && agreeCheck2 ? (
+        <div id='RegisterContainer'>
+          <Input
+            className = "InputText"
+            type="email"
+            placeholder="이메일" 
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)}
+            aria-label='이메일 입력 칸입니다. 회원가입을 위한 이메일을 입력해주세요.'
           />
-          <RegisterButton text='이메일 인증' onClick={handleEmailAuthentication}/>
+          {!emailSend && !emailAuthentication && <RegisterButton text='이메일 인증 코드 발송' onClick={handleEmailSender} aria-label='회원가입을 위한 이메일 인증 코드 발송 버튼입니다.'/>}
+          {emailSend && !emailAuthentication && 
+            <>
+              <Input
+                type="text"
+                placeholder="인증코드 입력"
+                value={userCode}
+                onChange={(e) => setUserCode(e.target.value)}
+                aria-label='발송된 인증 코드를 입력해주세요.'
+              />
+              <RegisterButton text='이메일 인증' onClick={handleEmailAuthentication}/>
+            </>
+          }
+          <Input 
+            type="text"
+            placeholder="이름" 
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            aria-label='이름 입력 칸입니다. 회원가입을 위해 이름을 입력해주세요.'
+          />
+          <Input 
+            type="password"
+            placeholder="비밀번호" 
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            aria-label='비밀번호 입력 칸입니다. 회원가입을 위해 8자 이상, 15자 이하, 그리고 영문, 특수문자, 숫자 조합의 비밀번호를 입력해주세요.'
+          />
+          <Input 
+            type="password"
+            placeholder="비밀번호 확인" 
+            value={passwordCheck}
+            onChange={handlePasswordCheckChange}
+            aria-label='비밀번호 확인 칸입니다. 작성하신 비밀번호를 한번 더 입력해주세요.'
+          />
+          {pwFlag === false && passwordCheck.length !== 0 && <Info text='비밀번호가 일치하지 않습니다.'/>}
+          <CheckBox
+            label="시각 장애 여부" // 체크박스 옆에 표시될 텍스트
+            checked={handicap} // 체크 여부를 state로 전달
+            onChange={(e) => setHandicap(e.target.checked)} // 체크 상태가 변경될 때 state 업데이트
+            aria-label='사이트 이용의 편의성을 위해 시각 장애 여부를 체크합니다. 기본 상태는 체크가 안된 상태이며 해당되신다면 체크해주세요.'
+          />
+          
+          <RegisterButton text='회원가입' onClick={handleSignup} aria-label='회원가입 버튼입니다.'/>
+        </div>
+
+      ) : (
+        <>
+        <div id='AgreementContainer'>
+          <AgreementContent1 />
+          <br/>
+          <CheckBox 
+            label='동의함'
+            checked={agreeCheck1}
+            onChange={(e)=> setAgreeCheck1(e.target.checked)}
+            aria-label='개인정보 취급 방침 및 약관 동의서입니다. 동의할 경우 동의해주세요.'
+          />
+          <br/><br/>
+          <AgreementContent2 />
+          <br/>
+          <CheckBox 
+            label='동의함'
+            checked={agreeCheck2}
+            onChange={(e)=> setAgreeCheck2(e.target.checked)}
+            aria-label='개인정보 취급 방침 및 약관 동의서입니다. 동의할 경우 동의해주세요.'
+          />
+        </div>
         </>
-      }
-      <StyledInput 
-        type="text"
-        placeholder="이름" 
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        aria-label='이름 입력 칸입니다. 회원가입을 위해 이름을 입력해주세요.'
-      />
-      <StyledInput 
-        type="password"
-        placeholder="비밀번호" 
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        aria-label='비밀번호 입력 칸입니다. 회원가입을 위해 8자 이상, 15자 이하, 그리고 영문, 특수문자, 숫자 조합의 비밀번호를 입력해주세요.'
-      />
-      <StyledInput 
-        type="password"
-        placeholder="비밀번호 확인" 
-        value={passwordCheck}
-        onChange={handlePasswordCheckChange}
-        aria-label='비밀번호 확인 칸입니다. 작성하신 비밀번호를 한번 더 입력해주세요.'
-      />
-      {pwFlag === false && passwordCheck.length !== 0 && <Info text='비밀번호가 일치하지 않습니다.'/>}
-      <CheckBox
-        label="시각 장애 여부" // 체크박스 옆에 표시될 텍스트
-        checked={handicap} // 체크 여부를 state로 전달
-        onChange={(e) => setHandicap(e.target.checked)} // 체크 상태가 변경될 때 state 업데이트
-        aria-label='사이트 이용의 편의성을 위해 시각 장애 여부를 체크합니다. 기본 상태는 체크가 안된 상태이며 해당되신다면 체크해주세요.'
-      />
+      )}
       
-      <RegisterButton text='회원가입' onClick={handleSignup} aria-label='회원가입 버튼입니다.'/>
-    </div>
     </>
   );
 };

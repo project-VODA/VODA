@@ -11,6 +11,9 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -81,13 +84,13 @@ public class FriendController {
             @ApiResponse(code=500, message="친구 목록 호출 실패 - 서버(DB) 오류")
     })
     @GetMapping("/{userEmail}")
-    public ResponseEntity<?> searchAllFriend(@PathVariable String userEmail) {
+    public ResponseEntity<?> searchAllFriend(@PathVariable String userEmail, @PageableDefault(size = 5) Pageable pageable) {
         log.info("FriendController - searchAllFriend : 친구 목록");
-
+        log.info("페이지번호 : {}",String.valueOf(pageable.getPageNumber()));
         try{
-            List<FriendResponse> friendList = friendService.searchAllFriend(userEmail);
+            Page<FriendResponse> friendList = friendService.searchAllFriend(userEmail, pageable);
 
-            return new ResponseEntity<List<FriendResponse>>(friendList, HttpStatus.OK);
+            return new ResponseEntity<Page<FriendResponse>>(friendList, HttpStatus.OK);
         }catch (Exception e) {
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }

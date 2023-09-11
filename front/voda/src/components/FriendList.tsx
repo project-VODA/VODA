@@ -1,23 +1,15 @@
 import React, { useEffect, useState } from 'react';
-
-import Button from "./SettingButton";
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../store/store';
-import { UserInfoType } from '../store/userSlice';
 import { sendCalling } from '../apis/calling';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import UserSearchList from "../components/UserSearchList";
-// import Button from "../components/SettingButton";
 import SmallRedButton from "../components/SmallRedBtn";
-
-import FriendPageButton from '../components/FriendPageBtn'
-import DeleteFriendButton from './SmallRedBtn'
 
 // react-icons
 import { FiPhoneCall } from "react-icons/fi"
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { ImUserPlus } from 'react-icons/im'
+import { FiX } from 'react-icons/fi'
 
 //API
 import { deleteFriend, getFriendList } from '../apis/friend';
@@ -26,6 +18,8 @@ import { updateCall } from "../store/callSlice";
 import '../styles/detail/DetailWaitingPage.css'
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHook';
 import useErrorHandlers from '../hooks/useError';
+import Paging from './Paging';
+import styled from 'styled-components';
 
 type Friend = {
   friendNo: number;
@@ -35,6 +29,43 @@ type Friend = {
 
 type FriendsList = Friend[];
 
+const PagingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  //margin-top: 100px; // 페이징 컨트롤 위 여백 조절
+`;
+
+
+const ContextBox = styled.div`
+  overflow: scroll;
+  height: 50vh;
+  overflow-x: hidden;
+
+  h1 {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 0.7em;
+    margin-top: 0.7em;
+    font-weight: bolder;
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  ul, ol {
+    margin-left: 1.5em; 
+  }
+
+  li {
+    margin-bottom: 0.5em;
+  }
+
+`
 
 const FriendList = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -50,41 +81,39 @@ const FriendList = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // 모달 닫힐 때 친구 목록 갱신 필요, 리덕스 이용해야 함.. 
-  // isModalOpen을 FriendList 컴포넌트로 넘기는 식이 이상적일듯
-
-  // useEffect(() => {
-  //   getFriendList(sessionStorage.getItem("userEmail"))
-  //         .then((res: FriendsList) => {
-  //           setFriendList(res);
-  //         })
-  //         .catch((err) => {
-  //           console.log(err);
-  //         })
-  // }, [isModalOpen])
-
   // redux에서 저장된 정보 가져오기
   const userInfo = useAppSelector((state) => state.user.userInfo);
   
   const [friendList, setFriendList] = useState<FriendsList>([]);
   const [isMsgOpen, setIsMsgOpen] = useState(false);
   const [msg, setMsg] = useState('');
+  const [totalItem, setTotalItem] = useState(0);
+  const [nowPage, setNowPage] = useState(1);
 
   const navigate = useNavigate();
   const errorhandlers = useErrorHandlers();
   const dispatch = useAppDispatch();
-
-  useEffect(handleFriendList, []);
+ 
+  useEffect(handleFriendList, [nowPage]);
 
   function handleFriendList() {
-    getFriendList(userInfo.userEmail)
-      .then((res: FriendsList) => {
-        setFriendList(res);
+    getFriendList(userInfo.userEmail, nowPage)
+      .then((res) => {
+        setFriendList(res.data.content);
+        setTotalItem(res.data.totalElements);
+        // console.log(nowPage);
       })
       .catch((err) => {
         errorhandlers(err.response, handleFriendList);
       })
   }
+
+  const setPage = (currentPage: React.SetStateAction<number>) => {
+    // console.log("클릭함?");
+    // console.log(currentPage);
+    setNowPage(currentPage);
+    // handleFriendList();
+  };
   
 
   const handleDeleteFriend = (friend: Friend) => {
@@ -111,10 +140,10 @@ const FriendList = () => {
         console.log(res);
         const msg = res.data;
 
-        if(msg=="senderOn"){
+        if(msg === "senderOn"){
           setMsg("자신에게 걸려온 통화가 있는지 확인하세요");
           setIsMsgOpen(true);
-        } else if( msg=="receiverOn"){
+        } else if( msg === "receiverOn"){
           setMsg("상대방이 통화중입니다.");
           setIsMsgOpen(true);
         }else {
@@ -144,22 +173,20 @@ const FriendList = () => {
       style={{     
         content: {
           backgroundColor: "#f0f0f0",
-          width: "80vw", // 원하는 너비로 조정
-          maxWidth: "unset", // 최대 너비 제거
-          margin: "0 auto", // 가운데 정렬
-          border: "none", // 테두리 제거
-          padding: "20px", // 내부 패딩
-          // overflowX: "hidden",
+          width: "80vw",
+          maxWidth: "unset",
+          margin: "0 auto",
+          border: "none",
+          padding: "20px",
           overflowX: isMobile ? "auto" : "hidden",
-          // 가로 스크롤 1500(전체화면 기준 내용이 가려지는 크기) 이하에는 스크롤 생기게
-          overflowY: "auto", // 세로 스크롤 유지
+          overflowY: "auto",
         }
       }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', padding: '10px' }}>
         <span style={{ marginLeft: 'auto', marginRight: 'auto', fontSize:'2.2vw', fontWeight: 'bolder' }}>친구 찾기</span>
         <span style={{ display: 'flex', justifyContent: 'flex-end'}}>
-          <SmallRedButton onClick={(e) => setModalOpen(false)} text="X" />
+          <FiX onClick={(e) => setModalOpen(false)} style={{ fontSize: '2.5vw' }} />
         </span>
       </div>
 
@@ -167,6 +194,7 @@ const FriendList = () => {
       <UserSearchList/>
     </Modal>
   </>
+      {/* <ContextBox> */}
       <table className = 'friendTable' style={{ borderCollapse: 'separate', borderSpacing: '0px 20px',  }}>
         <colgroup>
           <col width = "20%" />
@@ -203,6 +231,7 @@ const FriendList = () => {
           ))}
         </tbody>
       </table>
+      {/* </ContextBox> */}
 
       <Modal id="messageModel"
         isOpen={isMsgOpen} 
@@ -211,13 +240,13 @@ const FriendList = () => {
         style={{
           content: {
             backgroundColor: localStorage.getItem('theme') === 'detail' ? 'white' : '#001d3d',
-            width: '400px', // Adjust the width as needed
-            height: '300px', // Adjust the height as needed
-            margin: 'auto', // Center the modal
-            display: 'flex', // Flex container
-            flexDirection: 'column', // Stack content vertically
-            justifyContent: 'center', // Center horizontally
-            alignItems: 'center', // Center vertically
+            width: '400px',
+            height: '300px',
+            margin: 'auto',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
           }
         }}
         shouldCloseOnOverlayClick={false}
@@ -229,6 +258,9 @@ const FriendList = () => {
           </span>
         </div>
       </Modal>
+      <PagingContainer>
+        <Paging page={nowPage} count={totalItem} setPage={setPage}/>
+      </PagingContainer>
     </>
   );
 };
