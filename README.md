@@ -145,6 +145,8 @@
 ### 아키텍쳐 다이어그램
 ![Alt text](./exec/resource/img/아키텍쳐.png) <br/>
 
+## 📽️ UCC
+[유튜브](https://youtu.be/ypS_xI9M2W0)
 
 ## 💎 느낀 점(소감)
 
