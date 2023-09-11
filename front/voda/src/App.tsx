@@ -1,18 +1,15 @@
-// App.tsx
-
 import React, { createContext } from 'react';
 // import { RootState } from './store/reducers'; // 가정: RootState는 redux store의 전체 상태 타입입니다.
-import { BrowserRouter as Router, Route, Routes, Navigate, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from "react-router-dom";
 
 // redux
 //import { useAppDispatch, useAppSelector } from "./constants/types";
-import { axiosInstance } from "./apis/instance";
-import {
-  updateAccessToken, updateLoginStatus,
-} from "./store/authReducer";
+// import { axiosInstance } from "./apis/instance";
+// import {
+//   updateAccessToken, updateLoginStatus,
+// } from "./store/authReducer";
 
 
-// import Navbar from './components/Navbar';
 import Navigation from './components/Navigation';
 import LandingPage from './pages/LandingPage';
 import ServerEvent from './components/ServerEvent';
@@ -31,6 +28,7 @@ import SimpleRoom from './pages/simple/WaitingRoomPage';
 import SimpleFeedBack from './pages/simple/FeedBackPage';
 import SimpleWriteArticle from './pages/simple/board/WriteArticlePage';
 import SimpleDetailArticle from './pages/simple/board/DetailArticlePage';
+import SimpleModifyArticle from './pages/simple/board/ModifyArticlePage';
 import SimpleColor from './pages/simple/ColorPage';
 
 import DetailHomePage from './pages/detail/HomePage';
@@ -51,17 +49,13 @@ import FaceTest from './pages/detail/FaceTest';
 
 // 스타일 & 모드(mode)
 import { GlobalStyle } from './styles/global-styles';
-import { SimpleTheme, DetailTheme, Theme } from './styles/theme';
+import { SimpleTheme, Theme } from './styles/theme';
 import { useMode } from './hooks/useMode';
 
 import ModeToggle from './components/ModeToggle';
 import DetailWriteArticle from './pages/detail/board/WriteArticlePage';
 import { styled } from 'styled-components';
-import simpleLogo from "./assets/images/logo_yellow.png";
 import ErrorPage from './pages/ErrorPage';
-import { UserInfoType, UserSettingType } from './store/userSlice';
-import { useSelector } from 'react-redux';
-import { RootState } from './store/store';
 import { useAppSelector } from './hooks/reduxHook';
 
 // 1) 다수의 props 발생 시 interface 설정
@@ -79,11 +73,6 @@ export const ThemeContext = createContext<ContextProps>({
   },
 });
 
-const LogoImage = styled.img`
-  width: 120px;
-  height: auto;
-`;
-
 // 화면 사이즈 조정
 const AppContainer = styled.div`
   height: 100vh;
@@ -94,8 +83,17 @@ const AppContainer = styled.div`
 
 const App: React.FC = () => {
   const isLogin = useAppSelector((state) => state.user.isLogin);
-
   const { theme, toggleTheme } = useMode();
+
+  //특정 페이지(/video)에서 모드토글 안보이게 하기
+  const ToggleWrapper = () => {
+    const location = useLocation();
+  
+    if (location.pathname === '/video') {
+      return null;
+    }
+    return <ModeToggle />;
+  }
 
   const commonRoutes = [
     { path: '/', element: theme === SimpleTheme ? <LandingPage /> : <LandingPage /> },
@@ -115,15 +113,9 @@ const App: React.FC = () => {
     { path: isLogin ? '/feedback' : '/', element: theme === SimpleTheme ? <SimpleFeedBack/> : <DetailFeedBack/> },
     { path: isLogin ? '/write' : '/', element: theme === SimpleTheme ? <SimpleWriteArticle/> : <DetailWriteArticle/> },
     { path: isLogin ? '/view/:articleNo' : '/', element: theme === SimpleTheme ? <SimpleDetailArticle/> : <SimpleDetailArticle/> },
+    { path: isLogin ? '/modify/:articleNo' : '/', element: theme === SimpleTheme ? <SimpleModifyArticle/> : <SimpleModifyArticle/> },
     { path: '/error', element: <ErrorPage />},
     { path: '*', element: <Navigate replace to="/" /> },
-    
-    // { path: '/', element: screenMode === 'simple' ? <SimpleHomePage /> : <DetailHomePage /> },
-    // { path: '/about', element: screenMode === 'simple' ? <SimpleAbout /> : <DetailAbout /> },
-    // { path: '/login', element: screenMode === 'simple' ? <SimpleLogin /> : <DetailLogin /> },
-    // { path: '/mypage', element: screenMode === 'simple' ? <SimpleMyPage /> : <DetailMyPage /> },
-    // { path: '/video', element: screenMode === 'simple' ? <SimpleVideo /> : <DetailVideo /> },
-    // { path: '*', element: <Navigate replace to="/" /> },
   ];
 
   // screenMode에 따라서 SimplePage 또는 DetailPage를 렌더링합니다.
@@ -136,7 +128,7 @@ const App: React.FC = () => {
           {theme === SimpleTheme ? 
           <></> : 
           <Navigation />}
-          <ModeToggle />
+          <ToggleWrapper />
           <Routes>
             {commonRoutes.map((route) => (
               <Route key={route.path} path={route.path} element={<div style={{ marginTop:

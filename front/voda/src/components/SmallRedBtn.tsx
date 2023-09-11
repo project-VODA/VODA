@@ -1,5 +1,3 @@
-// components/Button.tsx
-
 import React, { useContext } from 'react';
 
 import styled from 'styled-components';
@@ -14,8 +12,8 @@ interface ThemeProps {
 const SmallRedButton = styled('button')<ThemeProps>`
   width: 3vw;
   height: 40px;
-  border-radius: 15px;
-  font-size: 1vw;
+  border-radius: 10px;
+  font-size: 18px;
   padding: 8px;
   margin: 8px;
   border: 1px solid ${({ theme }) => theme.text};
@@ -37,15 +35,16 @@ export interface ButtonProps {
   onClick: (event: any) => void;
   'aria-label'?: string
   id? : string;
-  tabIndex?: number
+  tabIndex?: number;
+  style?: React.CSSProperties;
 }
 
-export default function Setting({ text, onClick, "aria-label":ariaLabel, id }: ButtonProps ) {
+export default function Setting({ text, onClick, "aria-label":ariaLabel, id, style }: ButtonProps ) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <>
-      <SmallRedButton theme={theme} onClick={onClick} aria-label={ariaLabel} id={id}>{text}</SmallRedButton>
+      <SmallRedButton style={style} theme={theme} onClick={onClick} aria-label={ariaLabel} id={id}>{text}</SmallRedButton>
     </>
   );
 }

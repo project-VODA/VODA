@@ -1,6 +1,3 @@
-// HandleBtn.tsx
-// NavButton 스타일 따옴
-
 import React, { useContext } from 'react';
 
 import styled from 'styled-components';
@@ -20,6 +17,7 @@ const HandleButton = styled.button<ThemeProps>`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-weight: bold;
 
   border: 1px solid ${({ theme }) => theme.text};
   background: ${({ theme }) => theme.text};

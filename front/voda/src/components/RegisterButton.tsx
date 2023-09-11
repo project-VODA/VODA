@@ -1,5 +1,3 @@
-// components/Button.tsx
-
 import React, { useContext } from 'react';
 
 import styled from 'styled-components';
@@ -19,9 +17,9 @@ const ButtonContainer = styled.div`
 
 // 테마(모드) 별로 색상 고려해줘야됌!!
 const RegisterButton = styled('button')<ThemeProps>`
-  width: 60%;
+  width: 30vw;
   height: 60px;
-  border-radius: 20px;
+  border-radius: 10px;
   font-size: 20px;
   padding: 8px;
   margin-bottom: 16px;
@@ -38,11 +36,12 @@ const RegisterButton = styled('button')<ThemeProps>`
       theme === SimpleTheme ? '#FFD60A' : '#003566'};
     transition: all 0.1s ease-in-out;
   }
+  
+  @media (max-width: 768px) {
+    width: 80%; /* 또는 원하는 크기로 지정 */
+  }
+  
 `;
-
-//// hover - color
-// color: ${({ theme }) =>
-// theme === SimpleTheme ? theme.mainColor : theme.body};
 
 export interface ButtonProps {
   text: string;

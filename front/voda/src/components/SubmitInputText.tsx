@@ -1,10 +1,8 @@
-// components/Input.tsx
-
 import React, { useContext } from 'react';
 
 import styled from 'styled-components';
 import { ThemeContext } from '../App';
-import { SimpleTheme, Theme } from '../styles/theme';
+import { Theme } from '../styles/theme';
 
 
 interface ThemeProps {
@@ -18,24 +16,28 @@ const TextContainer = styled.div`
 
 // 테마(모드) 별로 색상 고려해줘야됌!!
 const InputField = styled.input<ThemeProps>`
-  width: 58%;
+  width: 29vw;
   height: 40px;
   border-radius: 20px;
   font-size: 20px;
   padding: 8px;
   margin-bottom: 20px;
   border: 1px solid ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.text};
+  background-color: ${({ theme }) => theme.body};  상속 받아서 색상 적용하려면 위로 이동하셔요
 
-  max-width: 450px;
+  max-width: 467px;
 
   text-align: center;
 
   &::placeholder {
     text-align: center;
   }
+
+  @media (max-width: 768px) {
+    width: 80%; /* 또는 원하는 크기로 지정 */
+  }
 `;
-  // color: ${({ theme }) => theme.text};
-  // background-color: ${({ theme }) => theme.body};  상속 받아서 색상 적용하려면 위로 이동하셔요
 interface InputProps {
   type: string;
   placeholder: string;

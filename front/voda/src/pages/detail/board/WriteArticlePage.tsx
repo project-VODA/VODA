@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ReactQuill from 'react-quill';
@@ -9,9 +9,6 @@ import { registArticle } from '../../../apis/board';
 import Title from '../../../components/Title';
 import Input from '../../../components/InputText';
 import RegistButton from '../../../components/RegisterButton';
-import { UserInfoType } from '../../../store/userSlice';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../store/store';
 import { Link } from "react-router-dom";
 import useErrorHandlers from '../../../hooks/useError';
 
@@ -23,7 +20,7 @@ color: inherit;
 const QuillContainer = styled.div`
   display: flex;
   justify-content: center;
-`
+`;
 
 const StyledQuill = styled(ReactQuill)`
   .ql-toolbar.ql-snow {
@@ -35,8 +32,18 @@ const StyledQuill = styled(ReactQuill)`
   .ql-editor {
     justify-content: center;
   }
-`
+`;
 
+const StyledInput = styled(Input)`
+  max-width: 700px;
+  min-width: 210px;
+  width: 44.5%;
+`;
+
+const StyledRegistButton = styled(RegistButton)`
+  max-width: 600px;
+  width: 38%;
+`;
 
 const SimpleWriteArticle = () => {
   const [title, setTitle] = useState('');
@@ -47,17 +54,21 @@ const SimpleWriteArticle = () => {
   const articleData = {
     articleTitle: title,
     articleContent: content,
-  }
+  };
 
   const handleRegist = () => {
-    registArticle(articleData)
-      .then((res) => {
-        RedirectListPage();
-      })
-      .catch((err) => {
-        errorHandlers(err.response, handleRegist);
-      })
-  }
+    if(articleData.articleTitle && articleData.articleContent) {
+      registArticle(articleData)
+        .then((res) => {
+          RedirectListPage();
+        })
+        .catch((err) => {
+          errorHandlers(err.response, handleRegist);
+        })
+      } else {
+      alert("제목이나 내용이 비어있습니다.");
+    };
+  };
 
   const navigate = useNavigate();
 
@@ -70,7 +81,7 @@ const SimpleWriteArticle = () => {
       <StyledLink to='' aria-label='새 문의글을 작성하는 페이지입니다.'>
         <Title title='문의글 작성' />
       </StyledLink>
-      <Input
+      <StyledInput
         type="text"
         placeholder="제목"
         value={title}
@@ -83,7 +94,7 @@ const SimpleWriteArticle = () => {
           placeholder="건의하고 싶은 내용을 자세히 입력해주세요"
           modules={{
             toolbar: [
-              [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+              [{ 'header': '1' }, { 'header': '2' },],
               [{ 'list': 'ordered' }, { 'list': 'bullet' }],
               ['bold', 'italic', 'underline'],
               [{ 'color': [] }, { 'background': [] }],
@@ -92,8 +103,9 @@ const SimpleWriteArticle = () => {
             ],
           }}
           style={{
-            width: '58%',
-            maxWidth: '600px',
+            width: '50vw',
+            maxWidth: '700px',
+            minWidth:'210px',
             marginBottom: '2%',
             color: '#001d3d',
             background: 'rgba(200, 200, 200, 0.5)',
@@ -103,7 +115,7 @@ const SimpleWriteArticle = () => {
         />
       </QuillContainer>
 
-      <RegistButton text="등록" onClick={handleRegist}></RegistButton>
+      <StyledRegistButton style={{ width: '50vw', maxWidth:'700px'}} text="등록" onClick={handleRegist}></StyledRegistButton>
       
     </>
   );

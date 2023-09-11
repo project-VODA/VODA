@@ -1,6 +1,3 @@
-// components/Button.tsx
-// 이거 handle 버튼으로 바뀌었음.
-
 import React, { useContext } from 'react';
 
 import { Link } from 'react-router-dom';
@@ -13,12 +10,6 @@ import { SimpleTheme, Theme } from '../styles/theme';
 interface ThemeProps {
   theme: Theme;
 }
-
-// const ButtonContainer = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// `;
 
 // 테마(모드) 별로 색상 고려해줘야됌!!
 const SquareButton = styled(Link)<ThemeProps>`

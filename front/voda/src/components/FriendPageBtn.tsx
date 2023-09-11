@@ -1,5 +1,3 @@
-// components/Button.tsx
-
 import React, { useContext } from 'react';
 
 import styled from 'styled-components';
@@ -14,7 +12,7 @@ interface ThemeProps {
 const FriendPageButton = styled('button')<ThemeProps>`
   width: 60px;
   height: 40px;
-  border-radius: 15px;
+  border-radius: 10px;
   font-size: 18px;
   padding: 8px;
   margin: 8px;

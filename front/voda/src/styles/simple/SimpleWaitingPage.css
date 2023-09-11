@@ -6,7 +6,6 @@
 
 #customModal {
   max-width: 1500px !important;
-  /* position: fixed !important; */
   min-width: 20px;
   min-height: 550px;
   top: 50% !important;
@@ -17,23 +16,18 @@
 #FriendContainer td {
   padding: 0px 4vw 3%; 
   font-size: 1.54vw;
-  /* font-weight: bold; */
-  /* text-align: center; */
-  /* position: absolute; */
-  /* left: 50%; */
-  /* transform: translateX(-50%); */
 }
 
 .callButton {
-  width: 50% !important;
+  width: 8vw !important;
 }
 
 .delButton {
-  width: 50% !important;
+  width: 8vw !important;
 }
 
 .addButton {
-  width: 60% !important;
+  width: 8vw !important;
 }
 
 .exitButton {

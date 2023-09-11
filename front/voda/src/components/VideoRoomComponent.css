@@ -5,13 +5,13 @@
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 999999;
+  z-index: 2;
   min-width: 400px !important;
 }
 
 .toolbar{
   min-height: 40px !important;
-
+  z-index: 2;
 }
 
 #titleContent{

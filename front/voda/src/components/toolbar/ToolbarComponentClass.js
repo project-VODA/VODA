@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import "./ToolbarComponent.css";
 
 import AppBar from "@material-ui/core/AppBar";
@@ -12,13 +12,14 @@ import DeleteButton from "../../components/DeleteButton";
 const SimpleLogo = require("../../assets/images/logo_yellow.png");
 const DetailLogo = require("../../assets/images/logo_black.png");
 
+
+
 /* 표정 버튼 이동 - KSH (VideoRoomComponent.js -> ToolbarComponentClass.js*/
-export const getUserHandicap = async () => {
-  const res = await axiosServer().get(`/users/mypage`);
-  return res.data.useHandicap;
-}
 
 export default class ToolbarComponentClass extends Component {
+
+  
+
   constructor(props) {
     super(props);
     this.state = { fullscreen: false };
@@ -68,7 +69,7 @@ export default class ToolbarComponentClass extends Component {
     const localUser = this.props.user;
     const theme = localStorage.getItem('theme')
     const toolbarID = theme === 'simple' ? 'toolbar-simple-theme' : 'toolbar-detail-theme';
-
+    
     return (
       <AppBar className="toolbar" id={toolbarID}>
         <Toolbar className="toolbar">
@@ -86,11 +87,13 @@ export default class ToolbarComponentClass extends Component {
 
           <div className="buttonsContent">
             {/* 표정 버튼 이동 - KSH (VideoRoomComponent.js -> ToolbarComponentClass.js*/}
+            
             <span>
-              {getUserHandicap ? (<SettingButton tabIndex={1} id='hearExpression' text='표정 듣기' onClick={this.hearExpression} aria-label='표정 듣기 버튼입니다.'  />
+              {this.props.handicap ? (<SettingButton tabIndex={1} id='hearExpression' text='표정 듣기' onClick={this.hearExpression} aria-label='표정 듣기 버튼입니다.'  />
               ) : (<SettingButton tabIndex={1} id='sendExpression' text='표정 보내기' onClick={this.sendExpression} aria-label='표정 보내기 버튼입니다.' />
               )}
             </span>
+            
             <span id="navMicButton" onClick={this.micStatusChanged} >
               {localUser !== undefined && localUser.isAudioActive() ? (
                 <SettingButton

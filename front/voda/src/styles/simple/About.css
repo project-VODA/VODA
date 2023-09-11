@@ -2,25 +2,24 @@
 
 /* 영상통화 중 표정알림 서비스 */
 .aboutTitle{
-max-width: 100%;
-max-height: 100%;
-margin-top: 0px;
-position: relative;
-width: 97%;
-min-width: 800px;
-height: 14%;
-left: 19%;
-/* justify-content: center; */
+  max-width: 100%;
+  max-height: 100%;
+  margin-top: 0px;
+  position: relative;
+  width: 97%;
+  min-width: 800px;
+  height: 14%;
+  left: 19%;
 
-color: #FFC300;
-font-style: normal;
-font-weight: 700;
-font-size: 4.7vw;
-line-height: 122px;
-display: flex;
-align-items: center;
-text-align: center;
-text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  color: #FFC300;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 4.7vw;
+  line-height: 122px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 /* Dark-Yellow */
 
@@ -28,117 +27,119 @@ text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
 /* VODA는 웹 브라우저에서 시각 장애인에게 비언어적 소통을 지원합니다.지인과 가족을 친구로 등록하여 손쉽게 영상 통화를 시작해보세요. */
 .aboutContent{
-max-width: 100%;
-max-height: 100%;
-margin: 0px;
-position: relative;
-width: 98%;
-min-width: 800px;
-/* height: 0px; */
-/* justify-content: right; */
-left: 19%;
-top: 85%;
-display: inline-block;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0px;
+  position: relative;
+  width: 98%;
+  min-width: 800px;
+  left: 19%;
+  top: 85%;
+  display: inline-block;
 
-font-family: 'KoddiUD OnGothic';
-font-style: normal;
-font-weight: 700;
-font-size: 2vw;
-line-height: 51px;
-display: flex;
-align-items: center;
+  font-family: 'KoddiUD OnGothic';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 2vw;
+  line-height: 51px;
+  display: flex;
+  align-items: center;
 
-/* Super-Silver */
-color: #F0F0F0;
+  /* Super-Silver */
+  color: #F0F0F0;
 
-text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
 }
 
 /* VODA */
 .aboutVODA{
-max-width: 100%;
-max-height: 100%;
-position: relative;
-width: 3vw;
-/* height: 10%; */
-left: 20%;
-margin-top: 1%;
-display: inline-block;
+  max-width: 100%;
+  max-height: 100%;
+  position: relative;
+  width: 3vw;
+  left: 20%;
+  margin-top: 1%;
+  display: inline-block;
 
-font-family: 'Secular One';
-font-style: normal;
-font-weight: 400;
-font-size: 4vw;
-/* line-height: 146px; */
-display: flex;
-align-items: center;
-text-align: center;
+  font-family: 'Secular One';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 4vw;
+  display: flex;
+  align-items: center;
+  text-align: center;
 
-/* Dark-Yellow */
-color: #FFC300;
+  /* Dark-Yellow */
+  color: #FFC300;
 
-text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 /* Voice Over Diverse Assistance */
 .aboutMean{
-max-width: 100%;
-max-height: 100%;
-position: relative;
-width: 96%;
-min-width: 800px;
-margin-top: 2%;
-left: 20%;
-/* top: 60%; */
+  max-width: 100%;
+  max-height: 100%;
+  position: relative;
+  width: 96%;
+  min-width: 800px;
+  margin-top: 2%;
+  left: 20%;
 
-/* font-family: 'Secular One'; */
-font-style: normal;
-font-weight: 400;
-font-size: 2vw;
-line-height: 60px;
-display: flex;
-text-align: left;
-/* align-items: center; */
+  /* font-family: 'Secular One'; */
+  font-style: normal;
+  font-weight: 400;
+  font-size: 2vw;
+  line-height: 60px;
+  display: flex;
+  text-align: left;
 
-/* Super-Silver */
-color: #F0F0F0;
+  /* Super-Silver */
+  color: #F0F0F0;
 }
 
 
 /* “ 표정을 소리로 보다 ” */
 .aboutSlogan{
-/* max-width: 100%; */
-/* max-height: 100%; */
-margin-top: -3.9vw;
-display: flex, inline-block;
-flex-direction: column;
-align-items: end;
-/* text-align: center; */
-position: relative;
-/* width: 0vw; */
-/* min-width: 800px; */
-left: 10%;
+  margin-top: -3.9vw;
+  display: flex, inline-block;
+  flex-direction: column;
+  align-items: end;
+  position: relative;
+  left: 10%;
 
 
-font-family: 'KoddiUD OnGothic';
-font-style: normal;
-font-weight: 700;
-font-size: 4vw;
-line-height: 110px;
-display: flex;
-/* align-items: center; */
-text-align: center;
+  font-family: 'KoddiUD OnGothic';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 4vw;
+  line-height: 110px;
+  display: flex;
+  text-align: center;
 
-/* Dark-Yellow */
-color: #FFC300;
+  /* Dark-Yellow */
+  color: #FFC300;
 
-text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .SqrLogo {
   display: flex;
-  /* right: 20vw; */
   width: 14vw;
   height: 14vw;
+}
+
+.ourService {
+  max-width: 100%;
+  margin: 20px auto;
+  padding: 40px;
+  position: relative;
+  width: 90%;
+  max-width: 1400px;
+
+  font-family: 'Koddi';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1.5vw;
+  line-height: 1.5;
 }

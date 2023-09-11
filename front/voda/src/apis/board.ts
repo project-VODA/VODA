@@ -1,9 +1,9 @@
 import {axiosServer} from "./server";
 
 // 게시글 목록
-export const getArticles = async () => {
-  const res = await axiosServer().get<any>(`/articles/`);
-  return res.data;
+export const getArticles = async (page :number) => {
+  const res = await axiosServer().get<any>(`/articles?page=${page-1}`);
+  return res;
 }
 
 // 게시글 상세 내용 

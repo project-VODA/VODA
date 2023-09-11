@@ -1,22 +1,16 @@
 import React, { useState, KeyboardEvent } from "react";
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from "react-redux";
 
-import { UserSettingType, userSliceLogin } from "../../store/userSlice";
+import { userSliceLogin } from "../../store/userSlice";
 
 import { loginServer } from "../../apis/user";
 import { Link as TitleLink } from "react-router-dom" ;
 import SimpleTitle from '../../components/SimpleTitle';
 import Input from '../../components/SubmitInputText';
 import LoginButton from '../../components/RegisterButton';
-import Link from "../../components/TextLink";
-import { access } from "fs";
 
 import '../../styles/simple/RegisterContainer.css'
 import styled from "styled-components";
-import useErrorHandlers from "../../hooks/useError";
-import { useMode } from "../../hooks/useMode";
-import { RootState } from "../../store/store";
 import { useAppDispatch } from "../../hooks/reduxHook";
 import { HttpStatusCode } from "axios";
 

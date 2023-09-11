@@ -1,25 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 import SimpleTitle from '../../components/SimpleTitle';
-import Input from '../../components/InputText';
 import ModifyButton from '../../components/RegisterButton';
-import DeleteButton from '../../components/DeleteButton';
-import CheckBox from '../../components/CheckBox';
-import { cancelUser, changePassword, getUserInfo, logout, updateUserInfo, updateUserSetting } from '../../apis/user';
-import Info from '../../components/InfoText';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
-import { UserInfoType, UserSettingType, userSliceLogout } from '../../store/userSlice';
+import { updateUserSetting } from '../../apis/user';
 import { Link } from "react-router-dom";
 
-import DivideContainer from '../../components/DivideHorizontalContainer';
-
-import '../../styles/simple/EnvSettingPage.css'
-import { useAppSelector } from '../../hooks/reduxHook';
-import useLogOut from '../../hooks/useLogout';
+import '../../styles/detail/EnvSettingPage.css'
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHook';
 import useErrorHandlers from '../../hooks/useError';
+import { updateSliceUserSetting } from '../../store/userSlice';
 
 const StyledLink = styled(Link)`
 text-decoration: none;
@@ -49,14 +39,15 @@ const SimpleEnvSettingPage = () => {
     usersettingScreenType: screenMode,
   };
 
-  const naviagte = useNavigate();
-  const logout = useLogOut();
+  const dispatch = useAppDispatch();
   const errorHandlers = useErrorHandlers();
 
   const handleModify = () => {
     updateUserSetting(userSettingRequest)
       .then((res) => {
-        logout();
+        alert("설정이 변경되었습니다.");
+        dispatch(updateSliceUserSetting({usersettingTypeNo: userSettingRequest.usersettingTypeNo
+          , usersettingScreenType: userSettingRequest.usersettingScreenType}));
       })
       .catch((err) => {
         errorHandlers(err.response, handleModify);
@@ -74,7 +65,7 @@ const SimpleEnvSettingPage = () => {
           <div className='alarmContainer'>
             <p className='alarmTitle' aria-label='알림을 선택하세요. 남자, 여자 목소리, 조언을 선택 가능합니다.' tabIndex={1}>알림 설정</p>
             <div className='chooseAlarm'>
-            <div style={{ marginTop:'100px' }}>
+            <div style={{ marginTop:'70px' }}>
               <label tabIndex={2}>
                 <input
                   type='radio'
@@ -110,22 +101,37 @@ const SimpleEnvSettingPage = () => {
                   value='2'
                   checked={notificationType === 2}
                   onChange={() => setNotificationType(2)}
-                  aria-label='음성과 상황에 맞는 조언'
+                  aria-label='남성음성과 상황에 맞는 조언'
                   style={{ width: '20px', height: '20px' }}
                 />
-                음성 & 조언
+                남자 목소리 & 대화 조언
               </label>
             </div>
+            <div style={{ marginTop:'20px' }}>
+              <label tabIndex={5}>
+                <input
+                  type='radio'
+                  name='typeNo'
+                  value='2'
+                  checked={notificationType === 3}
+                  onChange={() => setNotificationType(3)}
+                  aria-label='여성음성과 상황에 맞는 조언'
+                  style={{ width: '20px', height: '20px' }}
+                />
+                여자 목소리 & 대화 조언
+              </label>
+            </div>
+            <div style={{marginTop: '20px'}}></div>
           </div>
         </div>
       
 
 
       <div className='modeContainer'>
-        <div className='modeTitle' aria-label='모드를 설정할 수 있습니다.' tabIndex={5}>모드 설정</div>
+        <div className='modeTitle' aria-label='모드를 설정할 수 있습니다.' tabIndex={6}>모드 설정</div>
       <div className='chooseMode'>
-        <div style={{ marginTop:'100px' }}>
-          <label  tabIndex={6}>
+        <div style={{ marginTop:'70px' }}>
+          <label  tabIndex={7}>
             <input
               type='radio'
               name='screenMode'
@@ -139,7 +145,7 @@ const SimpleEnvSettingPage = () => {
           </label>
         </div>
         <div style={{ marginTop:'20px' }}>
-          <label tabIndex={7} >
+          <label tabIndex={8} >
             <input
               aria-label='심플 모드'
               type='radio'
@@ -152,6 +158,7 @@ const SimpleEnvSettingPage = () => {
             심플 모드
           </label>
         </div>
+        <div style={{marginTop: '20px'}}></div>
       </div>
       </div>
       </div>
@@ -163,7 +170,7 @@ const SimpleEnvSettingPage = () => {
           onClick={handleModify}
           aria-label='설정 변경 버튼입니다.'
           style={{ width: '250px', height: '56px'}}
-          tabIndex={8}
+          tabIndex={9}
         />
       </ButtonContainer>
     </>

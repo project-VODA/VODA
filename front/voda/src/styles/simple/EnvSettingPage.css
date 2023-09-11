@@ -1,56 +1,49 @@
-.allContainer {
+.allContainerS {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
-  /* flex-wrap: wrap; */
-  margin-top: 5%;
+  margin-bottom: 5%;
+  font-weight: bold;
 }
 
 /* Rectangle 1 */
-.alarmContainer,
-.modeContainer {
+.alarmContainerS,
+.modeContainerS {
   flex: 0 0 calc(40% - 10vw); /* 두 상자의 너비가 같고, 간격을 위해 5vw를 뺀 값으로 설정 */
-  border: 10px solid #FFC300;
+  border: 5px solid #FFC300;
   border-radius: 10%;
   height: 45vh;
   padding: 15px;
   display: inline-block;
-  /* margin: 10%; */
 }
 
 /* 음성 음성과 조언 */
-.chooseAlarm{
+.chooseAlarmS{
 left: 20vw;
 top: 50vh;
 font-family: 'Koddi';
 font-size: 30px;
-/* text-align: center; */
+text-align: center;
 color: #FFC300;
-margin-left: 40%;
-margin-top: 10%;
 margin-bottom: 20%;
 overflow: hidden;
 }
 
 
 /* 디테일 모드 심플 모드 */
-.chooseMode{
+.chooseModeS{
   left: 20vw;
   top: 50vh;
   font-family: 'Koddi';
   font-size: 30px;
-  /* text-align: center; */
+  text-align: center;
   color: #FFC300;
-  margin-left: 40%;
-  margin-top: 10%;
-  margin-bottom: 20%;
   overflow: hidden;
 }
 
 
 /* 알림 설정 */
-.alarmTitle{
-position: absolute;
+.alarmTitleS{
 width: auto;
 height: auto;
 left: 19vw;
@@ -63,14 +56,15 @@ font-size: 48px;
 line-height: 58px;
 text-align: center;
 
+margin-top: 20px;
+
 color: #FFC300;
 }
 
 
 /* 모드 설정 */
 
-.modeTitle{
-position: absolute;
+.modeTitleS{
 width: auto;
 height: auto;
 left: 69vw;
@@ -83,15 +77,52 @@ font-size: 48px;
 line-height: 58px;
 text-align: center;
 
+margin-top: 20px;
+
 color: #FFC300;
 }
 
 
-.modifyButton {
-  /* display: flex; */
+.modifyButtonS {
   justify-content: center;
   align-items: center;
   left: 48vw;
   height: 10vh;
   width: 20vw;
+}
+
+/* 라디오 버튼 css */
+
+.chooseAlarmS input[type="radio"] {
+  vertical-align: middle;
+  appearance: none;
+  border: max(2px, 0.1em) solid #FFC300;
+  border-radius: 50%;
+  width: 1.25em;
+  height: 1.25em;
+}
+
+.chooseAlarmS input[type="radio"]:checked {
+  background-color: #FFC300;
+}
+
+.chooseAlarmS input[type="radio"]:hover {
+  box-shadow: 0 0 0 max(4px, 0.2em) #FFD60A;
+}
+
+.chooseModeS input[type="radio"] {
+  vertical-align: middle;
+  appearance: none;
+  border: max(2px, 0.1em) solid #FFC300;
+  border-radius: 50%;
+  width: 1.25em;
+  height: 1.25em;
+}
+
+.chooseModeS input[type="radio"]:checked {
+  background-color: #FFC300;
+}
+
+.chooseModeS input[type="radio"]:hover {
+  box-shadow: 0 0 0 max(4px, 0.2em) #FFD60A;
 }

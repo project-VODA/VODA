@@ -28,7 +28,7 @@
   height: 100%;
   object-fit: cover;
   transition: opacity 0.5s ease;
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
 .caption {
@@ -55,6 +55,12 @@
   transform: translateY(-50%);
 }
 
+@media (max-width: 768px) {
+  .caption .caption-title {
+    font-size: 40px;
+  }
+}
+
 .caption .caption-one-line-text {
   font-size: 3vh;
   padding: 5px 10px;
@@ -76,6 +82,12 @@
   top: 60%;
   left: 15%;
   transform: translateY(-50%);
+}
+
+@media (max-width: 768px) {
+  .caption .caption-two-line-text {
+    font-size: 20px;
+  }
 }
 
 .prev-btn,

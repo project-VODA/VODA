@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../store/store";
 import { sendCalling } from "../apis/calling";
 import { useNavigate } from "react-router-dom";
 
-import { UserInfoType } from "../store/userSlice";
-
-import SmallYellowButton from "../components/SmallYellowBtn"
 import Button from "./SettingButton";
 import RedButton from "./DeleteButton"
 import Input from "./InputText";
@@ -28,19 +23,6 @@ const inputColor = {
   backgroundColor: 'white',
   marginTop: '28px',
 };
-
-const SimpleModal = {
-  content: {
-    backgroundColor: '#001d3d',
-  },
-}
-
-const DetailModal = {
-  content: {
-    backgroundColor: '#fff',
-  },
-}
-
 
 type User = {
   userEmail: string;
@@ -153,11 +135,6 @@ const UserSearchList = () => {
         tabIndex={0}
       />
       <table id="tbodyContainer" style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '28px'}}>
-        {/* <colgroup>
-          <col width="30%" />
-          <col width="30%" />
-          <col width="40%" />
-        </colgroup> */}
         <tbody id="FriendContainer" tabIndex={2}>
           {userList.length === 0 ? (
             <tr>
@@ -188,7 +165,6 @@ const UserSearchList = () => {
                   </div>
                   )}
                 </td>
-
               </tr>
             ))
           )}
@@ -201,13 +177,13 @@ const UserSearchList = () => {
         style={{
           content: {
             backgroundColor: localStorage.getItem('theme') === 'detail' ? 'white' : '#001d3d',
-            width: '400px', // Adjust the width as needed
-            height: '300px', // Adjust the height as needed
-            margin: 'auto', // Center the modal
-            display: 'flex', // Flex container
-            flexDirection: 'column', // Stack content vertically
-            justifyContent: 'center', // Center horizontally
-            alignItems: 'center', // Center vertically
+            width: '400px',
+            height: '300px',
+            margin: 'auto',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
           }
         }}
         shouldCloseOnOverlayClick={false}

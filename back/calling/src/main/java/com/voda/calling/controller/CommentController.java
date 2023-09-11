@@ -85,7 +85,6 @@ public class CommentController {
             log.info("댓글 수정 실패 - 서버(DB) 오류");
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 
     @ApiOperation( value = "댓글 삭제", notes = "commentNo를 이용해 댓글을 삭제하는 api")
