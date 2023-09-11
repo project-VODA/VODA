@@ -4,7 +4,7 @@
 **D iverse**   
 **A ssistance**  
 
-<img src="../exec/resource/img/VODA_logo.png" width="100" height="100">
+<img src="./exec/resource/img/VODA_logo.png" width="100" height="100">
 <br/> <br/>   
 
 ## 프로젝트 개요  
