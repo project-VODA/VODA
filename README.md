@@ -34,7 +34,7 @@ SSAFY 9기 2학기 공통 프로젝트
 | 김지원 | BE | AI |
 | 나건 | BE | FE |
 | 윤선희 | BE | FE |
-| 최규헌 | BE | FE |
+| 최규헌 | BE & FE | BE api 구현 / FE axios, Redux, style / 일정 관리 |
 <br/>
 
 ## 기술 스택
