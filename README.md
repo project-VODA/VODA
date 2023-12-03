@@ -142,7 +142,7 @@
 ![Alt text](./exec/resource/img/api4.PNG) <br/>
 
 ### 아키텍쳐 다이어그램
-![Alt text](./exec/resource/img/아키텍쳐.png) <br/>
+![아키텍쳐](./exec/resource/img/architecture.png) <br/>
 
 ## 📽️ UCC
 - **[유튜브 영상 - 심청전](https://youtu.be/ypS_xI9M2W0)**
